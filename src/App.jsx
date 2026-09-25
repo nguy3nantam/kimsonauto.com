@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 
 // Layout & Common Components
 import Navbar from './components/common/Navbar';
 import Footer from './components/common/Footer';
 import FloatingCTA from './components/common/FloatingCTA';
-import BookingModal from './components/common/BookingModal';
 
-// Pages
+// Corporate Ecosystem Pages
 import HomePage from './pages/HomePage';
-import VehiclesPage from './pages/VehiclesPage';
-import ServicesPage from './pages/ServicesPage';
 import AboutPage from './pages/AboutPage';
+import PillarsPage from './pages/PillarsPage';
+import NetworkPage from './pages/NetworkPage';
+import SustainabilityPage from './pages/SustainabilityPage';
 import NewsPage from './pages/NewsPage';
 import ContactPage from './pages/ContactPage';
 import NotFoundPage from './pages/NotFoundPage';
@@ -28,82 +28,34 @@ function ScrollToTop() {
 }
 
 export default function App() {
-  const [isBookingOpen, setIsBookingOpen] = useState(false);
-  const [bookingType, setBookingType] = useState('service'); // 'service' | 'test-drive'
-  const [selectedCar, setSelectedCar] = useState(null);
-
-  const handleOpenBooking = (type = 'service', car = null) => {
-    setBookingType(type);
-    if (car) setSelectedCar(car);
-    setIsBookingOpen(true);
-  };
-
-  const handleCloseBooking = () => {
-    setIsBookingOpen(false);
-  };
-
   return (
     <Router>
       <ScrollToTop />
-      <div className="min-h-screen flex flex-col bg-slate-50 text-slate-800 font-sans selection:bg-primary selection:text-white">
-        <Navbar onOpenBooking={handleOpenBooking} />
+      <div className="min-h-screen flex flex-col bg-white text-slate-800 font-sans selection:bg-primary selection:text-white">
+        <Navbar />
 
         <main className="flex-grow">
           <Routes>
-            <Route 
-              path="/" 
-              element={
-                <HomePage 
-                  onOpenBooking={handleOpenBooking} 
-                  onSelectCar={(car) => handleOpenBooking('test-drive', car)} 
-                />
-              } 
-            />
-            <Route 
-              path="/vehicles" 
-              element={
-                <VehiclesPage 
-                  onOpenBooking={handleOpenBooking} 
-                  selectedCar={selectedCar} 
-                  setSelectedCar={setSelectedCar} 
-                />
-              } 
-            />
-            <Route 
-              path="/services" 
-              element={<ServicesPage onOpenBooking={handleOpenBooking} />} 
-            />
-            <Route 
-              path="/about" 
-              element={<AboutPage />} 
-            />
-            <Route 
-              path="/news" 
-              element={<NewsPage />} 
-            />
-            <Route 
-              path="/contact" 
-              element={<ContactPage onOpenBooking={handleOpenBooking} />} 
-            />
-            <Route 
-              path="*" 
-              element={<NotFoundPage />} 
-            />
+            <Route path="/" element={<HomePage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/linh-vuc" element={<PillarsPage />} />
+            <Route path="/mang-luoi" element={<NetworkPage />} />
+            <Route path="/phat-trien-ben-vung" element={<SustainabilityPage />} />
+            <Route path="/tin-tuc" element={<NewsPage />} />
+            <Route path="/lien-he" element={<ContactPage />} />
+
+            {/* Aliases for convenience */}
+            <Route path="/vehicles" element={<Navigate to="/linh-vuc" replace />} />
+            <Route path="/services" element={<Navigate to="/linh-vuc" replace />} />
+            <Route path="/contact" element={<Navigate to="/lien-he" replace />} />
+            <Route path="/news" element={<Navigate to="/tin-tuc" replace />} />
+
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </main>
 
-        <Footer onOpenBooking={handleOpenBooking} />
-
-        {/* Global Floating Contact Actions */}
-        <FloatingCTA onOpenBooking={handleOpenBooking} />
-
-        {/* Global Booking Modal */}
-        <BookingModal 
-          isOpen={isBookingOpen} 
-          onClose={handleCloseBooking} 
-          initialType={bookingType}
-          selectedCar={selectedCar}
-        />
+        <Footer />
+        <FloatingCTA />
       </div>
     </Router>
   );

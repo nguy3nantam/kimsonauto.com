@@ -1,18 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Phone, Calendar, MapPin, ChevronRight, ShieldCheck } from 'lucide-react';
+import { Menu, X, Globe, Phone, ChevronRight } from 'lucide-react';
 
-export default function Navbar({ onOpenBooking }) {
+export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 20) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const navLinks = [
     { name: 'Trang Chủ', path: '/' },
-    { name: 'Showroom Xe', path: '/vehicles' },
-    { name: 'Dịch Vụ & Bảo Dưỡng', path: '/services' },
     { name: 'Về Kim Sơn', path: '/about' },
-    { name: 'Tin Tức', path: '/news' },
-    { name: 'Chi Nhánh & Liên Hệ', path: '/contact' },
+    { name: 'Lĩnh Vực Hoạt Động', path: '/linh-vuc' },
+    { name: 'Mạng Lưới Chi Nhánh', path: '/mang-luoi' },
+    { name: 'Phát Triển Bền Vững', path: '/phat-trien-ben-vung' },
+    { name: 'Tin Tức & Truyền Thông', path: '/tin-tuc' },
+    { name: 'Liên Hệ Hợp Tác', path: '/lien-he' },
   ];
 
   const isActive = (path) => {
@@ -22,63 +36,62 @@ export default function Navbar({ onOpenBooking }) {
   };
 
   return (
-    <header className="sticky top-0 z-50 shadow-md">
-      {/* Top Banner Bar */}
-      <div className="bg-secondary text-slate-300 text-xs py-2 px-4 border-b border-slate-800">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
-          <div className="flex items-center gap-4 flex-wrap justify-center sm:justify-start">
-            <span className="flex items-center gap-1.5 text-slate-300">
-              <ShieldCheck size={14} className="text-primary-light" />
-              Hệ Sinh Thái Ô Tô Uy Tín Từ Năm 2014
-            </span>
-            <span className="hidden md:inline-block text-slate-600">|</span>
-            <span className="hidden md:flex items-center gap-1.5 text-slate-300">
-              <MapPin size={14} className="text-primary-light" />
-              7 Chi Nhánh tại Đồng Nai & TP. Hồ Chí Minh
-            </span>
+    <header className="sticky top-0 z-50 transition-all duration-300">
+      {/* Top Corporate Bar */}
+      <div className="bg-slate-900 text-slate-300 text-xs py-1.5 px-4 sm:px-8 border-b border-slate-800">
+        <div className="max-w-7xl mx-auto flex justify-between items-center">
+          <div className="flex items-center gap-4 text-[11px] tracking-wider uppercase text-slate-400 font-semibold">
+            <span>HỆ SINH THÁI Ô TÔ KIM SƠN</span>
+            <span className="hidden md:inline text-slate-700">•</span>
+            <span className="hidden md:inline text-slate-400">THÀNH LẬP TỪ NĂM 2014</span>
           </div>
 
-          <div className="flex items-center gap-4">
-            <span className="text-slate-400">Giờ mở cửa: 07:30 - 18:00</span>
-            <a 
-              href="tel:0908123456" 
-              className="flex items-center gap-1 font-bold text-white hover:text-primary-light transition-colors"
-            >
-              <Phone size={13} className="text-primary animate-pulse" />
-              Hotline 24/7: <span className="text-amber-400">0908 123 456</span>
+          <div className="flex items-center gap-6 text-xs">
+            <a href="tel:0908123456" className="flex items-center gap-1.5 hover:text-amber-400 transition-colors">
+              <Phone size={12} className="text-primary-light" />
+              <span>Hotline: <strong className="text-white">0908 123 456</strong></span>
             </a>
+
+            <div className="flex items-center gap-1.5 border-l border-slate-700 pl-4 text-[11px]">
+              <Globe size={13} className="text-slate-400" />
+              <span className="font-bold text-amber-400">VN</span>
+              <span className="text-slate-600">/</span>
+              <span className="text-slate-400 hover:text-white cursor-pointer">EN</span>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Main Navigation Bar */}
-      <nav className="bg-white/95 backdrop-blur-md border-b border-slate-100">
+      {/* Main Corporate Navbar */}
+      <nav className={`transition-all duration-300 ${
+        scrolled ? 'bg-white shadow-md py-3' : 'bg-white/95 backdrop-blur-md py-4 border-b border-slate-200'
+      }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20">
-            {/* Logo */}
+          <div className="flex justify-between items-center">
+            {/* Vingroup-style Elegant Brand Logo */}
             <Link to="/" className="flex items-center gap-3 group">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center text-white font-extrabold text-2xl shadow-glow group-hover:scale-105 transition-transform">
+              <div className="w-11 h-11 rounded-lg bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center text-white font-black text-xl shadow-glow group-hover:scale-105 transition-transform">
                 KS
               </div>
               <div className="flex flex-col">
-                <span className="text-xl sm:text-2xl font-black tracking-tight text-slate-900 group-hover:text-primary transition-colors">
-                  KIM SƠN <span className="text-primary">AUTO</span>
+                <span className="text-xl sm:text-2xl font-black tracking-tight text-slate-900 group-hover:text-primary transition-colors leading-none">
+                  KIM SƠN
                 </span>
-                <span className="text-[10px] tracking-widest text-slate-500 font-semibold uppercase">
-                  Automobiles Ecosystem
+                <span className="text-[10px] tracking-widest text-slate-500 font-bold uppercase mt-1">
+                  AUTOMOBILES ECOSYSTEM
                 </span>
               </div>
             </Link>
 
-            {/* Desktop Navigation Links */}
-            <div className="hidden lg:flex items-center space-x-1 xl:space-x-2">
+            {/* Desktop Navigation */}
+            <div className="hidden xl:flex items-center space-x-1">
               {navLinks.map((link) => (
                 <Link
                   key={link.path}
                   to={link.path}
-                  className={`px-3 py-2 rounded-lg text-sm font-semibold transition-all duration-200 ${
+                  className={`px-3.5 py-2 rounded-lg text-xs lg:text-sm font-bold uppercase tracking-wider transition-all duration-200 ${
                     isActive(link.path)
-                      ? 'text-primary bg-primary-subtle/50'
+                      ? 'text-primary border-b-2 border-primary rounded-none bg-transparent'
                       : 'text-slate-700 hover:text-primary hover:bg-slate-50'
                   }`}
                 >
@@ -87,38 +100,22 @@ export default function Navbar({ onOpenBooking }) {
               ))}
             </div>
 
-            {/* Desktop Action Buttons */}
-            <div className="hidden sm:flex items-center gap-3">
-              <button
-                onClick={() => onOpenBooking('service')}
-                className="flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white px-4 py-2.5 rounded-xl text-sm font-bold shadow-sm transition-all hover:shadow-md"
+            {/* CTA Portal Button */}
+            <div className="hidden lg:flex items-center gap-3">
+              <Link
+                to="/linh-vuc"
+                className="bg-primary hover:bg-primary-dark text-white px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider shadow-sm transition-all hover:shadow-md flex items-center gap-1.5"
               >
-                <Calendar size={16} className="text-primary-light" />
-                <span>Đặt Lịch Hẹn</span>
-              </button>
-
-              <button
-                onClick={() => onOpenBooking('test-drive')}
-                className="hidden xl:flex items-center gap-2 bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary text-white px-4 py-2.5 rounded-xl text-sm font-bold shadow-glow transition-all hover:scale-105"
-              >
-                <span>Lái Thử Xe</span>
-                <ChevronRight size={16} />
-              </button>
+                <span>5 Trụ Cột Hoạt Động</span>
+                <ChevronRight size={14} />
+              </Link>
             </div>
 
-            {/* Mobile Hamburger Button */}
-            <div className="lg:hidden flex items-center gap-2">
-              <button
-                onClick={() => onOpenBooking('service')}
-                className="sm:hidden bg-primary text-white p-2 rounded-lg"
-                title="Đặt lịch"
-              >
-                <Calendar size={18} />
-              </button>
+            {/* Mobile Hamburger */}
+            <div className="xl:hidden flex items-center">
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="p-2 text-slate-700 hover:text-primary focus:outline-none rounded-lg hover:bg-slate-100"
-                aria-label="Toggle menu"
+                className="p-2 text-slate-800 hover:text-primary rounded-lg focus:outline-none"
               >
                 {isOpen ? <X size={26} /> : <Menu size={26} />}
               </button>
@@ -126,51 +123,31 @@ export default function Navbar({ onOpenBooking }) {
           </div>
         </div>
 
-        {/* Mobile Dropdown Menu */}
+        {/* Mobile Menu */}
         {isOpen && (
-          <div className="lg:hidden bg-white border-b border-slate-200 shadow-xl px-4 pt-2 pb-6 space-y-2 animate-fadeIn">
+          <div className="xl:hidden bg-white border-t border-slate-100 shadow-xl px-4 py-6 space-y-2">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
                 onClick={() => setIsOpen(false)}
-                className={`block px-4 py-3 rounded-xl text-base font-semibold transition-colors ${
+                className={`block px-4 py-3 rounded-xl text-sm font-bold uppercase tracking-wider transition-colors ${
                   isActive(link.path)
-                    ? 'text-primary bg-primary-subtle/60'
-                    : 'text-slate-700 hover:bg-slate-100'
+                    ? 'text-primary bg-primary-subtle/50'
+                    : 'text-slate-700 hover:bg-slate-50'
                 }`}
               >
                 {link.name}
               </Link>
             ))}
-
-            <div className="pt-4 border-t border-slate-100 grid grid-cols-2 gap-2">
-              <button
-                onClick={() => {
-                  setIsOpen(false);
-                  onOpenBooking('service');
-                }}
-                className="w-full flex items-center justify-center gap-2 bg-slate-900 text-white py-3 rounded-xl font-bold text-sm"
+            <div className="pt-4 border-t border-slate-100">
+              <Link
+                to="/lien-he"
+                onClick={() => setIsOpen(false)}
+                className="w-full block text-center bg-primary text-white py-3 rounded-xl text-xs font-bold uppercase tracking-wider"
               >
-                <Calendar size={16} />
-                <span>Đặt Dịch Vụ</span>
-              </button>
-              <button
-                onClick={() => {
-                  setIsOpen(false);
-                  onOpenBooking('test-drive');
-                }}
-                className="w-full flex items-center justify-center gap-2 bg-primary text-white py-3 rounded-xl font-bold text-sm"
-              >
-                <span>Lái Thử Xe</span>
-              </button>
-            </div>
-
-            <div className="pt-2 text-center text-xs text-slate-500">
-              Hotline 24/7:{' '}
-              <a href="tel:0908123456" className="font-bold text-primary">
-                0908 123 456
-              </a>
+                Kết Nối Hợp Tác Doanh Nghiệp
+              </Link>
             </div>
           </div>
         )}

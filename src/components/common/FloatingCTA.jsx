@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Phone, Calendar, ArrowUp, MessageSquare } from 'lucide-react';
+import { Phone, ArrowUp } from 'lucide-react';
 
-export default function FloatingCTA({ onOpenBooking }) {
+export default function FloatingCTA() {
   const [showScrollTop, setShowScrollTop] = useState(false);
 
   useEffect(() => {
@@ -27,53 +27,36 @@ export default function FloatingCTA({ onOpenBooking }) {
       {showScrollTop && (
         <button
           onClick={scrollToTop}
-          className="w-11 h-11 rounded-full bg-slate-800 text-white flex items-center justify-center shadow-lg hover:bg-slate-700 transition-all hover:scale-110"
+          className="w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center shadow-lg hover:bg-slate-800 transition-all hover:scale-110 border border-slate-700"
           title="Lên đầu trang"
         >
-          <ArrowUp size={18} />
+          <ArrowUp size={16} />
         </button>
       )}
-
-      {/* Quick Booking Button */}
-      <button
-        onClick={() => onOpenBooking('service')}
-        className="group flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white pl-4 pr-5 py-3 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 border border-slate-700 hover:scale-105"
-      >
-        <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white">
-          <Calendar size={16} />
-        </div>
-        <span className="text-xs sm:text-sm font-bold tracking-tight">Đặt Lịch Ngay</span>
-      </button>
 
       {/* Zalo Contact Button */}
       <a
         href="https://zalo.me/0908123456"
         target="_blank"
         rel="noopener noreferrer"
-        className="group flex items-center gap-2 bg-[#0068ff] hover:bg-[#0052cc] text-white pl-3.5 pr-4 py-3 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
-        title="Chat Zalo Tư Vấn"
+        className="group flex items-center gap-2 bg-[#0068ff] hover:bg-[#0052cc] text-white px-3.5 py-2.5 rounded-full shadow-lg hover:shadow-xl transition-all hover:scale-105"
+        title="Kết nối Zalo đối ngoại"
       >
-        <div className="w-8 h-8 rounded-full bg-white text-[#0068ff] flex items-center justify-center font-extrabold text-sm shadow">
+        <div className="w-6 h-6 rounded-full bg-white text-[#0068ff] flex items-center justify-center font-black text-xs">
           Z
         </div>
-        <span className="text-xs sm:text-sm font-bold tracking-tight">Chat Zalo</span>
+        <span className="text-xs font-bold tracking-wide">Zalo Tập Đoàn</span>
       </a>
 
-      {/* Hotline Pulse Button */}
+      {/* Corporate Hotline */}
       <a
         href="tel:0908123456"
-        className="relative group flex items-center gap-2 bg-gradient-to-r from-primary to-primary-dark text-white pl-3.5 pr-4 py-3 rounded-full shadow-glow hover:shadow-2xl transition-all duration-300 hover:scale-105"
-        title="Gọi Hotline Cứu Hộ & Tư Vấn 24/7"
+        className="relative group flex items-center gap-2 bg-gradient-to-r from-primary to-primary-dark text-white px-4 py-2.5 rounded-full shadow-glow hover:shadow-xl transition-all hover:scale-105"
+        title="Tổng Đài Điều Hành Kim Sơn"
       >
-        {/* Radar ping effect */}
-        <span className="absolute -inset-1 rounded-full bg-red-500 opacity-30 group-hover:opacity-60 animate-ping"></span>
-        <div className="relative w-8 h-8 rounded-full bg-white text-primary flex items-center justify-center font-bold shadow">
-          <Phone size={16} className="animate-bounce" />
-        </div>
-        <div className="relative flex flex-col text-left">
-          <span className="text-[10px] uppercase font-bold text-red-100 tracking-wider">Hotline 24/7</span>
-          <span className="text-xs sm:text-sm font-extrabold tracking-tight">0908 123 456</span>
-        </div>
+        <span className="absolute -inset-1 rounded-full bg-red-500 opacity-25 group-hover:opacity-50 animate-ping"></span>
+        <Phone size={15} className="relative text-white" />
+        <span className="relative text-xs font-bold tracking-wide">0908 123 456</span>
       </a>
     </div>
   );
