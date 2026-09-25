@@ -1,0 +1,155 @@
+import React from 'react';
+import { Award, ShieldCheck, Users, Target, Clock, Wrench, CheckCircle2 } from 'lucide-react';
+
+export default function AboutPage() {
+  const milestones = [
+    {
+      year: '2014',
+      title: 'Khởi Đầu Vững Chắc',
+      desc: 'Thành lập trung tâm dịch vụ kỹ thuật ô tô đầu tiên tại TP. Biên Hòa, tập trung vào sửa chữa máy gầm và phục hồi xe tai nạn.'
+    },
+    {
+      year: '2017',
+      title: 'Hợp Tác Chiến Lược Chevrolet & Nissan',
+      desc: 'Trở thành đơn vị ủy quyền bảo dưỡng, sửa chữa và phân phối phụ tùng chính hãng cho các dòng xe Mỹ và Nhật Bản.'
+    },
+    {
+      year: '2020',
+      title: 'Mở Rộng Mạng Lưới Chi Nhánh',
+      desc: 'Phát triển hệ thống các trạm dịch vụ tại Bửu Long, Trảng Dài, Long Thành và Nhơn Trạch nhằm phục vụ khách hàng thuận tiện nhất.'
+    },
+    {
+      year: '2023',
+      title: 'Chuyển Đổi Xanh Cùng VinFast',
+      desc: 'Hợp tác đẩy mạnh phân phối ô tô điện VinFast, đào tạo kỹ sư chuyên sâu về pin cao áp và công nghệ ô tô thông minh.'
+    },
+    {
+      year: '2026',
+      title: 'Hệ Sinh Thái Ô Tô Toàn Diện',
+      desc: 'Hoàn thiện hệ sinh thái 7 chi nhánh khắp Đồng Nai và TP.HCM, mang đến trải nghiệm mua xe, bảo dưỡng và cứu hộ 24/7 hoàn hảo.'
+    }
+  ];
+
+  return (
+    <div className="bg-slate-50 min-h-screen py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20">
+        {/* Header */}
+        <div className="text-center max-w-3xl mx-auto">
+          <span className="text-xs font-bold text-primary uppercase tracking-widest">VỀ CHÚNG TÔI</span>
+          <h1 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight mt-2 mb-4">
+            Kim Sơn Automobiles
+          </h1>
+          <p className="text-base text-slate-600">
+            Hơn 12 năm kiến tạo niềm tin và khẳng định vị thế dẫn đầu trong lĩnh vực kinh doanh xe và chăm sóc kỹ thuật ô tô tại Đông Nam Bộ.
+          </p>
+        </div>
+
+        {/* Vision & Mission */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          <div className="relative rounded-3xl overflow-hidden shadow-2xl">
+            <img 
+              src="https://images.unsplash.com/photo-1562141961-b5d7d7665637?auto=format&fit=crop&q=80&w=900" 
+              alt="Kim Sơn Workshop" 
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent flex items-end p-8">
+              <p className="text-white font-bold text-lg">Xưởng dịch vụ đạt chuẩn quốc tế tại Đồng Nai</p>
+            </div>
+          </div>
+
+          <div className="space-y-6">
+            <div>
+              <span className="text-xs font-bold text-primary uppercase">Sứ mệnh</span>
+              <h2 className="text-2xl sm:text-3xl font-black text-slate-900 mt-1 mb-3">
+                Đồng Hành An Toàn Trên Mọi Chặng Đường
+              </h2>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                Tại Kim Sơn Automobiles, chúng tôi không chỉ bán xe hay sửa chữa phương tiện, mà chúng tôi trao gửi sự an tâm tuyệt đối cho khách hàng và gia đình. Mọi chiếc xe lăn bánh từ xưởng đều được chăm sóc bằng sự tỉ mỉ của những người thợ tâm huyết nhất.
+              </p>
+            </div>
+
+            <div>
+              <span className="text-xs font-bold text-primary uppercase">Tầm nhìn</span>
+              <h2 className="text-2xl sm:text-3xl font-black text-slate-900 mt-1 mb-3">
+                Hệ Sinh Thái Ô Tô Số 1 Khu Vực Đông Nam Bộ
+              </h2>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                Đón đầu làn sóng chuyển đổi năng lượng xanh, Kim Sơn tiếp tục mở rộng quy mô, nâng cao chất lượng dịch vụ xe điện và xe truyền thống, trở thành điểm đến tin cậy của hàng trăm nghìn chủ xe.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Core Values */}
+        <div className="bg-white rounded-3xl p-8 sm:p-12 border border-slate-200 shadow-md">
+          <div className="text-center max-w-2xl mx-auto mb-12">
+            <h3 className="text-2xl sm:text-3xl font-black text-slate-900">Giá Trị Cốt Lõi</h3>
+            <p className="text-xs text-slate-500 mt-2">Bốn nguyên tắc định hình văn hóa phục vụ của Kim Sơn Automobiles</p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 text-center">
+              <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mx-auto mb-4">
+                <Target size={24} />
+              </div>
+              <h4 className="font-bold text-slate-900 mb-2">Tận Tâm</h4>
+              <p className="text-xs text-slate-600 leading-relaxed">Lắng nghe khách hàng, tư vấn đúng bệnh, đúng giá, đặt sự an toàn lên hàng đầu.</p>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 text-center">
+              <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mx-auto mb-4">
+                <ShieldCheck size={24} />
+              </div>
+              <h4 className="font-bold text-slate-900 mb-2">Minh Bạch</h4>
+              <p className="text-xs text-slate-600 leading-relaxed">Báo giá rõ ràng trước khi làm, bàn giao phụ tùng cũ thay ra tận tay khách hàng.</p>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 text-center">
+              <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mx-auto mb-4">
+                <Wrench size={24} />
+              </div>
+              <h4 className="font-bold text-slate-900 mb-2">Chất Lượng</h4>
+              <p className="text-xs text-slate-600 leading-relaxed">Phụ tùng chính phẩm 100%, bảo hành dài hạn với tiêu chuẩn khắt khe.</p>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 text-center">
+              <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mx-auto mb-4">
+                <Clock size={24} />
+              </div>
+              <h4 className="font-bold text-slate-900 mb-2">Tốc Độ</h4>
+              <p className="text-xs text-slate-600 leading-relaxed">Quy trình tối ưu, giao xe đúng hẹn, cứu hộ nhanh chóng 15-30 phút.</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Timeline */}
+        <div className="bg-secondary text-white rounded-3xl p-8 sm:p-12 border border-slate-800 shadow-2xl">
+          <div className="text-center max-w-2xl mx-auto mb-12">
+            <span className="text-xs font-bold text-primary-light uppercase tracking-wider">HÀNH TRÌNH PHÁT TRIỂN</span>
+            <h3 className="text-3xl font-black mt-1">Cột Mốc Lịch Sử (2014 - 2026)</h3>
+          </div>
+
+          <div className="space-y-8 relative before:absolute before:inset-0 before:left-4 md:before:left-1/2 before:w-0.5 before:bg-slate-700">
+            {milestones.map((m, idx) => (
+              <div key={m.year} className={`relative flex items-center gap-6 ${idx % 2 === 0 ? 'md:flex-row-reverse' : ''}`}>
+                <div className="hidden md:block w-1/2"></div>
+                
+                {/* Dot */}
+                <div className="z-10 w-9 h-9 rounded-full bg-primary text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-glow">
+                  {idx + 1}
+                </div>
+
+                {/* Card */}
+                <div className="bg-slate-800/90 p-6 rounded-2xl border border-slate-700 flex-1">
+                  <span className="text-primary-light font-black text-xl">{m.year}</span>
+                  <h4 className="text-base font-bold text-white mt-1 mb-2">{m.title}</h4>
+                  <p className="text-xs text-slate-300 leading-relaxed">{m.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
