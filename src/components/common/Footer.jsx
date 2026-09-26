@@ -71,7 +71,7 @@ export default function Footer() {
               <li>
                 <Link to="/mang-luoi" className="hover:text-white transition-colors flex items-center gap-1.5">
                   <ChevronRight size={12} className="text-primary-light" />
-                  <span>Mạng Lưới 7 Cơ Sở & Chi Nhánh</span>
+                  <span>Mạng Lưới 11 Cơ Sở & Chi Nhánh</span>
                 </Link>
               </li>
               <li>

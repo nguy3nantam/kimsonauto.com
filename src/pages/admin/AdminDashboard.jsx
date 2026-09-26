@@ -94,7 +94,7 @@ export default function AdminDashboard() {
             Xin Chào, Ban Quản Trị Kim Sơn!
           </h1>
           <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-            Hệ thống đang quản lý đồng bộ 5 trụ cột kinh doanh và mạng lưới 7 cơ sở phục vụ khách hàng trên toàn khu vực Đông Nam Bộ.
+            Hệ thống đang quản lý đồng bộ 5 trụ cột kinh doanh và mạng lưới 11 cơ sở & chi nhánh phục vụ khách hàng trên toàn khu vực Đông Nam Bộ.
           </p>
         </div>
       </div>

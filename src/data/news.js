@@ -7,7 +7,7 @@ export const newsData = [
     readTime: '3 phút đọc',
     image: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&q=80&w=800',
     summary: 'Nhận ngay gói phụ kiện cao cấp trị giá 20 triệu đồng, miễn phí sạc pin 1 năm cùng lãi suất vay ưu đãi chỉ từ 4.9%/năm khi mua xe VinFast tại Kim Sơn.',
-    content: 'Kim Sơn Automobiles tưng bừng triển khai chương trình ưu đãi đặc biệt dành cho quý khách hàng đặt cọc và nhận xe điện VinFast (VF 3, VF 5, VF 6, VF 7). Khách hàng được hỗ trợ 100% lệ phí trước bạ tùy dòng xe, tặng kèm gói phủ Ceramic và thảm lót sàn cao cấp cùng thẻ VIP dịch vụ hậu mãi tại 7 chi nhánh trên toàn hệ thống.'
+    content: 'Kim Sơn Automobiles tưng bừng triển khai chương trình ưu đãi đặc biệt dành cho quý khách hàng đặt cọc và nhận xe điện VinFast (VF 3, VF 5, VF 6, VF 7). Khách hàng được hỗ trợ 100% lệ phí trước bạ tùy dòng xe, tặng kèm gói phủ Ceramic và thảm lót sàn cao cấp cùng thẻ VIP dịch vụ hậu mãi tại 11 chi nhánh & cơ sở trên toàn hệ thống.'
   },
   {
     id: 'ev-battery-care',

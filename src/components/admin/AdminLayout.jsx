@@ -37,7 +37,7 @@ export default function AdminLayout() {
   const navItems = [
     { name: 'Tổng Quan Hệ Sinh Thái', path: '/admin', icon: LayoutDashboard },
     { name: '5 Trụ Cột Hoạt Động', path: '/admin/pillars', icon: Layers },
-    { name: 'Mạng Lưới 7 Chi Nhánh', path: '/admin/branches', icon: MapPin },
+    { name: 'Mạng Lưới 11 Chi Nhánh', path: '/admin/branches', icon: MapPin },
     { name: 'Tin Tức & Thông Cáo', path: '/admin/news', icon: Newspaper },
     { name: 'Yêu Cầu Hợp Tác B2B', path: '/admin/contacts', icon: Mail },
     { name: 'Cài Đặt & Thông Tin', path: '/admin/settings', icon: Settings },

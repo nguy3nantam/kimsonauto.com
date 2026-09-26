@@ -15,7 +15,7 @@ export default function NetworkPage() {
             Mạng Lưới Chi Nhánh & Trung Tâm Dịch Vụ
           </h1>
           <p className="text-slate-600 text-sm sm:text-base mt-3 leading-relaxed">
-            Hệ thống 7 cơ sở quy mô lớn trải dài tại các vị trí kinh tế chiến lược kết nối giữa TP. Hồ Chí Minh và tỉnh Đồng Nai, đảm bảo năng lực phục vụ kịp thời và chuẩn mực.
+            Hệ thống 11 chi nhánh & cơ sở quy mô lớn trải dài tại các vị trí kinh tế chiến lược kết nối giữa TP. Hồ Chí Minh và tỉnh Đồng Nai, đảm bảo năng lực phục vụ kịp thời và chuẩn mực.
           </p>
         </div>
 
@@ -29,7 +29,7 @@ export default function NetworkPage() {
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <span className="text-[10px] font-bold text-primary bg-primary-subtle px-3 py-1 rounded-full uppercase tracking-wider">
-                    {b.id === 'hcm' ? 'Trụ Sở Điều Hành' : 'Chi Nhánh Kỹ Thuật'}
+                    {b.id === 'gf-kim-son-hcm' ? 'Trụ Sở & Văn Phòng' : b.role.includes('Xưởng') ? 'Xưởng Kỹ Thuật' : 'Showroom & Dịch Vụ'}
                   </span>
                   <span className="text-xs text-slate-400 font-semibold">Đông Nam Bộ</span>
                 </div>

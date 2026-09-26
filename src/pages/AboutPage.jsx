@@ -26,7 +26,7 @@ export default function AboutPage() {
     {
       year: '2026',
       title: 'Hệ Sinh Thái Ô Tô Toàn Diện',
-      desc: 'Hoàn thiện hệ sinh thái 7 chi nhánh khắp Đồng Nai và TP.HCM, mang đến trải nghiệm mua xe, bảo dưỡng và cứu hộ 24/7 hoàn hảo.'
+      desc: 'Hoàn thiện hệ sinh thái 11 chi nhánh & cơ sở khắp Đồng Nai và TP.HCM, mang đến trải nghiệm dịch vụ xe toàn diện và cứu hộ 24/7 hoàn hảo.'
     }
   ];
 

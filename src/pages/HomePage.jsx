@@ -266,10 +266,10 @@ export default function HomePage() {
                 QUY MÔ HẠ TẦNG
               </div>
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-[1.3]">
-                Mạng Lưới 7 Chi Nhánh Kết Nối Vùng Trọng Điểm
+                Mạng Lưới 11 Chi Nhánh & Cơ Sở Kết Nối Vùng Trọng Điểm
               </h2>
               <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-                Hệ thống cơ sở của Kim Sơn Automobiles tọa lạc tại các vị trí chiến lược dọc theo trục kinh tế TP. Hồ Chí Minh - Đồng Nai (TP. Thủ Đức, Biên Hòa, Bửu Long, Trảng Dài, Long Thành, Nhơn Trạch, Long Khánh), sẵn sàng tiếp nhận và phục vụ với diện tích xưởng dịch vụ hàng nghìn mét vuông.
+                Hệ thống cơ sở của Kim Sơn Automobiles tọa lạc tại các vị trí chiến lược dọc theo trục kinh tế TP. Hồ Chí Minh - Đồng Nai (Biên Hòa, Long Khánh, Long Thành, Nhơn Trạch, Trảng Bom, Bình Thạnh, Thủ Đức), sẵn sàng tiếp nhận và phục vụ với diện tích xưởng dịch vụ hàng nghìn mét vuông.
               </p>
 
               <div className="space-y-2.5 pt-2">

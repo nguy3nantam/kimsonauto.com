@@ -53,7 +53,7 @@ export default function BookingModal({ isOpen, onClose, initialType = 'service',
           </div>
           <h3 className="text-2xl font-black tracking-tight">Kim Sơn Automobiles</h3>
           <p className="text-xs text-slate-400 mt-1">
-            Tiếp nhận và phục vụ nhanh chóng tại 7 chi nhánh trên toàn hệ thống.
+            Tiếp nhận và phục vụ nhanh chóng tại 11 chi nhánh & cơ sở trên toàn hệ thống.
           </p>
 
           {/* Mode Switch Tabs */}

@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { Phone, Mail, MapPin, Clock, Send, CheckCircle2, ShieldAlert, ChevronRight, Navigation } from 'lucide-react';
 import { branchesData } from '../data/branches';
-import { api } from '../services/api';
 
-export default function ContactPage() {
+export default function ContactPage({ onOpenBooking }) {
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState({
     name: '',
@@ -13,16 +12,11 @@ export default function ContactPage() {
     message: '',
   });
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (!form.name || !form.phone) {
       alert('Vui lòng nhập Họ tên và Số điện thoại!');
       return;
-    }
-    try {
-      await api.submitContact(form);
-    } catch (err) {
-      console.warn('Backend submission fallback:', err);
     }
     setSubmitted(true);
   };
@@ -37,7 +31,7 @@ export default function ContactPage() {
             Đồng Hành Cùng Bạn Mọi Lúc Mọi Nơi
           </h1>
           <p className="text-base text-slate-600">
-            Hệ thống 7 chi nhánh rộng khắp Đồng Nai và TP. Hồ Chí Minh luôn sẵn sàng phục vụ và giải quyết mọi nhu cầu của Quý khách.
+            Hệ thống 11 chi nhánh & cơ sở rộng khắp Đồng Nai và TP. Hồ Chí Minh luôn sẵn sàng phục vụ và giải quyết mọi nhu cầu của Quý khách.
           </p>
         </div>
 
@@ -83,10 +77,10 @@ export default function ContactPage() {
           </div>
         </div>
 
-        {/* 7 Branches Directory */}
+        {/* 11 Branches Directory */}
         <div>
           <div className="text-center max-w-2xl mx-auto mb-10">
-            <h2 className="text-2xl sm:text-3xl font-black text-slate-900">Danh Sách 7 Chi Nhánh Kim Sơn</h2>
+            <h2 className="text-2xl sm:text-3xl font-black text-slate-900">Danh Sách 11 Chi Nhánh & Cơ Sở Kim Sơn</h2>
             <p className="text-xs text-slate-500 mt-2">Bấm vào số điện thoại để gọi ngay hoặc bấm "Chỉ đường" để mở Google Maps.</p>
           </div>
 
