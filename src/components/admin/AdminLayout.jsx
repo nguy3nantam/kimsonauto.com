@@ -25,7 +25,9 @@ export default function AdminLayout() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Protect route check
+  const isAdmin = currentUser?.id === '1' || currentUser?.username === 'admin' || currentUser?.role === 'Super Admin' || currentUser?.role === 'Quản Trị Viên';
+
+  // Protect route check and role-based access
   useEffect(() => {
     const token = localStorage.getItem('kimson_admin_token');
     if (!token) {
@@ -35,12 +37,18 @@ export default function AdminLayout() {
     const userStr = localStorage.getItem('kimson_admin_user');
     if (userStr) {
       try {
-        setCurrentUser(JSON.parse(userStr));
+        const u = JSON.parse(userStr);
+        setCurrentUser(u);
+        const userIsAdmin = u?.id === '1' || u?.username === 'admin' || u?.role === 'Super Admin' || u?.role === 'Quản Trị Viên';
+        // Các user đăng ký chỉ được thấy thông báo và file dùng chung (/admin/portal)
+        if (!userIsAdmin && location.pathname !== '/admin/portal' && location.pathname !== '/admin') {
+          navigate('/admin/portal', { replace: true });
+        }
       } catch (e) {
         console.error(e);
       }
     }
-  }, [navigate]);
+  }, [navigate, location.pathname]);
 
   const handleLogout = () => {
     localStorage.removeItem('kimson_admin_token');
@@ -48,7 +56,7 @@ export default function AdminLayout() {
     navigate('/admin/login');
   };
 
-  const navItems = [
+  const adminNavItems = [
     { name: 'Thông Báo & File Dùng Chung', path: '/admin/portal', icon: FolderOpen },
     { name: 'Tổng Quan Hệ Sinh Thái', path: '/admin/dashboard', icon: LayoutDashboard },
     { name: 'Người Đăng Ký', path: '/admin/users', icon: Users },
@@ -58,6 +66,12 @@ export default function AdminLayout() {
     { name: 'Yêu Cầu Hợp Tác B2B', path: '/admin/contacts', icon: Mail },
     { name: 'Cài Đặt & Thông Tin', path: '/admin/settings', icon: Settings },
   ];
+
+  const userNavItems = [
+    { name: 'Thông Báo & File Dùng Chung', path: '/admin/portal', icon: FolderOpen },
+  ];
+
+  const navItems = isAdmin ? adminNavItems : userNavItems;
 
   const isActive = (path) => {
     if (path === '/admin/portal' && (location.pathname === '/admin/portal' || location.pathname === '/admin')) return true;
@@ -93,7 +107,9 @@ export default function AdminLayout() {
               </div>
               <div>
                 <span className="font-extrabold text-base tracking-tight text-white block">KIM SƠN</span>
-                <span className="text-[10px] font-bold text-primary-light uppercase tracking-widest block">ADMIN PORTAL</span>
+                <span className="text-[10px] font-bold text-primary-light uppercase tracking-widest block">
+                  {isAdmin ? 'ADMIN PORTAL' : 'MEMBER PORTAL'}
+                </span>
               </div>
             </Link>
 
@@ -108,7 +124,7 @@ export default function AdminLayout() {
           {/* Navigation Items */}
           <nav className="p-4 space-y-1.5">
             <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider px-3 mb-2">
-              Quản Trị Nội Dung
+              {isAdmin ? 'Quản Trị Hệ Sinh Thái' : 'Cổng Thông Tin Thành Viên'}
             </div>
             {navItems.map((item) => {
               const Icon = item.icon;
@@ -168,7 +184,7 @@ export default function AdminLayout() {
               <Menu size={24} />
             </button>
             <h2 className="text-lg sm:text-xl font-extrabold text-slate-900 tracking-tight">
-              Bảng Quản Trị Hệ Sinh Thái Kim Sơn
+              {isAdmin ? 'Bảng Quản Trị Hệ Sinh Thái Kim Sơn' : 'Cổng Thông Tin & File Dùng Chung'}
             </h2>
           </div>
 

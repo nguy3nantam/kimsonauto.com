@@ -95,7 +95,7 @@ export default function AdminPortalHub() {
     }
   };
 
-  const isAdmin = currentUser?.role === 'Super Admin' || currentUser?.role === 'Quản Trị Viên';
+  const isAdmin = currentUser?.id === '1' || currentUser?.username === 'admin' || currentUser?.role === 'Super Admin' || currentUser?.role === 'Quản Trị Viên';
 
   // -------------------------------------------------------------
   // Announcements Handlers
@@ -324,25 +324,27 @@ export default function AdminPortalHub() {
         </div>
 
         {/* Action Button for Admins */}
-        <div className="flex items-center gap-2">
-          {activeTab === 'announcements' ? (
-            <button
-              onClick={() => setIsAnnouncementModalOpen(true)}
-              className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary text-white text-xs font-bold rounded-xl shadow-glow transition-all"
-            >
-              <Plus size={16} />
-              <span>Đăng Thông Báo Mới</span>
-            </button>
-          ) : (
-            <button
-              onClick={() => setIsFileModalOpen(true)}
-              className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary text-white text-xs font-bold rounded-xl shadow-glow transition-all"
-            >
-              <Plus size={16} />
-              <span>Chia Sẻ File Tài Liệu Mới</span>
-            </button>
-          )}
-        </div>
+        {isAdmin && (
+          <div className="flex items-center gap-2">
+            {activeTab === 'announcements' ? (
+              <button
+                onClick={() => setIsAnnouncementModalOpen(true)}
+                className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary text-white text-xs font-bold rounded-xl shadow-glow transition-all"
+              >
+                <Plus size={16} />
+                <span>Đăng Thông Báo Mới</span>
+              </button>
+            ) : (
+              <button
+                onClick={() => setIsFileModalOpen(true)}
+                className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary text-white text-xs font-bold rounded-xl shadow-glow transition-all"
+              >
+                <Plus size={16} />
+                <span>Chia Sẻ File Tài Liệu Mới</span>
+              </button>
+            )}
+          </div>
+        )}
       </div>
 
       {/* ========================================================= */}

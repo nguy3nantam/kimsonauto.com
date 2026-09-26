@@ -25,6 +25,7 @@ export default function Navbar() {
   const [mounted, setMounted] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -32,13 +33,26 @@ export default function Navbar() {
     localStorage.removeItem('kimson_admin_token');
     localStorage.removeItem('kimson_admin_user');
     setIsLoggedIn(false);
+    setCurrentUser(null);
     navigate('/');
   };
 
   useEffect(() => {
     const token = localStorage.getItem('kimson_admin_token');
     setIsLoggedIn(!!token);
+    const userStr = localStorage.getItem('kimson_admin_user');
+    if (userStr) {
+      try {
+        setCurrentUser(JSON.parse(userStr));
+      } catch (e) {
+        console.error(e);
+      }
+    } else {
+      setCurrentUser(null);
+    }
   }, [location.pathname, isOpen]);
+
+  const isAdmin = currentUser?.id === '1' || currentUser?.username === 'admin' || currentUser?.role === 'Super Admin' || currentUser?.role === 'Quản Trị Viên';
 
   useEffect(() => {
     setMounted(true);
@@ -393,18 +407,18 @@ export default function Navbar() {
             {/* Dropdown Menu Tài Khoản (Đăng Nhập / Đăng Ký) khi rê chuột (Hover) */}
             <div className="relative group">
               <Link
-                to={isLoggedIn ? "/admin" : "/admin/login"}
+                to={isLoggedIn ? (isAdmin ? "/admin/dashboard" : "/admin/portal") : "/admin/login"}
                 className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold transition-all duration-300 shadow-xs ${
                   isLoggedIn
                     ? 'bg-emerald-50 text-emerald-700 hover:bg-emerald-600 hover:text-white border border-emerald-200'
                     : 'bg-primary-subtle text-primary hover:bg-primary hover:text-white border border-primary/20 hover:border-primary'
                 }`}
-                title={isLoggedIn ? "Đến bảng quản trị hệ thống" : "Tài khoản hệ thống"}
-                aria-label={isLoggedIn ? "Bảng quản trị" : "Tài khoản"}
+                title={isLoggedIn ? (isAdmin ? "Bảng quản trị hệ thống" : "Cổng thông tin & file dùng chung") : "Tài khoản hệ thống"}
+                aria-label={isLoggedIn ? "Cổng thành viên" : "Tài khoản"}
               >
                 <User size={13} className="shrink-0" />
                 <span className="hidden sm:inline-block">
-                  {isLoggedIn ? "Quản Trị" : "Đăng Nhập"}
+                  {isLoggedIn ? (isAdmin ? "Quản Trị" : "Cổng Nội Bộ") : "Đăng Nhập"}
                 </span>
                 <ChevronDown size={11} className="transition-transform duration-200 group-hover:rotate-180 opacity-70 shrink-0" />
               </Link>
@@ -449,19 +463,20 @@ export default function Navbar() {
                   ) : (
                     <>
                       <div className="px-3 py-2 bg-slate-50 rounded-xl mb-1 border border-slate-100">
-                        <div className="text-xs font-bold text-slate-900 leading-tight">Ban Quản Trị Kim Sơn</div>
-                        <div className="text-[10px] text-emerald-600 font-semibold flex items-center gap-1 mt-0.5">
-                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                          <span>Đang đăng nhập hệ thống</span>
+                        <div className="text-xs font-bold text-slate-900 leading-tight">
+                          {currentUser?.fullName || currentUser?.name || 'Thành Viên Kim Sơn'}
+                        </div>
+                        <div className="text-[10px] text-slate-500 font-semibold mt-0.5">
+                          {currentUser?.unit ? `${currentUser.unit} • ${currentUser.department}` : 'Đang đăng nhập hệ thống'}
                         </div>
                       </div>
 
                       <Link
-                        to="/admin"
+                        to={isAdmin ? "/admin/dashboard" : "/admin/portal"}
                         className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-slate-100 text-xs font-bold text-slate-700 hover:text-primary transition-all"
                       >
                         <ShieldCheck size={15} className="text-primary" />
-                        <span>Bảng Quản Trị Hệ Sinh Thái</span>
+                        <span>{isAdmin ? "Bảng Quản Trị CMS" : "Thông Báo & File Dùng Chung"}</span>
                       </Link>
 
                       <button
