@@ -6,6 +6,8 @@ import {
   Newspaper, 
   Mail, 
   Users, 
+  Building2,
+  Briefcase,
   CheckCircle2, 
   Clock, 
   ArrowUpRight,
@@ -21,23 +23,27 @@ export default function AdminDashboard() {
     totalNews: 3,
     totalContacts: 2,
     pendingContacts: 1,
+    totalUsers: 8,
     totalEngineers: 300,
     totalCustomers: 50000,
     satisfactionRate: '99%'
   });
   const [recentContacts, setRecentContacts] = useState([]);
+  const [recentUsers, setRecentUsers] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadData() {
       try {
-        const [statsData, contactsData] = await Promise.all([
+        const [statsData, contactsData, usersData] = await Promise.all([
           api.getStats().catch(() => null),
-          api.getContacts().catch(() => [])
+          api.getContacts().catch(() => []),
+          api.getUsers().catch(() => [])
         ]);
 
         if (statsData) setStats(statsData);
         if (contactsData) setRecentContacts(contactsData.slice(0, 5));
+        if (usersData) setRecentUsers(usersData.slice(0, 5));
       } catch (err) {
         console.error('Error loading dashboard:', err);
       } finally {
@@ -79,6 +85,14 @@ export default function AdminDashboard() {
       icon: Mail,
       color: 'from-amber-600 to-amber-700',
       link: '/admin/contacts'
+    },
+    {
+      title: 'Người Đăng Ký',
+      value: stats.totalUsers || 8,
+      desc: '8 đơn vị & 5 bộ phận',
+      icon: Users,
+      color: 'from-rose-600 to-rose-700',
+      link: '/admin/users'
     }
   ];
 
@@ -100,7 +114,7 @@ export default function AdminDashboard() {
       </div>
 
       {/* KPI Cards Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
         {kpis.map((kpi, idx) => {
           const Icon = kpi.icon;
           return (
@@ -191,6 +205,87 @@ export default function AdminDashboard() {
                     </td>
                     <td className="py-3.5 px-6 text-slate-400 text-[11px]">
                       {c.createdAt ? new Date(c.createdAt).toLocaleDateString('vi-VN') : 'Hôm nay'}
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* Recent Registered Users Section */}
+      <div className="bg-white rounded-2xl border border-slate-200/90 shadow-xs overflow-hidden">
+        <div className="p-6 border-b border-slate-100 flex items-center justify-between flex-wrap gap-4">
+          <div>
+            <h3 className="text-base font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
+              <span>Người Đăng Ký Hệ Thống Gần Đây</span>
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-primary/10 text-primary border border-primary/20">
+                {stats.totalUsers || 8} thành viên
+              </span>
+            </h3>
+            <p className="text-xs text-slate-500">
+              Nhân sự và thành viên đăng ký theo 8 Đơn Vị và 5 Bộ Phận trực thuộc
+            </p>
+          </div>
+          <Link
+            to="/admin/users"
+            className="text-xs font-bold text-primary hover:underline flex items-center gap-1"
+          >
+            Quản lý tất cả người đăng ký →
+          </Link>
+        </div>
+
+        <div className="overflow-x-auto">
+          <table className="w-full text-left text-xs">
+            <thead className="bg-slate-50 text-slate-500 uppercase tracking-wider text-[10px] border-b border-slate-100 font-bold">
+              <tr>
+                <th className="py-3 px-6">Họ và Tên</th>
+                <th className="py-3 px-6">Đơn Vị</th>
+                <th className="py-3 px-6">Bộ Phận</th>
+                <th className="py-3 px-6">Email / SĐT</th>
+                <th className="py-3 px-6">Ngày Đăng Ký</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100 text-slate-700">
+              {recentUsers.length === 0 ? (
+                <tr>
+                  <td colSpan="5" className="py-8 text-center text-slate-400">
+                    Chưa có thành viên đăng ký nào.
+                  </td>
+                </tr>
+              ) : (
+                recentUsers.map((u) => (
+                  <tr key={u.id} className="hover:bg-slate-50/80 transition-colors">
+                    <td className="py-3.5 px-6 font-semibold text-slate-900">
+                      <div className="flex items-center gap-2.5">
+                        <div className="w-7 h-7 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center font-bold text-[11px] border border-slate-200">
+                          {(u.fullName || u.name || 'U').charAt(0).toUpperCase()}
+                        </div>
+                        <div>
+                          <div>{u.fullName || u.name}</div>
+                          <div className="text-[10px] font-normal text-slate-400 font-mono">@{u.username}</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="py-3.5 px-6">
+                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[11px] font-semibold bg-slate-100 text-slate-800 border border-slate-200">
+                        <Building2 size={11} className="text-primary" />
+                        <span>{u.unit || 'Chưa thiết lập'}</span>
+                      </span>
+                    </td>
+                    <td className="py-3.5 px-6">
+                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[11px] font-semibold bg-blue-50 text-blue-700 border border-blue-200">
+                        <Briefcase size={11} />
+                        <span>{u.department || 'Chưa thiết lập'}</span>
+                      </span>
+                    </td>
+                    <td className="py-3.5 px-6 font-mono text-[11px]">
+                      <div>{u.email || '—'}</div>
+                      <div className="text-slate-400 text-[10px]">{u.phone || ''}</div>
+                    </td>
+                    <td className="py-3.5 px-6 text-slate-400 text-[11px]">
+                      {u.createdAt ? new Date(u.createdAt).toLocaleDateString('vi-VN') : 'Mặc định'}
                     </td>
                   </tr>
                 ))

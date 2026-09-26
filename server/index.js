@@ -34,24 +34,30 @@ app.post('/api/auth/login', async (req, res) => {
 });
 
 app.post('/api/auth/register', async (req, res) => {
-  const { username, password, name, email, phone } = req.body;
-  if (!username || !password || !name) {
+  const { username, password, fullName, name, email, phone, unit, department } = req.body;
+  const displayName = (fullName || name || '').trim();
+
+  if (!username || !password || !displayName) {
     return res.status(400).json({ error: 'Vui lòng điền họ tên, tên tài khoản và mật khẩu' });
   }
 
   const users = await readData('users') || [];
-  if (users.some(u => u.username.toLowerCase() === username.toLowerCase())) {
+  if (users.some(u => u.username.toLowerCase() === username.trim().toLowerCase())) {
     return res.status(400).json({ error: 'Tên tài khoản này đã được sử dụng' });
   }
 
   const newUser = {
     id: String(Date.now()),
-    username: username.trim(),
-    password,
-    name: name.trim(),
+    fullName: displayName,
+    name: displayName,
+    unit: (unit || 'VF Biên Hòa').trim(),
+    department: (department || 'Kinh Doanh').trim(),
     email: (email || '').trim(),
     phone: (phone || '').trim(),
-    role: 'Partner / Client',
+    username: username.trim(),
+    password,
+    role: 'Thành Viên',
+    status: 'active',
     createdAt: new Date().toISOString()
   };
 
@@ -76,6 +82,121 @@ app.get('/api/auth/me', async (req, res) => {
 });
 
 // ==========================================
+// 1.1 USERS & REGISTRATIONS MANAGEMENT API
+// ==========================================
+app.get('/api/users', async (req, res) => {
+  const { unit, department, search } = req.query;
+  const users = await readData('users') || [];
+  
+  let filtered = users.map(({ password: _, ...u }) => ({
+    ...u,
+    fullName: u.fullName || u.name || u.username,
+    unit: u.unit || (u.role === 'Super Admin' ? 'VF GF Q2' : 'VF Biên Hòa'),
+    department: u.department || (u.role === 'Super Admin' ? 'Ban Giám Đốc' : 'Kinh Doanh'),
+    status: u.status || 'active'
+  }));
+
+  if (unit && unit !== 'all') {
+    filtered = filtered.filter(u => u.unit === unit);
+  }
+
+  if (department && department !== 'all') {
+    filtered = filtered.filter(u => u.department === department);
+  }
+
+  if (search) {
+    const q = search.toLowerCase();
+    filtered = filtered.filter(u => 
+      (u.fullName && u.fullName.toLowerCase().includes(q)) ||
+      (u.username && u.username.toLowerCase().includes(q)) ||
+      (u.email && u.email.toLowerCase().includes(q)) ||
+      (u.phone && u.phone.includes(q)) ||
+      (u.unit && u.unit.toLowerCase().includes(q)) ||
+      (u.department && u.department.toLowerCase().includes(q))
+    );
+  }
+
+  res.json(filtered);
+});
+
+app.post('/api/users', async (req, res) => {
+  const { username, password, fullName, name, email, phone, unit, department, role, status } = req.body;
+  const displayName = (fullName || name || '').trim();
+
+  if (!username || !password || !displayName) {
+    return res.status(400).json({ error: 'Vui lòng điền họ tên, tên tài khoản và mật khẩu' });
+  }
+
+  const users = await readData('users') || [];
+  if (users.some(u => u.username.toLowerCase() === username.trim().toLowerCase())) {
+    return res.status(400).json({ error: 'Tên tài khoản này đã tồn tại' });
+  }
+
+  const newUser = {
+    id: String(Date.now()),
+    fullName: displayName,
+    name: displayName,
+    unit: (unit || 'VF Biên Hòa').trim(),
+    department: (department || 'Kinh Doanh').trim(),
+    email: (email || '').trim(),
+    phone: (phone || '').trim(),
+    username: username.trim(),
+    password,
+    role: role || 'Thành Viên',
+    status: status || 'active',
+    createdAt: new Date().toISOString()
+  };
+
+  users.push(newUser);
+  await writeData('users', users);
+
+  const { password: _, ...userProfile } = newUser;
+  res.status(201).json(userProfile);
+});
+
+app.put('/api/users/:id', async (req, res) => {
+  const { id } = req.params;
+  const users = await readData('users') || [];
+  const index = users.findIndex(u => u.id === id);
+
+  if (index === -1) {
+    return res.status(404).json({ error: 'Không tìm thấy người dùng' });
+  }
+
+  const existing = users[index];
+  const { password, ...updateData } = req.body;
+  
+  users[index] = {
+    ...existing,
+    ...updateData,
+    fullName: updateData.fullName || updateData.name || existing.fullName || existing.name,
+    password: password ? password : existing.password,
+    updatedAt: new Date().toISOString()
+  };
+
+  await writeData('users', users);
+  const { password: _, ...userProfile } = users[index];
+  res.json(userProfile);
+});
+
+app.delete('/api/users/:id', async (req, res) => {
+  const { id } = req.params;
+  if (id === '1') {
+    return res.status(403).json({ error: 'Không thể xóa tài khoản Quản Trị Viên Mặc Định' });
+  }
+
+  const users = await readData('users') || [];
+  const filtered = users.filter(u => u.id !== id);
+
+  if (filtered.length === users.length) {
+    return res.status(404).json({ error: 'Không tìm thấy người dùng' });
+  }
+
+  await writeData('users', filtered);
+  res.json({ message: 'Xóa người dùng thành công' });
+});
+
+// ==========================================
 // 2. DASHBOARD KPI STATS API
 // ==========================================
 app.get('/api/stats', async (req, res) => {
@@ -83,6 +204,7 @@ app.get('/api/stats', async (req, res) => {
   const branches = await readData('branches') || [];
   const news = await readData('news') || [];
   const contacts = await readData('contacts') || [];
+  const users = await readData('users') || [];
   const settings = await readData('settings') || {};
 
   const pendingContacts = contacts.filter(c => c.status === 'pending').length;
@@ -92,6 +214,7 @@ app.get('/api/stats', async (req, res) => {
     totalBranches: branches.length,
     totalNews: news.length,
     totalContacts: contacts.length,
+    totalUsers: users.length,
     pendingContacts,
     totalEngineers: settings.totalEngineers || 300,
     totalCustomers: settings.totalCustomers || 50000,

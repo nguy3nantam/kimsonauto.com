@@ -29,6 +29,12 @@ export const api = {
   register: (userData) => fetchApi('/api/auth/register', { method: 'POST', body: JSON.stringify(userData) }),
   getMe: () => fetchApi('/api/auth/me'),
 
+  // Users / Registrations
+  getUsers: (params = '') => fetchApi(`/api/users${params ? `?${params}` : ''}`),
+  createUser: (data) => fetchApi('/api/users', { method: 'POST', body: JSON.stringify(data) }),
+  updateUser: (id, data) => fetchApi(`/api/users/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
+  deleteUser: (id) => fetchApi(`/api/users/${id}`, { method: 'DELETE' }),
+
   // Stats
   getStats: () => fetchApi('/api/stats'),
 

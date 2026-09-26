@@ -24,6 +24,7 @@ import AdminPillars from './pages/admin/AdminPillars';
 import AdminBranches from './pages/admin/AdminBranches';
 import AdminNews from './pages/admin/AdminNews';
 import AdminContacts from './pages/admin/AdminContacts';
+import AdminUsers from './pages/admin/AdminUsers';
 import AdminSettings from './pages/admin/AdminSettings';
 
 // Scroll to top helper on route change
@@ -89,6 +90,7 @@ export default function App() {
           <Route path="branches" element={<AdminBranches />} />
           <Route path="news" element={<AdminNews />} />
           <Route path="contacts" element={<AdminContacts />} />
+          <Route path="users" element={<AdminUsers />} />
           <Route path="settings" element={<AdminSettings />} />
         </Route>
       </Routes>

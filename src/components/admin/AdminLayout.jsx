@@ -6,6 +6,7 @@ import {
   MapPin, 
   Newspaper, 
   Mail, 
+  Users,
   Settings, 
   LogOut, 
   ExternalLink, 
@@ -40,6 +41,7 @@ export default function AdminLayout() {
     { name: 'Mạng Lưới 11 Chi Nhánh', path: '/admin/branches', icon: MapPin },
     { name: 'Tin Tức & Thông Cáo', path: '/admin/news', icon: Newspaper },
     { name: 'Yêu Cầu Hợp Tác B2B', path: '/admin/contacts', icon: Mail },
+    { name: 'Người Đăng Ký', path: '/admin/users', icon: Users },
     { name: 'Cài Đặt & Thông Tin', path: '/admin/settings', icon: Settings },
   ];
 

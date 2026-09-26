@@ -10,9 +10,30 @@ import {
   Phone, 
   Mail, 
   UserPlus,
-  LogIn
+  LogIn,
+  Building2,
+  Briefcase
 } from 'lucide-react';
 import { api } from '../../services/api';
+
+export const UNIT_OPTIONS = [
+  'VF Biên Hòa',
+  'VF Bửu Long',
+  'VF Trảng Dài',
+  'VF Long Thành',
+  'VF Long Khánh',
+  'VF Tân Hiệp',
+  'VF Bình Thạnh',
+  'VF GF Q2'
+];
+
+export const DEPARTMENT_OPTIONS = [
+  'Kinh Doanh',
+  'Dịch Vụ',
+  'Kế Toán',
+  'Nhân Sự',
+  'Marketing'
+];
 
 export default function AdminLoginPage({ initialMode = 'login' }) {
   const location = useLocation();
@@ -23,6 +44,8 @@ export default function AdminLoginPage({ initialMode = 'login' }) {
   const [username, setUsername] = useState('admin');
   const [password, setPassword] = useState('kimson@2026');
   const [fullName, setFullName] = useState('');
+  const [unit, setUnit] = useState('VF Biên Hòa');
+  const [department, setDepartment] = useState('Kinh Doanh');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
@@ -63,9 +86,12 @@ export default function AdminLoginPage({ initialMode = 'login' }) {
         navigate('/admin');
       } else {
         const res = await api.register({
+          fullName,
           name: fullName,
           username,
           password,
+          unit,
+          department,
           phone,
           email
         });
@@ -150,24 +176,112 @@ export default function AdminLoginPage({ initialMode = 'login' }) {
             )}
 
             {mode === 'register' && (
-              <div>
-                <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
-                  Họ và Tên / Tên Doanh Nghiệp <span className="text-red-400">*</span>
-                </label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
-                    <User size={17} />
+              <>
+                <div>
+                  <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+                    Họ và Tên <span className="text-red-400">*</span>
+                  </label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
+                      <User size={17} />
+                    </div>
+                    <input
+                      type="text"
+                      required
+                      value={fullName}
+                      onChange={(e) => setFullName(e.target.value)}
+                      className="w-full pl-10 pr-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-white text-sm focus:outline-none focus:border-primary transition-colors"
+                      placeholder="Nguyễn Văn A"
+                    />
                   </div>
-                  <input
-                    type="text"
-                    required
-                    value={fullName}
-                    onChange={(e) => setFullName(e.target.value)}
-                    className="w-full pl-10 pr-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-white text-sm focus:outline-none focus:border-primary transition-colors"
-                    placeholder="Nguyễn Văn A"
-                  />
                 </div>
-              </div>
+
+                {/* Đơn Vị & Bộ Phận */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+                      Đơn Vị <span className="text-red-400">*</span>
+                    </label>
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
+                        <Building2 size={16} />
+                      </div>
+                      <select
+                        value={unit}
+                        onChange={(e) => setUnit(e.target.value)}
+                        className="w-full pl-9 pr-3 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-white text-xs sm:text-sm focus:outline-none focus:border-primary transition-colors cursor-pointer appearance-none"
+                      >
+                        {UNIT_OPTIONS.map((u) => (
+                          <option key={u} value={u} className="bg-slate-900 text-white">
+                            {u}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+                      Bộ Phận <span className="text-red-400">*</span>
+                    </label>
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
+                        <Briefcase size={16} />
+                      </div>
+                      <select
+                        value={department}
+                        onChange={(e) => setDepartment(e.target.value)}
+                        className="w-full pl-9 pr-3 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-white text-xs sm:text-sm focus:outline-none focus:border-primary transition-colors cursor-pointer appearance-none"
+                      >
+                        {DEPARTMENT_OPTIONS.map((d) => (
+                          <option key={d} value={d} className="bg-slate-900 text-white">
+                            {d}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Email & Phone */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+                      Email
+                    </label>
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
+                        <Mail size={16} />
+                      </div>
+                      <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        className="w-full pl-9 pr-3 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-white text-sm focus:outline-none focus:border-primary transition-colors"
+                        placeholder="email@kimsonauto.com"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+                      Số Điện Thoại
+                    </label>
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
+                        <Phone size={16} />
+                      </div>
+                      <input
+                        type="tel"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                        className="w-full pl-9 pr-3 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-white text-sm focus:outline-none focus:border-primary transition-colors"
+                        placeholder="0908 xxx xxx"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </>
             )}
 
             <div>
@@ -189,45 +303,7 @@ export default function AdminLoginPage({ initialMode = 'login' }) {
               </div>
             </div>
 
-            {mode === 'register' && (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
-                    Số Điện Thoại
-                  </label>
-                  <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
-                      <Phone size={16} />
-                    </div>
-                    <input
-                      type="tel"
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
-                      className="w-full pl-9 pr-3 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-white text-sm focus:outline-none focus:border-primary transition-colors"
-                      placeholder="0908 xxx xxx"
-                    />
-                  </div>
-                </div>
 
-                <div>
-                  <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
-                    Email
-                  </label>
-                  <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
-                      <Mail size={16} />
-                    </div>
-                    <input
-                      type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      className="w-full pl-9 pr-3 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-white text-sm focus:outline-none focus:border-primary transition-colors"
-                      placeholder="email@domain.com"
-                    />
-                  </div>
-                </div>
-              </div>
-            )}
 
             <div>
               <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
