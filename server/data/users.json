@@ -1,0 +1,10 @@
+[
+  {
+    "id": "1",
+    "username": "admin",
+    "password": "kimson@2026",
+    "name": "Ban Điều Hành Kim Sơn",
+    "role": "Super Admin",
+    "email": "admin@kimsonauto.com"
+  }
+]

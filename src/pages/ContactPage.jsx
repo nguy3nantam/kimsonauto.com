@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Phone, Mail, MapPin, Clock, Send, CheckCircle2, ShieldAlert, ChevronRight, Navigation } from 'lucide-react';
 import { branchesData } from '../data/branches';
+import { api } from '../services/api';
 
-export default function ContactPage({ onOpenBooking }) {
+export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState({
     name: '',
@@ -12,11 +13,16 @@ export default function ContactPage({ onOpenBooking }) {
     message: '',
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!form.name || !form.phone) {
       alert('Vui lòng nhập Họ tên và Số điện thoại!');
       return;
+    }
+    try {
+      await api.submitContact(form);
+    } catch (err) {
+      console.warn('Backend submission fallback:', err);
     }
     setSubmitted(true);
   };

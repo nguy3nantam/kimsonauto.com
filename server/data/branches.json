@@ -1,0 +1,58 @@
+[
+  {
+    "id": "hcm",
+    "name": "Trụ Sở Điều Hành & Trung Tâm TP. Hồ Chí Minh",
+    "role": "Trụ sở chính & Văn phòng điều hành hệ sinh thái",
+    "address": "Số 18 Đường Số 7, Phường An Phú, TP. Thủ Đức, TP. Hồ Chí Minh",
+    "hotline": "0908 123 456",
+    "features": ["Văn phòng tập đoàn", "Trung tâm trải nghiệm xe", "Ban điều phối dịch vụ"]
+  },
+  {
+    "id": "bien-hoa",
+    "name": "Tổ Hợp Dịch Vụ & Kỹ Thuật Biên Hòa",
+    "role": "Trung tâm kỹ thuật công nghệ cao trọng điểm",
+    "address": "Đại lộ Đồng Khởi, Phường Tân Hiệp, TP. Biên Hòa, Tỉnh Đồng Nai",
+    "hotline": "0908 123 457",
+    "features": ["Xưởng đại tu động cơ", "Phòng sơn sấy hồng ngoại", "Kho phụ tùng trung tâm"]
+  },
+  {
+    "id": "buu-long",
+    "name": "Chi Nhánh Kỹ Thuật Bửu Long",
+    "role": "Trạm dịch vụ nhanh & bảo dưỡng định kỳ",
+    "address": "Đường Huỳnh Văn Nghệ, Phường Bửu Long, TP. Biên Hòa, Tỉnh Đồng Nai",
+    "hotline": "0908 123 458",
+    "features": ["Bảo dưỡng nhanh 30 phút", "Detailing & Spa xe", "Thay nhớt chính hãng"]
+  },
+  {
+    "id": "trang-dai",
+    "name": "Chi Nhánh Kỹ Thuật Trảng Dài",
+    "role": "Trung tâm sửa chữa điện gầm & phụ kiện",
+    "address": "Đường Bùi Trọng Nghĩa, Phường Trảng Dài, TP. Biên Hòa, Tỉnh Đồng Nai",
+    "hotline": "0908 123 459",
+    "features": ["Hệ thống điều hòa ô tô", "Nâng cấp công nghệ lái", "Bảo dưỡng gầm máy"]
+  },
+  {
+    "id": "long-thanh",
+    "name": "Trung Tâm Dịch Vụ Cửa Ngõ Sân Bay Long Thành",
+    "role": "Tổ hợp tiếp nhận & Cứu hộ cao tốc",
+    "address": "Quốc Lộ 51, Thị Trấn Long Thành, Huyện Long Thành, Tỉnh Đồng Nai",
+    "hotline": "0908 123 460",
+    "features": ["Trạm cứu hộ cao tốc 24/7", "Xưởng dịch vụ quy mô 3.000m²", "Trạm sạc xe điện"]
+  },
+  {
+    "id": "nhon-trach",
+    "name": "Chi Nhánh Kỹ Thuật Nhơn Trạch",
+    "role": "Phục vụ cư dân & KCN Nhơn Trạch",
+    "address": "Đường Tôn Đức Thắng (Tỉnh Lộ 25B), Huyện Nhơn Trạch, Tỉnh Đồng Nai",
+    "hotline": "0908 123 461",
+    "features": ["Đồng sơn phục hồi xe", "Bảo dưỡng xe doanh nghiệp", "Cứu hộ lưu động"]
+  },
+  {
+    "id": "long-khanh",
+    "name": "Chi Nhánh Dịch Vụ Long Khánh",
+    "role": "Cửa ngõ miền Trung & Tây Nguyên kết nối",
+    "address": "Đường Hùng Vương, Phường Xuân Bình, TP. Long Khánh, Tỉnh Đồng Nai",
+    "hotline": "0908 123 462",
+    "features": ["Showroom trưng bày xe", "Trung tâm bảo dưỡng", "Chăm sóc xe chuyên nghiệp"]
+  }
+]

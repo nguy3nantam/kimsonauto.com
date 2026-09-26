@@ -1,0 +1,26 @@
+[
+  {
+    "id": "lead-1",
+    "name": "Nguyễn Hoàng Minh",
+    "company": "Tập đoàn Vận tải & Logistics Đông Nam",
+    "email": "minh.nguyen@dongnamlogistics.vn",
+    "phone": "0912 345 678",
+    "service": "Bảo dưỡng & Quản lý Đội xe Doanh nghiệp",
+    "branch": "bien-hoa",
+    "message": "Chúng tôi cần tư vấn hợp đồng bảo dưỡng trọn gói cho đội xe 45 chiếc bán tải và xe thương mại chạy tuyến Đồng Nai - TP.HCM.",
+    "status": "pending",
+    "createdAt": "2026-09-25T14:30:00.000Z"
+  },
+  {
+    "id": "lead-2",
+    "name": "Trần Thị Bích Ngọc",
+    "company": "Công ty CP Cơ khí & Thiết bị Ô tô Toàn Cầu",
+    "email": "bichngoc@globalauto.com.vn",
+    "phone": "0988 765 432",
+    "service": "Cung ứng Phụ tùng & Linh kiện Kỹ thuật",
+    "branch": "hcm",
+    "message": "Muốn đặt lịch hẹn thảo luận về việc trở thành nhà phân phối phụ tùng chính ngạch cấp 1 cho hệ thống xưởng Kim Sơn.",
+    "status": "contacted",
+    "createdAt": "2026-09-24T09:15:00.000Z"
+  }
+]
