@@ -7,11 +7,11 @@ export default function Navbar() {
   const [lang, setLang] = useState('VN');
   const location = useLocation();
 
-  // Navigation Links - Loại bỏ "Trang Chủ" (click logo để về trang chủ chuẩn Vingroup)
+  // Navigation Links chuẩn theo yêu cầu: Giới Thiệu, Hoạt Động, Hệ Thống, Phát Triển Bền Vững, Tin Tức, Liên Hệ
   const navLinks = [
-    { name: 'Về Kim Sơn', path: '/about' },
-    { name: 'Lĩnh Vực Hoạt Động', path: '/linh-vuc' },
-    { name: 'Mạng Lưới Chi Nhánh', path: '/mang-luoi' },
+    { name: 'Giới Thiệu', path: '/about' },
+    { name: 'Hoạt Động', path: '/linh-vuc' },
+    { name: 'Hệ Thống', path: '/mang-luoi' },
     { name: 'Phát Triển Bền Vững', path: '/phat-trien-ben-vung' },
     { name: 'Tin Tức', path: '/tin-tuc' },
     { name: 'Liên Hệ', path: '/lien-he' },
