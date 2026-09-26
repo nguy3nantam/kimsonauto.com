@@ -220,29 +220,29 @@ export default function Navbar() {
   );
 
   return (
-    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-100 shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
+    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-100 shadow-xs h-12 max-h-12 flex items-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full h-full">
+        <div className="flex justify-between items-center h-full">
           {/* Logo - Biểu tượng thuần không chữ */}
           <Link 
             to="/" 
-            className="flex items-center group py-2" 
+            className="flex items-center group shrink-0" 
             title="Trang Chủ - Kim Sơn Automobiles"
             aria-label="Trang Chủ"
           >
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary via-primary to-primary-dark flex items-center justify-center text-white shadow-glow group-hover:scale-105 group-hover:shadow-glow-lg transition-all duration-300 p-2.5">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary via-primary to-primary-dark flex items-center justify-center text-white shadow-xs group-hover:scale-105 group-hover:shadow-glow transition-all duration-200 p-1.5">
               <svg 
                 viewBox="0 0 48 48" 
                 fill="none" 
                 xmlns="http://www.w3.org/2000/svg" 
-                className="w-full h-full text-white drop-shadow-sm"
+                className="w-full h-full text-white drop-shadow-xs"
               >
                 <path 
                   d="M24 4L7 11V22C7 32.5 14.3 42.1 24 44.5C33.7 42.1 41 32.5 41 22V11L24 4Z" 
                   stroke="currentColor" 
                   strokeWidth="2.5" 
                   strokeLinecap="round" 
-                  strokeLinejoin="round"
+                  strokeLinejoin="round" 
                   className="opacity-90"
                 />
                 <path 
@@ -260,14 +260,14 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center space-x-1 xl:space-x-3">
+          <nav className="hidden lg:flex items-center space-x-1 xl:space-x-2">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
-                className={`px-3.5 py-2 rounded-lg text-sm font-semibold transition-all duration-200 ${
+                className={`px-3 py-1 rounded-md text-xs font-semibold transition-all duration-200 ${
                   isActive(link.path)
-                    ? 'text-primary bg-primary-subtle/60 font-bold'
+                    ? 'text-primary bg-primary-subtle/70 font-bold'
                     : 'text-slate-700 hover:text-primary hover:bg-slate-50'
                 }`}
               >
@@ -277,12 +277,12 @@ export default function Navbar() {
           </nav>
 
           {/* Phía bên phải: Chuyển đổi ngôn ngữ & Nút mở Offcanvas Menu */}
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
             {/* Language Switcher */}
-            <div className="hidden sm:flex items-center bg-slate-100 p-1 rounded-xl text-xs font-bold text-slate-600">
+            <div className="hidden sm:flex items-center bg-slate-100 p-0.5 rounded-lg text-[11px] font-bold text-slate-600">
               <button
                 onClick={() => setLang('VN')}
-                className={`px-2.5 py-1 rounded-lg transition-all ${
+                className={`px-2 py-0.5 rounded-md transition-all ${
                   lang === 'VN' ? 'bg-white text-primary shadow-xs' : 'hover:text-slate-900'
                 }`}
               >
@@ -290,7 +290,7 @@ export default function Navbar() {
               </button>
               <button
                 onClick={() => setLang('EN')}
-                className={`px-2.5 py-1 rounded-lg transition-all ${
+                className={`px-2 py-0.5 rounded-md transition-all ${
                   lang === 'EN' ? 'bg-white text-primary shadow-xs' : 'hover:text-slate-900'
                 }`}
               >
@@ -301,11 +301,11 @@ export default function Navbar() {
             {/* Nút kích hoạt Offcanvas Menu (cả Desktop & Mobile) */}
             <button
               onClick={() => setIsOpen(true)}
-              className="flex items-center gap-2 p-2 sm:px-3 sm:py-2 text-slate-700 hover:text-primary rounded-xl hover:bg-slate-100 transition-colors border border-transparent hover:border-slate-200"
+              className="flex items-center gap-1.5 px-2.5 py-1 text-slate-700 hover:text-primary rounded-lg hover:bg-slate-100 transition-colors border border-transparent hover:border-slate-200"
               title="Mở menu hệ sinh thái"
               aria-label="Mở menu"
             >
-              <Menu size={24} />
+              <Menu size={18} />
               <span className="hidden sm:inline-block text-xs font-bold uppercase tracking-wider text-slate-700">
                 Menu
               </span>
