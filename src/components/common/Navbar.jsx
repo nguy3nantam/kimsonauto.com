@@ -1,58 +1,48 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { 
-  Menu, 
-  X, 
-  ChevronRight, 
-  Building2, 
-  Layers, 
-  MapPin, 
-  Leaf, 
-  Newspaper, 
-  Mail 
-} from 'lucide-react';
+import { Menu, X, ChevronRight, Building2, Layers, MapPin, Leaf, Newspaper, Mail } from 'lucide-react';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [lang, setLang] = useState('VN');
   const location = useLocation();
 
-  // Navigation Links chuẩn: Giới Thiệu, Hoạt Động, Hệ Thống, Phát Triển Bền Vững, Tin Tức, Liên Hệ
+  // Danh mục menu đồng bộ chính xác: Giới Thiệu, Hoạt Động, Hệ Thống, Phát Triển Bền Vững, Tin Tức, Liên Hệ
   const navLinks = [
     { 
       name: 'Giới Thiệu', 
-      path: '/about',
-      desc: 'Lịch sử phát triển, tầm nhìn & giá trị cốt lõi',
+      path: '/about', 
+      desc: 'Lịch sử hình thành & giá trị cốt lõi',
       icon: Building2 
     },
     { 
       name: 'Hoạt Động', 
-      path: '/linh-vuc',
-      desc: '5 trụ cột dịch vụ kỹ thuật & công nghệ ô tô',
+      path: '/linh-vuc', 
+      desc: '5 trụ cột kỹ thuật & công nghệ ô tô',
       icon: Layers 
     },
     { 
       name: 'Hệ Thống', 
-      path: '/mang-luoi',
+      path: '/mang-luoi', 
       desc: 'Mạng lưới 7 cơ sở tại TP.HCM & Đồng Nai',
       icon: MapPin 
     },
     { 
       name: 'Phát Triển Bền Vững', 
-      path: '/phat-trien-ben-vung',
-      desc: 'Chiến lược chuyển đổi xanh & cam kết ESG',
+      path: '/phat-trien-ben-vung', 
+      desc: 'Chiến lược chuyển đổi xanh & chuẩn ESG',
       icon: Leaf 
     },
     { 
       name: 'Tin Tức', 
-      path: '/tin-tuc',
-      desc: 'Thông cáo báo chí & sự kiện hệ sinh thái',
+      path: '/tin-tuc', 
+      desc: 'Thông cáo báo chí & sự kiện tập đoàn',
       icon: Newspaper 
     },
     { 
       name: 'Liên Hệ', 
-      path: '/lien-he',
-      desc: 'Trụ sở điều hành & kết nối đối tác B2B',
+      path: '/lien-he', 
+      desc: 'Trụ sở điều hành & đối tác B2B',
       icon: Mail 
     },
   ];
@@ -64,12 +54,12 @@ export default function Navbar() {
     return false;
   };
 
-  // Close offcanvas on route change
+  // Đóng offcanvas khi chuyển trang
   useEffect(() => {
     setIsOpen(false);
   }, [location.pathname]);
 
-  // Handle body overflow lock & Escape key
+  // Khóa cuộn trang khi mở offcanvas và hỗ trợ phím Escape
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') setIsOpen(false);
@@ -92,11 +82,11 @@ export default function Navbar() {
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-100 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
-          {/* Logo - Biểu tượng thuần, hoàn toàn loại bỏ text */}
+          {/* Logo - Biểu tượng thuần không chữ */}
           <Link 
             to="/" 
             className="flex items-center group py-2" 
-            title="Trang Chủ - Kim Sơn Automobiles Ecosystem"
+            title="Trang Chủ - Kim Sơn Automobiles"
             aria-label="Trang Chủ"
           >
             <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary via-primary to-primary-dark flex items-center justify-center text-white shadow-glow group-hover:scale-105 group-hover:shadow-glow-lg transition-all duration-300 p-2.5">
@@ -106,7 +96,6 @@ export default function Navbar() {
                 xmlns="http://www.w3.org/2000/svg" 
                 className="w-full h-full text-white drop-shadow-sm"
               >
-                {/* Khung khiên công nghệ ô tô */}
                 <path 
                   d="M24 4L7 11V22C7 32.5 14.3 42.1 24 44.5C33.7 42.1 41 32.5 41 22V11L24 4Z" 
                   stroke="currentColor" 
@@ -115,13 +104,11 @@ export default function Navbar() {
                   strokeLinejoin="round"
                   className="opacity-90"
                 />
-                {/* Cánh chim khí động học tầng 1 */}
                 <path 
                   d="M24 12L33 19.5L24 27L15 19.5L24 12Z" 
                   fill="currentColor" 
                   className="opacity-95"
                 />
-                {/* Cánh chim khí động học tầng 2 */}
                 <path 
                   d="M24 24L31 29.5L24 35.5L17 29.5L24 24Z" 
                   fill="currentColor" 
@@ -148,7 +135,7 @@ export default function Navbar() {
             ))}
           </nav>
 
-          {/* Phía bên phải: Chuyển đổi ngôn ngữ VN | EN & Nút mở Offcanvas Menu */}
+          {/* Phía bên phải: Chuyển đổi ngôn ngữ & Nút mở Offcanvas Menu */}
           <div className="flex items-center gap-2 sm:gap-3">
             {/* Language Switcher */}
             <div className="hidden sm:flex items-center bg-slate-100 p-1 rounded-xl text-xs font-bold text-slate-600">
@@ -170,15 +157,15 @@ export default function Navbar() {
               </button>
             </div>
 
-            {/* Offcanvas Trigger Button (Hiển thị ở cả Desktop và Mobile) */}
+            {/* Nút kích hoạt Offcanvas Menu (cả Desktop & Mobile) */}
             <button
               onClick={() => setIsOpen(true)}
-              className="flex items-center gap-1.5 p-2 sm:px-3 sm:py-2 text-slate-700 hover:text-primary focus:outline-none rounded-xl hover:bg-slate-100 transition-colors"
+              className="flex items-center gap-2 p-2 sm:px-3 sm:py-2 text-slate-700 hover:text-primary rounded-xl hover:bg-slate-100 transition-colors border border-transparent hover:border-slate-200"
               title="Mở menu hệ sinh thái"
               aria-label="Mở menu"
             >
               <Menu size={24} />
-              <span className="hidden sm:inline-block text-xs font-bold uppercase tracking-wider text-slate-600">
+              <span className="hidden sm:inline-block text-xs font-bold uppercase tracking-wider text-slate-700">
                 Menu
               </span>
             </button>
@@ -186,7 +173,11 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Offcanvas Backdrop Blur Overlay */}
+      {/* ======================================================== */}
+      {/* OFFCANVAS MENU DRAWER                                    */}
+      {/* ======================================================== */}
+
+      {/* 1. Lớp phủ mờ (Backdrop Blur Overlay) */}
       <div 
         className={`fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50 transition-opacity duration-300 ${
           isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
@@ -195,9 +186,9 @@ export default function Navbar() {
         aria-hidden="true"
       />
 
-      {/* Offcanvas Drawer Panel */}
+      {/* 2. Ngăn kéo trượt (Offcanvas Drawer Panel) */}
       <div 
-        className={`fixed top-0 right-0 bottom-0 w-full sm:w-[420px] max-w-full bg-white z-50 shadow-2xl flex flex-col justify-between overflow-y-auto transform transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 right-0 bottom-0 w-full sm:w-[440px] max-w-full bg-white z-50 shadow-2xl flex flex-col justify-between overflow-y-auto transform transition-transform duration-300 ease-in-out ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
         role="dialog"
@@ -205,7 +196,7 @@ export default function Navbar() {
         aria-label="Menu Hệ Sinh Thái"
       >
         {/* Drawer Header */}
-        <div className="p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+        <div className="p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/60">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary via-primary to-primary-dark flex items-center justify-center text-white shadow-glow p-2">
               <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full text-white">
@@ -229,11 +220,12 @@ export default function Navbar() {
           </button>
         </div>
 
-        {/* Drawer Body - Navigation Items */}
-        <div className="p-6 space-y-1.5 flex-1">
+        {/* Drawer Body - Toàn bộ các mục đồng bộ như Header Menu */}
+        <div className="p-6 space-y-2 flex-1">
           <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-3 px-3">
-            Danh Mục Hệ Sinh Thái
+            Mục Lục Hệ Sinh Thái (Chuẩn Header)
           </div>
+
           {navLinks.map((link) => {
             const Icon = link.icon;
             const active = isActive(link.path);
@@ -249,10 +241,10 @@ export default function Navbar() {
                 }`}
               >
                 <div className="flex items-center gap-3.5">
-                  <div className={`w-9 h-9 rounded-xl flex items-center justify-center transition-colors shrink-0 ${
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-colors shrink-0 ${
                     active ? 'bg-primary text-white' : 'bg-slate-100 text-slate-500 group-hover:bg-primary-subtle group-hover:text-primary'
                   }`}>
-                    <Icon size={18} />
+                    <Icon size={19} />
                   </div>
                   <div>
                     <div className="text-sm font-bold leading-snug">{link.name}</div>
@@ -264,10 +256,10 @@ export default function Navbar() {
             );
           })}
 
-          {/* Corporate Ecosystem Highlight Card */}
+          {/* Card giới thiệu quy mô hệ sinh thái */}
           <div className="pt-6">
             <div className="bg-gradient-to-br from-slate-900 to-slate-950 text-white p-5 rounded-2xl border border-slate-800 space-y-2">
-              <span className="text-[10px] font-bold text-primary-light uppercase tracking-wider block">QUY MÔ VẬN HÀNH</span>
+              <span className="text-[10px] font-bold text-primary-light uppercase tracking-wider block">QUY MÔ TẬP ĐOÀN</span>
               <div className="text-xs font-semibold text-slate-200">5 Trụ Cột Chiến Lược • 7 Cơ Sở Trọng Điểm</div>
               <p className="text-[11px] text-slate-400 leading-relaxed">
                 Định vị tổ hợp kỹ thuật và công nghiệp ô tô đa lĩnh vực hàng đầu khu vực kinh tế trọng điểm phía Nam.
