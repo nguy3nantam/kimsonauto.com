@@ -17,10 +17,17 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [lang, setLang] = useState('VN');
   const [mounted, setMounted] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
     setMounted(true);
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 15);
+    };
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   // 6 mục menu chuẩn: Giới Thiệu, Hoạt Động, Hệ Thống, Phát Triển Bền Vững, Tin Tức, Liên Hệ
@@ -220,17 +227,23 @@ export default function Navbar() {
   );
 
   return (
-    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-100 shadow-xs h-12 max-h-12 flex items-center">
+    <header 
+      className={`sticky top-0 z-40 h-12 max-h-12 relative flex items-center transition-all duration-500 ease-in-out ${
+        isScrolled
+          ? 'bg-white/95 backdrop-blur-xl shadow-md border-b border-slate-200/80 text-slate-800'
+          : 'bg-gradient-to-r from-white/95 via-sky-50/75 via-blue-50/60 to-white/95 backdrop-blur-md border-b border-blue-100/50 text-slate-800 animate-header-gradient'
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full h-full">
         <div className="flex justify-between items-center h-full">
-          {/* Logo - Biểu tượng thuần không chữ */}
+          {/* Logo - Biểu tượng thuần không chữ với hiệu ứng chuyển màu */}
           <Link 
             to="/" 
             className="flex items-center group shrink-0" 
             title="Trang Chủ - Kim Sơn Automobiles"
             aria-label="Trang Chủ"
           >
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary via-primary to-primary-dark flex items-center justify-center text-white shadow-xs group-hover:scale-105 group-hover:shadow-glow transition-all duration-200 p-1.5">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary via-[#0284c7] to-[#4338ca] hover:from-primary-dark hover:to-primary flex items-center justify-center text-white shadow-xs group-hover:scale-105 group-hover:shadow-glow transition-all duration-500 p-1.5 animate-header-gradient">
               <svg 
                 viewBox="0 0 48 48" 
                 fill="none" 
@@ -259,16 +272,16 @@ export default function Navbar() {
             </div>
           </Link>
 
-          {/* Desktop Navigation Links */}
+          {/* Desktop Navigation Links với hiệu ứng hover chuyển màu gradient */}
           <nav className="hidden lg:flex items-center space-x-1 xl:space-x-2">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
-                className={`px-3 py-1 rounded-md text-xs font-semibold transition-all duration-200 ${
+                className={`px-3 py-1 rounded-md text-xs font-semibold transition-all duration-300 ${
                   isActive(link.path)
-                    ? 'text-primary bg-primary-subtle/70 font-bold'
-                    : 'text-slate-700 hover:text-primary hover:bg-slate-50'
+                    ? 'text-primary bg-gradient-to-r from-primary/15 via-primary-light/10 to-primary/15 font-bold shadow-xs'
+                    : 'text-slate-700 hover:text-primary hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary-light/10'
                 }`}
               >
                 {link.name}
@@ -298,10 +311,10 @@ export default function Navbar() {
               </button>
             </div>
 
-            {/* Nút kích hoạt Offcanvas Menu (cả Desktop & Mobile) */}
+            {/* Nút kích hoạt Offcanvas Menu với hiệu ứng chuyển màu khi hover */}
             <button
               onClick={() => setIsOpen(true)}
-              className="flex items-center gap-1.5 px-2.5 py-1 text-slate-700 hover:text-primary rounded-lg hover:bg-slate-100 transition-colors border border-transparent hover:border-slate-200"
+              className="flex items-center gap-1.5 px-2.5 py-1 text-slate-700 hover:text-primary rounded-lg hover:bg-gradient-to-r hover:from-slate-100 hover:to-blue-50/80 transition-all duration-300 border border-transparent hover:border-blue-200/60"
               title="Mở menu hệ sinh thái"
               aria-label="Mở menu"
             >
@@ -313,6 +326,13 @@ export default function Navbar() {
           </div>
         </div>
       </div>
+
+      {/* Hiệu ứng dải viền chuyển màu đa sắc động liên tục (Animated Gradient Color Shift Bar) */}
+      <div 
+        className={`absolute bottom-0 left-0 right-0 h-[2px] transition-all duration-500 pointer-events-none bg-gradient-to-r from-primary via-cyan-400 via-indigo-500 to-primary animate-border-gradient ${
+          isScrolled ? 'opacity-100 shadow-[0_1px_8px_rgba(0,98,210,0.35)]' : 'opacity-75'
+        }`} 
+      />
 
       {/* Render Offcanvas Drawer qua React Portal trực tiếp vào document.body để không bị chặn bởi backdrop-filter của header */}
       {mounted && createPortal(offcanvasDrawer, document.body)}
