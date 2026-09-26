@@ -28,13 +28,13 @@ export default function PillarsPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto">
-          <div className="inline-block text-xs font-bold text-primary uppercase tracking-widest border-b-2 border-primary pb-1 mb-3">
+          <div className="inline-block text-xs font-bold text-primary uppercase tracking-[0.15em] border-b-2 border-primary pb-1 mb-2.5">
             LĨNH VỰC HOẠT ĐỘNG
           </div>
-          <h1 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
+          <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-[1.3]">
             5 Trụ Cột Hoạt Động Cốt Lõi
           </h1>
-          <p className="text-slate-600 text-base mt-4">
+          <p className="text-slate-600 text-sm sm:text-base mt-3 leading-relaxed">
             Hệ sinh thái Kim Sơn Automobiles vận hành đồng bộ và bổ trợ lẫn nhau, tạo nên sức mạnh tổng hợp phục vụ trọn vẹn mọi nhu cầu về phương tiện ô tô.
           </p>
         </div>
@@ -74,12 +74,12 @@ export default function PillarsPage() {
                       {getPillarIcon(pillar.icon)}
                     </div>
                     <div>
-                      <span className="text-xs font-bold text-slate-400 uppercase tracking-widest block">{pillar.subtitle}</span>
-                      <h2 className="text-2xl sm:text-3xl font-black text-slate-900 leading-tight">{pillar.title}</h2>
+                      <span className="text-xs font-semibold text-primary uppercase tracking-wider block">{pillar.subtitle}</span>
+                      <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 leading-snug mt-0.5">{pillar.title}</h2>
                     </div>
                   </div>
 
-                  <p className="text-sm font-semibold text-primary italic">
+                  <p className="text-xs sm:text-sm font-medium text-slate-700 italic leading-relaxed">
                     "{pillar.tagline}"
                   </p>
 

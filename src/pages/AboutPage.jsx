@@ -8,13 +8,13 @@ export default function AboutPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto">
-          <div className="inline-block text-xs font-bold text-primary uppercase tracking-widest border-b-2 border-primary pb-1 mb-3">
+          <div className="inline-block text-xs font-bold text-primary uppercase tracking-[0.15em] border-b-2 border-primary pb-1 mb-2.5">
             HỒ SƠ TẬP ĐOÀN
           </div>
-          <h1 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
+          <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-[1.3]">
             Về Kim Sơn Automobiles Ecosystem
           </h1>
-          <p className="text-slate-600 text-base mt-4">
+          <p className="text-slate-600 text-sm sm:text-base mt-3 leading-relaxed">
             Hành trình hơn một thập kỷ kiên định xây dựng hệ sinh thái ô tô chuẩn mực, phụng sự người tiêu dùng và kiến tạo những giá trị bền vững cho ngành kỹ thuật ô tô Việt Nam.
           </p>
         </div>
@@ -23,8 +23,8 @@ export default function AboutPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-8">
             <div className="bg-white p-8 rounded-3xl border border-slate-200/90 shadow-sm space-y-3">
-              <span className="text-xs font-bold text-primary uppercase tracking-widest">TẦM NHÌN CHIẾN LƯỢC</span>
-              <h2 className="text-2xl font-black text-slate-900">
+              <span className="text-xs font-semibold text-primary uppercase tracking-wider">TẦM NHÌN CHIẾN LƯỢC</span>
+              <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 leading-snug">
                 Hệ Sinh Thái Ô Tô Dẫn Đầu Khu Vực Phía Nam
               </h2>
               <p className="text-sm text-slate-600 leading-relaxed">
@@ -33,8 +33,8 @@ export default function AboutPage() {
             </div>
 
             <div className="bg-white p-8 rounded-3xl border border-slate-200/90 shadow-sm space-y-3">
-              <span className="text-xs font-bold text-primary uppercase tracking-widest">SỨ MỆNH PHỤNG SỰ</span>
-              <h2 className="text-2xl font-black text-slate-900">
+              <span className="text-xs font-semibold text-primary uppercase tracking-wider">SỨ MỆNH PHỤNG SỰ</span>
+              <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 leading-snug">
                 Nâng Tầm Chuẩn Mực - An Tâm Vận Hành
               </h2>
               <p className="text-sm text-slate-600 leading-relaxed">
@@ -95,22 +95,22 @@ export default function AboutPage() {
         </div>
 
         {/* Milestone Timeline (2014 - 2026) */}
-        <div className="bg-slate-950 text-white rounded-3xl p-8 sm:p-14 border border-slate-900 shadow-2xl">
-          <div className="text-center max-w-2xl mx-auto mb-14">
-            <span className="text-xs font-bold text-amber-400 uppercase tracking-widest">HÀNH TRÌNH PHÁT TRIỂN</span>
-            <h3 className="text-3xl font-black mt-2">Dấu Ấn Lịch Sử 2014 - 2026</h3>
+        <div className="bg-slate-950 text-white rounded-3xl p-8 sm:p-12 border border-slate-900 shadow-2xl">
+          <div className="text-center max-w-2xl mx-auto mb-12">
+            <span className="text-xs font-semibold text-amber-400 uppercase tracking-widest">HÀNH TRÌNH PHÁT TRIỂN</span>
+            <h3 className="text-2xl sm:text-3xl font-extrabold text-white mt-1.5 leading-snug tracking-tight">Dấu Ấn Lịch Sử 2014 - 2026</h3>
           </div>
 
           <div className="space-y-8 relative before:absolute before:inset-0 before:left-4 md:before:left-1/2 before:w-0.5 before:bg-slate-800">
             {ecosystemData.historyMilestones.map((m, idx) => (
               <div key={m.year} className={`relative flex items-center gap-6 ${idx % 2 === 0 ? 'md:flex-row-reverse' : ''}`}>
                 <div className="hidden md:block w-1/2"></div>
-                <div className="z-10 w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-glow">
+                <div className="z-10 w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-glow font-display">
                   {idx + 1}
                 </div>
                 <div className="bg-slate-900/90 p-6 rounded-2xl border border-slate-800 flex-1">
-                  <span className="text-amber-400 font-black text-xl">{m.year}</span>
-                  <h4 className="text-base font-bold text-white mt-1 mb-2">{m.title}</h4>
+                  <span className="text-amber-400 font-extrabold text-xl font-display">{m.year}</span>
+                  <h4 className="text-base font-bold text-white mt-1 mb-1.5 leading-snug">{m.title}</h4>
                   <p className="text-xs text-slate-400 leading-relaxed">{m.description}</p>
                 </div>
               </div>

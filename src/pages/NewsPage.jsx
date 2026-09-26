@@ -10,13 +10,13 @@ export default function NewsPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto">
-          <div className="inline-block text-xs font-bold text-primary uppercase tracking-widest border-b-2 border-primary pb-1 mb-3">
+          <div className="inline-block text-xs font-bold text-primary uppercase tracking-[0.15em] border-b-2 border-primary pb-1 mb-2.5">
             TRUYỀN THÔNG & ĐỐI NGOẠI
           </div>
-          <h1 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
+          <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-[1.3]">
             Tin Tức & Thông Cáo Báo Chí
           </h1>
-          <p className="text-slate-600 text-base mt-4">
+          <p className="text-slate-600 text-sm sm:text-base mt-3 leading-relaxed">
             Cập nhật các hoạt động hợp tác chiến lược, thông cáo sự kiện và định hướng phát triển của Hệ sinh thái Kim Sơn Automobiles.
           </p>
         </div>

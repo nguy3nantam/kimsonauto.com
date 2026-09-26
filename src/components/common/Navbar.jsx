@@ -74,10 +74,10 @@ export default function Navbar() {
                 KS
               </div>
               <div className="flex flex-col">
-                <span className="text-xl sm:text-2xl font-black tracking-tight text-slate-900 group-hover:text-primary transition-colors leading-none">
+                <span className="text-xl sm:text-2xl font-extrabold tracking-tight text-slate-900 group-hover:text-primary transition-colors leading-none font-display">
                   KIM SƠN
                 </span>
-                <span className="text-[10px] tracking-widest text-slate-500 font-bold uppercase mt-1">
+                <span className="text-[9px] tracking-[0.22em] text-slate-500 font-semibold uppercase mt-1">
                   AUTOMOBILES ECOSYSTEM
                 </span>
               </div>
@@ -89,10 +89,10 @@ export default function Navbar() {
                 <Link
                   key={link.path}
                   to={link.path}
-                  className={`px-3.5 py-2 rounded-lg text-xs lg:text-sm font-bold uppercase tracking-wider transition-all duration-200 ${
+                  className={`px-3 py-2 text-xs lg:text-[13px] font-semibold tracking-wide transition-all duration-200 ${
                     isActive(link.path)
-                      ? 'text-primary border-b-2 border-primary rounded-none bg-transparent'
-                      : 'text-slate-700 hover:text-primary hover:bg-slate-50'
+                      ? 'text-primary border-b-2 border-primary rounded-none bg-transparent font-bold'
+                      : 'text-slate-700 hover:text-primary hover:bg-slate-50 rounded-lg'
                   }`}
                 >
                   {link.name}
@@ -104,7 +104,7 @@ export default function Navbar() {
             <div className="hidden lg:flex items-center gap-3">
               <Link
                 to="/linh-vuc"
-                className="bg-primary hover:bg-primary-dark text-white px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider shadow-sm transition-all hover:shadow-md flex items-center gap-1.5"
+                className="bg-primary hover:bg-primary-dark text-white px-5 py-2 rounded-full text-xs font-semibold tracking-wide shadow-sm transition-all hover:shadow-md flex items-center gap-1.5"
               >
                 <span>5 Trụ Cột Hoạt Động</span>
                 <ChevronRight size={14} />

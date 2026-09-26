@@ -8,13 +8,13 @@ export default function NetworkPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto">
-          <div className="inline-block text-xs font-bold text-primary uppercase tracking-widest border-b-2 border-primary pb-1 mb-3">
+          <div className="inline-block text-xs font-bold text-primary uppercase tracking-[0.15em] border-b-2 border-primary pb-1 mb-2.5">
             HẠ TẦNG & CƠ SỞ
           </div>
-          <h1 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
+          <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-[1.3]">
             Mạng Lưới Chi Nhánh & Trung Tâm Dịch Vụ
           </h1>
-          <p className="text-slate-600 text-base mt-4">
+          <p className="text-slate-600 text-sm sm:text-base mt-3 leading-relaxed">
             Hệ thống 7 cơ sở quy mô lớn trải dài tại các vị trí kinh tế chiến lược kết nối giữa TP. Hồ Chí Minh và tỉnh Đồng Nai, đảm bảo năng lực phục vụ kịp thời và chuẩn mực.
           </p>
         </div>

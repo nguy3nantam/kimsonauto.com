@@ -8,14 +8,14 @@ export default function SustainabilityPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 text-xs font-bold text-emerald-600 uppercase tracking-widest bg-emerald-100 px-4 py-1.5 rounded-full mb-3">
+          <div className="inline-flex items-center gap-2 text-xs font-semibold text-emerald-700 uppercase tracking-wider bg-emerald-50 px-4 py-1.5 rounded-full mb-2.5 border border-emerald-200">
             <Leaf size={14} />
             CHIẾN LƯỢC PHÁT TRIỂN BỀN VỮNG (ESG)
           </div>
-          <h1 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
+          <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-[1.3]">
             Trách Nhiệm Xã Hội & Chuyển Đổi Xanh
           </h1>
-          <p className="text-slate-600 text-base mt-4">
+          <p className="text-slate-600 text-sm sm:text-base mt-3 leading-relaxed">
             Tại Kim Sơn Automobiles, sự thành công của doanh nghiệp luôn song hành cùng trách nhiệm bảo vệ môi trường sinh thái và sự thịnh vượng của cộng đồng.
           </p>
         </div>
@@ -26,7 +26,7 @@ export default function SustainabilityPage() {
             <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold">
               <Leaf size={24} />
             </div>
-            <h3 className="text-xl font-black text-slate-900">Môi Trường (Environmental)</h3>
+            <h3 className="text-lg font-bold text-slate-900 leading-snug">Môi Trường (Environmental)</h3>
             <p className="text-xs text-slate-600 leading-relaxed">
               Tiên phong trang bị hạ tầng dịch vụ cho ô tô điện không phát thải. 100% chất thải nguy hại (dầu nhớt cũ, ắc quy chì, dung môi sơn) được thu gom và xử lý nghiêm ngặt bởi các đơn vị được Bộ Tài Nguyên & Môi Trường cấp phép.
             </p>

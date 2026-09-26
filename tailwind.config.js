@@ -24,7 +24,18 @@ export default {
         }
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        sans: ['"Be Vietnam Pro"', 'Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        display: ['"Plus Jakarta Sans"', '"Be Vietnam Pro"', 'sans-serif'],
+      },
+      lineHeight: {
+        'viet-tight': '1.25',
+        'viet-snug': '1.38',
+        'viet-normal': '1.6',
+        'viet-relaxed': '1.75',
+      },
+      letterSpacing: {
+        'viet-title': '-0.015em',
+        'viet-wide': '0.05em',
       },
       boxShadow: {
         'glow': '0 0 25px -5px rgba(220, 38, 38, 0.3)',
