@@ -23,8 +23,16 @@ if (!fs.existsSync(uploadsDir)) {
 app.use('/uploads', express.static(uploadsDir, { maxAge: '7d' }));
 
 // ==========================================
-// 1. AUTHENTICATION API
+// 1. AUTHENTICATION & ROLE MANAGEMENT API
 // ==========================================
+const normalizeRole = (role) => {
+  if (!role) return 'User';
+  const r = String(role).trim().toLowerCase();
+  if (r === 'admin' || r === 'super admin' || r === 'quản trị viên' || r === 'quan tri vien') return 'Admin';
+  if (r === 'leader' || r === 'trưởng bộ phận' || r === 'truong bo phan' || r === 'trưởng phòng' || r === 'truong phong' || r === 'quản lý') return 'Leader';
+  return 'User';
+};
+
 app.post('/api/auth/login', async (req, res) => {
   const { username, password } = req.body;
   const users = await readData('users') || [];
@@ -34,8 +42,14 @@ app.post('/api/auth/login', async (req, res) => {
     return res.status(401).json({ error: 'Tài khoản hoặc mật khẩu không chính xác' });
   }
 
-  // Safe user profile without password
-  const { password: _, ...userProfile } = user;
+  // Safe user profile with normalized role
+  const role = normalizeRole(user.role);
+  const { password: _, ...userProfile } = {
+    ...user,
+    role,
+    fullName: user.fullName || user.name || user.username
+  };
+
   res.json({
     token: `token_${Date.now()}_${user.id}`,
     user: userProfile
@@ -65,7 +79,7 @@ app.post('/api/auth/register', async (req, res) => {
     phone: (phone || '').trim(),
     username: username.trim(),
     password,
-    role: 'Thành Viên',
+    role: 'User',
     status: 'active',
     createdAt: new Date().toISOString()
   };
@@ -85,7 +99,10 @@ app.get('/api/auth/me', async (req, res) => {
   const users = await readData('users') || [];
   if (users.length > 0) {
     const { password: _, ...userProfile } = users[0];
-    return res.json(userProfile);
+    return res.json({
+      ...userProfile,
+      role: normalizeRole(userProfile.role)
+    });
   }
   res.status(404).json({ error: 'User not found' });
 });
@@ -94,16 +111,22 @@ app.get('/api/auth/me', async (req, res) => {
 // 1.1 USERS & REGISTRATIONS MANAGEMENT API
 // ==========================================
 app.get('/api/users', async (req, res) => {
-  const { unit, department, search } = req.query;
+  const { unit, department, search, requesterRole, requesterUnit, requesterDepartment } = req.query;
   const users = await readData('users') || [];
   
   let filtered = users.map(({ password: _, ...u }) => ({
     ...u,
     fullName: u.fullName || u.name || u.username,
-    unit: u.unit || (u.role === 'Super Admin' ? 'VF GF Q2' : 'VF Biên Hòa'),
-    department: u.department || (u.role === 'Super Admin' ? 'Ban Giám Đốc' : 'Kinh Doanh'),
+    role: normalizeRole(u.role),
+    unit: u.unit || 'VF Biên Hòa',
+    department: u.department || 'Kinh Doanh',
     status: u.status || 'active'
   }));
+
+  // Leader permission restriction: can only view users in their unit and department
+  if (requesterRole === 'Leader' && requesterUnit && requesterDepartment) {
+    filtered = filtered.filter(u => u.unit === requesterUnit && u.department === requesterDepartment);
+  }
 
   if (unit && unit !== 'all') {
     filtered = filtered.filter(u => u.unit === unit);
@@ -129,7 +152,7 @@ app.get('/api/users', async (req, res) => {
 });
 
 app.post('/api/users', async (req, res) => {
-  const { username, password, fullName, name, email, phone, unit, department, role, status } = req.body;
+  const { username, password, fullName, name, email, phone, unit, department, role, status, requesterRole, requesterUnit, requesterDepartment } = req.body;
   const displayName = (fullName || name || '').trim();
 
   if (!username || !password || !displayName) {
@@ -141,17 +164,28 @@ app.post('/api/users', async (req, res) => {
     return res.status(400).json({ error: 'Tên tài khoản này đã tồn tại' });
   }
 
+  let finalUnit = (unit || 'VF Biên Hòa').trim();
+  let finalDepartment = (department || 'Kinh Doanh').trim();
+  let finalRole = normalizeRole(role || 'User');
+
+  // Enforce Leader scope restrictions
+  if (requesterRole === 'Leader') {
+    if (requesterUnit) finalUnit = requesterUnit;
+    if (requesterDepartment) finalDepartment = requesterDepartment;
+    finalRole = 'User'; // Leader can only create subordinate Users
+  }
+
   const newUser = {
     id: String(Date.now()),
     fullName: displayName,
     name: displayName,
-    unit: (unit || 'VF Biên Hòa').trim(),
-    department: (department || 'Kinh Doanh').trim(),
+    unit: finalUnit,
+    department: finalDepartment,
     email: (email || '').trim(),
     phone: (phone || '').trim(),
     username: username.trim(),
     password,
-    role: role || 'Thành Viên',
+    role: finalRole,
     status: status || 'active',
     createdAt: new Date().toISOString()
   };
@@ -173,8 +207,28 @@ app.put('/api/users/:id', async (req, res) => {
   }
 
   const existing = users[index];
-  const { password, ...updateData } = req.body;
+  const { password, requesterRole, requesterUnit, requesterDepartment, ...updateData } = req.body;
   
+  // Protect Admin account from being modified by Leader
+  if (existing.id === '1' || existing.username === 'admin' || existing.role === 'Admin') {
+    if (requesterRole && requesterRole !== 'Admin') {
+      return res.status(403).json({ error: 'Bạn không có quyền chỉnh sửa tài khoản Quản Trị Viên' });
+    }
+  }
+
+  // Leader restriction: can only modify users in their own branch and department
+  if (requesterRole === 'Leader') {
+    if (existing.unit !== requesterUnit || existing.department !== requesterDepartment) {
+      return res.status(403).json({ error: 'Bạn chỉ có quyền quản lý nhân viên thuộc chi nhánh và bộ phận của mình' });
+    }
+    // Leader cannot change user's unit or department or promote role
+    updateData.unit = requesterUnit;
+    updateData.department = requesterDepartment;
+    updateData.role = 'User';
+  } else if (updateData.role) {
+    updateData.role = normalizeRole(updateData.role);
+  }
+
   users[index] = {
     ...existing,
     ...updateData,
@@ -190,17 +244,31 @@ app.put('/api/users/:id', async (req, res) => {
 
 app.delete('/api/users/:id', async (req, res) => {
   const { id } = req.params;
+  const { requesterRole, requesterUnit, requesterDepartment } = req.query;
+
   if (id === '1') {
     return res.status(403).json({ error: 'Không thể xóa tài khoản Quản Trị Viên Mặc Định' });
   }
 
   const users = await readData('users') || [];
-  const filtered = users.filter(u => u.id !== id);
+  const targetUser = users.find(u => u.id === id);
 
-  if (filtered.length === users.length) {
+  if (!targetUser) {
     return res.status(404).json({ error: 'Không tìm thấy người dùng' });
   }
 
+  if (targetUser.username === 'admin' || targetUser.role === 'Admin') {
+    return res.status(403).json({ error: 'Không thể xóa tài khoản Quản Trị Viên' });
+  }
+
+  // Leader restriction
+  if (requesterRole === 'Leader') {
+    if (targetUser.unit !== requesterUnit || targetUser.department !== requesterDepartment) {
+      return res.status(403).json({ error: 'Bạn chỉ có quyền xóa nhân viên thuộc chi nhánh và bộ phận của mình' });
+    }
+  }
+
+  const filtered = users.filter(u => u.id !== id);
   await writeData('users', filtered);
   res.json({ message: 'Xóa người dùng thành công' });
 });

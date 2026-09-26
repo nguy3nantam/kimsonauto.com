@@ -95,7 +95,30 @@ export default function AdminPortalHub() {
     }
   };
 
-  const isAdmin = currentUser?.id === '1' || currentUser?.username === 'admin' || currentUser?.role === 'Super Admin' || currentUser?.role === 'Quản Trị Viên';
+  const userRole = currentUser?.role || ((currentUser?.id === '1' || currentUser?.username === 'admin') ? 'Admin' : 'User');
+  const isAdmin = userRole === 'Admin' || currentUser?.id === '1' || currentUser?.username === 'admin';
+  const isLeader = userRole === 'Leader';
+  const isUser = !isAdmin && !isLeader;
+  const canCreate = isAdmin || isLeader;
+
+  const canDeleteAnnouncement = (item) => {
+    if (isAdmin) return true;
+    if (isLeader) {
+      return item.author === (currentUser?.fullName || currentUser?.name) ||
+             item.targetUnit === currentUser?.unit ||
+             item.targetDepartment === currentUser?.department;
+    }
+    return false;
+  };
+
+  const canDeleteFile = (item) => {
+    if (isAdmin) return true;
+    if (isLeader) {
+      return item.uploadedBy === (currentUser?.fullName || currentUser?.name) ||
+             item.targetDepartment === currentUser?.department;
+    }
+    return false;
+  };
 
   // -------------------------------------------------------------
   // Announcements Handlers
@@ -109,7 +132,9 @@ export default function AdminPortalHub() {
     try {
       await api.createAnnouncement({
         ...newAnnouncement,
-        author: currentUser?.fullName || currentUser?.name || 'Ban Quản Trị Kim Sơn'
+        targetUnit: isLeader ? (currentUser?.unit || 'VF Biên Hòa') : newAnnouncement.targetUnit,
+        targetDepartment: isLeader ? (currentUser?.department || 'Kinh Doanh') : newAnnouncement.targetDepartment,
+        author: currentUser?.fullName || currentUser?.name || (isLeader ? 'Leader Chi Nhánh' : 'Ban Quản Trị Kim Sơn')
       });
       setIsAnnouncementModalOpen(false);
       setNewAnnouncement({
@@ -117,8 +142,8 @@ export default function AdminPortalHub() {
         content: '',
         category: 'Chính Sách & Quy Định',
         priority: 'normal',
-        targetUnit: 'Tất Cả Đơn Vị',
-        targetDepartment: 'Tất Cả Bộ Phận',
+        targetUnit: isLeader ? (currentUser?.unit || 'VF Biên Hòa') : 'Tất Cả Đơn Vị',
+        targetDepartment: isLeader ? (currentUser?.department || 'Kinh Doanh') : 'Tất Cả Bộ Phận',
         pinned: false
       });
       loadData();
@@ -151,7 +176,8 @@ export default function AdminPortalHub() {
     try {
       await api.createSharedFile({
         ...newFile,
-        uploadedBy: currentUser?.fullName || currentUser?.name || 'Ban Quản Trị Kim Sơn'
+        targetDepartment: isLeader ? (currentUser?.department || 'Kinh Doanh') : newFile.targetDepartment,
+        uploadedBy: currentUser?.fullName || currentUser?.name || (isLeader ? 'Leader Chi Nhánh' : 'Ban Quản Trị Kim Sơn')
       });
       setIsFileModalOpen(false);
       setNewFile({
@@ -160,7 +186,7 @@ export default function AdminPortalHub() {
         category: 'Biểu Mẫu Hành Chính',
         fileSize: '2.5 MB',
         fileType: 'PDF',
-        targetDepartment: 'Tất Cả'
+        targetDepartment: isLeader ? (currentUser?.department || 'Kinh Doanh') : 'Tất Cả'
       });
       loadData();
     } catch (err) {
@@ -323,8 +349,8 @@ export default function AdminPortalHub() {
           </button>
         </div>
 
-        {/* Action Button for Admins */}
-        {isAdmin && (
+        {/* Action Button for Admins & Leaders */}
+        {canCreate && (
           <div className="flex items-center gap-2">
             {activeTab === 'announcements' ? (
               <button
@@ -332,7 +358,7 @@ export default function AdminPortalHub() {
                 className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary text-white text-xs font-bold rounded-xl shadow-glow transition-all"
               >
                 <Plus size={16} />
-                <span>Đăng Thông Báo Mới</span>
+                <span>{isLeader ? 'Đăng Thông Báo Chi Nhánh' : 'Đăng Thông Báo Mới'}</span>
               </button>
             ) : (
               <button
@@ -340,9 +366,17 @@ export default function AdminPortalHub() {
                 className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary text-white text-xs font-bold rounded-xl shadow-glow transition-all"
               >
                 <Plus size={16} />
-                <span>Chia Sẻ File Tài Liệu Mới</span>
+                <span>{isLeader ? 'Tải Lên Tệp Chi Nhánh' : 'Chia Sẻ File Tài Liệu Mới'}</span>
               </button>
             )}
+          </div>
+        )}
+
+        {/* Read-only indicator for regular User */}
+        {isUser && (
+          <div className="flex items-center gap-2 px-3.5 py-2 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-800 text-xs font-semibold">
+            <CheckCircle2 size={16} className="text-emerald-600" />
+            <span>Chế độ xem tài liệu & thông báo</span>
           </div>
         )}
       </div>
@@ -474,7 +508,7 @@ export default function AdminPortalHub() {
                         Đọc Chi Tiết →
                       </button>
 
-                      {isAdmin && (
+                      {canDeleteAnnouncement(item) && (
                         <button
                           onClick={() => handleDeleteAnnouncement(item.id)}
                           className="p-1.5 text-slate-400 hover:text-red-600 rounded-lg hover:bg-red-50 transition-colors"
@@ -568,7 +602,7 @@ export default function AdminPortalHub() {
                         <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-700 uppercase">
                           {file.fileType}
                         </span>
-                        {isAdmin && (
+                        {canDeleteFile(file) && (
                           <button
                             onClick={() => handleDeleteSharedFile(file.id)}
                             className="p-1 text-slate-300 hover:text-red-600 rounded-md transition-colors"

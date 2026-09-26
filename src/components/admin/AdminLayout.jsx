@@ -28,7 +28,10 @@ export default function AdminLayout() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const isAdmin = currentUser?.id === '1' || currentUser?.username === 'admin' || currentUser?.role === 'Super Admin' || currentUser?.role === 'Quản Trị Viên';
+  const userRole = currentUser?.role || ((currentUser?.id === '1' || currentUser?.username === 'admin') ? 'Admin' : 'User');
+  const isAdmin = userRole === 'Admin' || currentUser?.id === '1' || currentUser?.username === 'admin';
+  const isLeader = userRole === 'Leader';
+  const isUser = !isAdmin && !isLeader;
 
   // Protect route check and role-based access
   useEffect(() => {
@@ -42,10 +45,21 @@ export default function AdminLayout() {
       try {
         const u = JSON.parse(userStr);
         setCurrentUser(u);
-        const userIsAdmin = u?.id === '1' || u?.username === 'admin' || u?.role === 'Super Admin' || u?.role === 'Quản Trị Viên';
-        // Các user đăng ký chỉ được thấy thông báo và file dùng chung (/admin/portal)
-        if (!userIsAdmin && location.pathname !== '/admin/portal' && location.pathname !== '/admin') {
-          navigate('/admin/portal', { replace: true });
+        const role = u?.role || ((u?.id === '1' || u?.username === 'admin') ? 'Admin' : 'User');
+        const userIsAdmin = role === 'Admin' || u?.id === '1' || u?.username === 'admin';
+        const userIsLeader = role === 'Leader';
+
+        // User role: only allowed /admin/portal or /admin
+        if (!userIsAdmin && !userIsLeader) {
+          if (location.pathname !== '/admin/portal' && location.pathname !== '/admin') {
+            navigate('/admin/portal', { replace: true });
+          }
+        } 
+        // Leader role: only allowed /admin/portal, /admin, /admin/users
+        else if (userIsLeader) {
+          if (location.pathname !== '/admin/portal' && location.pathname !== '/admin' && location.pathname !== '/admin/users') {
+            navigate('/admin/portal', { replace: true });
+          }
         }
       } catch (e) {
         console.error(e);
@@ -63,7 +77,7 @@ export default function AdminLayout() {
     { name: 'Thông Báo & File Dùng Chung', path: '/admin/portal', icon: FolderOpen },
     { name: 'Tổng Quan Hệ Sinh Thái', path: '/admin/dashboard', icon: LayoutDashboard },
     { name: 'Slider Trang Chủ', path: '/admin/sliders', icon: ImageIcon },
-    { name: 'Người Đăng Ký', path: '/admin/users', icon: Users },
+    { name: 'Người Đăng Ký & Phân Quyền', path: '/admin/users', icon: Users },
     { name: 'Nền Tảng Phát Triển', path: '/admin/pillars', icon: Layers },
     { name: 'Mạng Lưới 11 Chi Nhánh', path: '/admin/branches', icon: MapPin },
     { name: 'Tin Tức & Thông Cáo', path: '/admin/news', icon: Newspaper },
@@ -71,15 +85,68 @@ export default function AdminLayout() {
     { name: 'Cài Đặt & Thông Tin', path: '/admin/settings', icon: Settings },
   ];
 
+  const leaderNavItems = [
+    { name: 'Thông Báo & File Dùng Chung', path: '/admin/portal', icon: FolderOpen },
+    { 
+      name: `Quản Lý User (${currentUser?.unit || 'Chi Nhánh'})`, 
+      path: '/admin/users', 
+      icon: Users 
+    },
+  ];
+
   const userNavItems = [
     { name: 'Thông Báo & File Dùng Chung', path: '/admin/portal', icon: FolderOpen },
   ];
 
-  const navItems = isAdmin ? adminNavItems : userNavItems;
+  const navItems = isAdmin ? adminNavItems : isLeader ? leaderNavItems : userNavItems;
 
   const isActive = (path) => {
     if (path === '/admin/portal' && (location.pathname === '/admin/portal' || location.pathname === '/admin')) return true;
     return location.pathname === path;
+  };
+
+  const getRoleBadge = () => {
+    if (isAdmin) {
+      return (
+        <span className="text-[9px] font-black text-amber-300 uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-500/20 border border-amber-400/40 shrink-0">
+          ADMIN
+        </span>
+      );
+    }
+    if (isLeader) {
+      return (
+        <span className="text-[9px] font-black text-blue-300 uppercase tracking-wider px-2 py-0.5 rounded-full bg-blue-500/20 border border-blue-400/40 shrink-0">
+          LEADER
+        </span>
+      );
+    }
+    return (
+      <span className="text-[9px] font-bold text-emerald-300 uppercase tracking-wider px-2 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400/40 shrink-0">
+        USER
+      </span>
+    );
+  };
+
+  const getHeaderRoleBadge = () => {
+    if (isAdmin) {
+      return (
+        <span className="px-2.5 py-1 rounded-full bg-amber-50 border border-amber-300 text-amber-700 text-xs font-black">
+          Toàn Quyền Admin
+        </span>
+      );
+    }
+    if (isLeader) {
+      return (
+        <span className="px-2.5 py-1 rounded-full bg-blue-50 border border-blue-300 text-blue-700 text-xs font-bold">
+          Leader: {currentUser?.unit || 'Chi Nhánh'}
+        </span>
+      );
+    }
+    return (
+      <span className="px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-300 text-emerald-700 text-xs font-bold">
+        User: Xem Thông Báo & File
+      </span>
+    );
   };
 
   return (
@@ -107,9 +174,7 @@ export default function AdminLayout() {
                 alt="Kim Sơn Automobiles" 
                 className="h-10 w-auto object-contain"
               />
-              <span className="text-[9px] font-bold text-primary-light uppercase tracking-wider px-2 py-0.5 rounded-full bg-primary/20 border border-primary/40 shrink-0">
-                {isAdmin ? 'ADMIN' : 'PORTAL'}
-              </span>
+              {getRoleBadge()}
             </Link>
 
             <button 
@@ -123,7 +188,7 @@ export default function AdminLayout() {
           {/* Navigation Items */}
           <nav className="p-4 space-y-1.5">
             <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider px-3 mb-2">
-              {isAdmin ? 'Quản Trị Hệ Sinh Thái' : 'Cổng Thông Tin Thành Viên'}
+              {isAdmin ? 'Quản Trị Hệ Sinh Thái' : isLeader ? 'Quản Trị Cấp Chi Nhánh' : 'Cổng Thông Tin Thành Viên'}
             </div>
             {navItems.map((item) => {
               const Icon = item.icon;
@@ -187,15 +252,14 @@ export default function AdminLayout() {
                 <img src={branding.logo || '/logo-kimson.png'} alt="Kim Sơn Automobiles" className="h-7 w-auto object-contain" />
               </Link>
               <h2 className="text-base sm:text-xl font-extrabold text-slate-900 tracking-tight">
-                {isAdmin ? 'Bảng Quản Trị Hệ Sinh Thái Kim Sơn' : 'Cổng Thông Tin & File Dùng Chung'}
+                {isAdmin ? 'Bảng Quản Trị Hệ Sinh Thái Kim Sơn' : isLeader ? `Quản Trị Chi Nhánh: ${currentUser?.unit || ''}` : 'Cổng Thông Tin & File Dùng Chung'}
               </h2>
             </div>
           </div>
 
           <div className="flex items-center gap-3">
-            <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-bold">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span>Hệ Thống Trực Tuyến</span>
+            <div className="hidden sm:block">
+              {getHeaderRoleBadge()}
             </div>
 
             <div className="flex items-center gap-2.5 pl-2 border-l border-slate-200">
@@ -208,7 +272,13 @@ export default function AdminLayout() {
                 </div>
               </div>
 
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary to-primary-dark text-white flex items-center justify-center font-black text-xs shadow-xs">
+              <div className={`w-9 h-9 rounded-xl flex items-center justify-center font-black text-xs shadow-xs ${
+                isAdmin 
+                  ? 'bg-gradient-to-br from-amber-500 to-amber-700 text-white'
+                  : isLeader 
+                  ? 'bg-gradient-to-br from-blue-600 to-blue-800 text-white'
+                  : 'bg-gradient-to-br from-emerald-600 to-emerald-800 text-white'
+              }`}>
                 {(currentUser?.fullName || currentUser?.name || 'K').charAt(0).toUpperCase()}
               </div>
             </div>

@@ -30,10 +30,36 @@ export const api = {
   getMe: () => fetchApi('/api/auth/me'),
 
   // Users / Registrations
-  getUsers: (params = '') => fetchApi(`/api/users${params ? `?${params}` : ''}`),
+  getUsers: (params = '') => {
+    let query = '';
+    if (typeof params === 'object' && params !== null) {
+      const sp = new URLSearchParams();
+      Object.entries(params).forEach(([k, v]) => {
+        if (v !== undefined && v !== null && v !== '') sp.append(k, v);
+      });
+      const s = sp.toString();
+      query = s ? `?${s}` : '';
+    } else if (typeof params === 'string' && params) {
+      query = params.startsWith('?') ? params : `?${params}`;
+    }
+    return fetchApi(`/api/users${query}`);
+  },
   createUser: (data) => fetchApi('/api/users', { method: 'POST', body: JSON.stringify(data) }),
   updateUser: (id, data) => fetchApi(`/api/users/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
-  deleteUser: (id) => fetchApi(`/api/users/${id}`, { method: 'DELETE' }),
+  deleteUser: (id, params = '') => {
+    let query = '';
+    if (typeof params === 'object' && params !== null) {
+      const sp = new URLSearchParams();
+      Object.entries(params).forEach(([k, v]) => {
+        if (v !== undefined && v !== null && v !== '') sp.append(k, v);
+      });
+      const s = sp.toString();
+      query = s ? `?${s}` : '';
+    } else if (typeof params === 'string' && params) {
+      query = params.startsWith('?') ? params : `?${params}`;
+    }
+    return fetchApi(`/api/users/${id}${query}`, { method: 'DELETE' });
+  },
 
   // Stats
   getStats: () => fetchApi('/api/stats'),

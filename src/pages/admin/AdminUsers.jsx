@@ -46,6 +46,7 @@ export default function AdminUsers() {
   const [filterUnit, setFilterUnit] = useState('all');
   const [filterDepartment, setFilterDepartment] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const [currentUser, setCurrentUser] = useState(null);
   
   // Modal state
   const [modalOpen, setModalOpen] = useState(false);
@@ -58,20 +59,40 @@ export default function AdminUsers() {
     department: 'Kinh Doanh',
     email: '',
     phone: '',
-    role: 'Thành Viên',
+    role: 'User',
     status: 'active'
   });
   const [formError, setFormError] = useState('');
   const [formSubmitting, setFormSubmitting] = useState(false);
 
   useEffect(() => {
-    loadUsers();
+    const userStr = localStorage.getItem('kimson_admin_user');
+    let u = null;
+    if (userStr) {
+      try {
+        u = JSON.parse(userStr);
+        setCurrentUser(u);
+      } catch (e) {
+        console.error(e);
+      }
+    }
+    loadUsers(u);
   }, []);
 
-  const loadUsers = async () => {
+  const userRole = currentUser?.role || ((currentUser?.id === '1' || currentUser?.username === 'admin') ? 'Admin' : 'User');
+  const isAdmin = userRole === 'Admin' || currentUser?.id === '1' || currentUser?.username === 'admin';
+  const isLeader = userRole === 'Leader';
+
+  const loadUsers = async (activeUser = currentUser) => {
     setLoading(true);
     try {
-      const data = await api.getUsers();
+      const isL = activeUser?.role === 'Leader';
+      const params = isL ? {
+        requesterRole: 'Leader',
+        requesterUnit: activeUser?.unit,
+        requesterDepartment: activeUser?.department
+      } : {};
+      const data = await api.getUsers(params);
       setUsers(data);
     } catch (err) {
       console.error('Failed to load users:', err);
@@ -86,11 +107,11 @@ export default function AdminUsers() {
       fullName: '',
       username: '',
       password: '',
-      unit: 'VF Biên Hòa',
-      department: 'Kinh Doanh',
+      unit: isLeader ? (currentUser?.unit || 'VF Biên Hòa') : 'VF Biên Hòa',
+      department: isLeader ? (currentUser?.department || 'Kinh Doanh') : 'Kinh Doanh',
       email: '',
       phone: '',
-      role: 'Thành Viên',
+      role: 'User',
       status: 'active'
     });
     setFormError('');
@@ -103,11 +124,11 @@ export default function AdminUsers() {
       fullName: user.fullName || user.name || '',
       username: user.username || '',
       password: '',
-      unit: user.unit || 'VF Biên Hòa',
-      department: user.department || 'Kinh Doanh',
+      unit: user.unit || (isLeader ? currentUser?.unit : 'VF Biên Hòa'),
+      department: user.department || (isLeader ? currentUser?.department : 'Kinh Doanh'),
       email: user.email || '',
       phone: user.phone || '',
-      role: user.role || 'Thành Viên',
+      role: user.role || 'User',
       status: user.status || 'active'
     });
     setFormError('');
@@ -131,12 +152,15 @@ export default function AdminUsers() {
         const updatePayload = {
           fullName: formData.fullName,
           name: formData.fullName,
-          unit: formData.unit,
-          department: formData.department,
+          unit: isLeader ? currentUser?.unit : formData.unit,
+          department: isLeader ? currentUser?.department : formData.department,
           email: formData.email,
           phone: formData.phone,
-          role: formData.role,
-          status: formData.status
+          role: isLeader ? 'User' : formData.role,
+          status: formData.status,
+          requesterRole: isLeader ? 'Leader' : 'Admin',
+          requesterUnit: currentUser?.unit,
+          requesterDepartment: currentUser?.department
         };
         if (formData.password) {
           updatePayload.password = formData.password;
@@ -152,12 +176,18 @@ export default function AdminUsers() {
         }
         await api.createUser({
           ...formData,
-          name: formData.fullName
+          name: formData.fullName,
+          unit: isLeader ? currentUser?.unit : formData.unit,
+          department: isLeader ? currentUser?.department : formData.department,
+          role: isLeader ? 'User' : formData.role,
+          requesterRole: isLeader ? 'Leader' : 'Admin',
+          requesterUnit: currentUser?.unit,
+          requesterDepartment: currentUser?.department
         });
       }
 
       handleCloseModal();
-      loadUsers();
+      loadUsers(currentUser);
     } catch (err) {
       setFormError(err.message || 'Thao tác không thành công');
     } finally {
@@ -166,15 +196,25 @@ export default function AdminUsers() {
   };
 
   const handleDelete = async (user) => {
-    if (user.id === '1') {
-      alert('Không thể xóa Quản Trị Viên Mặc Định của hệ thống!');
+    if (user.id === '1' || user.username === 'admin' || user.role === 'Admin') {
+      alert('Không thể xóa Quản Trị Viên hệ thống!');
+      return;
+    }
+
+    if (isLeader && (user.unit !== currentUser?.unit || user.department !== currentUser?.department)) {
+      alert('Bạn chỉ có quyền quản lý nhân viên thuộc chi nhánh và bộ phận của mình!');
       return;
     }
 
     if (window.confirm(`Bạn có chắc chắn muốn xóa thành viên "${user.fullName || user.name}"?`)) {
       try {
-        await api.deleteUser(user.id);
-        loadUsers();
+        const deleteParams = isLeader ? {
+          requesterRole: 'Leader',
+          requesterUnit: currentUser?.unit,
+          requesterDepartment: currentUser?.department
+        } : {};
+        await api.deleteUser(user.id, deleteParams);
+        loadUsers(currentUser);
       } catch (err) {
         alert('Lỗi khi xóa người dùng: ' + err.message);
       }
@@ -183,6 +223,12 @@ export default function AdminUsers() {
 
   // Filter logic
   const filteredUsers = users.filter((u) => {
+    // If Leader, only show users belonging to Leader's unit & department
+    if (isLeader) {
+      if (currentUser?.unit && u.unit !== currentUser.unit) return false;
+      if (currentUser?.department && u.department !== currentUser.department) return false;
+    }
+
     const matchesUnit = filterUnit === 'all' || u.unit === filterUnit;
     const matchesDept = filterDepartment === 'all' || u.department === filterDepartment;
     const q = searchQuery.toLowerCase();
@@ -229,25 +275,54 @@ export default function AdminUsers() {
 
   return (
     <div className="space-y-6">
+      {/* Leader Permission Scope Banner */}
+      {isLeader && (
+        <div className="bg-gradient-to-r from-blue-900 via-slate-900 to-indigo-950 text-white rounded-3xl p-5 sm:p-6 shadow-md border border-blue-700/60 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-2xl bg-blue-500/20 border border-blue-400/40 flex items-center justify-center text-blue-300 shrink-0">
+              <ShieldCheck size={26} />
+            </div>
+            <div>
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-blue-500/30 text-blue-200 text-[10px] font-bold uppercase tracking-wider mb-1 border border-blue-400/30">
+                Phân Quyền Leader Chi Nhánh
+              </div>
+              <h2 className="text-lg sm:text-xl font-black text-white">
+                Phạm Vi Quản Lý: {currentUser?.unit || 'Chi Nhánh'} — Bộ Phận: {currentUser?.department || 'Bộ Phận'}
+              </h2>
+              <p className="text-xs text-blue-200/80 mt-1">
+                Leader có quyền xem, tạo mới và quản lý các tài khoản nhân viên (Role User) thuộc chi nhánh & bộ phận được giao.
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 self-start sm:self-center shrink-0">
+            <span className="px-3.5 py-1.5 rounded-xl bg-blue-500/20 text-blue-200 border border-blue-400/40 text-xs font-bold">
+              {filteredUsers.length} Nhân sự trực thuộc
+            </span>
+          </div>
+        </div>
+      )}
+
       {/* Header & Page Title */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-2xl font-black text-slate-900 tracking-tight">
-              Quản Lý Người Đăng Ký Hệ Thống
+              {isLeader ? `Quản Lý Nhân Viên: ${currentUser?.unit || ''}` : 'Quản Lý Người Đăng Ký Hệ Thống'}
             </h1>
             <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-primary/10 text-primary border border-primary/20">
-              {users.length} thành viên
+              {filteredUsers.length} {isLeader ? 'nhân viên' : 'thành viên'}
             </span>
           </div>
           <p className="text-xs sm:text-sm text-slate-500 mt-1">
-            Theo dõi và phân quyền danh sách đăng ký theo 8 Đơn Vị và 5 Bộ Phận trực thuộc Kim Sơn
+            {isLeader 
+              ? `Danh sách nhân sự thuộc ${currentUser?.unit || 'Chi Nhánh'} - ${currentUser?.department || 'Bộ Phận'}`
+              : 'Theo dõi và phân quyền danh sách đăng ký theo 8 Đơn Vị và 5 Bộ Phận trực thuộc Kim Sơn'}
           </p>
         </div>
 
         <div className="flex items-center gap-2.5">
           <button
-            onClick={loadUsers}
+            onClick={() => loadUsers(currentUser)}
             disabled={loading}
             className="p-2.5 bg-white border border-slate-200 rounded-xl text-slate-600 hover:text-primary hover:border-primary transition-colors shadow-xs"
             title="Tải lại danh sách"
@@ -260,41 +335,43 @@ export default function AdminUsers() {
             className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary text-white text-xs font-bold rounded-xl shadow-glow transition-all"
           >
             <Plus size={16} />
-            <span>Thêm Thành Viên Mới</span>
+            <span>{isLeader ? 'Thêm Nhân Viên Chi Nhánh' : 'Thêm Thành Viên Mới'}</span>
           </button>
         </div>
       </div>
 
-      {/* KPI Distribution Cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5">
-        {DEPARTMENT_OPTIONS.map((dept) => {
-          const count = deptCounts[dept] || 0;
-          return (
-            <div 
-              key={dept} 
-              onClick={() => setFilterDepartment(filterDepartment === dept ? 'all' : dept)}
-              className={`p-4 rounded-2xl border transition-all cursor-pointer ${
-                filterDepartment === dept 
-                  ? 'bg-slate-900 text-white border-slate-800 shadow-md ring-2 ring-primary/40' 
-                  : 'bg-white hover:bg-slate-50/80 border-slate-200/90 shadow-xs'
-              }`}
-            >
-              <div className="flex items-center justify-between mb-2">
-                <span className={`text-[10px] font-bold uppercase tracking-wider ${filterDepartment === dept ? 'text-primary-light' : 'text-slate-400'}`}>
-                  Bộ phận
-                </span>
-                <Briefcase size={14} className={filterDepartment === dept ? 'text-primary-light' : 'text-slate-400'} />
+      {/* KPI Distribution Cards (Admin only) */}
+      {isAdmin && (
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5">
+          {DEPARTMENT_OPTIONS.map((dept) => {
+            const count = deptCounts[dept] || 0;
+            return (
+              <div 
+                key={dept} 
+                onClick={() => setFilterDepartment(filterDepartment === dept ? 'all' : dept)}
+                className={`p-4 rounded-2xl border transition-all cursor-pointer ${
+                  filterDepartment === dept 
+                    ? 'bg-slate-900 text-white border-slate-800 shadow-md ring-2 ring-primary/40' 
+                    : 'bg-white hover:bg-slate-50/80 border-slate-200/90 shadow-xs'
+                }`}
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <span className={`text-[10px] font-bold uppercase tracking-wider ${filterDepartment === dept ? 'text-primary-light' : 'text-slate-400'}`}>
+                    Bộ phận
+                  </span>
+                  <Briefcase size={14} className={filterDepartment === dept ? 'text-primary-light' : 'text-slate-400'} />
+                </div>
+                <div className={`text-xl font-black tracking-tight ${filterDepartment === dept ? 'text-white' : 'text-slate-900'}`}>
+                  {count}
+                </div>
+                <div className={`text-xs font-bold mt-0.5 truncate ${filterDepartment === dept ? 'text-slate-200' : 'text-slate-700'}`}>
+                  {dept}
+                </div>
               </div>
-              <div className={`text-xl font-black tracking-tight ${filterDepartment === dept ? 'text-white' : 'text-slate-900'}`}>
-                {count}
-              </div>
-              <div className={`text-xs font-bold mt-0.5 truncate ${filterDepartment === dept ? 'text-slate-200' : 'text-slate-700'}`}>
-                {dept}
-              </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
+      )}
 
       {/* Search & Filter Toolbar */}
       <div className="bg-white p-4 rounded-2xl border border-slate-200/90 shadow-xs flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
@@ -312,39 +389,50 @@ export default function AdminUsers() {
 
         {/* Filter Controls */}
         <div className="flex flex-wrap sm:flex-nowrap items-center gap-2.5">
-          {/* Đơn Vị Filter */}
-          <div className="flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-1.5 w-full sm:w-auto">
-            <Building2 size={14} className="text-slate-400 shrink-0" />
-            <select
-              value={filterUnit}
-              onChange={(e) => setFilterUnit(e.target.value)}
-              className="bg-transparent text-xs font-bold text-slate-700 focus:outline-none cursor-pointer w-full"
-            >
-              <option value="all">Tất cả đơn vị ({users.length})</option>
-              {UNIT_OPTIONS.map((u) => (
-                <option key={u} value={u}>
-                  {u} ({unitCounts[u] || 0})
-                </option>
-              ))}
-            </select>
-          </div>
+          {/* Admin Filters */}
+          {isAdmin ? (
+            <>
+              {/* Đơn Vị Filter */}
+              <div className="flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-1.5 w-full sm:w-auto">
+                <Building2 size={14} className="text-slate-400 shrink-0" />
+                <select
+                  value={filterUnit}
+                  onChange={(e) => setFilterUnit(e.target.value)}
+                  className="bg-transparent text-xs font-bold text-slate-700 focus:outline-none cursor-pointer w-full"
+                >
+                  <option value="all">Tất cả đơn vị ({users.length})</option>
+                  {UNIT_OPTIONS.map((u) => (
+                    <option key={u} value={u}>
+                      {u} ({unitCounts[u] || 0})
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-          {/* Bộ Phận Filter */}
-          <div className="flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-1.5 w-full sm:w-auto">
-            <Briefcase size={14} className="text-slate-400 shrink-0" />
-            <select
-              value={filterDepartment}
-              onChange={(e) => setFilterDepartment(e.target.value)}
-              className="bg-transparent text-xs font-bold text-slate-700 focus:outline-none cursor-pointer w-full"
-            >
-              <option value="all">Tất cả bộ phận</option>
-              {DEPARTMENT_OPTIONS.map((d) => (
-                <option key={d} value={d}>
-                  {d} ({deptCounts[d] || 0})
-                </option>
-              ))}
-            </select>
-          </div>
+              {/* Bộ Phận Filter */}
+              <div className="flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-1.5 w-full sm:w-auto">
+                <Briefcase size={14} className="text-slate-400 shrink-0" />
+                <select
+                  value={filterDepartment}
+                  onChange={(e) => setFilterDepartment(e.target.value)}
+                  className="bg-transparent text-xs font-bold text-slate-700 focus:outline-none cursor-pointer w-full"
+                >
+                  <option value="all">Tất cả bộ phận</option>
+                  {DEPARTMENT_OPTIONS.map((d) => (
+                    <option key={d} value={d}>
+                      {d} ({deptCounts[d] || 0})
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </>
+          ) : (
+            /* Leader Scope Indicator */
+            <div className="flex items-center gap-2 px-3 py-1.5 bg-blue-50 border border-blue-200 rounded-xl text-xs font-bold text-blue-800">
+              <Building2 size={14} className="text-blue-600" />
+              <span>{currentUser?.unit} • {currentUser?.department}</span>
+            </div>
+          )}
 
           {(filterUnit !== 'all' || filterDepartment !== 'all' || searchQuery) && (
             <button
@@ -461,9 +549,22 @@ export default function AdminUsers() {
 
                       {/* Vai Trò */}
                       <td className="py-3.5 px-5">
-                        <span className="text-xs font-semibold text-slate-700">
-                          {user.role || 'Thành Viên'}
-                        </span>
+                        {user.role === 'Admin' || isDefaultAdmin ? (
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-black bg-amber-50 text-amber-800 border border-amber-300">
+                            <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+                            <span>Admin</span>
+                          </span>
+                        ) : user.role === 'Leader' ? (
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-blue-50 text-blue-800 border border-blue-300">
+                            <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
+                            <span>Leader</span>
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-emerald-50 text-emerald-800 border border-emerald-300">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                            <span>User</span>
+                          </span>
+                        )}
                       </td>
 
                       {/* Ngày Tạo */}
@@ -479,15 +580,17 @@ export default function AdminUsers() {
                       {/* Actions */}
                       <td className="py-3.5 px-5 text-right whitespace-nowrap">
                         <div className="flex items-center justify-end gap-1.5">
-                          <button
-                            onClick={() => handleOpenEditModal(user)}
-                            className="p-1.5 text-slate-400 hover:text-primary hover:bg-slate-100 rounded-lg transition-colors"
-                            title="Chỉnh sửa thông tin"
-                          >
-                            <Edit3 size={15} />
-                          </button>
+                          {(!isLeader || (user.role !== 'Admin' && !isDefaultAdmin)) && (
+                            <button
+                              onClick={() => handleOpenEditModal(user)}
+                              className="p-1.5 text-slate-400 hover:text-primary hover:bg-slate-100 rounded-lg transition-colors"
+                              title="Chỉnh sửa thông tin"
+                            >
+                              <Edit3 size={15} />
+                            </button>
+                          )}
 
-                          {!isDefaultAdmin && (
+                          {!isDefaultAdmin && user.role !== 'Admin' && (!isLeader || user.role === 'User') && (
                             <button
                               onClick={() => handleDelete(user)}
                               className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
@@ -554,47 +657,67 @@ export default function AdminUsers() {
               </div>
 
               {/* Unit & Department Dropdowns */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-                    Đơn Vị <span className="text-red-500">*</span>
-                  </label>
-                  <div className="relative">
-                    <Building2 size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
-                    <select
-                      value={formData.unit}
-                      onChange={(e) => setFormData({ ...formData, unit: e.target.value })}
-                      className="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm font-semibold text-slate-800 focus:outline-none focus:border-primary cursor-pointer"
-                    >
-                      {UNIT_OPTIONS.map((u) => (
-                        <option key={u} value={u}>
-                          {u}
-                        </option>
-                      ))}
-                    </select>
+              {isLeader ? (
+                <div className="p-3.5 bg-blue-50/80 border border-blue-200 rounded-2xl flex items-center justify-between">
+                  <div className="space-y-0.5">
+                    <span className="text-[10px] uppercase font-bold text-blue-600 tracking-wider">
+                      Phạm Vi Chi Nhánh & Bộ Phận
+                    </span>
+                    <div className="text-xs font-bold text-blue-950 flex items-center gap-2">
+                      <Building2 size={14} className="text-blue-600" />
+                      <span>{currentUser?.unit || 'VF Biên Hòa'}</span>
+                      <span className="text-blue-300">•</span>
+                      <Briefcase size={14} className="text-blue-600" />
+                      <span>{currentUser?.department || 'Kinh Doanh'}</span>
+                    </div>
                   </div>
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-200/60 text-blue-800">
+                    Cố định
+                  </span>
                 </div>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                      Đơn Vị <span className="text-red-500">*</span>
+                    </label>
+                    <div className="relative">
+                      <Building2 size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+                      <select
+                        value={formData.unit}
+                        onChange={(e) => setFormData({ ...formData, unit: e.target.value })}
+                        className="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm font-semibold text-slate-800 focus:outline-none focus:border-primary cursor-pointer"
+                      >
+                        {UNIT_OPTIONS.map((u) => (
+                          <option key={u} value={u}>
+                            {u}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
 
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-                    Bộ Phận <span className="text-red-500">*</span>
-                  </label>
-                  <div className="relative">
-                    <Briefcase size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
-                    <select
-                      value={formData.department}
-                      onChange={(e) => setFormData({ ...formData, department: e.target.value })}
-                      className="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm font-semibold text-slate-800 focus:outline-none focus:border-primary cursor-pointer"
-                    >
-                      {DEPARTMENT_OPTIONS.map((d) => (
-                        <option key={d} value={d}>
-                          {d}
-                        </option>
-                      ))}
-                    </select>
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                      Bộ Phận <span className="text-red-500">*</span>
+                    </label>
+                    <div className="relative">
+                      <Briefcase size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+                      <select
+                        value={formData.department}
+                        onChange={(e) => setFormData({ ...formData, department: e.target.value })}
+                        className="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm font-semibold text-slate-800 focus:outline-none focus:border-primary cursor-pointer"
+                      >
+                        {DEPARTMENT_OPTIONS.map((d) => (
+                          <option key={d} value={d}>
+                            {d}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
 
               {/* Email & Phone */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
@@ -663,17 +786,28 @@ export default function AdminUsers() {
                   <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
                     Vai Trò Phân Quyền
                   </label>
-                  <select
-                    value={formData.role}
-                    onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm font-semibold text-slate-800 focus:outline-none focus:border-primary cursor-pointer"
-                  >
-                    <option value="Thành Viên">Thành Viên</option>
-                    <option value="Nhân Viên">Nhân Viên</option>
-                    <option value="Trưởng Bộ Phận">Trưởng Bộ Phận</option>
-                    <option value="Quản Trị Viên">Quản Trị Viên</option>
-                    <option value="Super Admin">Super Admin</option>
-                  </select>
+                  {isLeader ? (
+                    <div>
+                      <select
+                        disabled
+                        value="User"
+                        className="w-full px-3.5 py-2.5 bg-slate-100 border border-slate-200 rounded-xl text-xs sm:text-sm font-bold text-slate-700 cursor-not-allowed"
+                      >
+                        <option value="User">User (Nhân Viên Chi Nhánh)</option>
+                      </select>
+                      <p className="text-[10px] text-slate-400 mt-1">Leader quản lý và tạo tài khoản cấp Nhân viên (User) thuộc chi nhánh.</p>
+                    </div>
+                  ) : (
+                    <select
+                      value={formData.role}
+                      onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+                      className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm font-semibold text-slate-800 focus:outline-none focus:border-primary cursor-pointer"
+                    >
+                      <option value="Admin">Admin (Toàn Quyền Quản Trị)</option>
+                      <option value="Leader">Leader (Quản Lý Chi Nhánh & Bộ Phận)</option>
+                      <option value="User">User (Xem Thông Báo & File Dùng Chung)</option>
+                    </select>
+                  )}
                 </div>
 
                 <div>
