@@ -99,20 +99,15 @@ export default function AdminLayout() {
         <div>
           {/* Brand Logo Header */}
           <div className="h-20 px-6 border-b border-slate-800 flex items-center justify-between">
-            <Link to="/admin" className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary via-primary to-primary-dark flex items-center justify-center text-white shadow-glow p-2">
-                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full text-white">
-                  <path d="M24 4L7 11V22C7 32.5 14.3 42.1 24 44.5C33.7 42.1 41 32.5 41 22V11L24 4Z" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M24 12L33 19.5L24 27L15 19.5L24 12Z" fill="currentColor"/>
-                  <path d="M24 24L31 29.5L24 35.5L17 29.5L24 24Z" fill="currentColor" opacity="0.75"/>
-                </svg>
-              </div>
-              <div>
-                <span className="font-extrabold text-base tracking-tight text-white block">KIM SƠN</span>
-                <span className="text-[10px] font-bold text-primary-light uppercase tracking-widest block">
-                  {isAdmin ? 'ADMIN PORTAL' : 'MEMBER PORTAL'}
-                </span>
-              </div>
+            <Link to="/admin" className="flex items-center gap-2.5">
+              <img 
+                src="/logo-kimson-white.png" 
+                alt="Kim Sơn Automobiles" 
+                className="h-10 w-auto object-contain"
+              />
+              <span className="text-[9px] font-bold text-primary-light uppercase tracking-wider px-2 py-0.5 rounded-full bg-primary/20 border border-primary/40 shrink-0">
+                {isAdmin ? 'ADMIN' : 'PORTAL'}
+              </span>
             </Link>
 
             <button 
@@ -185,9 +180,14 @@ export default function AdminLayout() {
             >
               <Menu size={24} />
             </button>
-            <h2 className="text-lg sm:text-xl font-extrabold text-slate-900 tracking-tight">
-              {isAdmin ? 'Bảng Quản Trị Hệ Sinh Thái Kim Sơn' : 'Cổng Thông Tin & File Dùng Chung'}
-            </h2>
+            <div className="flex items-center gap-3">
+              <Link to="/admin" className="lg:hidden">
+                <img src="/logo-kimson.png" alt="Kim Sơn Automobiles" className="h-7 w-auto object-contain" />
+              </Link>
+              <h2 className="text-base sm:text-xl font-extrabold text-slate-900 tracking-tight">
+                {isAdmin ? 'Bảng Quản Trị Hệ Sinh Thái Kim Sơn' : 'Cổng Thông Tin & File Dùng Chung'}
+              </h2>
+            </div>
           </div>
 
           <div className="flex items-center gap-3">

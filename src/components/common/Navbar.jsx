@@ -162,17 +162,13 @@ export default function Navbar() {
         {/* Drawer Header */}
         <div className="p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/70 shrink-0">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary via-primary to-primary-dark flex items-center justify-center text-white shadow-glow p-2">
-              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full text-white">
-                <path d="M24 4L7 11V22C7 32.5 14.3 42.1 24 44.5C33.7 42.1 41 32.5 41 22V11L24 4Z" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="opacity-90"/>
-                <path d="M24 12L33 19.5L24 27L15 19.5L24 12Z" fill="currentColor" className="opacity-95"/>
-                <path d="M24 24L31 29.5L24 35.5L17 29.5L24 24Z" fill="currentColor" className="opacity-75"/>
-              </svg>
-            </div>
-            <div>
-              <span className="text-sm font-black text-slate-900 tracking-tight block">KIM SƠN</span>
-              <span className="text-[10px] font-bold text-primary uppercase tracking-widest block">Automobiles Ecosystem</span>
-            </div>
+            <Link to="/" onClick={() => setIsOpen(false)}>
+              <img 
+                src="/logo-kimson.png" 
+                alt="Kim Sơn Automobiles" 
+                className="h-10 w-auto object-contain hover:scale-105 transition-transform"
+              />
+            </Link>
           </div>
 
           <button
@@ -329,40 +325,18 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full h-full">
         <div className="flex justify-between items-center h-full">
-          {/* Logo - Biểu tượng thuần không chữ với hiệu ứng chuyển màu */}
+          {/* Logo Kim Sơn Automobiles */}
           <Link 
             to="/" 
-            className="flex items-center group shrink-0" 
-            title="Trang Chủ - Kim Sơn Automobiles"
-            aria-label="Trang Chủ"
+            className="flex items-center group shrink-0 py-1" 
+            title="Kim Sơn Automobiles"
+            aria-label="Trang Chủ Kim Sơn Automobiles"
           >
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary via-[#0284c7] to-[#4338ca] hover:from-primary-dark hover:to-primary flex items-center justify-center text-white shadow-xs group-hover:scale-105 group-hover:shadow-glow transition-all duration-500 p-1.5 animate-header-gradient">
-              <svg 
-                viewBox="0 0 48 48" 
-                fill="none" 
-                xmlns="http://www.w3.org/2000/svg" 
-                className="w-full h-full text-white drop-shadow-xs"
-              >
-                <path 
-                  d="M24 4L7 11V22C7 32.5 14.3 42.1 24 44.5C33.7 42.1 41 32.5 41 22V11L24 4Z" 
-                  stroke="currentColor" 
-                  strokeWidth="2.5" 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round" 
-                  className="opacity-90"
-                />
-                <path 
-                  d="M24 12L33 19.5L24 27L15 19.5L24 12Z" 
-                  fill="currentColor" 
-                  className="opacity-95"
-                />
-                <path 
-                  d="M24 24L31 29.5L24 35.5L17 29.5L24 24Z" 
-                  fill="currentColor" 
-                  className="opacity-75"
-                />
-              </svg>
-            </div>
+            <img 
+              src="/logo-kimson.png" 
+              alt="Kim Sơn Automobiles" 
+              className="h-8 sm:h-9 w-auto object-contain drop-shadow-xs transition-transform duration-300 group-hover:scale-105"
+            />
           </Link>
 
           {/* Desktop Navigation Links với hiệu ứng hover chuyển màu gradient */}

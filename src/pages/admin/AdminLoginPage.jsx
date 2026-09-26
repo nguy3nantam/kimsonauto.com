@@ -118,15 +118,14 @@ export default function AdminLoginPage({ initialMode = 'login' }) {
       <div className="w-full max-w-md relative z-10 my-8">
         {/* Brand Card Header */}
         <div className="text-center mb-6">
-          <Link to="/" className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-primary to-primary-dark text-white shadow-lg shadow-primary/30 mb-4 p-3 hover:scale-105 transition-transform border border-primary-light/40">
-            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full text-white">
-              <path d="M24 4L7 11V22C7 32.5 14.3 42.1 24 44.5C33.7 42.1 41 32.5 41 22V11L24 4Z" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-              <path d="M24 12L33 19.5L24 27L15 19.5L24 12Z" fill="currentColor"/>
-              <path d="M24 24L31 29.5L24 35.5L17 29.5L24 24Z" fill="currentColor" opacity="0.75"/>
-            </svg>
+          <Link to="/" className="inline-block hover:scale-105 transition-transform mb-3">
+            <img 
+              src="/logo-kimson.png" 
+              alt="Kim Sơn Automobiles" 
+              className="h-16 sm:h-20 w-auto object-contain mx-auto"
+            />
           </Link>
-          <h1 className="text-2xl font-black text-slate-900 tracking-tight">KIM SƠN AUTOMOBILES</h1>
-          <p className="text-xs uppercase tracking-widest text-primary font-bold mt-1">
+          <p className="text-xs uppercase tracking-widest text-primary font-bold">
             {mode === 'login' ? 'Cổng Quản Trị Hệ Sinh Thái' : 'Đăng Ký Tài Khoản Hệ Sinh Thái'}
           </p>
         </div>

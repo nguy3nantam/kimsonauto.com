@@ -11,12 +11,13 @@ export default function Footer() {
           {/* Brand & Mission (Col 1-2) */}
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-white font-black text-xl">
-                KS
-              </div>
-              <span className="text-xl font-black text-white tracking-tight">
-                KIM SƠN <span className="text-primary-light">ECOSYSTEM</span>
-              </span>
+              <Link to="/" className="inline-block hover:opacity-90 transition-opacity">
+                <img 
+                  src="/logo-kimson-white.png" 
+                  alt="Kim Sơn Automobiles" 
+                  className="h-11 w-auto object-contain"
+                />
+              </Link>
             </div>
 
             <p className="text-xs sm:text-sm text-slate-400 leading-relaxed max-w-md">
