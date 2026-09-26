@@ -1,7 +1,7 @@
 export const branchesData = [
   {
     id: 'vinfast-bien-hoa',
-    name: 'VinFast Biên Hòa',
+    name: 'VinFast Kim Sơn Biên Hoà',
     area: 'Đồng Nai',
     address: '643 Quốc Lộ 1, KP. 27, P. Long Bình, TP. Biên Hòa, Tỉnh Đồng Nai',
     hotline: '0908 123 456',
@@ -10,6 +10,7 @@ export const branchesData = [
     role: 'Showroom & Trung Tâm Dịch Vụ Xe Điện VinFast',
     services: ['Showroom Xe VinFast', 'Bảo Dưỡng Định Kỳ', 'Xưởng Kỹ Thuật', 'Trạm Sạc Nhanh'],
     mapsUrl: 'https://maps.google.com/?q=643+Quốc+Lộ+1,+P.Long+Bình,+TP.+Biên+Hòa,+Đồng+Nai',
+    image: '/vinfast-kimson-bienhoa.jpg',
     isMain: false
   },
   {

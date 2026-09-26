@@ -37,7 +37,7 @@ const DEFAULT_SLIDES = [
     title: 'Đại Lý Ủy Quyền VinFast\nHàng Đầu Khu Vực Phía Nam',
     subtitle: 'MẠNG LƯỚI SHOWROOM & XƯỞNG DỊCH VỤ HIỆN ĐẠI',
     description: 'Sở hữu chuỗi 11 chi nhánh và showroom 3S/1S VinFast tại các vị trí chiến lược: Biên Hòa, Long Thành, Long Khánh, Trảng Dài, Bình Thạnh, Quận 2...',
-    image: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=85&w=1920',
+    image: '/vinfast-kimson-bienhoa.jpg',
     primaryButtonText: 'Khám Phá Mạng Lưới Chi Nhánh',
     primaryButtonLink: '/mang-luoi',
     secondaryButtonText: 'Đăng Ký Lái Thử & Tư Vấn',
@@ -248,17 +248,21 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="relative">
+            <div className="relative group">
               <div className="aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border border-slate-200">
                 <img 
-                  src="https://images.unsplash.com/photo-1562141961-b5d7d7665637?auto=format&fit=crop&q=80&w=1000" 
-                  alt="Kim Sơn Engineering Facility" 
-                  className="w-full h-full object-cover"
+                  src="/vinfast-kimson-bienhoa.jpg" 
+                  alt="VinFast Kim Sơn Biên Hoà" 
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
               </div>
-              <div className="absolute -bottom-5 -left-5 bg-slate-900 text-white p-5 rounded-2xl shadow-xl border border-slate-800 hidden sm:block max-w-xs">
-                <p className="text-2xl font-black text-amber-400 font-display">2014 - 2026</p>
-                <p className="text-xs text-slate-300 mt-1 leading-relaxed">Hơn một thập kỷ kiên định phục vụ và phát triển công nghệ ô tô Việt.</p>
+              <div className="absolute -bottom-5 -left-5 bg-slate-900/95 backdrop-blur-md text-white p-5 rounded-2xl shadow-xl border border-slate-800 hidden sm:block max-w-xs">
+                <div className="flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-wider mb-1">
+                  <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                  <span>Showroom 3S Trọng Điểm</span>
+                </div>
+                <p className="text-base font-black text-white font-display">VinFast Kim Sơn Biên Hoà</p>
+                <p className="text-xs text-slate-300 mt-1 leading-relaxed">Cơ sở quy mô hiện đại kết nối trục kinh tế Đông Nam Bộ.</p>
               </div>
             </div>
           </div>
