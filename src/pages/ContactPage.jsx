@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Phone, Mail, MapPin, Clock, Send, CheckCircle2, ShieldAlert, ChevronRight, Navigation } from 'lucide-react';
 import { branchesData } from '../data/branches';
 
-export default function ContactPage({ onOpenBooking }) {
+export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState({
     name: '',
@@ -160,26 +160,26 @@ export default function ContactPage({ onOpenBooking }) {
         <div className="bg-white rounded-3xl p-8 sm:p-12 border border-slate-200 shadow-md">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <span className="text-xs font-bold text-primary uppercase">GỬI PHẢN HỒI / TƯ VẤN</span>
+              <span className="text-xs font-bold text-primary uppercase">LIÊN HỆ & HỢP TÁC B2B</span>
               <h2 className="text-2xl sm:text-3xl font-black text-slate-900 mt-1 mb-4">
-                Chúng Tôi Luôn Sẵn Sàng Lắng Nghe
+                Kết Nối Cùng Hệ Sinh Thái Kim Sơn
               </h2>
               <p className="text-sm text-slate-600 leading-relaxed mb-6">
-                Quý khách có nhu cầu báo giá xe lăn bánh, tư vấn thủ tục vay trả góp, bảo hiểm thân vỏ hoặc góp ý chất lượng dịch vụ? Hãy điền thông tin vào biểu mẫu bên cạnh, chuyên viên Kim Sơn sẽ liên hệ phản hồi ngay.
+                Quý đối tác, doanh nghiệp và khách hàng có nhu cầu hợp tác chiến lược B2B, cung ứng phụ tùng linh kiện kỹ thuật, quản lý đội xe hoặc phản ánh chất lượng dịch vụ? Hãy gửi thông tin cho ban điều hành của chúng tôi.
               </p>
 
               <div className="space-y-4 text-xs sm:text-sm text-slate-700">
                 <div className="flex items-center gap-3">
                   <CheckCircle2 size={18} className="text-emerald-500" />
-                  <span>Báo giá chính xác, minh bạch, không phát sinh chi phí</span>
+                  <span>Hợp tác thương mại và cung ứng phụ tùng kỹ thuật cao</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <CheckCircle2 size={18} className="text-emerald-500" />
-                  <span>Hỗ trợ lái thử xe tận nhà theo yêu cầu</span>
+                  <span>Giải pháp dịch vụ kỹ thuật & bảo dưỡng trọn gói đội xe doanh nghiệp</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <CheckCircle2 size={18} className="text-emerald-500" />
-                  <span>Bảo mật 100% dữ liệu thông tin khách hàng</span>
+                  <span>Bảo mật 100% dữ liệu thông tin đối tác & khách hàng</span>
                 </div>
               </div>
             </div>

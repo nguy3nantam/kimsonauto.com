@@ -27,10 +27,10 @@ export default function FloatingCTA() {
       {showScrollTop && (
         <button
           onClick={scrollToTop}
-          className="w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center shadow-lg hover:bg-slate-800 transition-all hover:scale-110 border border-slate-700"
+          className="w-11 h-11 rounded-full bg-slate-800 text-white flex items-center justify-center shadow-lg hover:bg-slate-700 transition-all hover:scale-110"
           title="Lên đầu trang"
         >
-          <ArrowUp size={16} />
+          <ArrowUp size={18} />
         </button>
       )}
 
@@ -39,24 +39,30 @@ export default function FloatingCTA() {
         href="https://zalo.me/0908123456"
         target="_blank"
         rel="noopener noreferrer"
-        className="group flex items-center gap-2 bg-[#0068ff] hover:bg-[#0052cc] text-white px-3.5 py-2.5 rounded-full shadow-lg hover:shadow-xl transition-all hover:scale-105"
-        title="Kết nối Zalo đối ngoại"
+        className="group flex items-center gap-2 bg-[#0068ff] hover:bg-[#0052cc] text-white pl-3.5 pr-4 py-3 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
+        title="Chat Zalo Doanh Nghiệp"
       >
-        <div className="w-6 h-6 rounded-full bg-white text-[#0068ff] flex items-center justify-center font-black text-xs">
+        <div className="w-8 h-8 rounded-full bg-white text-[#0068ff] flex items-center justify-center font-extrabold text-sm shadow">
           Z
         </div>
-        <span className="text-xs font-bold tracking-wide">Zalo Tập Đoàn</span>
+        <span className="text-xs sm:text-sm font-bold tracking-tight">Chat Zalo</span>
       </a>
 
-      {/* Corporate Hotline */}
+      {/* Hotline Pulse Button */}
       <a
         href="tel:0908123456"
-        className="relative group flex items-center gap-2 bg-gradient-to-r from-primary to-primary-dark text-white px-4 py-2.5 rounded-full shadow-glow hover:shadow-xl transition-all hover:scale-105"
-        title="Tổng Đài Điều Hành Kim Sơn"
+        className="relative group flex items-center gap-2 bg-gradient-to-r from-primary to-primary-dark text-white pl-3.5 pr-4 py-3 rounded-full shadow-glow hover:shadow-2xl transition-all duration-300 hover:scale-105"
+        title="Gọi Tổng Đài Điều Hành 24/7"
       >
-        <span className="absolute -inset-1 rounded-full bg-sky-400 opacity-25 group-hover:opacity-50 animate-ping"></span>
-        <Phone size={15} className="relative text-white" />
-        <span className="relative text-xs font-bold tracking-wide">0908 123 456</span>
+        {/* Radar ping effect */}
+        <span className="absolute -inset-1 rounded-full bg-primary-light opacity-30 group-hover:opacity-60 animate-ping"></span>
+        <div className="relative w-8 h-8 rounded-full bg-white text-primary flex items-center justify-center font-bold shadow">
+          <Phone size={16} className="animate-bounce" />
+        </div>
+        <div className="relative flex flex-col text-left">
+          <span className="text-[10px] uppercase font-bold text-blue-100 tracking-wider">Tổng Đài 24/7</span>
+          <span className="text-xs sm:text-sm font-extrabold tracking-tight">0908 123 456</span>
+        </div>
       </a>
     </div>
   );
