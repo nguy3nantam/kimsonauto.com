@@ -48,7 +48,7 @@ export default function AdminPillars() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-black text-slate-900 tracking-tight">
-            5 Trụ Cột Hoạt Động Cốt Lõi
+            5 Nền Tảng Phát Triển Cốt Lõi
           </h1>
           <p className="text-xs sm:text-sm text-slate-500">
             Quản lý và chỉnh sửa thông tin các lĩnh vực kinh doanh trong hệ sinh thái
@@ -59,7 +59,7 @@ export default function AdminPillars() {
       {saveSuccess && (
         <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-bold flex items-center gap-2">
           <CheckCircle2 size={16} />
-          <span>Cập nhật trụ cột thành công! Dữ liệu đã được lưu trữ vào hệ thống.</span>
+          <span>Cập nhật nền tảng phát triển thành công! Dữ liệu đã được lưu trữ vào hệ thống.</span>
         </div>
       )}
 
@@ -76,7 +76,7 @@ export default function AdminPillars() {
               {isEditing ? (
                 <form onSubmit={handleSave} className="space-y-4">
                   <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-                    <span className="text-xs font-bold text-primary uppercase">Chỉnh Sửa: Trụ Cột 0{index + 1}</span>
+                    <span className="text-xs font-bold text-primary uppercase">Chỉnh Sửa: Nền Tảng 0{index + 1}</span>
                     <button
                       type="button"
                       onClick={() => setEditingPillar(null)}

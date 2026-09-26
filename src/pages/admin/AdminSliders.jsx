@@ -31,8 +31,8 @@ export default function AdminSliders() {
     subtitle: 'TẬP ĐOÀN HỆ SINH THÁI Ô TÔ KIM SƠN',
     description: '',
     image: 'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&q=85&w=1920',
-    primaryButtonText: 'Khám Phá 5 Trụ Cột Hoạt Động',
-    primaryButtonLink: '/linh-vuc',
+    primaryButtonText: 'Khám Phá 5 Nền Tảng Phát Triển',
+    primaryButtonLink: '/about',
     secondaryButtonText: 'Hành Trình 12 Năm (2014 - 2026)',
     secondaryButtonLink: '/about',
     order: 1,
@@ -196,7 +196,7 @@ export default function AdminSliders() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-slate-200 shadow-xs">
         <div>
           <div className="flex items-center gap-3">
-            <div className="p-2.5 bg-amber-50 text-primary rounded-xl">
+            <div className="p-2.5 bg-blue-50 text-primary rounded-xl">
               <Sliders size={24} />
             </div>
             <div>
@@ -324,7 +324,7 @@ export default function AdminSliders() {
                 {sliders.map((slide, index) => (
                   <tr 
                     key={slide.id} 
-                    className={`hover:bg-slate-50/80 transition ${previewSlide?.id === slide.id ? 'bg-amber-50/50' : ''}`}
+                    className={`hover:bg-slate-50/80 transition ${previewSlide?.id === slide.id ? 'bg-blue-50/40' : ''}`}
                   >
                     {/* Order & Reorder arrows */}
                     <td className="py-4 px-4 text-center">
@@ -438,7 +438,7 @@ export default function AdminSliders() {
                       <div className="flex items-center justify-center gap-2">
                         <button
                           onClick={() => setPreviewSlide(slide)}
-                          className="p-2 text-slate-500 hover:text-primary hover:bg-amber-50 rounded-lg transition"
+                          className="p-2 text-slate-500 hover:text-primary hover:bg-blue-50 rounded-lg transition"
                           title="Xem trước slide này"
                         >
                           <Eye size={17} />
@@ -590,7 +590,7 @@ export default function AdminSliders() {
                       type="text"
                       value={formData.primaryButtonText}
                       onChange={(e) => setFormData({ ...formData, primaryButtonText: e.target.value })}
-                      placeholder="VD: Khám Phá 5 Trụ Cột Hoạt Động"
+                      placeholder="VD: Khám Phá 5 Nền Tảng Phát Triển"
                       className="w-full px-3 py-2 rounded-lg border border-slate-300 text-xs"
                     />
                   </div>

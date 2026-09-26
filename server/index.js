@@ -444,7 +444,7 @@ app.post('/api/sliders', async (req, res) => {
     description: (description || '').trim(),
     image: image.trim(),
     primaryButtonText: (primaryButtonText || 'Khám Phá Thêm').trim(),
-    primaryButtonLink: (primaryButtonLink || '/linh-vuc').trim(),
+    primaryButtonLink: (primaryButtonLink || '/about').trim(),
     secondaryButtonText: (secondaryButtonText || 'Liên Hệ').trim(),
     secondaryButtonLink: (secondaryButtonLink || '/lien-he').trim(),
     order: Number(order) || (items.length + 1),
@@ -518,7 +518,7 @@ app.get('/api/stats', async (req, res) => {
 });
 
 // ==========================================
-// 3. PILLARS (5 TRỤ CỘT HỆ SINH THÁI) API
+// 3. PILLARS (5 NỀN TẢNG PHÁT TRIỂN HỆ SINH THÁI) API
 // ==========================================
 app.get('/api/pillars', async (req, res) => {
   const data = await readData('pillars') || [];
@@ -531,7 +531,7 @@ app.put('/api/pillars/:id', async (req, res) => {
   const index = pillars.findIndex(p => p.id === id);
 
   if (index === -1) {
-    return res.status(404).json({ error: 'Không tìm thấy trụ cột này' });
+    return res.status(404).json({ error: 'Không tìm thấy nền tảng phát triển này' });
   }
 
   pillars[index] = { ...pillars[index], ...req.body };

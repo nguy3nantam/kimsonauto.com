@@ -55,11 +55,11 @@ export default function AdminDashboard() {
 
   const kpis = [
     {
-      title: 'Trụ Cột Hệ Sinh Thái',
+      title: 'Nền Tảng Phát Triển',
       value: stats.totalPillars,
       desc: 'Chuỗi giá trị khép kín',
       icon: Layers,
-      color: 'from-amber-500 to-amber-600',
+      color: 'from-blue-600 to-blue-700',
       link: '/admin/pillars'
     },
     {

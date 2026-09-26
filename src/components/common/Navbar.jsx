@@ -275,7 +275,7 @@ export default function Navbar() {
           <div className="pt-6">
             <div className="bg-gradient-to-br from-slate-900 to-slate-950 text-white p-5 rounded-2xl border border-slate-800 space-y-2">
               <span className="text-[10px] font-bold text-primary-light uppercase tracking-wider block">QUY MÔ TẬP ĐOÀN</span>
-              <div className="text-xs font-semibold text-slate-200">5 Trụ Cột Chiến Lược • 11 Cơ Sở Trọng Điểm</div>
+              <div className="text-xs font-semibold text-slate-200">5 Nền Tảng Phát Triển • 11 Cơ Sở Trọng Điểm</div>
               <p className="text-[11px] text-slate-400 leading-relaxed">
                 Định vị tổ hợp kỹ thuật và công nghiệp ô tô đa lĩnh vực hàng đầu khu vực kinh tế trọng điểm phía Nam.
               </p>
