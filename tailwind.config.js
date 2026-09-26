@@ -26,8 +26,8 @@ export default {
         }
       },
       fontFamily: {
-        sans: ['"Be Vietnam Pro"', 'Inter', 'system-ui', '-apple-system', 'sans-serif'],
-        display: ['"Plus Jakarta Sans"', '"Be Vietnam Pro"', 'sans-serif'],
+        sans: ['"Inter"', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'sans-serif'],
+        display: ['"Inter"', 'system-ui', '-apple-system', 'sans-serif'],
       },
       lineHeight: {
         'viet-tight': '1.25',
