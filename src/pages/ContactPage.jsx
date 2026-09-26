@@ -1,181 +1,272 @@
 import React, { useState } from 'react';
-import { Phone, Mail, MapPin, Building, Send, CheckCircle2, ShieldCheck } from 'lucide-react';
-import { ecosystemData } from '../data/ecosystem';
+import { Phone, Mail, MapPin, Clock, Send, CheckCircle2, ShieldAlert, ChevronRight, Navigation } from 'lucide-react';
+import { branchesData } from '../data/branches';
 
-export default function ContactPage() {
+export default function ContactPage({ onOpenBooking }) {
   const [submitted, setSubmitted] = useState(false);
-  const [formData, setFormData] = useState({
-    companyName: '',
-    contactPerson: '',
+  const [form, setForm] = useState({
+    name: '',
     phone: '',
     email: '',
-    partnershipType: 'Hợp tác chuỗi cung ứng & Phụ tùng',
+    branch: branchesData[0].name,
     message: '',
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!formData.contactPerson || !formData.phone) {
-      alert('Vui lòng nhập Người liên hệ và Số điện thoại!');
+    if (!form.name || !form.phone) {
+      alert('Vui lòng nhập Họ tên và Số điện thoại!');
       return;
     }
     setSubmitted(true);
   };
 
   return (
-    <div className="bg-slate-50 min-h-screen py-16">
+    <div className="bg-slate-50 min-h-screen py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto">
-          <div className="inline-block text-xs font-bold text-primary uppercase tracking-[0.15em] border-b-2 border-primary pb-1 mb-2.5">
-            KẾT NỐI TẬP ĐOÀN
-          </div>
-          <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-[1.3]">
-            Liên Hệ & Hợp Tác Doanh Nghiệp
+          <span className="text-xs font-bold text-primary uppercase tracking-widest">LIÊN HỆ & MẠNG LƯỚI CHI NHÁNH</span>
+          <h1 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight mt-2 mb-4">
+            Đồng Hành Cùng Bạn Mọi Lúc Mọi Nơi
           </h1>
-          <p className="text-slate-600 text-sm sm:text-base mt-3 leading-relaxed">
-            Ban điều hành Kim Sơn Automobiles sẵn sàng lắng nghe và kết nối cùng các đối tác trong và ngoài nước nhằm phát triển chuỗi giá trị ô tô bền vững.
+          <p className="text-base text-slate-600">
+            Hệ thống 7 chi nhánh rộng khắp Đồng Nai và TP. Hồ Chí Minh luôn sẵn sàng phục vụ và giải quyết mọi nhu cầu của Quý khách.
           </p>
         </div>
 
-        {/* Corporate HQ Info Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="bg-white p-8 rounded-3xl border border-slate-200/90 shadow-sm space-y-3">
-            <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center font-bold">
-              <Building size={24} />
-            </div>
-            <h3 className="font-bold text-slate-900 text-base">Trụ Sở Điều Hành Chính</h3>
-            <p className="text-xs text-slate-600 leading-relaxed">{ecosystemData.headquarters}</p>
-            <p className="text-xs text-slate-400">TP. Hồ Chí Minh, Việt Nam</p>
-          </div>
-
-          <div className="bg-white p-8 rounded-3xl border border-slate-200/90 shadow-sm space-y-3">
-            <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center font-bold">
+        {/* Quick Contact Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="bg-white p-6 rounded-3xl border border-slate-200/90 shadow-sm flex items-start gap-4">
+            <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
               <Phone size={24} />
             </div>
-            <h3 className="font-bold text-slate-900 text-base">Tổng Đài Điều Hành 24/7</h3>
-            <a href={`tel:${ecosystemData.hotline.replace(/\s+/g, '')}`} className="text-xl font-black text-primary block">
-              {ecosystemData.hotline}
-            </a>
-            <p className="text-xs text-slate-400">Hỗ trợ kỹ thuật, cứu hộ & đối tác</p>
+            <div>
+              <p className="text-xs text-slate-400 font-bold uppercase">Hotline Tổng Đài</p>
+              <a href="tel:0908123456" className="text-xl font-black text-slate-900 hover:text-primary transition-colors">
+                0908 123 456
+              </a>
+              <p className="text-xs text-slate-500 mt-1">Hỗ trợ tư vấn mua xe & dịch vụ 24/7</p>
+            </div>
           </div>
 
-          <div className="bg-white p-8 rounded-3xl border border-slate-200/90 shadow-sm space-y-3">
-            <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center font-bold">
+          <div className="bg-white p-6 rounded-3xl border border-slate-200/90 shadow-sm flex items-start gap-4">
+            <div className="w-12 h-12 rounded-2xl bg-red-100 text-red-600 flex items-center justify-center shrink-0">
+              <ShieldAlert size={24} className="animate-pulse" />
+            </div>
+            <div>
+              <p className="text-xs text-red-500 font-bold uppercase">Cứu Hộ Khẩn Cấp</p>
+              <a href="tel:0908123456" className="text-xl font-black text-red-600 hover:text-red-700 transition-colors">
+                0908 123 456
+              </a>
+              <p className="text-xs text-slate-500 mt-1">Xe sàn trượt, kích bình, kéo xe 15-30 phút</p>
+            </div>
+          </div>
+
+          <div className="bg-white p-6 rounded-3xl border border-slate-200/90 shadow-sm flex items-start gap-4">
+            <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
               <Mail size={24} />
             </div>
-            <h3 className="font-bold text-slate-900 text-base">Hộp Thư Đối Ngoại</h3>
-            <a href={`mailto:${ecosystemData.email}`} className="text-base font-bold text-slate-800 hover:text-primary block">
-              {ecosystemData.email}
-            </a>
-            <p className="text-xs text-slate-400">Tiếp nhận đề xuất hợp tác B2B</p>
+            <div>
+              <p className="text-xs text-slate-400 font-bold uppercase">Hộp Thư Điện Tử</p>
+              <a href="mailto:contact@kimsonauto.com" className="text-lg font-bold text-slate-900 hover:text-primary transition-colors">
+                contact@kimsonauto.com
+              </a>
+              <p className="text-xs text-slate-500 mt-1">Phản hồi yêu cầu trong 2 giờ làm việc</p>
+            </div>
           </div>
         </div>
 
-        {/* Corporate Partnership Form */}
-        <div className="bg-white rounded-3xl p-8 sm:p-14 border border-slate-200 shadow-md">
+        {/* 7 Branches Directory */}
+        <div>
+          <div className="text-center max-w-2xl mx-auto mb-10">
+            <h2 className="text-2xl sm:text-3xl font-black text-slate-900">Danh Sách 7 Chi Nhánh Kim Sơn</h2>
+            <p className="text-xs text-slate-500 mt-2">Bấm vào số điện thoại để gọi ngay hoặc bấm "Chỉ đường" để mở Google Maps.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {branchesData.map((branch) => (
+              <div 
+                key={branch.id}
+                className="bg-white rounded-3xl p-6 border border-slate-200/90 shadow-sm hover:shadow-xl transition-all flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex justify-between items-start mb-3">
+                    <span className="text-xs font-bold text-primary px-3 py-1 bg-primary-subtle/60 rounded-full">
+                      {branch.area}
+                    </span>
+                    {branch.isMain && (
+                      <span className="text-xs font-bold bg-slate-900 text-white px-2.5 py-0.5 rounded-full">
+                        Trụ Sở
+                      </span>
+                    )}
+                  </div>
+
+                  <h3 className="text-lg font-black text-slate-900 mb-3">{branch.name}</h3>
+
+                  <div className="space-y-2 text-xs text-slate-600 mb-4">
+                    <div className="flex items-start gap-2">
+                      <MapPin size={16} className="text-primary shrink-0 mt-0.5" />
+                      <span>{branch.address}</span>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <Phone size={16} className="text-primary shrink-0" />
+                      <a href={`tel:${branch.hotline.replace(/\s+/g, '')}`} className="font-bold text-slate-900 hover:text-primary">
+                        {branch.hotline}
+                      </a>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <Clock size={16} className="text-primary shrink-0" />
+                      <span>{branch.hours}</span>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap gap-1.5 mb-4">
+                    {branch.services.map((svc, i) => (
+                      <span key={i} className="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-md font-medium">
+                        {svc}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-2 pt-3 border-t border-slate-100">
+                  <a
+                    href={branch.mapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-colors"
+                  >
+                    <Navigation size={14} />
+                    <span>Chỉ Đường</span>
+                  </a>
+
+                  <a
+                    href={`tel:${branch.hotline.replace(/\s+/g, '')}`}
+                    className="py-2.5 bg-primary hover:bg-primary-dark text-white rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-colors shadow-sm"
+                  >
+                    <Phone size={14} />
+                    <span>Gọi Ngay</span>
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Contact Inquiry Form */}
+        <div className="bg-white rounded-3xl p-8 sm:p-12 border border-slate-200 shadow-md">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-4">
-              <span className="text-xs font-bold text-primary uppercase tracking-widest">KẾT NỐI ĐỐI TÁC</span>
-              <h2 className="text-2xl sm:text-3xl font-black text-slate-900 leading-tight">
-                Gửi Đề Xuất Hợp Tác Cùng Hệ Sinh Thái Kim Sơn
+            <div>
+              <span className="text-xs font-bold text-primary uppercase">GỬI PHẢN HỒI / TƯ VẤN</span>
+              <h2 className="text-2xl sm:text-3xl font-black text-slate-900 mt-1 mb-4">
+                Chúng Tôi Luôn Sẵn Sàng Lắng Nghe
               </h2>
-              <p className="text-sm text-slate-600 leading-relaxed">
-                Chúng tôi mở rộng hợp tác trên nhiều lĩnh vực:
+              <p className="text-sm text-slate-600 leading-relaxed mb-6">
+                Quý khách có nhu cầu báo giá xe lăn bánh, tư vấn thủ tục vay trả góp, bảo hiểm thân vỏ hoặc góp ý chất lượng dịch vụ? Hãy điền thông tin vào biểu mẫu bên cạnh, chuyên viên Kim Sơn sẽ liên hệ phản hồi ngay.
               </p>
-              <ul className="space-y-2 text-xs text-slate-600">
-                <li className="flex items-center gap-2"><CheckCircle2 size={14} className="text-primary" /> Cung cấp linh kiện, phụ tùng và phụ kiện ô tô chính ngạch</li>
-                <li className="flex items-center gap-2"><CheckCircle2 size={14} className="text-primary" /> Bảo dưỡng, sửa chữa quản lý đội xe doanh nghiệp (Fleet Management)</li>
-                <li className="flex items-center gap-2"><CheckCircle2 size={14} className="text-primary" /> Hợp tác bảo hiểm thân vỏ và giám định xe cơ giới</li>
-                <li className="flex items-center gap-2"><CheckCircle2 size={14} className="text-primary" /> Liên kết đào tạo nhân lực kỹ thuật công nghệ ô tô</li>
-              </ul>
+
+              <div className="space-y-4 text-xs sm:text-sm text-slate-700">
+                <div className="flex items-center gap-3">
+                  <CheckCircle2 size={18} className="text-emerald-500" />
+                  <span>Báo giá chính xác, minh bạch, không phát sinh chi phí</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <CheckCircle2 size={18} className="text-emerald-500" />
+                  <span>Hỗ trợ lái thử xe tận nhà theo yêu cầu</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <CheckCircle2 size={18} className="text-emerald-500" />
+                  <span>Bảo mật 100% dữ liệu thông tin khách hàng</span>
+                </div>
+              </div>
             </div>
 
             <div className="bg-slate-50 p-6 sm:p-8 rounded-2xl border border-slate-200">
               {submitted ? (
                 <div className="text-center py-8 space-y-4">
                   <CheckCircle2 size={48} className="text-emerald-500 mx-auto" />
-                  <h4 className="text-xl font-bold text-slate-900">Đã Gửi Thành Công!</h4>
+                  <h4 className="text-xl font-bold text-slate-900">Cảm Ơn Quý Khách!</h4>
                   <p className="text-xs text-slate-600">
-                    Cảm ơn Quý đối tác. Ban Phát Triển Kinh Doanh Kim Sơn Automobiles sẽ liên hệ trao đổi trong vòng 24 giờ làm việc.
+                    Tin nhắn của Quý khách đã được gửi thành công đến ban điều hành Kim Sơn Automobiles. Chúng tôi sẽ phản hồi trong thời gian sớm nhất.
                   </p>
                   <button
                     onClick={() => setSubmitted(false)}
                     className="bg-primary text-white px-6 py-2 rounded-xl text-xs font-bold"
                   >
-                    Gửi yêu cầu khác
+                    Gửi tin nhắn khác
                   </button>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4 text-xs sm:text-sm">
                   <div>
-                    <label className="block font-bold text-slate-700 mb-1">Tên Tổ Chức / Doanh Nghiệp</label>
+                    <label className="block font-bold text-slate-700 mb-1">Họ và Tên *</label>
                     <input
                       type="text"
-                      placeholder="Công ty TNHH / Cổ phần..."
-                      value={formData.companyName}
-                      onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
+                      required
+                      placeholder="Nguyễn Văn A"
+                      value={form.name}
+                      onChange={(e) => setForm({ ...form, name: e.target.value })}
                       className="w-full p-3 bg-white border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-primary"
                     />
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block font-bold text-slate-700 mb-1">Người Đại Diện Liên Hệ *</label>
-                      <input
-                        type="text"
-                        required
-                        placeholder="Họ và tên..."
-                        value={formData.contactPerson}
-                        onChange={(e) => setFormData({ ...formData, contactPerson: e.target.value })}
-                        className="w-full p-3 bg-white border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-primary"
-                      />
-                    </div>
-                    <div>
                       <label className="block font-bold text-slate-700 mb-1">Số Điện Thoại *</label>
                       <input
                         type="tel"
                         required
                         placeholder="0908 xxx xxx"
-                        value={formData.phone}
-                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                        value={form.phone}
+                        onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                        className="w-full p-3 bg-white border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-primary"
+                      />
+                    </div>
+                    <div>
+                      <label className="block font-bold text-slate-700 mb-1">Email</label>
+                      <input
+                        type="email"
+                        placeholder="email@example.com"
+                        value={form.email}
+                        onChange={(e) => setForm({ ...form, email: e.target.value })}
                         className="w-full p-3 bg-white border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-primary"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block font-bold text-slate-700 mb-1">Lĩnh Vực Hợp Tác Quan Tâm</label>
+                    <label className="block font-bold text-slate-700 mb-1">Chi Nhánh Cần Liên Hệ</label>
                     <select
-                      value={formData.partnershipType}
-                      onChange={(e) => setFormData({ ...formData, partnershipType: e.target.value })}
+                      value={form.branch}
+                      onChange={(e) => setForm({ ...form, branch: e.target.value })}
                       className="w-full p-3 bg-white border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-primary"
                     >
-                      <option value="Hợp tác chuỗi cung ứng & Phụ tùng">Hợp tác chuỗi cung ứng & Phụ tùng chính hãng</option>
-                      <option value="Dịch vụ bảo dưỡng đội xe doanh nghiệp">Dịch vụ bảo dưỡng đội xe doanh nghiệp (Fleet)</option>
-                      <option value="Hợp tác bảo hiểm thân vỏ">Hợp tác liên kết bảo hiểm thân vỏ</option>
-                      <option value="Phân phối xe điện & hạ tầng sạc">Phân phối xe điện & hạ tầng trạm sạc</option>
-                      <option value="Khác">Lĩnh vực khác</option>
+                      {branchesData.map((b) => (
+                        <option key={b.id} value={b.name}>{b.name} ({b.area})</option>
+                      ))}
                     </select>
                   </div>
 
                   <div>
-                    <label className="block font-bold text-slate-700 mb-1">Nội Dung Đề Xuất Sơ Bộ</label>
+                    <label className="block font-bold text-slate-700 mb-1">Nội Dung Yêu Cầu</label>
                     <textarea
                       rows="3"
-                      placeholder="Mô tả tóm tắt nội dung mong muốn hợp tác..."
-                      value={formData.message}
-                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      placeholder="Quý khách muốn tìm hiểu xe gì hoặc cần hỗ trợ dịch vụ nào?..."
+                      value={form.message}
+                      onChange={(e) => setForm({ ...form, message: e.target.value })}
                       className="w-full p-3 bg-white border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-primary"
                     ></textarea>
                   </div>
 
                   <button
                     type="submit"
-                    className="w-full py-3.5 bg-primary hover:bg-primary-dark text-white rounded-xl font-bold text-xs uppercase tracking-wider shadow-glow transition-all flex items-center justify-center gap-2"
+                    className="w-full py-3.5 bg-primary hover:bg-primary-dark text-white rounded-xl font-bold text-sm shadow-glow transition-all flex items-center justify-center gap-2"
                   >
-                    <Send size={15} />
-                    <span>Gửi Đề Xuất Cho Ban Điều Hành</span>
+                    <Send size={16} />
+                    <span>Gửi Yêu Cầu Cho Kim Sơn</span>
                   </button>
                 </form>
               )}

@@ -54,7 +54,7 @@ export default function FloatingCTA() {
         className="relative group flex items-center gap-2 bg-gradient-to-r from-primary to-primary-dark text-white px-4 py-2.5 rounded-full shadow-glow hover:shadow-xl transition-all hover:scale-105"
         title="Tổng Đài Điều Hành Kim Sơn"
       >
-        <span className="absolute -inset-1 rounded-full bg-red-500 opacity-25 group-hover:opacity-50 animate-ping"></span>
+        <span className="absolute -inset-1 rounded-full bg-sky-400 opacity-25 group-hover:opacity-50 animate-ping"></span>
         <Phone size={15} className="relative text-white" />
         <span className="relative text-xs font-bold tracking-wide">0908 123 456</span>
       </a>

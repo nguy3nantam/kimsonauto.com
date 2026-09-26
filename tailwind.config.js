@@ -8,19 +8,21 @@ export default {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#dc2626',
-          dark: '#991b1b',
-          light: '#ef4444',
-          subtle: '#fee2e2',
+          DEFAULT: '#0062d2', // Màu xanh dương công nghệ ô tô & tập đoàn uy tín
+          dark: '#004599',   // Xanh hoàng gia đậm
+          light: '#38bdf8',  // Xanh điện/xanh ngọc sáng
+          subtle: '#eff6ff', // Nền xanh nhạt thanh nhã
         },
         secondary: {
-          DEFAULT: '#0f172a',
-          light: '#1e293b',
-          muted: '#334155',
+          DEFAULT: '#0b1329', // Xanh đen vũ trụ sang trọng
+          light: '#132142',
+          muted: '#233760',
         },
         brand: {
           gold: '#f59e0b',
           silver: '#94a3b8',
+          cyan: '#06b6d4',
+          emerald: '#10b981',
         }
       },
       fontFamily: {
@@ -38,8 +40,8 @@ export default {
         'viet-wide': '0.05em',
       },
       boxShadow: {
-        'glow': '0 0 25px -5px rgba(220, 38, 38, 0.3)',
-        'premium': '0 20px 30px -10px rgba(15, 23, 42, 0.1)',
+        'glow': '0 0 25px -5px rgba(0, 98, 210, 0.45)',
+        'premium': '0 20px 30px -10px rgba(11, 19, 41, 0.12)',
       }
     },
   },
