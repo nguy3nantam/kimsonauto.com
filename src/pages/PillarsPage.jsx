@@ -32,7 +32,7 @@ export default function PillarsPage() {
             LĨNH VỰC HOẠT ĐỘNG
           </div>
           <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-[1.3]">
-            5 Nền Tảng Phát Triển Cốt Lõi
+            5 Trụ Cột Hoạt Động Cốt Lõi
           </h1>
           <p className="text-slate-600 text-sm sm:text-base mt-3 leading-relaxed">
             Hệ sinh thái Kim Sơn Automobiles vận hành đồng bộ và bổ trợ lẫn nhau, tạo nên sức mạnh tổng hợp phục vụ trọn vẹn mọi nhu cầu về phương tiện ô tô.
@@ -59,7 +59,7 @@ export default function PillarsPage() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent flex items-end p-6">
                   <span className="text-xs font-bold text-white bg-primary px-3 py-1 rounded-full uppercase tracking-wider">
-                    Nền Tảng 0{idx + 1}
+                    Trụ Cột 0{idx + 1}
                   </span>
                 </div>
               </div>

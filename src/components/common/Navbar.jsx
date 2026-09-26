@@ -18,10 +18,8 @@ import {
   LogOut,
   ShieldCheck
 } from 'lucide-react';
-import { useBranding } from '../../services/branding';
 
 export default function Navbar() {
-  const branding = useBranding();
   const [isOpen, setIsOpen] = useState(false);
   const [lang, setLang] = useState('VN');
   const [mounted, setMounted] = useState(false);
@@ -66,13 +64,19 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // 5 mục menu chuẩn: Giới Thiệu, Hệ Thống, Phát Triển Bền Vững, Tin Tức, Liên Hệ
+  // 6 mục menu chuẩn: Giới Thiệu, Hoạt Động, Hệ Thống, Phát Triển Bền Vững, Tin Tức, Liên Hệ
   const navLinks = [
     { 
       name: 'Giới Thiệu', 
       path: '/about', 
       desc: 'Lịch sử phát triển & giá trị cốt lõi',
       icon: Building2 
+    },
+    { 
+      name: 'Hoạt Động', 
+      path: '/linh-vuc', 
+      desc: '5 trụ cột kỹ thuật & công nghệ ô tô',
+      icon: Layers 
     },
     { 
       name: 'Hệ Thống', 
@@ -160,7 +164,7 @@ export default function Navbar() {
           <div className="flex items-center gap-3">
             <Link to="/" onClick={() => setIsOpen(false)}>
               <img 
-                src={branding.logo || '/logo-kimson.png'} 
+                src="/logo-kimson.png" 
                 alt="Kim Sơn Automobiles" 
                 className="h-10 w-auto object-contain hover:scale-105 transition-transform"
               />
@@ -275,7 +279,7 @@ export default function Navbar() {
           <div className="pt-6">
             <div className="bg-gradient-to-br from-slate-900 to-slate-950 text-white p-5 rounded-2xl border border-slate-800 space-y-2">
               <span className="text-[10px] font-bold text-primary-light uppercase tracking-wider block">QUY MÔ TẬP ĐOÀN</span>
-              <div className="text-xs font-semibold text-slate-200">5 Nền Tảng Phát Triển • 11 Cơ Sở Trọng Điểm</div>
+              <div className="text-xs font-semibold text-slate-200">5 Trụ Cột Chiến Lược • 11 Cơ Sở Trọng Điểm</div>
               <p className="text-[11px] text-slate-400 leading-relaxed">
                 Định vị tổ hợp kỹ thuật và công nghiệp ô tô đa lĩnh vực hàng đầu khu vực kinh tế trọng điểm phía Nam.
               </p>
@@ -329,7 +333,7 @@ export default function Navbar() {
             aria-label="Trang Chủ Kim Sơn Automobiles"
           >
             <img 
-              src={branding.logo || '/logo-kimson.png'} 
+              src="/logo-kimson.png" 
               alt="Kim Sơn Automobiles" 
               className="h-8 sm:h-9 w-auto object-contain drop-shadow-xs transition-transform duration-300 group-hover:scale-105"
             />

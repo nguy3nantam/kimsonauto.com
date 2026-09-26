@@ -31,8 +31,8 @@ export default function AdminSliders() {
     subtitle: 'TẬP ĐOÀN HỆ SINH THÁI Ô TÔ KIM SƠN',
     description: '',
     image: 'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&q=85&w=1920',
-    primaryButtonText: 'Khám Phá 5 Nền Tảng Phát Triển',
-    primaryButtonLink: '/about',
+    primaryButtonText: 'Khám Phá 5 Trụ Cột Hoạt Động',
+    primaryButtonLink: '/linh-vuc',
     secondaryButtonText: 'Hành Trình 12 Năm (2014 - 2026)',
     secondaryButtonLink: '/about',
     order: 1,
@@ -590,7 +590,7 @@ export default function AdminSliders() {
                       type="text"
                       value={formData.primaryButtonText}
                       onChange={(e) => setFormData({ ...formData, primaryButtonText: e.target.value })}
-                      placeholder="VD: Khám Phá 5 Nền Tảng Phát Triển"
+                      placeholder="VD: Khám Phá 5 Trụ Cột Hoạt Động"
                       className="w-full px-3 py-2 rounded-lg border border-slate-300 text-xs"
                     />
                   </div>

@@ -17,7 +17,7 @@ export const ecosystemData = {
     { number: '99%', label: 'Chỉ Số Hài Lòng Dịch Vụ', desc: 'Cam kết chất lượng và minh bạch' },
   ],
 
-  // 5 Nền Tảng Phát Triển Cốt Lõi (Kim Sơn Automobiles)
+  // 5 Trụ Cột Lĩnh Vực Hoạt Động (tương tự các trụ cột của Vingroup)
   pillars: [
     {
       id: 'distribution',
@@ -136,7 +136,7 @@ export const ecosystemData = {
     {
       year: '2026',
       title: 'Hệ Sinh Thái Ô Tô Kim Sơn Toàn Diện',
-      description: 'Chính thức định vị mô hình Hệ Sinh Thái Ô Tô đa lĩnh vực với 5 nền tảng phát triển và chuỗi 11 chi nhánh, showroom trọng điểm kết nối giữa TP.HCM và Đồng Nai.'
+      description: 'Chính thức định vị mô hình Hệ Sinh Thái Ô Tô đa lĩnh vực với 5 trụ cột kinh doanh và chuỗi 11 chi nhánh, showroom trọng điểm kết nối giữa TP.HCM và Đồng Nai.'
     }
   ],
 
@@ -258,7 +258,7 @@ export const ecosystemData = {
       date: '25/09/2026',
       readTime: '4 phút đọc',
       image: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&q=80&w=900',
-      summary: 'Hoàn thiện 5 nền tảng phát triển khép kín, tiếp tục mở rộng mạng lưới trạm dịch vụ đón đầu các hạ tầng giao thông trọng điểm phía Nam.'
+      summary: 'Hoàn thiện 5 trụ cột hoạt động khép kín, tiếp tục mở rộng mạng lưới trạm dịch vụ đón đầu các hạ tầng giao thông trọng điểm phía Nam.'
     },
     {
       id: '2',

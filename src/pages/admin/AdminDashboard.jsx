@@ -55,7 +55,7 @@ export default function AdminDashboard() {
 
   const kpis = [
     {
-      title: 'Nền Tảng Phát Triển',
+      title: 'Trụ Cột Hệ Sinh Thái',
       value: stats.totalPillars,
       desc: 'Chuỗi giá trị khép kín',
       icon: Layers,
