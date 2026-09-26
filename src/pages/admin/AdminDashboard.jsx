@@ -59,7 +59,7 @@ export default function AdminDashboard() {
       value: stats.totalPillars,
       desc: 'Chuỗi giá trị khép kín',
       icon: Layers,
-      color: 'from-blue-600 to-blue-700',
+      color: 'from-amber-500 to-amber-600',
       link: '/admin/pillars'
     },
     {

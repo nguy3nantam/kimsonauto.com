@@ -320,7 +320,7 @@ export default function Navbar() {
       className={`sticky top-0 z-40 h-12 max-h-12 relative flex items-center transition-all duration-500 ease-in-out ${
         isScrolled
           ? 'bg-white/95 backdrop-blur-xl shadow-md border-b border-slate-200/80 text-slate-800'
-          : 'bg-gradient-to-r from-white/95 via-sky-50/75 via-blue-50/60 to-white/95 backdrop-blur-md border-b border-blue-100/50 text-slate-800 animate-header-gradient'
+          : 'bg-gradient-to-r from-white/95 via-amber-50/70 via-yellow-50/45 to-white/95 backdrop-blur-md border-b border-amber-200/50 text-slate-800 animate-header-gradient'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full h-full">
@@ -469,7 +469,7 @@ export default function Navbar() {
             {/* Nút kích hoạt Offcanvas Menu với hiệu ứng chuyển màu khi hover */}
             <button
               onClick={() => setIsOpen(true)}
-              className="flex items-center gap-1.5 px-2.5 py-1 text-slate-700 hover:text-primary rounded-lg hover:bg-gradient-to-r hover:from-slate-100 hover:to-blue-50/80 transition-all duration-300 border border-transparent hover:border-blue-200/60"
+              className="flex items-center gap-1.5 px-2.5 py-1 text-slate-700 hover:text-primary rounded-lg hover:bg-gradient-to-r hover:from-slate-100 hover:to-amber-50/80 transition-all duration-300 border border-transparent hover:border-amber-200/60"
               title="Mở menu hệ sinh thái"
               aria-label="Mở menu"
             >

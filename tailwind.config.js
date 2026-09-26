@@ -8,20 +8,22 @@ export default {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#0062d2', // Màu xanh dương công nghệ ô tô & tập đoàn uy tín
-          dark: '#004599',   // Xanh hoàng gia đậm
-          light: '#38bdf8',  // Xanh điện/xanh ngọc sáng
-          subtle: '#eff6ff', // Nền xanh nhạt thanh nhã
+          DEFAULT: '#c98e00', // Màu vàng hoàng kim sang trọng chuẩn logo Kim Sơn Automobiles
+          dark: '#9a6700',   // Vàng đồng trầm ấm, uy quyền
+          light: '#e4b92f',  // Vàng kim loại ánh sáng từ swoosh xe
+          subtle: '#fefce8', // Nền vàng kem nhạt thanh nhã
         },
         secondary: {
-          DEFAULT: '#0b1329', // Xanh đen vũ trụ sang trọng
-          light: '#132142',
-          muted: '#233760',
+          DEFAULT: '#0f1117', // Đen tuyền sang trọng từ logo Kim Sơn
+          light: '#1a1d26',
+          muted: '#282c37',
         },
         brand: {
-          gold: '#f59e0b',
+          gold: '#e4b92f',
+          amber: '#c98e00',
+          bronze: '#9a6700',
+          dark: '#0f1117',
           silver: '#94a3b8',
-          cyan: '#06b6d4',
           emerald: '#10b981',
         }
       },
@@ -40,8 +42,9 @@ export default {
         'viet-wide': '0.05em',
       },
       boxShadow: {
-        'glow': '0 0 25px -5px rgba(0, 98, 210, 0.45)',
-        'premium': '0 20px 30px -10px rgba(11, 19, 41, 0.12)',
+        'glow': '0 0 25px -5px rgba(201, 142, 0, 0.45)',
+        'glow-lg': '0 0 35px -5px rgba(228, 185, 47, 0.5)',
+        'premium': '0 20px 30px -10px rgba(15, 17, 23, 0.12)',
       }
     },
   },

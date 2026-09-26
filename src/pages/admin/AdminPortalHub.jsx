@@ -437,7 +437,7 @@ export default function AdminPortalHub() {
                           {item.priority === 'urgent' ? 'Khẩn Cấp' : item.priority === 'high' ? 'Quan Trọng' : 'Thông Thường'}
                         </span>
 
-                        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-50 text-blue-700 border border-blue-200">
+                        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-800 border border-amber-200">
                           {item.category}
                         </span>
                       </div>
@@ -469,7 +469,7 @@ export default function AdminPortalHub() {
                     <div className="flex items-center gap-2">
                       <button
                         onClick={() => setSelectedAnnouncement(item)}
-                        className="px-3 py-1.5 rounded-lg bg-blue-50 hover:bg-primary hover:text-white text-primary text-xs font-bold transition-all"
+                        className="px-3 py-1.5 rounded-lg bg-amber-50 hover:bg-primary hover:text-white text-primary text-xs font-bold transition-all"
                       >
                         Đọc Chi Tiết →
                       </button>
@@ -560,7 +560,7 @@ export default function AdminPortalHub() {
                   <div className="space-y-3">
                     {/* Header Icon & Type */}
                     <div className="flex items-start justify-between">
-                      <div className="p-3 rounded-2xl bg-slate-50 border border-slate-100 group-hover:bg-blue-50/50 transition-colors">
+                      <div className="p-3 rounded-2xl bg-slate-50 border border-slate-100 group-hover:bg-amber-50/50 transition-colors">
                         {getFileIcon(file.fileType)}
                       </div>
 
@@ -592,7 +592,7 @@ export default function AdminPortalHub() {
 
                     {/* Category & Dept Badges */}
                     <div className="flex flex-wrap items-center gap-1.5 pt-1">
-                      <span className="px-2 py-0.5 rounded-md text-[10px] font-semibold bg-blue-50 text-blue-700 border border-blue-200">
+                      <span className="px-2 py-0.5 rounded-md text-[10px] font-semibold bg-amber-50 text-amber-800 border border-amber-200">
                         {file.category}
                       </span>
                       {file.targetDepartment && file.targetDepartment !== 'Tất Cả' && (
