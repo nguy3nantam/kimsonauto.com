@@ -70,6 +70,12 @@ export const api = {
   createSharedFile: (data) => fetchApi('/api/shared-files', { method: 'POST', body: JSON.stringify(data) }),
   deleteSharedFile: (id) => fetchApi(`/api/shared-files/${id}`, { method: 'DELETE' }),
 
+  // Sliders
+  getSliders: (params = '') => fetchApi(`/api/sliders${params ? `?${params}` : ''}`),
+  createSlider: (data) => fetchApi('/api/sliders', { method: 'POST', body: JSON.stringify(data) }),
+  updateSlider: (id, data) => fetchApi(`/api/sliders/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
+  deleteSlider: (id) => fetchApi(`/api/sliders/${id}`, { method: 'DELETE' }),
+
   // Settings
   getSettings: () => fetchApi('/api/settings'),
   updateSettings: (data) => fetchApi('/api/settings', { method: 'PUT', body: JSON.stringify(data) }),

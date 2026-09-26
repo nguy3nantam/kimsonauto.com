@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   ChevronRight, 
+  ChevronLeft,
   ArrowRight, 
   ShieldCheck, 
   Award, 
@@ -12,14 +13,89 @@ import {
   ShieldAlert, 
   MapPin, 
   CheckCircle2, 
-  Globe,
-  Leaf,
-  Users
+  Globe, 
+  Leaf, 
+  Users 
 } from 'lucide-react';
 import { ecosystemData } from '../data/ecosystem';
+import { api } from '../services/api';
+
+const DEFAULT_SLIDES = [
+  {
+    id: 'default-1',
+    title: 'Kiến Tạo Chuỗi Giá Trị\nHệ Sinh Thái Ô Tô',
+    subtitle: 'TẬP ĐOÀN HỆ SINH THÁI Ô TÔ KIM SƠN',
+    description: 'Từ năm 2014, Kim Sơn Automobiles không ngừng mở rộng và hoàn thiện mô hình hệ sinh thái khép kín: Phân phối phương tiện, Kỹ thuật dịch vụ công nghệ cao, Chuỗi cung ứng phụ tùng, Chăm sóc xe chuyên nghiệp và Hạ tầng cứu hộ 24/7.',
+    image: 'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&q=85&w=1920',
+    primaryButtonText: 'Khám Phá 5 Trụ Cột Hoạt Động',
+    primaryButtonLink: '/linh-vuc',
+    secondaryButtonText: 'Hành Trình 12 Năm (2014 - 2026)',
+    secondaryButtonLink: '/about'
+  },
+  {
+    id: 'default-2',
+    title: 'Đại Lý Ủy Quyền VinFast\nHàng Đầu Khu Vực Phía Nam',
+    subtitle: 'MẠNG LƯỚI SHOWROOM & XƯỞNG DỊCH VỤ HIỆN ĐẠI',
+    description: 'Sở hữu chuỗi 11 chi nhánh và showroom 3S/1S VinFast tại các vị trí chiến lược: Biên Hòa, Long Thành, Long Khánh, Trảng Dài, Bình Thạnh, Quận 2...',
+    image: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=85&w=1920',
+    primaryButtonText: 'Khám Phá Mạng Lưới Chi Nhánh',
+    primaryButtonLink: '/mang-luoi',
+    secondaryButtonText: 'Đăng Ký Lái Thử & Tư Vấn',
+    secondaryButtonLink: '/lien-he'
+  },
+  {
+    id: 'default-3',
+    title: 'Trung Tâm Kỹ Thuật Ô Tô &\nCứu Hộ Giao Thông 24/7',
+    subtitle: 'NĂNG LỰC DỊCH VỤ VÀ KỸ THUẬT TIÊN TIẾN',
+    description: 'Đội ngũ kỹ sư tay nghề cao, trang thiết bị chẩn đoán chuyên hãng hiện đại, cung ứng phụ tùng chính hãng và mạng lưới xe cứu hộ chuyên dụng túc trực 24/7.',
+    image: 'https://images.unsplash.com/photo-1486006920555-c77dce18193b?auto=format&fit=crop&q=85&w=1920',
+    primaryButtonText: 'Tìm Hiểu Năng Lực Kỹ Thuật',
+    primaryButtonLink: '/linh-vuc',
+    secondaryButtonText: 'Hotline Cứu Hộ 24/7',
+    secondaryButtonLink: '/lien-he'
+  }
+];
 
 export default function HomePage() {
   const [activePillar, setActivePillar] = useState(ecosystemData.pillars[0]);
+  const [slides, setSlides] = useState(DEFAULT_SLIDES);
+  const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
+  useEffect(() => {
+    let isMounted = true;
+    api.getSliders()
+      .then((data) => {
+        if (isMounted && Array.isArray(data) && data.length > 0) {
+          setSlides(data);
+        }
+      })
+      .catch((err) => {
+        console.warn('Failed to load sliders from API, using defaults:', err);
+      });
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  // Auto-play slide every 6 seconds
+  useEffect(() => {
+    if (slides.length <= 1 || isPaused) return;
+
+    const timer = setInterval(() => {
+      setCurrentSlideIndex((prev) => (prev + 1) % slides.length);
+    }, 6000);
+
+    return () => clearInterval(timer);
+  }, [slides.length, isPaused]);
+
+  const prevSlide = () => {
+    setCurrentSlideIndex((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
+  };
+
+  const nextSlide = () => {
+    setCurrentSlideIndex((prev) => (prev + 1) % slides.length);
+  };
 
   const getPillarIcon = (iconName) => {
     switch(iconName) {
@@ -34,52 +110,113 @@ export default function HomePage() {
 
   return (
     <div className="bg-white text-slate-800">
-      {/* 1. Vingroup-style Fullscreen Corporate Hero */}
-      <section className="relative min-h-[640px] lg:min-h-[720px] flex items-center justify-center text-white overflow-hidden bg-slate-950">
-        <img 
-          src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&q=85&w=1920" 
-          alt="Kim Sơn Automobiles Ecosystem"
-          className="absolute inset-0 w-full h-full object-cover object-center opacity-30 scale-105"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/85 to-slate-950/40"></div>
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-slate-950/30"></div>
+      {/* 1. Dynamic Corporate Hero Slider */}
+      <section 
+        className="relative min-h-[640px] lg:min-h-[720px] flex items-center justify-center text-white overflow-hidden bg-slate-950"
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+      >
+        {/* Background Images for all slides with smooth opacity crossfade */}
+        {slides.map((slide, idx) => (
+          <div
+            key={slide.id || idx}
+            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+              idx === currentSlideIndex ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'
+            }`}
+          >
+            <img 
+              src={slide.image} 
+              alt={slide.title}
+              className="w-full h-full object-cover object-center scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/85 to-slate-950/40"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-slate-950/30"></div>
+          </div>
+        ))}
 
-        <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full">
-          <div className="max-w-3xl space-y-6">
-            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-primary/20 border border-primary/40 text-primary-light text-xs font-semibold tracking-[0.15em] uppercase">
-              <span className="w-2 h-2 rounded-full bg-primary animate-ping"></span>
-              TẬP ĐOÀN HỆ SINH THÁI Ô TÔ KIM SƠN
-            </div>
+        {/* Slide Content */}
+        {slides[currentSlideIndex] && (
+          <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full">
+            <div 
+              key={currentSlideIndex} 
+              className="max-w-3xl space-y-6 animate-in fade-in slide-in-from-bottom-3 duration-500"
+            >
+              <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-primary/20 border border-primary/40 text-primary-light text-xs font-semibold tracking-[0.15em] uppercase">
+                <span className="w-2 h-2 rounded-full bg-primary animate-ping"></span>
+                {slides[currentSlideIndex].subtitle || 'TẬP ĐOÀN HỆ SINH THÁI Ô TÔ KIM SƠN'}
+              </div>
 
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.2] text-white">
-              Kiến Tạo Chuỗi Giá Trị <br />
-              <span className="bg-gradient-to-r from-white via-slate-200 to-primary-light bg-clip-text text-transparent">
-                Hệ Sinh Thái Ô Tô
-              </span>
-            </h1>
+              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.2] text-white whitespace-pre-line">
+                {slides[currentSlideIndex].title}
+              </h1>
 
-            <p className="text-base sm:text-lg text-slate-300 font-normal leading-relaxed">
-              Từ năm 2014, Kim Sơn Automobiles không ngừng mở rộng và hoàn thiện mô hình hệ sinh thái khép kín: Phân phối phương tiện, Kỹ thuật dịch vụ công nghệ cao, Chuỗi cung ứng phụ tùng, Chăm sóc xe chuyên nghiệp và Hạ tầng cứu hộ 24/7.
-            </p>
+              {slides[currentSlideIndex].description && (
+                <p className="text-base sm:text-lg text-slate-300 font-normal leading-relaxed max-w-2xl">
+                  {slides[currentSlideIndex].description}
+                </p>
+              )}
 
-            <div className="flex flex-col sm:flex-row gap-4 pt-3">
-              <Link 
-                to="/linh-vuc" 
-                className="inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-dark text-white px-7 py-3.5 rounded-xl font-semibold text-xs sm:text-sm uppercase tracking-wider shadow-glow transition-all hover:scale-105"
-              >
-                <span>Khám Phá 5 Trụ Cột Hoạt Động</span>
-                <ChevronRight size={16} />
-              </Link>
+              <div className="flex flex-col sm:flex-row gap-4 pt-3">
+                {slides[currentSlideIndex].primaryButtonText && (
+                  <Link 
+                    to={slides[currentSlideIndex].primaryButtonLink || '/linh-vuc'} 
+                    className="inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-dark text-white px-7 py-3.5 rounded-xl font-semibold text-xs sm:text-sm uppercase tracking-wider shadow-glow transition-all hover:scale-105"
+                  >
+                    <span>{slides[currentSlideIndex].primaryButtonText}</span>
+                    <ChevronRight size={16} />
+                  </Link>
+                )}
 
-              <Link 
-                to="/about" 
-                className="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/20 px-7 py-3.5 rounded-xl font-semibold text-xs sm:text-sm uppercase tracking-wider backdrop-blur-md transition-all hover:scale-105"
-              >
-                <span>Hành Trình 12 Năm (2014 - 2026)</span>
-              </Link>
+                {slides[currentSlideIndex].secondaryButtonText && (
+                  <Link 
+                    to={slides[currentSlideIndex].secondaryButtonLink || '/about'} 
+                    className="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/20 px-7 py-3.5 rounded-xl font-semibold text-xs sm:text-sm uppercase tracking-wider backdrop-blur-md transition-all hover:scale-105"
+                  >
+                    <span>{slides[currentSlideIndex].secondaryButtonText}</span>
+                  </Link>
+                )}
+              </div>
             </div>
           </div>
-        </div>
+        )}
+
+        {/* Prev / Next Controls */}
+        {slides.length > 1 && (
+          <>
+            <button
+              onClick={prevSlide}
+              aria-label="Slide trước"
+              className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-slate-900/50 hover:bg-primary text-white border border-white/20 backdrop-blur-md transition-all duration-200 hover:scale-110 hidden sm:flex items-center justify-center shadow-xl cursor-pointer"
+            >
+              <ChevronLeft size={22} />
+            </button>
+            <button
+              onClick={nextSlide}
+              aria-label="Slide tiếp theo"
+              className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-slate-900/50 hover:bg-primary text-white border border-white/20 backdrop-blur-md transition-all duration-200 hover:scale-110 hidden sm:flex items-center justify-center shadow-xl cursor-pointer"
+            >
+              <ChevronRight size={22} />
+            </button>
+          </>
+        )}
+
+        {/* Pagination Dots */}
+        {slides.length > 1 && (
+          <div className="absolute bottom-8 z-30 left-1/2 -translate-x-1/2 flex items-center gap-2.5 bg-slate-950/60 backdrop-blur-md px-4 py-2 rounded-full border border-white/10">
+            {slides.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => setCurrentSlideIndex(idx)}
+                aria-label={`Slide ${idx + 1}`}
+                className={`transition-all duration-300 rounded-full cursor-pointer ${
+                  idx === currentSlideIndex 
+                    ? 'w-8 h-2 bg-primary shadow-glow' 
+                    : 'w-2 h-2 bg-white/40 hover:bg-white/80'
+                }`}
+              />
+            ))}
+          </div>
+        )}
       </section>
 
       {/* 2. Overview Introduction (Về Hệ Sinh Thái Kim Sơn) */}

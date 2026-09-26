@@ -322,6 +322,80 @@ app.delete('/api/shared-files/:id', async (req, res) => {
 });
 
 // ==========================================
+// 1.4 HOME SLIDERS API
+// ==========================================
+app.get('/api/sliders', async (req, res) => {
+  const { all } = req.query;
+  let items = await readData('sliders') || [];
+  if (!all) {
+    items = items.filter(s => s.active !== false);
+  }
+  items.sort((a, b) => (Number(a.order) || 0) - (Number(b.order) || 0));
+  res.json(items);
+});
+
+app.post('/api/sliders', async (req, res) => {
+  const { title, subtitle, description, image, primaryButtonText, primaryButtonLink, secondaryButtonText, secondaryButtonLink, order, active } = req.body;
+  if (!title || !image) {
+    return res.status(400).json({ error: 'Vui lòng nhập tiêu đề và link hình ảnh cho slider' });
+  }
+
+  const items = await readData('sliders') || [];
+  const newItem = {
+    id: String(Date.now()),
+    title: title.trim(),
+    subtitle: (subtitle || 'TẬP ĐOÀN HỆ SINH THÁI Ô TÔ KIM SƠN').trim(),
+    description: (description || '').trim(),
+    image: image.trim(),
+    primaryButtonText: (primaryButtonText || 'Khám Phá Thêm').trim(),
+    primaryButtonLink: (primaryButtonLink || '/linh-vuc').trim(),
+    secondaryButtonText: (secondaryButtonText || 'Liên Hệ').trim(),
+    secondaryButtonLink: (secondaryButtonLink || '/lien-he').trim(),
+    order: Number(order) || (items.length + 1),
+    active: active !== false,
+    createdAt: new Date().toISOString()
+  };
+
+  items.push(newItem);
+  await writeData('sliders', items);
+  res.status(201).json(newItem);
+});
+
+app.put('/api/sliders/:id', async (req, res) => {
+  const { id } = req.params;
+  const items = await readData('sliders') || [];
+  const index = items.findIndex(s => s.id === id);
+
+  if (index === -1) {
+    return res.status(404).json({ error: 'Không tìm thấy slide' });
+  }
+
+  items[index] = {
+    ...items[index],
+    ...req.body,
+    order: req.body.order !== undefined ? Number(req.body.order) : items[index].order,
+    active: req.body.active !== undefined ? Boolean(req.body.active) : items[index].active,
+    updatedAt: new Date().toISOString()
+  };
+
+  await writeData('sliders', items);
+  res.json(items[index]);
+});
+
+app.delete('/api/sliders/:id', async (req, res) => {
+  const { id } = req.params;
+  const items = await readData('sliders') || [];
+  const filtered = items.filter(s => s.id !== id);
+
+  if (filtered.length === items.length) {
+    return res.status(404).json({ error: 'Không tìm thấy slide' });
+  }
+
+  await writeData('sliders', filtered);
+  res.json({ message: 'Xóa slide thành công' });
+});
+
+// ==========================================
 // 2. DASHBOARD KPI STATS API
 // ==========================================
 app.get('/api/stats', async (req, res) => {

@@ -16,7 +16,8 @@ import {
   Bell,
   ShieldCheck,
   Building2,
-  Briefcase
+  Briefcase,
+  Image as ImageIcon
 } from 'lucide-react';
 
 export default function AdminLayout() {
@@ -59,6 +60,7 @@ export default function AdminLayout() {
   const adminNavItems = [
     { name: 'Thông Báo & File Dùng Chung', path: '/admin/portal', icon: FolderOpen },
     { name: 'Tổng Quan Hệ Sinh Thái', path: '/admin/dashboard', icon: LayoutDashboard },
+    { name: 'Slider Trang Chủ', path: '/admin/sliders', icon: ImageIcon },
     { name: 'Người Đăng Ký', path: '/admin/users', icon: Users },
     { name: '5 Trụ Cột Hoạt Động', path: '/admin/pillars', icon: Layers },
     { name: 'Mạng Lưới 11 Chi Nhánh', path: '/admin/branches', icon: MapPin },

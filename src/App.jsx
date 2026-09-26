@@ -25,6 +25,7 @@ import AdminPillars from './pages/admin/AdminPillars';
 import AdminBranches from './pages/admin/AdminBranches';
 import AdminNews from './pages/admin/AdminNews';
 import AdminContacts from './pages/admin/AdminContacts';
+import AdminSliders from './pages/admin/AdminSliders';
 import AdminUsers from './pages/admin/AdminUsers';
 import AdminSettings from './pages/admin/AdminSettings';
 
@@ -89,6 +90,7 @@ export default function App() {
           <Route index element={<AdminPortalHub />} />
           <Route path="portal" element={<AdminPortalHub />} />
           <Route path="dashboard" element={<AdminDashboard />} />
+          <Route path="sliders" element={<AdminSliders />} />
           <Route path="pillars" element={<AdminPillars />} />
           <Route path="branches" element={<AdminBranches />} />
           <Route path="news" element={<AdminNews />} />
