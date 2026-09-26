@@ -98,21 +98,6 @@ export default function AdminDashboard() {
 
   return (
     <div className="space-y-8">
-      {/* Welcome Banner */}
-      <div className="bg-gradient-to-r from-slate-900 via-secondary to-slate-900 rounded-3xl p-6 sm:p-8 text-white relative overflow-hidden shadow-lg">
-        <div className="relative z-10 max-w-2xl space-y-2">
-          <span className="text-xs font-bold uppercase tracking-widest text-primary-light">
-            TRUNG TÂM ĐIỀU HÀNH KỸ THUẬT SỐ
-          </span>
-          <h1 className="text-2xl sm:text-3xl font-black tracking-tight">
-            Xin Chào, Ban Quản Trị Kim Sơn!
-          </h1>
-          <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-            Hệ thống đang quản lý đồng bộ 5 trụ cột kinh doanh và mạng lưới 11 cơ sở & chi nhánh phục vụ khách hàng trên toàn khu vực Đông Nam Bộ.
-          </p>
-        </div>
-      </div>
-
       {/* KPI Cards Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
         {kpis.map((kpi, idx) => {
