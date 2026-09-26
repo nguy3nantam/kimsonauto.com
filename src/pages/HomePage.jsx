@@ -27,8 +27,8 @@ const DEFAULT_SLIDES = [
     subtitle: 'TẬP ĐOÀN HỆ SINH THÁI Ô TÔ KIM SƠN',
     description: 'Từ năm 2014, Kim Sơn Automobiles không ngừng mở rộng và hoàn thiện mô hình hệ sinh thái khép kín: Phân phối phương tiện, Kỹ thuật dịch vụ công nghệ cao, Chuỗi cung ứng phụ tùng, Chăm sóc xe chuyên nghiệp và Hạ tầng cứu hộ 24/7.',
     image: 'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&q=85&w=1920',
-    primaryButtonText: 'Khám Phá 5 Trụ Cột Hoạt Động',
-    primaryButtonLink: '/linh-vuc',
+    primaryButtonText: 'Khám Phá Nền Tảng Phát Triển',
+    primaryButtonLink: '#nen-tang-phat-trien',
     secondaryButtonText: 'Hành Trình 12 Năm (2014 - 2026)',
     secondaryButtonLink: '/about'
   },
@@ -49,8 +49,8 @@ const DEFAULT_SLIDES = [
     subtitle: 'NĂNG LỰC DỊCH VỤ VÀ KỸ THUẬT TIÊN TIẾN',
     description: 'Đội ngũ kỹ sư tay nghề cao, trang thiết bị chẩn đoán chuyên hãng hiện đại, cung ứng phụ tùng chính hãng và mạng lưới xe cứu hộ chuyên dụng túc trực 24/7.',
     image: 'https://images.unsplash.com/photo-1486006920555-c77dce18193b?auto=format&fit=crop&q=85&w=1920',
-    primaryButtonText: 'Tìm Hiểu Năng Lực Kỹ Thuật',
-    primaryButtonLink: '/linh-vuc',
+    primaryButtonText: 'Tìm Hiểu Mạng Lưới Chi Nhánh',
+    primaryButtonLink: '/mang-luoi',
     secondaryButtonText: 'Hotline Cứu Hộ 24/7',
     secondaryButtonLink: '/lien-he'
   }
@@ -159,7 +159,7 @@ export default function HomePage() {
               <div className="flex flex-col sm:flex-row gap-4 pt-3">
                 {slides[currentSlideIndex].primaryButtonText && (
                   <Link 
-                    to={slides[currentSlideIndex].primaryButtonLink || '/linh-vuc'} 
+                    to={slides[currentSlideIndex].primaryButtonLink || '/about'} 
                     className="inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-dark text-white px-7 py-3.5 rounded-xl font-semibold text-xs sm:text-sm uppercase tracking-wider shadow-glow transition-all hover:scale-105"
                   >
                     <span>{slides[currentSlideIndex].primaryButtonText}</span>
@@ -290,15 +290,15 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 4. 5 Core Business Pillars */}
-      <section className="py-20 bg-slate-50">
+      {/* 4. Nền Tảng Phát Triển */}
+      <section id="nen-tang-phat-trien" className="py-20 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-14">
             <div className="inline-block text-xs font-bold text-primary uppercase tracking-[0.15em] border-b-2 border-primary pb-1 mb-2.5">
-              CẤU TRÚC HOẠT ĐỘNG
+              NỀN TẢNG PHÁT TRIỂN
             </div>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-[1.3]">
-              5 Trụ Cột Cốt Lõi Của Hệ Sinh Thái
+              Nền Tảng Phát Triển Của Hệ Sinh Thái
             </h2>
             <p className="text-slate-600 text-sm sm:text-base mt-3 leading-relaxed">
               Mỗi đơn vị thành viên đóng vai trò là một mắt xích hoàn hảo trong việc mang lại giá trị trọn đời cho chiếc xe và sự an tâm của khách hàng.
@@ -385,10 +385,10 @@ export default function HomePage() {
                 <div className="pt-4 border-t border-slate-100 flex justify-between items-center text-xs">
                   <span className="text-slate-400 font-medium">{activePillar.subtitle}</span>
                   <Link
-                    to="/linh-vuc"
+                    to="/about"
                     className="inline-flex items-center gap-1.5 text-primary hover:text-primary-dark font-bold uppercase tracking-wider"
                   >
-                    <span>Xem chi tiết cả 5 trụ cột</span>
+                    <span>Tìm hiểu thêm về Kim Sơn</span>
                     <ArrowRight size={13} />
                   </Link>
                 </div>

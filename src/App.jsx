@@ -9,7 +9,6 @@ import FloatingCTA from './components/common/FloatingCTA';
 // Corporate Ecosystem Public Pages
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
-import PillarsPage from './pages/PillarsPage';
 import NetworkPage from './pages/NetworkPage';
 import SustainabilityPage from './pages/SustainabilityPage';
 import NewsPage from './pages/NewsPage';
@@ -73,15 +72,16 @@ export default function App() {
         <Route element={<PublicLayout />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
-          <Route path="/linh-vuc" element={<PillarsPage />} />
           <Route path="/mang-luoi" element={<NetworkPage />} />
           <Route path="/phat-trien-ben-vung" element={<SustainabilityPage />} />
           <Route path="/tin-tuc" element={<NewsPage />} />
           <Route path="/lien-he" element={<ContactPage />} />
 
-          {/* Aliases for convenience */}
-          <Route path="/vehicles" element={<Navigate to="/linh-vuc" replace />} />
-          <Route path="/services" element={<Navigate to="/linh-vuc" replace />} />
+          {/* Aliases & Redirects */}
+          <Route path="/linh-vuc" element={<Navigate to="/about" replace />} />
+          <Route path="/hoat-dong" element={<Navigate to="/about" replace />} />
+          <Route path="/vehicles" element={<Navigate to="/about" replace />} />
+          <Route path="/services" element={<Navigate to="/about" replace />} />
           <Route path="/contact" element={<Navigate to="/lien-he" replace />} />
           <Route path="/news" element={<Navigate to="/tin-tuc" replace />} />
 

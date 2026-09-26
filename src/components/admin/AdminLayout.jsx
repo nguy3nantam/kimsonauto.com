@@ -64,7 +64,7 @@ export default function AdminLayout() {
     { name: 'Tổng Quan Hệ Sinh Thái', path: '/admin/dashboard', icon: LayoutDashboard },
     { name: 'Slider Trang Chủ', path: '/admin/sliders', icon: ImageIcon },
     { name: 'Người Đăng Ký', path: '/admin/users', icon: Users },
-    { name: '5 Trụ Cột Hoạt Động', path: '/admin/pillars', icon: Layers },
+    { name: 'Nền Tảng Phát Triển', path: '/admin/pillars', icon: Layers },
     { name: 'Mạng Lưới 11 Chi Nhánh', path: '/admin/branches', icon: MapPin },
     { name: 'Tin Tức & Thông Cáo', path: '/admin/news', icon: Newspaper },
     { name: 'Yêu Cầu Hợp Tác B2B', path: '/admin/contacts', icon: Mail },

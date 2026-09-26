@@ -42,15 +42,15 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* 5 Trụ Cột Hoạt Động (Col 3) */}
+          {/* Nền Tảng Phát Triển (Col 3) */}
           <div>
             <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-4 border-l-2 border-primary pl-2.5">
-              Trụ Cột Hệ Sinh Thái
+              Nền Tảng Phát Triển
             </h4>
             <ul className="space-y-2 text-xs">
               {ecosystemData.pillars.map((p) => (
                 <li key={p.id}>
-                  <Link to="/linh-vuc" className="hover:text-white transition-colors flex items-center gap-1.5">
+                  <Link to="/about" className="hover:text-white transition-colors flex items-center gap-1.5">
                     <ChevronRight size={12} className="text-primary-light" />
                     <span>{p.subtitle}</span>
                   </Link>

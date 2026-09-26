@@ -66,19 +66,13 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // 6 mục menu chuẩn: Giới Thiệu, Hoạt Động, Hệ Thống, Phát Triển Bền Vững, Tin Tức, Liên Hệ
+  // 5 mục menu chuẩn: Giới Thiệu, Hệ Thống, Phát Triển Bền Vững, Tin Tức, Liên Hệ
   const navLinks = [
     { 
       name: 'Giới Thiệu', 
       path: '/about', 
       desc: 'Lịch sử phát triển & giá trị cốt lõi',
       icon: Building2 
-    },
-    { 
-      name: 'Hoạt Động', 
-      path: '/linh-vuc', 
-      desc: '5 trụ cột kỹ thuật & công nghệ ô tô',
-      icon: Layers 
     },
     { 
       name: 'Hệ Thống', 
