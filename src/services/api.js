@@ -26,6 +26,7 @@ export async function fetchApi(endpoint, options = {}) {
 export const api = {
   // Auth
   login: (credentials) => fetchApi('/api/auth/login', { method: 'POST', body: JSON.stringify(credentials) }),
+  register: (userData) => fetchApi('/api/auth/register', { method: 'POST', body: JSON.stringify(userData) }),
   getMe: () => fetchApi('/api/auth/me'),
 
   // Stats

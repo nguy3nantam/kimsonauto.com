@@ -80,7 +80,8 @@ export default function App() {
         {/* ==================================================== */}
         {/* BACKEND ADMIN PORTAL ROUTES                          */}
         {/* ==================================================== */}
-        <Route path="/admin/login" element={<AdminLoginPage />} />
+        <Route path="/admin/login" element={<AdminLoginPage initialMode="login" />} />
+        <Route path="/register" element={<AdminLoginPage initialMode="register" />} />
         
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<AdminDashboard />} />

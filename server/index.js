@@ -33,6 +33,39 @@ app.post('/api/auth/login', async (req, res) => {
   });
 });
 
+app.post('/api/auth/register', async (req, res) => {
+  const { username, password, name, email, phone } = req.body;
+  if (!username || !password || !name) {
+    return res.status(400).json({ error: 'Vui lòng điền họ tên, tên tài khoản và mật khẩu' });
+  }
+
+  const users = await readData('users') || [];
+  if (users.some(u => u.username.toLowerCase() === username.toLowerCase())) {
+    return res.status(400).json({ error: 'Tên tài khoản này đã được sử dụng' });
+  }
+
+  const newUser = {
+    id: String(Date.now()),
+    username: username.trim(),
+    password,
+    name: name.trim(),
+    email: (email || '').trim(),
+    phone: (phone || '').trim(),
+    role: 'Partner / Client',
+    createdAt: new Date().toISOString()
+  };
+
+  users.push(newUser);
+  await writeData('users', users);
+
+  const { password: _, ...userProfile } = newUser;
+  res.status(201).json({
+    token: `token_${Date.now()}_${newUser.id}`,
+    user: userProfile,
+    message: 'Đăng ký tài khoản thành công!'
+  });
+});
+
 app.get('/api/auth/me', async (req, res) => {
   const users = await readData('users') || [];
   if (users.length > 0) {
