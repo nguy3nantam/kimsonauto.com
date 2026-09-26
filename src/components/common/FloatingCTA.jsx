@@ -21,32 +21,19 @@ export default function FloatingCTA() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  return (
-    <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-3 pointer-events-auto">
-      {/* Scroll to Top */}
-      {showScrollTop && (
-        <button
-          onClick={scrollToTop}
-          className="w-11 h-11 rounded-full bg-slate-800 text-white flex items-center justify-center shadow-lg hover:bg-slate-700 transition-all hover:scale-110"
-          title="Lên đầu trang"
-        >
-          <ArrowUp size={18} />
-        </button>
-      )}
+  if (!showScrollTop) return null;
 
-      {/* Zalo Contact Button */}
-      <a
-        href="https://zalo.me/0908123456"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="group flex items-center gap-2 bg-[#0068ff] hover:bg-[#0052cc] text-white pl-3.5 pr-4 py-3 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
-        title="Chat Zalo Doanh Nghiệp"
+  return (
+    <div className="fixed bottom-6 right-6 z-40 pointer-events-auto">
+      {/* Scroll to Top */}
+      <button
+        onClick={scrollToTop}
+        className="w-11 h-11 rounded-full bg-slate-900/90 hover:bg-primary text-white flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-110 border border-slate-700/60 backdrop-blur-sm"
+        title="Lên đầu trang"
+        aria-label="Lên đầu trang"
       >
-        <div className="w-8 h-8 rounded-full bg-white text-[#0068ff] flex items-center justify-center font-extrabold text-sm shadow">
-          Z
-        </div>
-        <span className="text-xs sm:text-sm font-bold tracking-tight">Chat Zalo</span>
-      </a>
+        <ArrowUp size={18} />
+      </button>
     </div>
   );
 }
