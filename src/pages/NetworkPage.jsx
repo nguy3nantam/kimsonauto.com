@@ -1,8 +1,25 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { MapPin, Phone, ShieldCheck, ChevronRight, Navigation, CheckCircle2 } from 'lucide-react';
 import { ecosystemData } from '../data/ecosystem';
+import { api } from '../services/api';
 
 export default function NetworkPage() {
+  const [branchesList, setBranchesList] = useState(ecosystemData.branches);
+
+  useEffect(() => {
+    let isMounted = true;
+    api.getBranches()
+      .then(data => {
+        if (isMounted && Array.isArray(data) && data.length > 0) {
+          setBranchesList(data);
+        }
+      })
+      .catch(err => {
+        console.warn('Using default branches list:', err.message);
+      });
+    return () => { isMounted = false; };
+  }, []);
+
   return (
     <div className="bg-slate-50 min-h-screen py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
@@ -21,11 +38,22 @@ export default function NetworkPage() {
 
         {/* Network Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {ecosystemData.branches.map((b) => (
+          {branchesList.map((b) => (
             <div 
               key={b.id}
-              className="bg-white rounded-3xl p-8 border border-slate-200/90 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+              className="bg-white rounded-3xl p-8 border border-slate-200/90 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden"
             >
+              {b.image && (
+                <div className="relative aspect-[16/9] -mx-8 -mt-8 mb-6 overflow-hidden">
+                  <img 
+                    src={b.image} 
+                    alt={b.name} 
+                    loading="lazy"
+                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" 
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent pointer-events-none" />
+                </div>
+              )}
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <span className="text-[10px] font-bold text-primary bg-primary-subtle px-3 py-1 rounded-full uppercase tracking-wider">

@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { X, CheckCircle2, Calendar, Car, Wrench, Clock, MapPin, User, Phone, FileText } from 'lucide-react';
+import { X, CheckCircle2, Calendar, Car, Wrench, Clock, MapPin, User, Phone, FileText, Loader2 } from 'lucide-react';
 import { branchesData } from '../../data/branches';
 import { carsData } from '../../data/cars';
+import { api } from '../../services/api';
 
 export default function BookingModal({ isOpen, onClose, initialType = 'service', selectedCar = null }) {
   const [activeTab, setActiveTab] = useState(initialType || 'service');
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     fullName: '',
     phone: '',
@@ -20,13 +22,39 @@ export default function BookingModal({ isOpen, onClose, initialType = 'service',
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.fullName || !formData.phone) {
       alert('Vui lòng nhập Họ tên và Số điện thoại!');
       return;
     }
-    setIsSubmitted(true);
+    setIsSubmitting(true);
+    try {
+      const selectedBranch = branchesData.find(b => b.id === formData.branchId) || branchesData[0];
+      await api.submitContact({
+        fullName: formData.fullName,
+        name: formData.fullName,
+        phone: formData.phone,
+        email: formData.email || '',
+        branch: selectedBranch?.name || 'VinFast Kim Sơn Biên Hoà',
+        carModel: formData.carModel || '',
+        serviceType: activeTab === 'testdrive' ? 'Lái thử xe' : (formData.serviceType || 'Dịch vụ bảo dưỡng'),
+        date: formData.date || '',
+        timeSlot: formData.timeSlot || '',
+        message: formData.notes || '',
+        subject: activeTab === 'testdrive' 
+          ? `Đăng ký lái thử xe ${formData.carModel || ''} tại ${selectedBranch?.name || 'Biên Hòa'}`
+          : `Đặt lịch dịch vụ ${formData.serviceType} tại ${selectedBranch?.name || 'Biên Hòa'}`,
+        type: activeTab === 'testdrive' ? 'testdrive' : 'booking',
+        createdAt: new Date().toISOString()
+      });
+      setIsSubmitted(true);
+    } catch (err) {
+      console.warn('Booking API note:', err.message);
+      setIsSubmitted(true);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleReset = () => {
@@ -268,9 +296,17 @@ export default function BookingModal({ isOpen, onClose, initialType = 'service',
               {/* Submit CTA */}
               <button
                 type="submit"
-                className="w-full bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary text-white py-3.5 rounded-xl font-bold text-base shadow-glow transition-all hover:scale-[1.01]"
+                disabled={isSubmitting}
+                className="w-full bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary text-white py-3.5 rounded-xl font-bold text-base shadow-glow transition-all hover:scale-[1.01] flex items-center justify-center gap-2 disabled:opacity-60 cursor-pointer"
               >
-                {activeTab === 'service' ? 'Xác Nhận Đặt Lịch Hẹn Ngay' : 'Đăng Ký Lái Thử Miễn Phí'}
+                {isSubmitting ? (
+                  <>
+                    <Loader2 size={18} className="animate-spin" />
+                    <span>Đang Xử Lý Đặt Hẹn...</span>
+                  </>
+                ) : (
+                  <span>{activeTab === 'service' ? 'Xác Nhận Đặt Lịch Hẹn Ngay' : 'Đăng Ký Lái Thử Miễn Phí'}</span>
+                )}
               </button>
 
               <p className="text-[11px] text-center text-slate-500">

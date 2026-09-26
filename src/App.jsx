@@ -35,12 +35,35 @@ function BrandingManager() {
   return null;
 }
 
-// Scroll to top helper on route change
+const ROUTE_TITLES = {
+  '/': 'Kim Sơn Automobiles - Cổng Thông Tin Hệ Sinh Thái Ô Tô',
+  '/about': 'Giới Thiệu - Kim Sơn Automobiles',
+  '/mang-luoi': 'Mạng Lưới 11 Chi Nhánh & Cơ Sở - Kim Sơn Automobiles',
+  '/phat-trien-ben-vung': 'Phát Triển Bền Vững (ESG) - Kim Sơn Automobiles',
+  '/tin-tuc': 'Tin Tức & Thông Cáo Báo Chí - Kim Sơn Automobiles',
+  '/lien-he': 'Liên Hệ & Hợp Tác B2B - Kim Sơn Automobiles',
+  '/admin/login': 'Đăng Nhập Quản Trị - Kim Sơn Automobiles',
+  '/register': 'Đăng Ký Thành Viên - Kim Sơn Automobiles',
+  '/admin': 'Cổng Quản Trị - Kim Sơn Automobiles',
+  '/admin/portal': 'Thông Báo & File Dùng Chung - Kim Sơn Portal',
+  '/admin/dashboard': 'Tổng Quan Hệ Sinh Thái - Kim Sơn Admin',
+  '/admin/sliders': 'Quản Lý Slider Trang Chủ - Kim Sơn Admin',
+  '/admin/users': 'Quản Lý Người Đăng Ký - Kim Sơn Admin',
+  '/admin/pillars': 'Nền Tảng Phát Triển - Kim Sơn Admin',
+  '/admin/branches': 'Mạng Lưới Chi Nhánh - Kim Sơn Admin',
+  '/admin/news': 'Quản Lý Tin Tức - Kim Sơn Admin',
+  '/admin/contacts': 'Yêu Cầu Hợp Tác - Kim Sơn Admin',
+  '/admin/settings': 'Cài Đặt Hệ Thống - Kim Sơn Admin',
+};
+
+// Scroll to top and title helper on route change
 function ScrollToTop() {
   const { pathname } = useLocation();
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    const targetTitle = ROUTE_TITLES[pathname] || (pathname.startsWith('/admin') ? 'Quản Trị - Kim Sơn Automobiles' : 'Kim Sơn Automobiles');
+    document.title = targetTitle;
   }, [pathname]);
 
   return null;

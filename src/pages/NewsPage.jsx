@@ -1,9 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Calendar, Clock, ChevronRight, X } from 'lucide-react';
 import { ecosystemData } from '../data/ecosystem';
+import { api } from '../services/api';
 
 export default function NewsPage() {
   const [selectedArticle, setSelectedArticle] = useState(null);
+  const [newsList, setNewsList] = useState(ecosystemData.news);
+
+  useEffect(() => {
+    let isMounted = true;
+    api.getNews()
+      .then(data => {
+        if (isMounted && Array.isArray(data) && data.length > 0) {
+          setNewsList(data);
+        }
+      })
+      .catch(err => {
+        console.warn('Using default news list:', err.message);
+      });
+    return () => { isMounted = false; };
+  }, []);
 
   return (
     <div className="bg-slate-50 min-h-screen py-16">
@@ -23,7 +39,7 @@ export default function NewsPage() {
 
         {/* News Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {ecosystemData.news.map((item) => (
+          {newsList.map((item) => (
             <div 
               key={item.id}
               onClick={() => setSelectedArticle(item)}
@@ -33,6 +49,7 @@ export default function NewsPage() {
                 <img 
                   src={item.image} 
                   alt={item.title} 
+                  loading="lazy"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
                 />
                 <span className="absolute top-4 left-4 bg-slate-900/80 backdrop-blur-md text-white text-[11px] font-bold px-3 py-1 rounded-full">

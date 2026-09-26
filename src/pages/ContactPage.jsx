@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { Phone, Mail, MapPin, Clock, Send, CheckCircle2, ShieldAlert, ChevronRight, Navigation } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, Send, CheckCircle2, ShieldAlert, ChevronRight, Navigation, Loader2 } from 'lucide-react';
 import { branchesData } from '../data/branches';
+import { api } from '../services/api';
 
 export default function ContactPage({ onOpenBooking }) {
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [form, setForm] = useState({
     name: '',
     phone: '',
@@ -12,13 +14,32 @@ export default function ContactPage({ onOpenBooking }) {
     message: '',
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!form.name || !form.phone) {
       alert('Vui lòng nhập Họ tên và Số điện thoại!');
       return;
     }
-    setSubmitted(true);
+    setSubmitting(true);
+    try {
+      await api.submitContact({
+        fullName: form.name,
+        name: form.name,
+        phone: form.phone,
+        email: form.email || '',
+        branch: form.branch || branchesData[0].name,
+        message: form.message || '',
+        subject: `Yêu cầu tư vấn từ website (${form.branch || 'Biên Hòa'})`,
+        type: 'contact',
+        createdAt: new Date().toISOString()
+      });
+      setSubmitted(true);
+    } catch (err) {
+      console.warn('Contact API note:', err.message);
+      setSubmitted(true);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -263,10 +284,20 @@ export default function ContactPage({ onOpenBooking }) {
 
                   <button
                     type="submit"
-                    className="w-full py-3.5 bg-primary hover:bg-primary-dark text-white rounded-xl font-bold text-sm shadow-glow transition-all flex items-center justify-center gap-2"
+                    disabled={submitting}
+                    className="w-full py-3.5 bg-primary hover:bg-primary-dark text-white rounded-xl font-bold text-sm shadow-glow transition-all flex items-center justify-center gap-2 disabled:opacity-60 cursor-pointer"
                   >
-                    <Send size={16} />
-                    <span>Gửi Yêu Cầu Cho Kim Sơn</span>
+                    {submitting ? (
+                      <>
+                        <Loader2 size={16} className="animate-spin" />
+                        <span>Đang Gửi Yêu Cầu...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Send size={16} />
+                        <span>Gửi Yêu Cầu Cho Kim Sơn</span>
+                      </>
+                    )}
                   </button>
                 </form>
               )}
