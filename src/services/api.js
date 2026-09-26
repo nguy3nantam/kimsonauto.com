@@ -76,7 +76,8 @@ export const api = {
   updateSlider: (id, data) => fetchApi(`/api/sliders/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
   deleteSlider: (id) => fetchApi(`/api/sliders/${id}`, { method: 'DELETE' }),
 
-  // Settings
+  // Settings & Branding
   getSettings: () => fetchApi('/api/settings'),
   updateSettings: (data) => fetchApi('/api/settings', { method: 'PUT', body: JSON.stringify(data) }),
+  uploadImage: (data) => fetchApi('/api/upload', { method: 'POST', body: JSON.stringify(data) }),
 };

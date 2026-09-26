@@ -2,8 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Phone, Mail, MapPin, ChevronRight, Globe, ShieldCheck } from 'lucide-react';
 import { ecosystemData } from '../../data/ecosystem';
+import { useBranding } from '../../services/branding';
 
 export default function Footer() {
+  const branding = useBranding();
   return (
     <footer className="bg-slate-950 text-slate-400 pt-16 pb-8 border-t border-slate-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -13,7 +15,7 @@ export default function Footer() {
             <div className="flex items-center gap-3">
               <Link to="/" className="inline-block hover:opacity-90 transition-opacity">
                 <img 
-                  src="/logo-kimson-white.png" 
+                  src={branding.logoWhite || '/logo-kimson-white.png'} 
                   alt="Kim Sơn Automobiles" 
                   className="h-11 w-auto object-contain"
                 />

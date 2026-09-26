@@ -18,8 +18,10 @@ import {
   LogOut,
   ShieldCheck
 } from 'lucide-react';
+import { useBranding } from '../../services/branding';
 
 export default function Navbar() {
+  const branding = useBranding();
   const [isOpen, setIsOpen] = useState(false);
   const [lang, setLang] = useState('VN');
   const [mounted, setMounted] = useState(false);
@@ -164,7 +166,7 @@ export default function Navbar() {
           <div className="flex items-center gap-3">
             <Link to="/" onClick={() => setIsOpen(false)}>
               <img 
-                src="/logo-kimson.png" 
+                src={branding.logo || '/logo-kimson.png'} 
                 alt="Kim Sơn Automobiles" 
                 className="h-10 w-auto object-contain hover:scale-105 transition-transform"
               />
@@ -333,7 +335,7 @@ export default function Navbar() {
             aria-label="Trang Chủ Kim Sơn Automobiles"
           >
             <img 
-              src="/logo-kimson.png" 
+              src={branding.logo || '/logo-kimson.png'} 
               alt="Kim Sơn Automobiles" 
               className="h-8 sm:h-9 w-auto object-contain drop-shadow-xs transition-transform duration-300 group-hover:scale-105"
             />

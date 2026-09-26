@@ -28,6 +28,13 @@ import AdminContacts from './pages/admin/AdminContacts';
 import AdminSliders from './pages/admin/AdminSliders';
 import AdminUsers from './pages/admin/AdminUsers';
 import AdminSettings from './pages/admin/AdminSettings';
+import { useBranding } from './services/branding';
+
+// Branding & Favicon Manager
+function BrandingManager() {
+  useBranding();
+  return null;
+}
 
 // Scroll to top helper on route change
 function ScrollToTop() {
@@ -57,6 +64,7 @@ function PublicLayout() {
 export default function App() {
   return (
     <Router>
+      <BrandingManager />
       <ScrollToTop />
       <Routes>
         {/* ==================================================== */}

@@ -9,5 +9,8 @@
   "slogan": "Kiến Tạo Giá Trị - Nâng Tầm Trải Nghiệm Ô Tô Việt",
   "totalEngineers": 300,
   "totalCustomers": 50000,
-  "satisfactionRate": "99%"
+  "satisfactionRate": "99%",
+  "logo": "/logo-kimson.png",
+  "logoWhite": "/logo-kimson-white.png",
+  "favicon": "/favicon.png"
 }

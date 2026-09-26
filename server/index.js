@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
+import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { readData, writeData } from './db.js';
 
@@ -11,7 +12,15 @@ const app = express();
 const PORT = process.env.PORT || 80;
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '15mb' }));
+app.use(express.urlencoded({ extended: true, limit: '15mb' }));
+
+// Static uploads folder
+const uploadsDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+}
+app.use('/uploads', express.static(uploadsDir));
 
 // ==========================================
 // 1. AUTHENTICATION API
@@ -601,6 +610,46 @@ app.put('/api/settings', async (req, res) => {
   settings = { ...settings, ...req.body };
   await writeData('settings', settings);
   res.json(settings);
+});
+
+// ==========================================
+// 7.1 IMAGE UPLOAD (LOGO / FAVICON / ASSETS)
+// ==========================================
+app.post('/api/upload', async (req, res) => {
+  try {
+    const { name, data, type } = req.body;
+    if (!data) {
+      return res.status(400).json({ error: 'Không tìm thấy dữ liệu hình ảnh' });
+    }
+
+    const matches = data.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+    let buffer;
+    let ext = '.png';
+    if (matches && matches.length === 3) {
+      buffer = Buffer.from(matches[2], 'base64');
+      const mime = matches[1];
+      if (mime.includes('jpeg') || mime.includes('jpg')) ext = '.jpg';
+      else if (mime.includes('svg')) ext = '.svg';
+      else if (mime.includes('x-icon') || mime.includes('ico') || mime.includes('icon')) ext = '.ico';
+      else if (mime.includes('webp')) ext = '.webp';
+    } else {
+      buffer = Buffer.from(data, 'base64');
+    }
+
+    if (name && path.extname(name)) {
+      ext = path.extname(name);
+    }
+
+    const cleanBaseName = name ? path.basename(name, ext).replace(/[^a-zA-Z0-9_-]/g, '_') : 'asset';
+    const fileName = `${cleanBaseName}_${Date.now()}${ext}`;
+    const filePath = path.join(uploadsDir, fileName);
+
+    await fs.promises.writeFile(filePath, buffer);
+    res.json({ url: `/uploads/${fileName}`, name: fileName });
+  } catch (err) {
+    console.error('Upload error:', err);
+    res.status(500).json({ error: 'Lỗi tải ảnh lên: ' + err.message });
+  }
 });
 
 // ==========================================

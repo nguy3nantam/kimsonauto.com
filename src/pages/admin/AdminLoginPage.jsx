@@ -15,6 +15,7 @@ import {
   Briefcase
 } from 'lucide-react';
 import { api } from '../../services/api';
+import { useBranding } from '../../services/branding';
 
 export const UNIT_OPTIONS = [
   'VF Biên Hòa',
@@ -36,6 +37,7 @@ export const DEPARTMENT_OPTIONS = [
 ];
 
 export default function AdminLoginPage({ initialMode = 'login' }) {
+  const branding = useBranding();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const paramMode = searchParams.get('mode') || (location.pathname === '/register' ? 'register' : initialMode);
@@ -120,7 +122,7 @@ export default function AdminLoginPage({ initialMode = 'login' }) {
         <div className="text-center mb-6">
           <Link to="/" className="inline-block hover:scale-105 transition-transform mb-3">
             <img 
-              src="/logo-kimson.png" 
+              src={branding.logo || '/logo-kimson.png'} 
               alt="Kim Sơn Automobiles" 
               className="h-16 sm:h-20 w-auto object-contain mx-auto"
             />
