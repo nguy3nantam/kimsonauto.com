@@ -10,7 +10,10 @@ import {
   MapPin, 
   Leaf, 
   Newspaper, 
-  Mail 
+  Mail,
+  User,
+  LogIn,
+  ShieldCheck
 } from 'lucide-react';
 
 export default function Navbar() {
@@ -18,7 +21,13 @@ export default function Navbar() {
   const [lang, setLang] = useState('VN');
   const [mounted, setMounted] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const location = useLocation();
+
+  useEffect(() => {
+    const token = localStorage.getItem('kimson_admin_token');
+    setIsLoggedIn(!!token);
+  }, [location.pathname, isOpen]);
 
   useEffect(() => {
     setMounted(true);
@@ -186,6 +195,36 @@ export default function Navbar() {
             );
           })}
 
+          {/* Cổng Đăng Nhập trong Offcanvas Menu */}
+          <div className="pt-2">
+            <Link
+              to={isLoggedIn ? "/admin" : "/admin/login"}
+              onClick={() => setIsOpen(false)}
+              className={`w-full flex items-center justify-between p-3.5 rounded-2xl transition-all group shadow-xs ${
+                isLoggedIn
+                  ? 'bg-slate-900 text-white hover:bg-slate-800 border border-slate-800'
+                  : 'bg-gradient-to-r from-primary via-primary to-primary-dark text-white hover:shadow-glow hover:scale-[1.01]'
+              }`}
+            >
+              <div className="flex items-center gap-3.5">
+                <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-white shrink-0 ${
+                  isLoggedIn ? 'bg-emerald-600' : 'bg-white/20'
+                }`}>
+                  {isLoggedIn ? <ShieldCheck size={19} /> : <LogIn size={19} />}
+                </div>
+                <div>
+                  <div className="text-sm font-bold leading-snug">
+                    {isLoggedIn ? 'Bảng Quản Trị Hệ Thống' : 'Cổng Đăng Nhập'}
+                  </div>
+                  <div className={`text-[11px] font-normal leading-tight mt-0.5 ${isLoggedIn ? 'text-emerald-400 font-semibold' : 'text-white/80'}`}>
+                    {isLoggedIn ? 'Đã đăng nhập • Quản lý ngay' : 'Quản trị viên & nhân sự nội bộ'}
+                  </div>
+                </div>
+              </div>
+              <ChevronRight size={16} className="text-white/80 group-hover:translate-x-1 transition-transform shrink-0" />
+            </Link>
+          </div>
+
           {/* Card giới thiệu quy mô hệ sinh thái */}
           <div className="pt-6">
             <div className="bg-gradient-to-br from-slate-900 to-slate-950 text-white p-5 rounded-2xl border border-slate-800 space-y-2">
@@ -310,6 +349,23 @@ export default function Navbar() {
                 EN
               </button>
             </div>
+
+            {/* Nút Đăng Nhập trên Header */}
+            <Link
+              to={isLoggedIn ? "/admin" : "/admin/login"}
+              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold transition-all duration-300 shadow-xs ${
+                isLoggedIn
+                  ? 'bg-emerald-50 text-emerald-700 hover:bg-emerald-600 hover:text-white border border-emerald-200'
+                  : 'bg-primary-subtle text-primary hover:bg-primary hover:text-white border border-primary/20 hover:border-primary'
+              }`}
+              title={isLoggedIn ? "Đến bảng quản trị hệ thống" : "Đăng nhập hệ thống"}
+              aria-label={isLoggedIn ? "Bảng quản trị" : "Đăng nhập"}
+            >
+              <User size={13} className="shrink-0" />
+              <span className="hidden sm:inline-block">
+                {isLoggedIn ? "Quản Trị" : "Đăng Nhập"}
+              </span>
+            </Link>
 
             {/* Nút kích hoạt Offcanvas Menu với hiệu ứng chuyển màu khi hover */}
             <button
