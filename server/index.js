@@ -110,6 +110,8 @@ app.get('/api/auth/me', async (req, res) => {
 // ==========================================
 // 1.1 USERS & REGISTRATIONS MANAGEMENT API
 // ==========================================
+const normStr = (s) => (s ? String(s).trim().toLowerCase() : '');
+
 app.get('/api/users', async (req, res) => {
   const { unit, department, search, requesterRole, requesterUnit, requesterDepartment } = req.query;
   const users = await readData('users') || [];
@@ -124,16 +126,21 @@ app.get('/api/users', async (req, res) => {
   }));
 
   // Leader permission restriction: can only view users in their unit and department
-  if (requesterRole === 'Leader' && requesterUnit && requesterDepartment) {
-    filtered = filtered.filter(u => u.unit === requesterUnit && u.department === requesterDepartment);
+  if (requesterRole === 'Leader') {
+    if (requesterUnit) {
+      filtered = filtered.filter(u => normStr(u.unit) === normStr(requesterUnit));
+    }
+    if (requesterDepartment) {
+      filtered = filtered.filter(u => normStr(u.department) === normStr(requesterDepartment));
+    }
   }
 
   if (unit && unit !== 'all') {
-    filtered = filtered.filter(u => u.unit === unit);
+    filtered = filtered.filter(u => normStr(u.unit) === normStr(unit));
   }
 
   if (department && department !== 'all') {
-    filtered = filtered.filter(u => u.department === department);
+    filtered = filtered.filter(u => normStr(u.department) === normStr(department));
   }
 
   if (search) {
@@ -218,12 +225,18 @@ app.put('/api/users/:id', async (req, res) => {
 
   // Leader restriction: can only modify users in their own branch and department
   if (requesterRole === 'Leader') {
-    if (existing.unit !== requesterUnit || existing.department !== requesterDepartment) {
+    const leaderUnit = normStr(requesterUnit);
+    const leaderDept = normStr(requesterDepartment);
+    const userUnit = normStr(existing.unit);
+    const userDept = normStr(existing.department);
+
+    if ((leaderUnit && userUnit && leaderUnit !== userUnit) || 
+        (leaderDept && userDept && leaderDept !== userDept)) {
       return res.status(403).json({ error: 'Bạn chỉ có quyền quản lý nhân viên thuộc chi nhánh và bộ phận của mình' });
     }
     // Leader cannot change user's unit or department or promote role
-    updateData.unit = requesterUnit;
-    updateData.department = requesterDepartment;
+    if (requesterUnit) updateData.unit = requesterUnit;
+    if (requesterDepartment) updateData.department = requesterDepartment;
     updateData.role = 'User';
   } else if (updateData.role) {
     updateData.role = normalizeRole(updateData.role);
@@ -263,7 +276,13 @@ app.delete('/api/users/:id', async (req, res) => {
 
   // Leader restriction
   if (requesterRole === 'Leader') {
-    if (targetUser.unit !== requesterUnit || targetUser.department !== requesterDepartment) {
+    const leaderUnit = normStr(requesterUnit);
+    const leaderDept = normStr(requesterDepartment);
+    const userUnit = normStr(targetUser.unit);
+    const userDept = normStr(targetUser.department);
+
+    if ((leaderUnit && userUnit && leaderUnit !== userUnit) || 
+        (leaderDept && userDept && leaderDept !== userDept)) {
       return res.status(403).json({ error: 'Bạn chỉ có quyền xóa nhân viên thuộc chi nhánh và bộ phận của mình' });
     }
   }
