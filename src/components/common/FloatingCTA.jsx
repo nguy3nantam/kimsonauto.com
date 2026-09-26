@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Phone, ArrowUp } from 'lucide-react';
+import { ArrowUp } from 'lucide-react';
 
 export default function FloatingCTA() {
   const [showScrollTop, setShowScrollTop] = useState(false);
@@ -46,23 +46,6 @@ export default function FloatingCTA() {
           Z
         </div>
         <span className="text-xs sm:text-sm font-bold tracking-tight">Chat Zalo</span>
-      </a>
-
-      {/* Hotline Pulse Button */}
-      <a
-        href="tel:0908123456"
-        className="relative group flex items-center gap-2 bg-gradient-to-r from-primary to-primary-dark text-white pl-3.5 pr-4 py-3 rounded-full shadow-glow hover:shadow-2xl transition-all duration-300 hover:scale-105"
-        title="Gọi Tổng Đài Điều Hành 24/7"
-      >
-        {/* Radar ping effect */}
-        <span className="absolute -inset-1 rounded-full bg-primary-light opacity-30 group-hover:opacity-60 animate-ping"></span>
-        <div className="relative w-8 h-8 rounded-full bg-white text-primary flex items-center justify-center font-bold shadow">
-          <Phone size={16} className="animate-bounce" />
-        </div>
-        <div className="relative flex flex-col text-left">
-          <span className="text-[10px] uppercase font-bold text-blue-100 tracking-wider">Tổng Đài 24/7</span>
-          <span className="text-xs sm:text-sm font-extrabold tracking-tight">0908 123 456</span>
-        </div>
       </a>
     </div>
   );
