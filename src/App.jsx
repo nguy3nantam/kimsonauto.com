@@ -19,6 +19,7 @@ import NotFoundPage from './pages/NotFoundPage';
 // Admin Backend Portal Components & Pages
 import AdminLoginPage from './pages/admin/AdminLoginPage';
 import AdminLayout from './components/admin/AdminLayout';
+import AdminPortalHub from './pages/admin/AdminPortalHub';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminPillars from './pages/admin/AdminPillars';
 import AdminBranches from './pages/admin/AdminBranches';
@@ -85,7 +86,9 @@ export default function App() {
         <Route path="/register" element={<AdminLoginPage initialMode="register" />} />
         
         <Route path="/admin" element={<AdminLayout />}>
-          <Route index element={<AdminDashboard />} />
+          <Route index element={<AdminPortalHub />} />
+          <Route path="portal" element={<AdminPortalHub />} />
+          <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="pillars" element={<AdminPillars />} />
           <Route path="branches" element={<AdminBranches />} />
           <Route path="news" element={<AdminNews />} />

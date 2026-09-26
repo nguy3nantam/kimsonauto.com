@@ -60,6 +60,16 @@ export const api = {
   updateContact: (id, data) => fetchApi(`/api/contacts/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
   deleteContact: (id) => fetchApi(`/api/contacts/${id}`, { method: 'DELETE' }),
 
+  // Announcements (Thông Báo Nội Bộ)
+  getAnnouncements: (params = '') => fetchApi(`/api/announcements${params ? `?${params}` : ''}`),
+  createAnnouncement: (data) => fetchApi('/api/announcements', { method: 'POST', body: JSON.stringify(data) }),
+  deleteAnnouncement: (id) => fetchApi(`/api/announcements/${id}`, { method: 'DELETE' }),
+
+  // Shared Files (File Dùng Chung)
+  getSharedFiles: (params = '') => fetchApi(`/api/shared-files${params ? `?${params}` : ''}`),
+  createSharedFile: (data) => fetchApi('/api/shared-files', { method: 'POST', body: JSON.stringify(data) }),
+  deleteSharedFile: (id) => fetchApi(`/api/shared-files/${id}`, { method: 'DELETE' }),
+
   // Settings
   getSettings: () => fetchApi('/api/settings'),
   updateSettings: (data) => fetchApi('/api/settings', { method: 'PUT', body: JSON.stringify(data) }),

@@ -7,17 +7,21 @@ import {
   Newspaper, 
   Mail, 
   Users,
+  FolderOpen,
   Settings, 
   LogOut, 
   ExternalLink, 
   Menu, 
   X,
   Bell,
-  ShieldCheck
+  ShieldCheck,
+  Building2,
+  Briefcase
 } from 'lucide-react';
 
 export default function AdminLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -26,6 +30,15 @@ export default function AdminLayout() {
     const token = localStorage.getItem('kimson_admin_token');
     if (!token) {
       navigate('/admin/login');
+      return;
+    }
+    const userStr = localStorage.getItem('kimson_admin_user');
+    if (userStr) {
+      try {
+        setCurrentUser(JSON.parse(userStr));
+      } catch (e) {
+        console.error(e);
+      }
     }
   }, [navigate]);
 
@@ -36,19 +49,19 @@ export default function AdminLayout() {
   };
 
   const navItems = [
-    { name: 'Tổng Quan Hệ Sinh Thái', path: '/admin', icon: LayoutDashboard },
+    { name: 'Thông Báo & File Dùng Chung', path: '/admin/portal', icon: FolderOpen },
+    { name: 'Tổng Quan Hệ Sinh Thái', path: '/admin/dashboard', icon: LayoutDashboard },
+    { name: 'Người Đăng Ký', path: '/admin/users', icon: Users },
     { name: '5 Trụ Cột Hoạt Động', path: '/admin/pillars', icon: Layers },
     { name: 'Mạng Lưới 11 Chi Nhánh', path: '/admin/branches', icon: MapPin },
     { name: 'Tin Tức & Thông Cáo', path: '/admin/news', icon: Newspaper },
     { name: 'Yêu Cầu Hợp Tác B2B', path: '/admin/contacts', icon: Mail },
-    { name: 'Người Đăng Ký', path: '/admin/users', icon: Users },
     { name: 'Cài Đặt & Thông Tin', path: '/admin/settings', icon: Settings },
   ];
 
   const isActive = (path) => {
-    if (path === '/admin' && location.pathname === '/admin') return true;
-    if (path !== '/admin' && location.pathname.startsWith(path)) return true;
-    return false;
+    if (path === '/admin/portal' && (location.pathname === '/admin/portal' || location.pathname === '/admin')) return true;
+    return location.pathname === path;
   };
 
   return (
@@ -160,13 +173,24 @@ export default function AdminLayout() {
           </div>
 
           <div className="flex items-center gap-3">
-            <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-bold">
+            <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-bold">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span>Hệ Thống Trực Tuyến 24/7</span>
+              <span>Hệ Thống Trực Tuyến</span>
             </div>
 
-            <div className="w-9 h-9 rounded-full bg-primary text-white flex items-center justify-center font-bold text-xs shadow-glow">
-              KS
+            <div className="flex items-center gap-2.5 pl-2 border-l border-slate-200">
+              <div className="text-right hidden sm:block">
+                <div className="text-xs font-bold text-slate-900 leading-tight">
+                  {currentUser?.fullName || currentUser?.name || 'Ban Quản Trị'}
+                </div>
+                <div className="text-[10px] text-slate-500 leading-tight mt-0.5 font-medium">
+                  {currentUser?.unit || 'VF GF Q2'} • {currentUser?.department || 'Ban Giám Đốc'}
+                </div>
+              </div>
+
+              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary to-primary-dark text-white flex items-center justify-center font-black text-xs shadow-xs">
+                {(currentUser?.fullName || currentUser?.name || 'K').charAt(0).toUpperCase()}
+              </div>
             </div>
           </div>
         </header>

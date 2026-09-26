@@ -197,6 +197,131 @@ app.delete('/api/users/:id', async (req, res) => {
 });
 
 // ==========================================
+// 1.2 ANNOUNCEMENTS (THÔNG BÁO NỘI BỘ) API
+// ==========================================
+app.get('/api/announcements', async (req, res) => {
+  const { category, department, unit, search } = req.query;
+  let items = await readData('announcements') || [];
+
+  if (category && category !== 'all') {
+    items = items.filter(i => i.category === category);
+  }
+  if (department && department !== 'all') {
+    items = items.filter(i => !i.targetDepartment || i.targetDepartment === 'all' || i.targetDepartment === department || i.targetDepartment === 'Tất Cả' || i.targetDepartment === 'Tất Cả Bộ Phận');
+  }
+  if (unit && unit !== 'all') {
+    items = items.filter(i => !i.targetUnit || i.targetUnit === 'all' || i.targetUnit === unit || i.targetUnit === 'Tất Cả' || i.targetUnit === 'Tất Cả Đơn Vị');
+  }
+  if (search) {
+    const q = search.toLowerCase();
+    items = items.filter(i => 
+      (i.title && i.title.toLowerCase().includes(q)) ||
+      (i.content && i.content.toLowerCase().includes(q)) ||
+      (i.author && i.author.toLowerCase().includes(q))
+    );
+  }
+
+  res.json(items);
+});
+
+app.post('/api/announcements', async (req, res) => {
+  const { title, content, category, priority, targetUnit, targetDepartment, author, pinned } = req.body;
+  if (!title || !content) {
+    return res.status(400).json({ error: 'Vui lòng nhập tiêu đề và nội dung thông báo' });
+  }
+
+  const items = await readData('announcements') || [];
+  const newItem = {
+    id: String(Date.now()),
+    title: title.trim(),
+    content: content.trim(),
+    category: category || 'Chính Sách & Quy Định',
+    priority: priority || 'normal',
+    targetUnit: targetUnit || 'Tất Cả Đơn Vị',
+    targetDepartment: targetDepartment || 'Tất Cả Bộ Phận',
+    author: author || 'Ban Điều Hành Kim Sơn',
+    pinned: !!pinned,
+    createdAt: new Date().toISOString()
+  };
+
+  items.unshift(newItem);
+  await writeData('announcements', items);
+  res.status(201).json(newItem);
+});
+
+app.delete('/api/announcements/:id', async (req, res) => {
+  const { id } = req.params;
+  const items = await readData('announcements') || [];
+  const filtered = items.filter(i => i.id !== id);
+  if (filtered.length === items.length) {
+    return res.status(404).json({ error: 'Không tìm thấy thông báo' });
+  }
+  await writeData('announcements', filtered);
+  res.json({ message: 'Xóa thông báo thành công' });
+});
+
+// ==========================================
+// 1.3 SHARED FILES (FILE DÙNG CHUNG) API
+// ==========================================
+app.get('/api/shared-files', async (req, res) => {
+  const { category, department, search } = req.query;
+  let items = await readData('shared-files') || [];
+
+  if (category && category !== 'all') {
+    items = items.filter(i => i.category === category);
+  }
+  if (department && department !== 'all') {
+    items = items.filter(i => !i.targetDepartment || i.targetDepartment === 'all' || i.targetDepartment === department || i.targetDepartment === 'Tất Cả');
+  }
+  if (search) {
+    const q = search.toLowerCase();
+    items = items.filter(i => 
+      (i.name && i.name.toLowerCase().includes(q)) ||
+      (i.description && i.description.toLowerCase().includes(q)) ||
+      (i.fileType && i.fileType.toLowerCase().includes(q))
+    );
+  }
+
+  res.json(items);
+});
+
+app.post('/api/shared-files', async (req, res) => {
+  const { name, description, category, fileSize, fileType, targetDepartment, uploadedBy } = req.body;
+  if (!name) {
+    return res.status(400).json({ error: 'Vui lòng nhập tên tài liệu' });
+  }
+
+  const items = await readData('shared-files') || [];
+  const newItem = {
+    id: String(Date.now()),
+    name: name.trim(),
+    description: (description || '').trim(),
+    category: category || 'Biểu Mẫu Hành Chính',
+    fileSize: fileSize || '1.0 MB',
+    fileType: fileType || 'PDF',
+    targetDepartment: targetDepartment || 'Tất Cả',
+    uploadedBy: uploadedBy || 'Ban Quản Trị Kim Sơn',
+    createdAt: new Date().toISOString(),
+    downloads: 0
+  };
+
+  items.unshift(newItem);
+  await writeData('shared-files', items);
+  res.status(201).json(newItem);
+});
+
+app.delete('/api/shared-files/:id', async (req, res) => {
+  const { id } = req.params;
+  const items = await readData('shared-files') || [];
+  const filtered = items.filter(i => i.id !== id);
+  if (filtered.length === items.length) {
+    return res.status(404).json({ error: 'Không tìm thấy file tài liệu' });
+  }
+  await writeData('shared-files', filtered);
+  res.json({ message: 'Xóa tài liệu thành công' });
+});
+
+// ==========================================
 // 2. DASHBOARD KPI STATS API
 // ==========================================
 app.get('/api/stats', async (req, res) => {

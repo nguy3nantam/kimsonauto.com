@@ -83,7 +83,7 @@ export default function AdminLoginPage({ initialMode = 'login' }) {
         const res = await api.login({ username, password });
         localStorage.setItem('kimson_admin_token', res.token);
         localStorage.setItem('kimson_admin_user', JSON.stringify(res.user));
-        navigate('/admin');
+        navigate('/admin/portal');
       } else {
         const res = await api.register({
           fullName,
@@ -99,7 +99,7 @@ export default function AdminLoginPage({ initialMode = 'login' }) {
         localStorage.setItem('kimson_admin_user', JSON.stringify(res.user));
         setSuccess('Đăng ký tài khoản thành công! Đang chuyển tiếp...');
         setTimeout(() => {
-          navigate('/admin');
+          navigate('/admin/portal');
         }, 1200);
       }
     } catch (err) {
