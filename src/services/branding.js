@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { api } from './api';
+import { withBasePath } from '../utils/assets';
 
 export const DEFAULT_BRANDING = {
-  logo: '/logo-kimson.png',
-  logoWhite: '/logo-kimson-white.png',
-  favicon: '/favicon.png',
+  logo: withBasePath('/logo-kimson.png'),
+  logoWhite: withBasePath('/logo-kimson-white.png'),
+  favicon: withBasePath('/favicon.png'),
   siteTitle: 'Kim Sơn Automobiles - Cổng Thông Tin Hệ Sinh Thái Ô Tô'
 };
 

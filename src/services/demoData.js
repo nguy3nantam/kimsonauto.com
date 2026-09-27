@@ -1,3 +1,5 @@
+import { withBasePath } from '../utils/assets';
+
 export const DEMO_CREDENTIALS = {
   admin: { username: 'admin_demo', password: 'Demo@123' },
   leader: { username: 'leader_demo', password: 'Demo@123' },
@@ -17,9 +19,9 @@ export const DEMO_SEED = {
     totalEngineers: 300,
     totalCustomers: 50000,
     satisfactionRate: '99%',
-    logo: '/kimsonauto.com/logo-kimson.png',
-    logoWhite: '/kimsonauto.com/logo-kimson-white.png',
-    favicon: '/kimsonauto.com/favicon.png',
+    logo: withBasePath('/logo-kimson.png'),
+    logoWhite: withBasePath('/logo-kimson-white.png'),
+    favicon: withBasePath('/favicon.png'),
     siteTitle: 'Kim Sơn Automobiles - Demo Tĩnh',
   },
   users: [
@@ -308,7 +310,7 @@ export const DEMO_SEED = {
       title: 'Mạng Lưới Showroom & Dịch Vụ Phía Nam',
       subtitle: 'TRÌNH DIỄN DỮ LIỆU CHI NHÁNH',
       description: 'Bản xem trước mô phỏng các điểm chạm khách hàng trong hệ sinh thái Kim Sơn.',
-      image: '/kimsonauto.com/vinfast-kimson-bienhoa.jpg',
+      image: withBasePath('/vinfast-kimson-bienhoa.jpg'),
       primaryButtonText: 'Xem Mạng Lưới',
       primaryButtonLink: '/mang-luoi',
       secondaryButtonText: 'Xem Tin Tức',

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Phone, Mail, MapPin, ChevronRight, Globe, ShieldCheck } from 'lucide-react';
 import { ecosystemData } from '../../data/ecosystem';
 import { useBranding } from '../../services/branding';
+import { withBasePath } from '../../utils/assets';
 
 export default function Footer() {
   const branding = useBranding();
@@ -15,7 +16,7 @@ export default function Footer() {
             <div className="flex items-center gap-3">
               <Link to="/" className="inline-block hover:opacity-90 transition-opacity">
                 <img 
-                  src={branding.logoWhite || '/logo-kimson-white.png'} 
+                  src={branding.logoWhite || withBasePath('/logo-kimson-white.png')} 
                   alt="Kim Sơn Automobiles" 
                   className="h-11 w-auto object-contain"
                 />

@@ -17,6 +17,7 @@ import {
 import { api, isStaticDemoMode } from '../../services/api';
 import { useBranding } from '../../services/branding';
 import { DEMO_CREDENTIALS } from '../../services/demoData';
+import { withBasePath } from '../../utils/assets';
 
 export const UNIT_OPTIONS = [
   'VF Biên Hòa',
@@ -124,7 +125,7 @@ export default function AdminLoginPage({ initialMode = 'login' }) {
         <div className="text-center mb-6">
           <Link to="/" className="inline-block hover:scale-105 transition-transform mb-3">
             <img 
-              src={branding.logo || '/logo-kimson.png'} 
+              src={branding.logo || withBasePath('/logo-kimson.png')} 
               alt="Kim Sơn Automobiles" 
               className="h-16 sm:h-20 w-auto object-contain mx-auto"
             />

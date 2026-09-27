@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { withBasePath } from '../utils/assets';
 import { 
   Award, ShieldCheck, Users, Target, Clock, Wrench, CheckCircle2, 
   MapPin, Phone, Sparkles, ChevronRight, Zap, ExternalLink 
@@ -54,7 +55,7 @@ export default function AboutPage() {
             {/* Image Box */}
             <div className="lg:col-span-7 relative group overflow-hidden min-h-[340px] sm:min-h-[440px] flex items-center bg-black">
               <img 
-                src="/vinfast-kimson-bienhoa.jpg" 
+                src={withBasePath('/vinfast-kimson-bienhoa.jpg')} 
                 alt="Showroom VinFast Kim Sơn Biên Hoà" 
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
