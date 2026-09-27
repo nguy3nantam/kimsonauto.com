@@ -18,6 +18,7 @@ import {
   LogOut,
   ShieldCheck
 } from 'lucide-react';
+import { withBasePath } from '../../utils/assets';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -164,7 +165,7 @@ export default function Navbar() {
           <div className="flex items-center gap-3">
             <Link to="/" onClick={() => setIsOpen(false)}>
               <img 
-                src="/logo-kimson.png" 
+                src={withBasePath('/logo-kimson.png')} 
                 alt="Kim Sơn Automobiles" 
                 className="h-10 w-auto object-contain hover:scale-105 transition-transform"
               />
@@ -333,7 +334,7 @@ export default function Navbar() {
             aria-label="Trang Chủ Kim Sơn Automobiles"
           >
             <img 
-              src="/logo-kimson.png" 
+              src={withBasePath('/logo-kimson.png')} 
               alt="Kim Sơn Automobiles" 
               className="h-8 sm:h-9 w-auto object-contain drop-shadow-xs transition-transform duration-300 group-hover:scale-105"
             />
@@ -494,4 +495,3 @@ export default function Navbar() {
     </header>
   );
 }
-

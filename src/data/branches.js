@@ -1,3 +1,5 @@
+import { withBasePath } from '../utils/assets';
+
 export const branchesData = [
   {
     id: 'vinfast-bien-hoa',
@@ -10,7 +12,7 @@ export const branchesData = [
     role: 'Showroom & Trung Tâm Dịch Vụ Xe Điện VinFast',
     services: ['Showroom Xe VinFast', 'Bảo Dưỡng Định Kỳ', 'Xưởng Kỹ Thuật', 'Trạm Sạc Nhanh'],
     mapsUrl: 'https://maps.google.com/?q=643+Quốc+Lộ+1,+P.Long+Bình,+TP.+Biên+Hòa,+Đồng+Nai',
-    image: '/vinfast-kimson-bienhoa.jpg',
+    image: withBasePath('/vinfast-kimson-bienhoa.jpg'),
     isMain: false
   },
   {

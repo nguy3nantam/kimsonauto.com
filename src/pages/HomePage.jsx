@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import { ecosystemData } from '../data/ecosystem';
 import { api } from '../services/api';
+import { withBasePath } from '../utils/assets';
 
 const DEFAULT_SLIDES = [
   {
@@ -37,7 +38,7 @@ const DEFAULT_SLIDES = [
     title: 'Đại Lý Ủy Quyền VinFast\nHàng Đầu Khu Vực Phía Nam',
     subtitle: 'MẠNG LƯỚI SHOWROOM & XƯỞNG DỊCH VỤ HIỆN ĐẠI',
     description: 'Sở hữu chuỗi 11 chi nhánh và showroom 3S/1S VinFast tại các vị trí chiến lược: Biên Hòa, Long Thành, Long Khánh, Trảng Dài, Bình Thạnh, Quận 2...',
-    image: '/vinfast-kimson-bienhoa.jpg',
+    image: withBasePath('/vinfast-kimson-bienhoa.jpg'),
     primaryButtonText: 'Khám Phá Mạng Lưới Chi Nhánh',
     primaryButtonLink: '/mang-luoi',
     secondaryButtonText: 'Đăng Ký Lái Thử & Tư Vấn',
@@ -262,7 +263,7 @@ export default function HomePage() {
             <div className="relative group">
               <div className="aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border border-slate-200">
                 <img 
-                  src="/vinfast-kimson-bienhoa.jpg" 
+                  src={withBasePath('/vinfast-kimson-bienhoa.jpg')} 
                   alt="VinFast Kim Sơn Biên Hoà" 
                   loading="lazy"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"

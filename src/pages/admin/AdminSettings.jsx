@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { api } from '../../services/api';
 import { DEFAULT_BRANDING, applyFavicon } from '../../services/branding';
+import { withBasePath } from '../../utils/assets';
 
 export default function AdminSettings() {
   const [activeTab, setActiveTab] = useState('branding'); // 'branding' | 'general'
@@ -156,11 +157,11 @@ export default function AdminSettings() {
   };
 
   const presets = {
-    logoDefault: '/logo-kimson.png',
-    logoWhite: '/logo-kimson-white.png',
-    favicon3D: '/favicon.png',
-    favicon32: '/favicon-32x32.png',
-    faviconApple: '/apple-touch-icon.png'
+    logoDefault: withBasePath('/logo-kimson.png'),
+    logoWhite: withBasePath('/logo-kimson-white.png'),
+    favicon3D: withBasePath('/favicon.png'),
+    favicon32: withBasePath('/favicon-32x32.png'),
+    faviconApple: withBasePath('/apple-touch-icon.png')
   };
 
   return (

@@ -20,9 +20,12 @@ import {
   Image as ImageIcon
 } from 'lucide-react';
 import { useBranding } from '../../services/branding';
+import { sanitizeAssetUrl, withBasePath } from '../../utils/assets';
 
 export default function AdminLayout() {
   const branding = useBranding();
+  const logoWhiteSrc = encodeURI(sanitizeAssetUrl(branding.logoWhite, withBasePath('/logo-kimson-white.png')));
+  const logoSrc = encodeURI(sanitizeAssetUrl(branding.logo, withBasePath('/logo-kimson.png')));
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const location = useLocation();
@@ -169,10 +172,11 @@ export default function AdminLayout() {
           {/* Brand Logo Header */}
           <div className="h-20 px-6 border-b border-slate-800 flex items-center justify-between">
             <Link to="/admin" className="flex items-center gap-2.5">
-              <img 
-                src={branding.logoWhite || '/logo-kimson-white.png'} 
-                alt="Kim Sơn Automobiles" 
-                className="h-10 w-auto object-contain"
+              <div
+                role="img"
+                aria-label="Kim Sơn Automobiles"
+                className="h-10 w-32 bg-center bg-contain bg-no-repeat"
+                style={{ backgroundImage: `url("${logoWhiteSrc}")` }}
               />
               {getRoleBadge()}
             </Link>
@@ -249,7 +253,12 @@ export default function AdminLayout() {
             </button>
             <div className="flex items-center gap-3">
               <Link to="/admin" className="lg:hidden">
-                <img src={branding.logo || '/logo-kimson.png'} alt="Kim Sơn Automobiles" className="h-7 w-auto object-contain" />
+                <div
+                  role="img"
+                  aria-label="Kim Sơn Automobiles"
+                  className="h-7 w-24 bg-center bg-contain bg-no-repeat"
+                  style={{ backgroundImage: `url("${logoSrc}")` }}
+                />
               </Link>
               <h2 className="text-base sm:text-xl font-extrabold text-slate-900 tracking-tight">
                 {isAdmin ? 'Bảng Quản Trị Hệ Sinh Thái Kim Sơn' : isLeader ? `Quản Trị Chi Nhánh: ${currentUser?.unit || ''}` : 'Cổng Thông Tin & File Dùng Chung'}
