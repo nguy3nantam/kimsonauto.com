@@ -14,8 +14,9 @@ import {
   Building2,
   Briefcase
 } from 'lucide-react';
-import { api } from '../../services/api';
+import { api, isStaticDemoMode } from '../../services/api';
 import { useBranding } from '../../services/branding';
+import { DEMO_CREDENTIALS } from '../../services/demoData';
 
 export const UNIT_OPTIONS = [
   'VF Biên Hòa',
@@ -38,13 +39,14 @@ export const DEPARTMENT_OPTIONS = [
 
 export default function AdminLoginPage({ initialMode = 'login' }) {
   const branding = useBranding();
+  const staticDemo = isStaticDemoMode();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const paramMode = searchParams.get('mode') || (location.pathname === '/register' ? 'register' : initialMode);
 
   const [mode, setMode] = useState(paramMode);
-  const [username, setUsername] = useState('admin');
-  const [password, setPassword] = useState('kimson@2026');
+  const [username, setUsername] = useState(staticDemo ? DEMO_CREDENTIALS.admin.username : 'admin');
+  const [password, setPassword] = useState(staticDemo ? DEMO_CREDENTIALS.admin.password : 'kimson@2026');
   const [fullName, setFullName] = useState('');
   const [unit, setUnit] = useState('VF Biên Hòa');
   const [department, setDepartment] = useState('Kinh Doanh');
@@ -66,8 +68,8 @@ export default function AdminLoginPage({ initialMode = 'login' }) {
     setError('');
     setSuccess('');
     if (newMode === 'login') {
-      if (!username) setUsername('admin');
-      if (!password) setPassword('kimson@2026');
+      if (!username) setUsername(staticDemo ? DEMO_CREDENTIALS.admin.username : 'admin');
+      if (!password) setPassword(staticDemo ? DEMO_CREDENTIALS.admin.password : 'kimson@2026');
     } else {
       setUsername('');
       setPassword('');
@@ -161,6 +163,13 @@ export default function AdminLoginPage({ initialMode = 'login' }) {
               <span>Đăng Ký</span>
             </button>
           </div>
+
+          {staticDemo && (
+            <div className="mb-5 flex items-start gap-2 p-3 rounded-2xl bg-blue-50 border border-blue-200 text-[11px] text-blue-800">
+              <ShieldCheck size={16} className="shrink-0 mt-0.5" />
+              <span>Dữ liệu đang chạy ở chế độ demo tĩnh trên trình duyệt. Mọi thay đổi chỉ lưu cục bộ trên máy đang xem.</span>
+            </div>
+          )}
 
           <form onSubmit={handleSubmit} className="space-y-4">
             {error && (
@@ -351,8 +360,8 @@ export default function AdminLoginPage({ initialMode = 'login' }) {
                   <button
                     type="button"
                     onClick={() => {
-                      setUsername('admin');
-                      setPassword('kimson@2026');
+                      setUsername(staticDemo ? DEMO_CREDENTIALS.admin.username : 'admin');
+                      setPassword(staticDemo ? DEMO_CREDENTIALS.admin.password : 'kimson@2026');
                     }}
                     className={`p-2 rounded-xl text-left border transition-all ${
                       username === 'admin' 
@@ -367,8 +376,8 @@ export default function AdminLoginPage({ initialMode = 'login' }) {
                   <button
                     type="button"
                     onClick={() => {
-                      setUsername('leader_bienhoa');
-                      setPassword('kimson@2026');
+                      setUsername(staticDemo ? DEMO_CREDENTIALS.leader.username : 'leader_bienhoa');
+                      setPassword(staticDemo ? DEMO_CREDENTIALS.leader.password : 'kimson@2026');
                     }}
                     className={`p-2 rounded-xl text-left border transition-all ${
                       username === 'leader_bienhoa' 
@@ -383,8 +392,8 @@ export default function AdminLoginPage({ initialMode = 'login' }) {
                   <button
                     type="button"
                     onClick={() => {
-                      setUsername('user_bienhoa');
-                      setPassword('kimson@2026');
+                      setUsername(staticDemo ? DEMO_CREDENTIALS.user.username : 'user_bienhoa');
+                      setPassword(staticDemo ? DEMO_CREDENTIALS.user.password : 'kimson@2026');
                     }}
                     className={`p-2 rounded-xl text-left border transition-all ${
                       username === 'user_bienhoa' 
@@ -397,7 +406,7 @@ export default function AdminLoginPage({ initialMode = 'login' }) {
                   </button>
                 </div>
                 <div className="text-center text-[10px] text-slate-400">
-                  Mật khẩu mặc định: <code className="font-bold text-slate-700">kimson@2026</code>
+                  Mật khẩu mặc định: <code className="font-bold text-slate-700">{staticDemo ? DEMO_CREDENTIALS.admin.password : 'kimson@2026'}</code>
                 </div>
               </div>
             ) : (
