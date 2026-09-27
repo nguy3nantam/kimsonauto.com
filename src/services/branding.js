@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { api } from './api';
-import { withBasePath } from '../utils/assets';
+import { sanitizeAssetUrl, withBasePath } from '../utils/assets';
 
 export const DEFAULT_BRANDING = {
   logo: withBasePath('/logo-kimson.png'),
@@ -12,7 +12,16 @@ export const DEFAULT_BRANDING = {
 export function getStoredBranding() {
   try {
     const raw = localStorage.getItem('kimson_branding');
-    if (raw) return { ...DEFAULT_BRANDING, ...JSON.parse(raw) };
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      return {
+        ...DEFAULT_BRANDING,
+        ...parsed,
+        logo: sanitizeAssetUrl(parsed.logo, DEFAULT_BRANDING.logo),
+        logoWhite: sanitizeAssetUrl(parsed.logoWhite, DEFAULT_BRANDING.logoWhite),
+        favicon: sanitizeAssetUrl(parsed.favicon, DEFAULT_BRANDING.favicon),
+      };
+    }
   } catch (e) {
     console.warn('Error reading stored branding:', e);
   }
@@ -38,9 +47,9 @@ export function useBranding() {
       .then(data => {
         if (!isMounted || !data) return;
         const updated = {
-          logo: data.logo || DEFAULT_BRANDING.logo,
-          logoWhite: data.logoWhite || DEFAULT_BRANDING.logoWhite,
-          favicon: data.favicon || DEFAULT_BRANDING.favicon,
+          logo: sanitizeAssetUrl(data.logo, DEFAULT_BRANDING.logo),
+          logoWhite: sanitizeAssetUrl(data.logoWhite, DEFAULT_BRANDING.logoWhite),
+          favicon: sanitizeAssetUrl(data.favicon, DEFAULT_BRANDING.favicon),
           siteTitle: data.siteTitle || DEFAULT_BRANDING.siteTitle
         };
         setBranding(updated);
@@ -61,7 +70,13 @@ export function useBranding() {
     const handleUpdate = (e) => {
       if (e.detail) {
         setBranding(prev => {
-          const next = { ...prev, ...e.detail };
+          const next = {
+            ...prev,
+            ...e.detail,
+            logo: sanitizeAssetUrl(e.detail.logo ?? prev.logo, DEFAULT_BRANDING.logo),
+            logoWhite: sanitizeAssetUrl(e.detail.logoWhite ?? prev.logoWhite, DEFAULT_BRANDING.logoWhite),
+            favicon: sanitizeAssetUrl(e.detail.favicon ?? prev.favicon, DEFAULT_BRANDING.favicon),
+          };
           try {
             localStorage.setItem('kimson_branding', JSON.stringify(next));
           } catch (err) {}

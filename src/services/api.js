@@ -10,7 +10,9 @@ const isBrowser = typeof window !== 'undefined';
 export function isStaticDemoMode() {
   if (!isBrowser) return false;
   const { hostname, protocol } = window.location;
-  return protocol === 'file:' || hostname.endsWith('github.io');
+  const normalizedHost = String(hostname || '').toLowerCase();
+  const isGitHubPagesHost = normalizedHost === 'github.io' || normalizedHost.endsWith('.github.io');
+  return protocol === 'file:' || isGitHubPagesHost;
 }
 
 const normalizeRole = (role) => {
