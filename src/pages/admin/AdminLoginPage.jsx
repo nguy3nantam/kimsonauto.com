@@ -41,6 +41,7 @@ export const DEPARTMENT_OPTIONS = [
 export default function AdminLoginPage({ initialMode = 'login' }) {
   const branding = useBranding();
   const staticDemo = isStaticDemoMode();
+  const logoSrc = encodeURI(sanitizeAssetUrl(branding.logo, withBasePath('/logo-kimson.png')));
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const paramMode = searchParams.get('mode') || (location.pathname === '/register' ? 'register' : initialMode);
@@ -124,10 +125,11 @@ export default function AdminLoginPage({ initialMode = 'login' }) {
         {/* Brand Card Header */}
         <div className="text-center mb-6">
           <Link to="/" className="inline-block hover:scale-105 transition-transform mb-3">
-            <img 
-              src={sanitizeAssetUrl(branding.logo, withBasePath('/logo-kimson.png'))} 
-              alt="Kim Sơn Automobiles" 
-              className="h-16 sm:h-20 w-auto object-contain mx-auto"
+            <div
+              role="img"
+              aria-label="Kim Sơn Automobiles"
+              className="h-16 sm:h-20 w-40 sm:w-48 mx-auto bg-center bg-contain bg-no-repeat"
+              style={{ backgroundImage: `url("${logoSrc}")` }}
             />
           </Link>
           <p className="text-xs uppercase tracking-widest text-primary font-bold">
