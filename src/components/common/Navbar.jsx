@@ -1,3 +1,4 @@
+import { api } from '../../services/api';
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -21,7 +22,6 @@ import {
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [lang, setLang] = useState('VN');
   const [mounted, setMounted] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -29,30 +29,22 @@ export default function Navbar() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    localStorage.removeItem('kimson_admin_token');
-    localStorage.removeItem('kimson_admin_user');
-    setIsLoggedIn(false);
-    setCurrentUser(null);
-    navigate('/');
+  const handleLogout = async () => {
+    try {
+      await api.logout();
+      localStorage.removeItem('kimson_admin_user');
+      localStorage.removeItem('kimson_admin_token');
+      setIsLoggedIn(false); setCurrentUser(null); navigate('/login');
+    } catch (error) { alert(error.message); }
   };
-
   useEffect(() => {
-    const token = localStorage.getItem('kimson_admin_token');
-    setIsLoggedIn(!!token);
-    const userStr = localStorage.getItem('kimson_admin_user');
-    if (userStr) {
-      try {
-        setCurrentUser(JSON.parse(userStr));
-      } catch (e) {
-        console.error(e);
-      }
-    } else {
-      setCurrentUser(null);
-    }
-  }, [location.pathname, isOpen]);
-
-  const isAdmin = currentUser?.id === '1' || currentUser?.username === 'admin' || currentUser?.role === 'Super Admin' || currentUser?.role === 'Quản Trị Viên';
+    let active = true;
+    api.getMe().then(user => {
+      if (active) { setIsLoggedIn(true); setCurrentUser(user); }
+    }).catch(() => { if (active) { setIsLoggedIn(false); setCurrentUser(null); } });
+    return () => { active = false; };
+  }, []);
+  const isAdmin = currentUser?.role === 'Admin';
 
   useEffect(() => {
     setMounted(true);
@@ -221,7 +213,7 @@ export default function Navbar() {
             {!isLoggedIn ? (
               <div className="grid grid-cols-2 gap-2.5">
                 <Link
-                  to="/admin/login"
+                  to="/login"
                   onClick={() => setIsOpen(false)}
                   className="flex items-center justify-center gap-2 p-3.5 rounded-2xl bg-gradient-to-r from-primary to-primary-dark text-white font-bold text-xs shadow-xs hover:shadow-glow transition-all"
                 >
@@ -292,18 +284,6 @@ export default function Navbar() {
           <div className="flex items-center justify-between text-xs">
             <span className="text-slate-500 font-medium">Ngôn ngữ hiển thị</span>
             <div className="flex items-center bg-white border border-slate-200 p-0.5 rounded-lg text-xs font-bold text-slate-600">
-              <button
-                onClick={() => setLang('VN')}
-                className={`px-3 py-1 rounded-md transition-all ${lang === 'VN' ? 'bg-primary text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'}`}
-              >
-                VN
-              </button>
-              <button
-                onClick={() => setLang('EN')}
-                className={`px-3 py-1 rounded-md transition-all ${lang === 'EN' ? 'bg-primary text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'}`}
-              >
-                EN
-              </button>
             </div>
           </div>
 
@@ -360,28 +340,12 @@ export default function Navbar() {
           <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
             {/* Language Switcher */}
             <div className="hidden sm:flex items-center bg-slate-100 p-0.5 rounded-lg text-[11px] font-bold text-slate-600">
-              <button
-                onClick={() => setLang('VN')}
-                className={`px-2 py-0.5 rounded-md transition-all ${
-                  lang === 'VN' ? 'bg-white text-primary shadow-xs' : 'hover:text-slate-900'
-                }`}
-              >
-                VN
-              </button>
-              <button
-                onClick={() => setLang('EN')}
-                className={`px-2 py-0.5 rounded-md transition-all ${
-                  lang === 'EN' ? 'bg-white text-primary shadow-xs' : 'hover:text-slate-900'
-                }`}
-              >
-                EN
-              </button>
             </div>
 
             {/* Dropdown Menu Tài Khoản (Đăng Nhập / Đăng Ký) khi rê chuột (Hover) */}
             <div className="relative group">
               <Link
-                to={isLoggedIn ? (isAdmin ? "/admin/dashboard" : "/admin/portal") : "/admin/login"}
+                to={isLoggedIn ? "/admin" : "/login"}
                 className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold transition-all duration-300 shadow-xs ${
                   isLoggedIn
                     ? 'bg-emerald-50 text-emerald-700 hover:bg-emerald-600 hover:text-white border border-emerald-200'
@@ -408,7 +372,7 @@ export default function Navbar() {
 
                       {/* Mục Đăng Nhập */}
                       <Link
-                        to="/admin/login"
+                        to="/login"
                         className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-primary-subtle/80 text-slate-700 hover:text-primary transition-all group/item"
                       >
                         <div className="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center shrink-0 group-hover/item:bg-primary group-hover/item:text-white transition-colors">

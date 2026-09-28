@@ -1,11 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Phone, Mail, MapPin, ChevronRight, Globe, ShieldCheck } from 'lucide-react';
-import { ecosystemData } from '../../data/ecosystem';
-import { useBranding } from '../../services/branding';
+import { usePublicContent } from '../../services/publicContent';
 
 export default function Footer() {
-  const branding = useBranding();
+  const { settings, pillars } = usePublicContent();
   return (
     <footer className="bg-slate-950 text-slate-400 pt-16 pb-8 border-t border-slate-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -15,7 +14,7 @@ export default function Footer() {
             <div className="flex items-center gap-3">
               <Link to="/" className="inline-block hover:opacity-90 transition-opacity">
                 <img 
-                  src={branding.logoWhite || '/logo-kimson-white.png'} 
+                  src={settings.logoWhite || '/logo-kimson-white.png'}
                   alt="Kim Sơn Automobiles" 
                   className="h-11 w-auto object-contain"
                 />
@@ -29,15 +28,15 @@ export default function Footer() {
             <div className="pt-2 space-y-2 text-xs text-slate-300">
               <div className="flex items-start gap-2.5">
                 <MapPin size={16} className="text-primary shrink-0 mt-0.5" />
-                <span>Trụ sở chính: {ecosystemData.headquarters}</span>
+                <span>Trụ sở chính: {settings.headquarters}</span>
               </div>
               <div className="flex items-center gap-2.5">
                 <Phone size={16} className="text-primary shrink-0" />
-                <span>Tổng Đài Điều Hành: <strong className="text-amber-400">{ecosystemData.hotline}</strong></span>
+                <span>Tổng Đài Điều Hành: <strong className="text-amber-400">{settings.hotline}</strong></span>
               </div>
               <div className="flex items-center gap-2.5">
                 <Mail size={16} className="text-primary shrink-0" />
-                <span>Email Hợp Tác: {ecosystemData.email}</span>
+                <span>Email Hợp Tác: {settings.email}</span>
               </div>
             </div>
           </div>
@@ -48,7 +47,7 @@ export default function Footer() {
               Nền Tảng Phát Triển
             </h4>
             <ul className="space-y-2 text-xs">
-              {ecosystemData.pillars.map((p) => (
+              {pillars.map((p) => (
                 <li key={p.id}>
                   <Link to="/about" className="hover:text-white transition-colors flex items-center gap-1.5">
                     <ChevronRight size={12} className="text-primary-light" />
@@ -68,13 +67,13 @@ export default function Footer() {
               <li>
                 <Link to="/about" className="hover:text-white transition-colors flex items-center gap-1.5">
                   <ChevronRight size={12} className="text-primary-light" />
-                  <span>Về Kim Sơn (2014 - 2026)</span>
+                  <span>Về Kim Sơn</span>
                 </Link>
               </li>
               <li>
                 <Link to="/mang-luoi" className="hover:text-white transition-colors flex items-center gap-1.5">
                   <ChevronRight size={12} className="text-primary-light" />
-                  <span>Mạng Lưới 11 Cơ Sở & Chi Nhánh</span>
+                  <span>Mạng Lưới Cơ Sở & Chi Nhánh</span>
                 </Link>
               </li>
               <li>

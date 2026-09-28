@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   ChevronRight, 
-  ChevronLeft,
   ArrowRight, 
   ShieldCheck, 
   Award, 
@@ -19,6 +18,7 @@ import {
 } from 'lucide-react';
 import { ecosystemData } from '../data/ecosystem';
 import { api } from '../services/api';
+import { usePublicContent } from '../services/publicContent';
 
 const DEFAULT_SLIDES = [
   {
@@ -57,32 +57,42 @@ const DEFAULT_SLIDES = [
 ];
 
 export default function HomePage() {
-  const [activePillar, setActivePillar] = useState(ecosystemData.pillars[0]);
-  const [slides, setSlides] = useState(DEFAULT_SLIDES);
+  const { settings, pillars, branches, esg, loading } = usePublicContent();
+  const [activePillarId, setActivePillarId] = useState(null);
+  const activePillar = pillars.find(pillar => pillar.id === activePillarId) || pillars[0];
+  const [slides, setSlides] = useState([]);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
-  const [homeNews, setHomeNews] = useState(ecosystemData.news);
+  const [homeNews, setHomeNews] = useState([]);
+  const [newsLoading, setNewsLoading] = useState(true);
+  const [newsError, setNewsError] = useState(false);
+  const years = Math.max(0, new Date().getFullYear() - (settings.foundingYear ?? new Date().getFullYear()));
+  const numbers = [loading.settings ? '—' : years, loading.pillars ? '—' : pillars.length, loading.branches ? '—' : branches.length, loading.settings ? '—' : (settings.totalEngineers ?? 0).toLocaleString('vi-VN'), loading.settings ? '—' : (settings.totalCustomers ?? 0).toLocaleString('vi-VN'), loading.settings ? '—' : (settings.satisfactionRate ?? '')];
+  const stats = ecosystemData.stats.map((stat, index) => ({ ...stat, number: numbers[index], ...(index === 0 ? { desc: settings.foundingYear ? `Từ năm ${settings.foundingYear}` : '' } : {}) }));
 
   useEffect(() => {
     let isMounted = true;
     api.getSliders()
       .then((data) => {
-        if (isMounted && Array.isArray(data) && data.length > 0) {
+        if (isMounted && Array.isArray(data)) {
           setSlides(data);
+          setCurrentSlideIndex(0);
         }
       })
       .catch((err) => {
         console.warn('Failed to load sliders from API, using defaults:', err);
+        if (isMounted) setSlides(DEFAULT_SLIDES);
       });
 
     api.getNews()
       .then((data) => {
-        if (isMounted && Array.isArray(data) && data.length > 0) {
+        if (isMounted && Array.isArray(data)) {
           setHomeNews(data);
         }
       })
-      .catch(() => {});
+      .catch(() => { if (isMounted) setNewsError(true); })
+      .finally(() => { if (isMounted) setNewsLoading(false); });
 
     return () => {
       isMounted = false;
@@ -100,14 +110,6 @@ export default function HomePage() {
     return () => clearInterval(timer);
   }, [slides.length, isPaused]);
 
-  const prevSlide = () => {
-    setCurrentSlideIndex((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
-  };
-
-  const nextSlide = () => {
-    setCurrentSlideIndex((prev) => (prev + 1) % slides.length);
-  };
-
   const getPillarIcon = (iconName) => {
     switch(iconName) {
       case 'Car': return <Car size={24} />;
@@ -122,7 +124,7 @@ export default function HomePage() {
   return (
     <div className="bg-white text-slate-800">
       {/* 1. Dynamic Corporate Hero Slider */}
-      <section 
+      {slides.length > 0 && <section
         className="relative min-h-[640px] lg:min-h-[720px] flex items-center justify-center text-white overflow-hidden bg-slate-950"
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
@@ -138,97 +140,12 @@ export default function HomePage() {
             <img 
               src={slide.image} 
               alt={slide.title}
-              className="w-full h-full object-cover object-center scale-105"
+              className="w-full h-full object-cover object-center"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/85 to-slate-950/40"></div>
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-slate-950/30"></div>
           </div>
         ))}
 
-        {/* Slide Content */}
-        {slides[currentSlideIndex] && (
-          <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full">
-            <div 
-              key={currentSlideIndex} 
-              className="max-w-3xl space-y-6 animate-in fade-in slide-in-from-bottom-3 duration-500"
-            >
-              <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-primary/20 border border-primary/40 text-primary-light text-xs font-semibold tracking-[0.15em] uppercase">
-                <span className="w-2 h-2 rounded-full bg-primary animate-ping"></span>
-                {slides[currentSlideIndex].subtitle || 'TẬP ĐOÀN HỆ SINH THÁI Ô TÔ KIM SƠN'}
-              </div>
-
-              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.2] text-white whitespace-pre-line">
-                {slides[currentSlideIndex].title}
-              </h1>
-
-              {slides[currentSlideIndex].description && (
-                <p className="text-base sm:text-lg text-slate-300 font-normal leading-relaxed max-w-2xl">
-                  {slides[currentSlideIndex].description}
-                </p>
-              )}
-
-              <div className="flex flex-col sm:flex-row gap-4 pt-3">
-                {slides[currentSlideIndex].primaryButtonText && (
-                  <Link 
-                    to={slides[currentSlideIndex].primaryButtonLink || '/about'} 
-                    className="inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-dark text-white px-7 py-3.5 rounded-xl font-semibold text-xs sm:text-sm uppercase tracking-wider shadow-glow transition-all hover:scale-105"
-                  >
-                    <span>{slides[currentSlideIndex].primaryButtonText}</span>
-                    <ChevronRight size={16} />
-                  </Link>
-                )}
-
-                {slides[currentSlideIndex].secondaryButtonText && (
-                  <Link 
-                    to={slides[currentSlideIndex].secondaryButtonLink || '/about'} 
-                    className="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/20 px-7 py-3.5 rounded-xl font-semibold text-xs sm:text-sm uppercase tracking-wider backdrop-blur-md transition-all hover:scale-105"
-                  >
-                    <span>{slides[currentSlideIndex].secondaryButtonText}</span>
-                  </Link>
-                )}
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Prev / Next Controls */}
-        {slides.length > 1 && (
-          <>
-            <button
-              onClick={prevSlide}
-              aria-label="Slide trước"
-              className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-slate-900/50 hover:bg-primary text-white border border-white/20 backdrop-blur-md transition-all duration-200 hover:scale-110 hidden sm:flex items-center justify-center shadow-xl cursor-pointer"
-            >
-              <ChevronLeft size={22} />
-            </button>
-            <button
-              onClick={nextSlide}
-              aria-label="Slide tiếp theo"
-              className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-slate-900/50 hover:bg-primary text-white border border-white/20 backdrop-blur-md transition-all duration-200 hover:scale-110 hidden sm:flex items-center justify-center shadow-xl cursor-pointer"
-            >
-              <ChevronRight size={22} />
-            </button>
-          </>
-        )}
-
-        {/* Pagination Dots */}
-        {slides.length > 1 && (
-          <div className="absolute bottom-8 z-30 left-1/2 -translate-x-1/2 flex items-center gap-2.5 bg-slate-950/60 backdrop-blur-md px-4 py-2 rounded-full border border-white/10">
-            {slides.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => setCurrentSlideIndex(idx)}
-                aria-label={`Slide ${idx + 1}`}
-                className={`transition-all duration-300 rounded-full cursor-pointer ${
-                  idx === currentSlideIndex 
-                    ? 'w-8 h-2 bg-primary shadow-glow' 
-                    : 'w-2 h-2 bg-white/40 hover:bg-white/80'
-                }`}
-              />
-            ))}
-          </div>
-        )}
-      </section>
+      </section>}
 
       {/* 2. Overview Introduction (Về Hệ Sinh Thái Kim Sơn) */}
       <section className="py-20 bg-white">
@@ -238,9 +155,9 @@ export default function HomePage() {
               <div className="inline-block text-xs font-bold text-primary uppercase tracking-[0.15em] border-b-2 border-primary pb-1">
                 TỔNG QUAN HỆ SINH THÁI
               </div>
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-[1.3]">
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-[1.3]">
                 Mô Hình Hệ Sinh Thái Ô Tô Toàn Diện & Khép Kín
-              </h2>
+              </h1>
               <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
                 Được xây dựng trên triết lý lấy chất lượng kỹ thuật làm nền tảng và sự hài lòng của khách hàng làm trung tâm, Kim Sơn Automobiles đã khẳng định vị thế là một trong những hệ sinh thái dịch vụ ô tô phát triển nhanh và uy tín nhất tại khu vực kinh tế trọng điểm Đông Nam Bộ.
               </p>
@@ -285,7 +202,7 @@ export default function HomePage() {
       <section className="py-14 bg-slate-950 text-white border-y border-slate-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 lg:grid-cols-6 gap-6 sm:gap-8 text-center divide-y sm:divide-y-0 sm:divide-x divide-slate-800">
-            {ecosystemData.stats.map((stat, i) => (
+            {stats.map((stat, i) => (
               <div key={i} className="pt-4 sm:pt-0">
                 <div className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-primary-light mb-1 font-display tracking-tight">
                   {stat.number}
@@ -321,12 +238,12 @@ export default function HomePage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
             {/* Pillars Navigation (Left - 5 Cols) */}
             <div className="lg:col-span-5 space-y-3">
-              {ecosystemData.pillars.map((pillar) => {
+              {pillars.map((pillar) => {
                 const isSelected = activePillar.id === pillar.id;
                 return (
                   <button
                     key={pillar.id}
-                    onClick={() => setActivePillar(pillar)}
+                    onClick={() => setActivePillarId(pillar.id)}
                     className={`w-full text-left p-4 sm:p-5 rounded-2xl transition-all duration-300 border flex items-center gap-4 ${
                       isSelected
                         ? 'bg-slate-900 text-white border-slate-900 shadow-xl translate-x-1.5'
@@ -358,7 +275,7 @@ export default function HomePage() {
             </div>
 
             {/* Pillar Active Detail Card (Right - 7 Cols) */}
-            <div className="lg:col-span-7 bg-white rounded-3xl overflow-hidden border border-slate-200/90 shadow-xl flex flex-col justify-between">
+            {activePillar ? <div className="lg:col-span-7 bg-white rounded-3xl overflow-hidden border border-slate-200/90 shadow-xl flex flex-col justify-between">
               <div className="relative aspect-[16/9] overflow-hidden">
                 <img 
                   src={activePillar.image} 
@@ -385,7 +302,7 @@ export default function HomePage() {
                     Năng Lực Vận Hành Trọng Yếu:
                   </h5>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                    {activePillar.capabilities.map((cap, i) => (
+                    {(activePillar.capabilities || []).map((cap, i) => (
                       <div key={i} className="flex items-start gap-2 text-xs text-slate-700 bg-slate-50 p-2.5 rounded-xl border border-slate-100">
                         <CheckCircle2 size={14} className="text-emerald-500 shrink-0 mt-0.5" />
                         <span className="leading-snug">{cap}</span>
@@ -405,7 +322,7 @@ export default function HomePage() {
                   </Link>
                 </div>
               </div>
-            </div>
+            </div> : <p className="lg:col-span-7 text-slate-500" role="status">{loading.pillars ? 'Đang tải nền tảng phát triển...' : 'Nội dung đang được cập nhật.'}</p>}
           </div>
         </div>
       </section>
@@ -419,14 +336,14 @@ export default function HomePage() {
                 QUY MÔ HẠ TẦNG
               </div>
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-[1.3]">
-                Mạng Lưới 11 Chi Nhánh & Cơ Sở Kết Nối Vùng Trọng Điểm
+                Mạng Lưới Chi Nhánh & Cơ Sở Kết Nối Vùng Trọng Điểm
               </h2>
               <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
                 Hệ thống cơ sở của Kim Sơn Automobiles tọa lạc tại các vị trí chiến lược dọc theo trục kinh tế TP. Hồ Chí Minh - Đồng Nai (Biên Hòa, Long Khánh, Long Thành, Nhơn Trạch, Trảng Bom, Bình Thạnh, Thủ Đức), sẵn sàng tiếp nhận và phục vụ với diện tích xưởng dịch vụ hàng nghìn mét vuông.
               </p>
 
               <div className="space-y-2.5 pt-2">
-                {ecosystemData.branches.slice(0, 4).map((b) => (
+                {branches.slice(0, 4).map((b) => (
                   <div key={b.id} className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 flex items-start gap-3">
                     <MapPin size={17} className="text-primary shrink-0 mt-0.5" />
                     <div>
@@ -494,7 +411,7 @@ export default function HomePage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-            {ecosystemData.sustainability.map((item, idx) => (
+            {esg.map((item, idx) => (
               <div key={idx} className="bg-slate-900/90 p-7 rounded-3xl border border-slate-800 hover:border-slate-700 transition-all">
                 <div className="text-amber-400 font-black text-xl mb-3 font-display">0{idx + 1}</div>
                 <h3 className="text-base sm:text-lg font-bold text-white mb-2 leading-snug">{item.title}</h3>
@@ -523,6 +440,7 @@ export default function HomePage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {!homeNews.length && <p role="status" className="text-slate-500 md:col-span-3">{newsLoading ? 'Đang tải tin tức...' : newsError ? 'Chưa thể tải tin tức. Vui lòng thử lại ở trang tin tức.' : 'Chưa có tin tức được công bố.'}</p>}
             {homeNews.slice(0, 3).map((item) => (
               <div key={item.id} className="bg-slate-50 rounded-3xl overflow-hidden border border-slate-200/90 hover:shadow-xl transition-all flex flex-col justify-between">
                 <div className="aspect-[16/10] overflow-hidden">
@@ -541,7 +459,7 @@ export default function HomePage() {
                       {item.summary}
                     </p>
                   </div>
-                  <Link to="/tin-tuc" className="pt-4 text-primary font-bold text-xs flex items-center gap-1">
+                  <Link to={`/tin-tuc/${encodeURIComponent(item.id)}`} className="pt-4 text-primary font-bold text-xs flex items-center gap-1">
                     Đọc tiếp <ChevronRight size={14} />
                   </Link>
                 </div>

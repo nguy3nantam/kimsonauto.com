@@ -1,24 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { MapPin, Phone, ShieldCheck, ChevronRight, Navigation, CheckCircle2 } from 'lucide-react';
-import { ecosystemData } from '../data/ecosystem';
-import { api } from '../services/api';
+import { usePublicContent } from '../services/publicContent';
 
 export default function NetworkPage() {
-  const [branchesList, setBranchesList] = useState(ecosystemData.branches);
-
-  useEffect(() => {
-    let isMounted = true;
-    api.getBranches()
-      .then(data => {
-        if (isMounted && Array.isArray(data) && data.length > 0) {
-          setBranchesList(data);
-        }
-      })
-      .catch(err => {
-        console.warn('Using default branches list:', err.message);
-      });
-    return () => { isMounted = false; };
-  }, []);
+  const { branches: branchesList, loading } = usePublicContent();
 
   return (
     <div className="bg-slate-50 min-h-screen py-16">
@@ -32,12 +17,13 @@ export default function NetworkPage() {
             Mạng Lưới Chi Nhánh & Trung Tâm Dịch Vụ
           </h1>
           <p className="text-slate-600 text-sm sm:text-base mt-3 leading-relaxed">
-            Hệ thống 11 chi nhánh & cơ sở quy mô lớn trải dài tại các vị trí kinh tế chiến lược kết nối giữa TP. Hồ Chí Minh và tỉnh Đồng Nai, đảm bảo năng lực phục vụ kịp thời và chuẩn mực.
+            Hệ thống chi nhánh & cơ sở quy mô lớn trải dài tại các vị trí kinh tế chiến lược kết nối giữa TP. Hồ Chí Minh và tỉnh Đồng Nai, đảm bảo năng lực phục vụ kịp thời và chuẩn mực.
           </p>
         </div>
 
         {/* Network Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {!branchesList.length && <p role="status" className="text-slate-500">{loading.branches ? 'Đang tải chi nhánh...' : 'Danh sách chi nhánh đang được cập nhật.'}</p>}
           {branchesList.map((b) => (
             <div 
               key={b.id}
@@ -57,7 +43,7 @@ export default function NetworkPage() {
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <span className="text-[10px] font-bold text-primary bg-primary-subtle px-3 py-1 rounded-full uppercase tracking-wider">
-                    {b.id === 'gf-kim-son-hcm' ? 'Trụ Sở & Văn Phòng' : b.role.includes('Xưởng') ? 'Xưởng Kỹ Thuật' : 'Showroom & Dịch Vụ'}
+                    {b.id === 'gf-kim-son-hcm' ? 'Trụ Sở & Văn Phòng' : b.role?.includes('Xưởng') ? 'Xưởng Kỹ Thuật' : 'Showroom & Dịch Vụ'}
                   </span>
                   <span className="text-xs text-slate-400 font-semibold">Đông Nam Bộ</span>
                 </div>
@@ -84,7 +70,7 @@ export default function NetworkPage() {
                 <div className="pt-2 border-t border-slate-100">
                   <p className="text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-2">Hạng mục phục vụ chính:</p>
                   <div className="space-y-1.5">
-                    {b.features.map((feat, i) => (
+                    {(b.features || []).map((feat, i) => (
                       <div key={i} className="flex items-center gap-2 text-xs text-slate-600">
                         <CheckCircle2 size={13} className="text-emerald-500 shrink-0" />
                         <span>{feat}</span>

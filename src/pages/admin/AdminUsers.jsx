@@ -80,7 +80,7 @@ export default function AdminUsers() {
   }, []);
 
   const userRole = currentUser?.role || ((currentUser?.id === '1' || currentUser?.username === 'admin') ? 'Admin' : 'User');
-  const isAdmin = userRole === 'Admin' || currentUser?.id === '1' || currentUser?.username === 'admin';
+  const isAdmin = userRole === 'Admin';
   const isLeader = userRole === 'Leader';
 
   const loadUsers = async (activeUser = currentUser) => {

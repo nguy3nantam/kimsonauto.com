@@ -22,7 +22,7 @@ export default function AdminNews() {
 
   const loadNews = async () => {
     try {
-      const data = await api.getNews();
+      const data = await api.getNews(true);
       setNews(data);
     } catch (err) {
       console.error('Failed to load news:', err);

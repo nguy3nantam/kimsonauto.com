@@ -1,462 +1,294 @@
-import React, { useState, useEffect } from 'react';
-import { 
-  Image as ImageIcon, 
-  Plus, 
-  Edit3, 
-  Trash2, 
-  CheckCircle2, 
-  X, 
-  Eye, 
-  EyeOff, 
-  ArrowUp, 
-  ArrowDown, 
-  ExternalLink, 
-  Sparkles, 
-  RefreshCw,
-  Sliders,
-  ChevronRight
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import {
+  Image as ImageIcon, Plus, Edit3, Trash2, CheckCircle2, AlertCircle,
+  X, Eye, EyeOff, ArrowUp, ArrowDown, RefreshCw, Sliders,
 } from 'lucide-react';
 import { api } from '../../services/api';
+
+const INITIAL_FORM = {
+  title: '',
+  image: '',
+  order: 1,
+  active: true,
+};
+const sortSlides = (slides) => [...slides].sort((a, b) => Number(a.order) - Number(b.order));
+
+function SlideImage({ src, title, className }) {
+  const [failed, setFailed] = useState(false);
+  if (!src || failed) {
+    return (
+      <div className={`${className} flex items-center justify-center gap-2 bg-slate-100 text-slate-500 text-sm p-4`}>
+        <ImageIcon size={22} />
+        <span>{src ? 'Không tải được hình ảnh' : 'Chưa chọn hình ảnh'}</span>
+      </div>
+    );
+  }
+  return <img src={src} alt={title} className={className} onError={() => setFailed(true)} />;
+}
 
 export default function AdminSliders() {
   const [sliders, setSliders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState('');
+  const [busy, setBusy] = useState(false);
   const [editingSlide, setEditingSlide] = useState(null);
   const [isCreating, setIsCreating] = useState(false);
-  const [previewSlide, setPreviewSlide] = useState(null);
+  const [previewId, setPreviewId] = useState(null);
   const [message, setMessage] = useState(null);
+  const [formError, setFormError] = useState('');
+  const [formData, setFormData] = useState(INITIAL_FORM);
+  const notificationTimer = useRef(null);
+  const mutationPending = useRef(false);
+  const previewSlide = sliders.find(slide => slide.id === previewId)
+    || sliders.find(slide => slide.active !== false) || sliders[0];
+  const controlsDisabled = loading || busy;
 
-  const initialForm = {
-    title: '',
-    subtitle: 'TẬP ĐOÀN HỆ SINH THÁI Ô TÔ KIM SƠN',
-    description: '',
-    image: 'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&q=85&w=1920',
-    primaryButtonText: 'Khám Phá 5 Trụ Cột Hoạt Động',
-    primaryButtonLink: '/linh-vuc',
-    secondaryButtonText: 'Hành Trình 12 Năm (2014 - 2026)',
-    secondaryButtonLink: '/about',
-    order: 1,
-    active: true
-  };
-
-  const [formData, setFormData] = useState(initialForm);
-
-  useEffect(() => {
-    loadSliders();
+  const showNotification = useCallback((text, type = 'success') => {
+    clearTimeout(notificationTimer.current);
+    setMessage({ text, type });
+    notificationTimer.current = setTimeout(() => setMessage(null), 5000);
   }, []);
 
-  const showNotification = (text, type = 'success') => {
-    setMessage({ text, type });
-    setTimeout(() => setMessage(null), 4000);
-  };
-
-  const loadSliders = async () => {
+  const loadSliders = useCallback(async () => {
+    setLoading(true);
+    setLoadError('');
     try {
-      setLoading(true);
       const data = await api.getSliders('all=true');
-      const sorted = (data || []).sort((a, b) => (Number(a.order) || 0) - (Number(b.order) || 0));
-      setSliders(sorted);
-      if (sorted.length > 0 && !previewSlide) {
-        setPreviewSlide(sorted[0]);
-      }
+      if (!Array.isArray(data)) throw new Error('Dữ liệu slider không hợp lệ');
+      setSliders(sortSlides(data));
     } catch (err) {
-      console.error('Failed to load sliders:', err);
-      showNotification('Không thể tải danh sách slider: ' + err.message, 'error');
+      setLoadError('Không thể tải danh sách slider: ' + err.message);
     } finally {
       setLoading(false);
     }
+  }, []);
+
+  useEffect(() => {
+    loadSliders();
+    return () => clearTimeout(notificationTimer.current);
+  }, [loadSliders]);
+
+  const startMutation = () => {
+    if (mutationPending.current) return false;
+    mutationPending.current = true;
+    setBusy(true);
+    return true;
+  };
+  const finishMutation = () => {
+    mutationPending.current = false;
+    setBusy(false);
   };
 
   const handleCreateOpen = () => {
     setIsCreating(true);
     setEditingSlide(null);
+    setFormError('');
     setFormData({
-      ...initialForm,
-      order: sliders.length + 1
+      ...INITIAL_FORM,
+      order: Math.min(10000, Math.max(0, ...sliders.map(slide => Number(slide.order) || 0)) + 1),
     });
   };
 
   const handleEdit = (slide) => {
     setEditingSlide(slide.id);
     setIsCreating(false);
+    setFormError('');
     setFormData({
       title: slide.title || '',
-      subtitle: slide.subtitle || 'TẬP ĐOÀN HỆ SINH THÁI Ô TÔ KIM SƠN',
-      description: slide.description || '',
       image: slide.image || '',
-      primaryButtonText: slide.primaryButtonText || 'Khám Phá Thêm',
-      primaryButtonLink: slide.primaryButtonLink || '/linh-vuc',
-      secondaryButtonText: slide.secondaryButtonText || 'Liên Hệ',
-      secondaryButtonLink: slide.secondaryButtonLink || '/lien-he',
-      order: Number(slide.order) || 1,
-      active: slide.active !== false
+      order: Number(slide.order) || 0,
+      active: slide.active !== false,
     });
   };
 
   const handleCloseModal = () => {
+    if (mutationPending.current) return;
     setIsCreating(false);
     setEditingSlide(null);
+    setFormError('');
   };
 
   const handleToggleActive = async (slide) => {
+    if (!startMutation()) return;
     try {
-      const updated = await api.updateSlider(slide.id, { active: !slide.active });
-      setSliders(sliders.map(s => s.id === slide.id ? updated : s));
-      if (previewSlide?.id === slide.id) {
-        setPreviewSlide(updated);
-      }
-      showNotification(`Đã ${updated.active ? 'bật' : 'tắt'} hiển thị slide #${slide.order}`);
+      const updated = await api.updateSlider(slide.id, { active: slide.active === false });
+      setSliders(current => sortSlides(current.map(item => item.id === slide.id ? updated : item)));
+      showNotification(`Đã ${updated.active ? 'bật' : 'tắt'} hiển thị slide "${updated.title}"`);
     } catch (err) {
       showNotification('Không thể cập nhật trạng thái: ' + err.message, 'error');
+    } finally {
+      finishMutation();
     }
   };
 
   const handleMoveOrder = async (slide, direction) => {
-    const currentIndex = sliders.findIndex(s => s.id === slide.id);
+    const currentIndex = sliders.findIndex(item => item.id === slide.id);
     const targetIndex = direction === 'up' ? currentIndex - 1 : currentIndex + 1;
-    if (targetIndex < 0 || targetIndex >= sliders.length) return;
-
-    const targetSlide = sliders[targetIndex];
-    const currentOrder = Number(slide.order) || (currentIndex + 1);
-    const targetOrder = Number(targetSlide.order) || (targetIndex + 1);
-
+    if (currentIndex < 0 || targetIndex < 0 || targetIndex >= sliders.length || !startMutation()) return;
+    const ids = sliders.map(item => item.id);
+    [ids[currentIndex], ids[targetIndex]] = [ids[targetIndex], ids[currentIndex]];
     try {
-      await api.updateSlider(slide.id, { order: targetOrder });
-      await api.updateSlider(targetSlide.id, { order: currentOrder });
-      await loadSliders();
+      const updated = await api.reorderSliders(ids);
+      setSliders(sortSlides(updated));
       showNotification('Đã thay đổi thứ tự hiển thị slider');
     } catch (err) {
-      showNotification('Lỗi khi đổi thứ tự: ' + err.message, 'error');
+      if (err.status === 409) await loadSliders();
+      showNotification('Không thể đổi thứ tự: ' + err.message, 'error');
+    } finally {
+      finishMutation();
     }
   };
 
-  const handleDelete = async (id, title) => {
-    if (!window.confirm(`Bạn có chắc muốn xóa slider "${title}" không?`)) return;
+  const handleDelete = async (slide) => {
+    if (!window.confirm(`Bạn có chắc muốn xóa slider "${slide.title}" không?`) || !startMutation()) return;
     try {
-      await api.deleteSlider(id);
-      const remaining = sliders.filter(s => s.id !== id);
-      setSliders(remaining);
-      if (previewSlide?.id === id) {
-        setPreviewSlide(remaining[0] || null);
-      }
+      await api.deleteSlider(slide.id);
+      setSliders(current => current.filter(item => item.id !== slide.id));
       showNotification('Đã xóa slider thành công');
     } catch (err) {
       showNotification('Không thể xóa slider: ' + err.message, 'error');
+    } finally {
+      finishMutation();
     }
   };
 
-  const handleSave = async (e) => {
-    e.preventDefault();
-    if (!formData.title.trim() || !formData.image.trim()) {
-      showNotification('Vui lòng nhập đầy đủ tiêu đề và hình ảnh', 'error');
+  const handleSave = async (event) => {
+    event.preventDefault();
+    const payload = { ...formData, title: formData.title.trim(), image: formData.image.trim(), order: Number(formData.order) };
+    if (!payload.title || !payload.image) {
+      setFormError('Vui lòng nhập tên slide và đường dẫn hình ảnh.');
       return;
     }
-
+    if (!/^https:\/\//.test(payload.image) && !/^\/(?!\/)/.test(payload.image)) {
+      setFormError('Đường dẫn ảnh phải bắt đầu bằng https:// hoặc / cho ảnh trên website.');
+      return;
+    }
+    if (formData.order === '' || !Number.isInteger(payload.order) || payload.order < 0 || payload.order > 10000) {
+      setFormError('Thứ tự phải là số nguyên từ 0 đến 10000.');
+      return;
+    }
+    if (!startMutation()) return;
+    setFormError('');
     try {
-      if (isCreating) {
-        const created = await api.createSlider(formData);
-        const updatedList = [...sliders, created].sort((a, b) => (Number(a.order) || 0) - (Number(b.order) || 0));
-        setSliders(updatedList);
-        setPreviewSlide(created);
-        showNotification('Thêm slide mới thành công!');
-      } else {
-        const updated = await api.updateSlider(editingSlide, formData);
-        const updatedList = sliders.map(s => s.id === editingSlide ? updated : s)
-          .sort((a, b) => (Number(a.order) || 0) - (Number(b.order) || 0));
-        setSliders(updatedList);
-        if (previewSlide?.id === editingSlide) {
-          setPreviewSlide(updated);
-        }
-        showNotification('Cập nhật slide thành công!');
-      }
-      handleCloseModal();
+      const saved = isCreating
+        ? await api.createSlider(payload)
+        : await api.updateSlider(editingSlide, payload);
+      setSliders(current => sortSlides(isCreating ? [...current, saved] : current.map(slide => slide.id === editingSlide ? saved : slide)));
+      setPreviewId(saved.id);
+      setIsCreating(false);
+      setEditingSlide(null);
+      showNotification(isCreating ? 'Thêm slide mới thành công!' : 'Cập nhật slide thành công!');
     } catch (err) {
-      showNotification('Lỗi khi lưu slide: ' + err.message, 'error');
+      setFormError('Không thể lưu slide: ' + err.message);
+    } finally {
+      finishMutation();
     }
   };
 
   return (
     <div className="space-y-8">
-      {/* Toast Notification */}
       {message && (
-        <div className={`p-4 rounded-xl flex items-center justify-between text-sm font-medium shadow-md transition-all ${
-          message.type === 'error' ? 'bg-red-50 text-red-700 border border-red-200' : 'bg-emerald-50 text-emerald-700 border border-emerald-200'
-        }`}>
+        <div role={message.type === 'error' ? 'alert' : 'status'} className={`p-4 rounded-xl flex items-center justify-between gap-3 text-sm font-medium border ${message.type === 'error' ? 'bg-red-50 text-red-700 border-red-200' : 'bg-emerald-50 text-emerald-700 border-emerald-200'}`}>
           <div className="flex items-center gap-2">
-            <CheckCircle2 size={18} />
+            {message.type === 'error' ? <AlertCircle size={18} className="shrink-0" /> : <CheckCircle2 size={18} className="shrink-0" />}
             <span>{message.text}</span>
           </div>
-          <button onClick={() => setMessage(null)} className="text-slate-400 hover:text-slate-600">
-            <X size={16} />
-          </button>
+          <button onClick={() => setMessage(null)} aria-label="Đóng thông báo"><X size={16} /></button>
         </div>
       )}
 
-      {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-slate-200 shadow-xs">
-        <div>
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 bg-blue-50 text-primary rounded-xl">
-              <Sliders size={24} />
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Quản Lý Slider Trang Chủ</h1>
-              <p className="text-sm text-slate-500 mt-0.5">
-                Tùy chỉnh hình ảnh, tiêu đề, khẩu hiệu và nút chuyển trang cho Banner chính của Website
-              </p>
-            </div>
+      <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-slate-200 shadow-xs">
+        <div className="flex items-center gap-3">
+          <div className="p-2.5 bg-blue-50 text-primary rounded-xl"><Sliders size={24} /></div>
+          <div>
+            <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Quản Lý Slider Trang Chủ</h1>
+            <p className="text-sm text-slate-500 mt-0.5">Quản lý hình ảnh, thứ tự và trạng thái hiển thị của banner trang chủ.</p>
           </div>
         </div>
-
-        <div className="flex items-center gap-3">
-          <button
-            onClick={loadSliders}
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-50 text-sm font-medium transition"
-            title="Tải lại dữ liệu"
-          >
-            <RefreshCw size={16} className={loading ? 'animate-spin' : ''} />
-            <span>Làm Mới</span>
+        <div className="flex flex-wrap items-center gap-3">
+          <button onClick={loadSliders} disabled={controlsDisabled} className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-50 text-sm font-medium disabled:opacity-50">
+            <RefreshCw size={16} className={loading ? 'animate-spin' : ''} /> Làm Mới
           </button>
-          <button
-            onClick={handleCreateOpen}
-            className="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white px-5 py-2.5 rounded-xl font-semibold text-sm shadow-md shadow-primary/20 transition-all hover:scale-105"
-          >
-            <Plus size={18} />
-            <span>Thêm Slide Mới</span>
+          <button onClick={handleCreateOpen} disabled={controlsDisabled || Boolean(loadError)} className="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white px-5 py-2.5 rounded-xl font-semibold text-sm disabled:opacity-50">
+            <Plus size={18} /> Thêm Slide Mới
           </button>
         </div>
       </div>
 
-      {/* Live Preview Box of Active/Selected Slide */}
+      {loadError && <p role="alert" className="p-4 rounded-xl bg-red-50 border border-red-200 text-sm text-red-700">{loadError} Bấm Làm Mới để thử lại.</p>}
+
       {previewSlide && (
         <div className="bg-slate-950 rounded-2xl overflow-hidden border border-slate-800 shadow-xl">
-          <div className="px-6 py-3 bg-slate-900 border-b border-slate-800 flex items-center justify-between text-xs text-slate-400">
-            <div className="flex items-center gap-2 font-medium">
-              <Sparkles size={14} className="text-amber-400" />
-              <span>Xem trước hiển thị: <strong>{previewSlide.title}</strong></span>
-            </div>
-            <div className="flex items-center gap-3">
-              <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${
-                previewSlide.active !== false ? 'bg-emerald-500/20 text-emerald-400' : 'bg-rose-500/20 text-rose-400'
-              }`}>
-                {previewSlide.active !== false ? 'Đang kích hoạt trên Home' : 'Đang ẩn'}
+          <div className="px-4 sm:px-6 py-3 bg-slate-900 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-300">
+            <span className="break-words">Xem trước: <strong>{previewSlide.title}</strong></span>
+            <div className="flex flex-wrap items-center gap-3 shrink-0">
+              <span className={`px-2.5 py-0.5 rounded-full font-semibold ${previewSlide.active !== false ? 'bg-emerald-500/20 text-emerald-300' : 'bg-rose-500/20 text-rose-300'}`}>
+                {previewSlide.active !== false ? 'Hiển thị trên trang chủ' : 'Đang ẩn trên trang chủ'}
               </span>
               <span>Thứ tự #{previewSlide.order}</span>
             </div>
           </div>
-
-          <div className="relative min-h-[360px] flex items-center p-8 sm:p-12 text-white overflow-hidden">
-            <img 
-              src={previewSlide.image} 
-              alt={previewSlide.title}
-              className="absolute inset-0 w-full h-full object-cover object-center opacity-35"
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/85 to-transparent"></div>
-
-            <div className="relative z-10 max-w-2xl space-y-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/25 border border-primary/40 text-primary-light text-xs font-bold uppercase tracking-wider">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary animate-ping"></span>
-                {previewSlide.subtitle || 'TẬP ĐOÀN HỆ SINH THÁI Ô TÔ KIM SƠN'}
-              </div>
-
-              <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-white leading-tight">
-                {previewSlide.title}
-              </h2>
-
-              <p className="text-sm sm:text-base text-slate-300 font-normal leading-relaxed line-clamp-3">
-                {previewSlide.description}
-              </p>
-
-              <div className="flex flex-wrap items-center gap-3 pt-2">
-                {previewSlide.primaryButtonText && (
-                  <span className="inline-flex items-center gap-1.5 bg-primary text-white px-5 py-2.5 rounded-xl font-semibold text-xs uppercase tracking-wider shadow-sm">
-                    {previewSlide.primaryButtonText}
-                    <ChevronRight size={14} />
-                  </span>
-                )}
-                {previewSlide.secondaryButtonText && (
-                  <span className="inline-flex items-center gap-1.5 bg-white/10 text-white border border-white/20 px-5 py-2.5 rounded-xl font-semibold text-xs uppercase tracking-wider backdrop-blur-sm">
-                    {previewSlide.secondaryButtonText}
-                  </span>
-                )}
-              </div>
-            </div>
+          <div className="relative h-[320px] lg:h-[360px] overflow-hidden">
+            <SlideImage key={previewSlide.image} src={previewSlide.image} title={previewSlide.title} className="w-full h-full object-cover object-center" />
           </div>
+          <p className="px-4 sm:px-6 py-3 text-xs text-slate-400">Banner trang chủ chỉ hiển thị hình ảnh, căn giữa và cắt theo khung màn hình. Tên slide dùng để quản lý và làm văn bản thay thế cho ảnh.</p>
         </div>
       )}
 
-      {/* Sliders Grid & Table */}
       <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
-        <div className="p-6 border-b border-slate-200 flex items-center justify-between">
-          <div>
-            <h3 className="text-lg font-bold text-slate-900">Danh Sách Slide ({sliders.length})</h3>
-            <p className="text-xs text-slate-500 mt-0.5">
-              Các slide sẽ tự động chuyển động trên trang chủ theo thứ tự đã sắp xếp
-            </p>
-          </div>
+        <div className="p-6 border-b border-slate-200">
+          <h2 className="text-lg font-bold text-slate-900">Danh Sách Slide ({sliders.length})</h2>
+          <p className="text-xs text-slate-500 mt-0.5">Chỉ các slide đang hiển thị được tự động chuyển trên trang chủ theo thứ tự đã sắp xếp.</p>
         </div>
-
         {loading ? (
-          <div className="p-12 text-center text-slate-400">
-            <RefreshCw size={28} className="animate-spin mx-auto mb-3 text-primary" />
-            <p className="text-sm">Đang tải danh sách slide...</p>
-          </div>
+          <div className="p-12 text-center text-slate-400" role="status"><RefreshCw size={28} className="animate-spin mx-auto mb-3 text-primary" /><p className="text-sm">Đang tải danh sách slide...</p></div>
+        ) : loadError && sliders.length === 0 ? (
+          <p className="p-8 text-center text-sm text-slate-500">Danh sách chưa tải được. Vui lòng thử lại.</p>
         ) : sliders.length === 0 ? (
           <div className="p-12 text-center text-slate-500">
             <ImageIcon size={40} className="mx-auto mb-3 text-slate-300" />
-            <p className="text-base font-semibold text-slate-700">Chưa có slider nào</p>
-            <p className="text-sm text-slate-400 mt-1">Bấm nút "Thêm Slide Mới" để tạo slide đầu tiên cho trang chủ.</p>
+            <p className="font-semibold text-slate-700">Chưa có slider nào</p>
+            <p className="text-sm mt-1">Bấm "Thêm Slide Mới" để tạo slide đầu tiên.</p>
           </div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="border-b border-slate-200 bg-slate-50 text-slate-600 text-xs font-semibold uppercase tracking-wider">
-                  <th className="py-3.5 px-4 w-16 text-center">Thứ tự</th>
-                  <th className="py-3.5 px-4 w-44">Hình Ảnh</th>
-                  <th className="py-3.5 px-4">Tiêu Đề & Nội Dung</th>
-                  <th className="py-3.5 px-4 w-48">Nút Điều Hướng (CTA)</th>
-                  <th className="py-3.5 px-4 w-32 text-center">Trạng Thái</th>
-                  <th className="py-3.5 px-4 w-36 text-center">Thao Tác</th>
-                </tr>
-              </thead>
+            <table className="w-full min-w-[680px] text-left border-collapse">
+              <thead><tr className="border-b border-slate-200 bg-slate-50 text-slate-600 text-xs font-semibold uppercase tracking-wider">
+                <th className="py-3.5 px-4 w-20 text-center">Thứ tự</th>
+                <th className="py-3.5 px-4 w-44">Hình ảnh</th>
+                <th className="py-3.5 px-4">Tên slide</th>
+                <th className="py-3.5 px-4 w-36 text-center">Trạng thái</th>
+                <th className="py-3.5 px-4 w-36 text-center">Thao tác</th>
+              </tr></thead>
               <tbody className="divide-y divide-slate-100 text-sm">
                 {sliders.map((slide, index) => (
-                  <tr 
-                    key={slide.id} 
-                    className={`hover:bg-slate-50/80 transition ${previewSlide?.id === slide.id ? 'bg-blue-50/40' : ''}`}
-                  >
-                    {/* Order & Reorder arrows */}
+                  <tr key={slide.id} className={`hover:bg-slate-50/80 ${previewSlide?.id === slide.id ? 'bg-blue-50/40' : ''}`}>
                     <td className="py-4 px-4 text-center">
-                      <div className="flex flex-col items-center justify-center gap-1">
-                        <span className="w-7 h-7 rounded-lg bg-slate-100 text-slate-700 font-bold text-xs flex items-center justify-center border border-slate-200">
-                          {slide.order}
-                        </span>
+                      <div className="flex flex-col items-center gap-1">
+                        <span className="w-8 h-7 rounded-lg bg-slate-100 text-slate-700 font-bold text-xs flex items-center justify-center border border-slate-200">{slide.order}</span>
                         <div className="flex items-center gap-0.5">
-                          <button
-                            type="button"
-                            disabled={index === 0}
-                            onClick={() => handleMoveOrder(slide, 'up')}
-                            className="p-1 text-slate-400 hover:text-primary disabled:opacity-30 disabled:hover:text-slate-400 transition"
-                            title="Di chuyển lên trên"
-                          >
-                            <ArrowUp size={14} />
-                          </button>
-                          <button
-                            type="button"
-                            disabled={index === sliders.length - 1}
-                            onClick={() => handleMoveOrder(slide, 'down')}
-                            className="p-1 text-slate-400 hover:text-primary disabled:opacity-30 disabled:hover:text-slate-400 transition"
-                            title="Di chuyển xuống dưới"
-                          >
-                            <ArrowDown size={14} />
-                          </button>
+                          <button disabled={controlsDisabled || Boolean(loadError) || index === 0} onClick={() => handleMoveOrder(slide, 'up')} className="p-1 text-slate-500 hover:text-primary disabled:opacity-30" aria-label={`Di chuyển ${slide.title} lên trên`}><ArrowUp size={16} /></button>
+                          <button disabled={controlsDisabled || Boolean(loadError) || index === sliders.length - 1} onClick={() => handleMoveOrder(slide, 'down')} className="p-1 text-slate-500 hover:text-primary disabled:opacity-30" aria-label={`Di chuyển ${slide.title} xuống dưới`}><ArrowDown size={16} /></button>
                         </div>
                       </div>
                     </td>
-
-                    {/* Image Thumbnail */}
                     <td className="py-4 px-4">
-                      <div 
-                        className="relative group w-36 h-20 rounded-xl overflow-hidden bg-slate-900 border border-slate-200 cursor-pointer shadow-xs"
-                        onClick={() => setPreviewSlide(slide)}
-                      >
-                        <img 
-                          src={slide.image} 
-                          alt={slide.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
-                        />
-                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white text-xs font-medium">
-                          <Eye size={16} className="mr-1" /> Xem
-                        </div>
-                      </div>
-                    </td>
-
-                    {/* Title & Description */}
-                    <td className="py-4 px-4">
-                      <div className="space-y-1">
-                        <span className="inline-block text-[11px] font-semibold uppercase tracking-wider text-primary bg-primary/10 px-2 py-0.5 rounded">
-                          {slide.subtitle || 'TẬP ĐOÀN HỆ SINH THÁI Ô TÔ KIM SƠN'}
-                        </span>
-                        <h4 className="font-bold text-slate-900 text-base leading-snug">
-                          {slide.title}
-                        </h4>
-                        <p className="text-xs text-slate-500 line-clamp-2 max-w-xl">
-                          {slide.description || '(Chưa có mô tả chi tiết)'}
-                        </p>
-                      </div>
-                    </td>
-
-                    {/* CTA Links */}
-                    <td className="py-4 px-4">
-                      <div className="space-y-1.5 text-xs">
-                        {slide.primaryButtonText ? (
-                          <div className="text-slate-700">
-                            <span className="font-medium text-slate-900">1: {slide.primaryButtonText}</span>
-                            <span className="text-slate-400 block truncate text-[11px]">{slide.primaryButtonLink}</span>
-                          </div>
-                        ) : null}
-                        {slide.secondaryButtonText ? (
-                          <div className="text-slate-700">
-                            <span className="font-medium text-slate-900">2: {slide.secondaryButtonText}</span>
-                            <span className="text-slate-400 block truncate text-[11px]">{slide.secondaryButtonLink}</span>
-                          </div>
-                        ) : null}
-                        {!slide.primaryButtonText && !slide.secondaryButtonText && (
-                          <span className="text-slate-400 italic">Không có nút</span>
-                        )}
-                      </div>
-                    </td>
-
-                    {/* Status Badge & Toggle */}
-                    <td className="py-4 px-4 text-center">
-                      <button
-                        onClick={() => handleToggleActive(slide)}
-                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition cursor-pointer ${
-                          slide.active !== false
-                            ? 'bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100'
-                            : 'bg-slate-100 text-slate-500 border border-slate-200 hover:bg-slate-200'
-                        }`}
-                        title="Bấm để bật/tắt hiển thị"
-                      >
-                        {slide.active !== false ? (
-                          <>
-                            <Eye size={13} className="text-emerald-600" />
-                            <span>Hiển thị</span>
-                          </>
-                        ) : (
-                          <>
-                            <EyeOff size={13} className="text-slate-400" />
-                            <span>Đang ẩn</span>
-                          </>
-                        )}
+                      <button onClick={() => setPreviewId(slide.id)} aria-label={`Xem trước ${slide.title}`} className="block w-36 h-20 rounded-xl overflow-hidden border border-slate-200">
+                        <SlideImage key={slide.image} src={slide.image} title={slide.title} className="w-full h-full object-cover object-center" />
                       </button>
                     </td>
-
-                    {/* Actions */}
+                    <td className="py-4 px-4"><h3 className="font-bold text-slate-900 break-words">{slide.title}</h3></td>
                     <td className="py-4 px-4 text-center">
-                      <div className="flex items-center justify-center gap-2">
-                        <button
-                          onClick={() => setPreviewSlide(slide)}
-                          className="p-2 text-slate-500 hover:text-primary hover:bg-blue-50 rounded-lg transition"
-                          title="Xem trước slide này"
-                        >
-                          <Eye size={17} />
-                        </button>
-                        <button
-                          onClick={() => handleEdit(slide)}
-                          className="p-2 text-slate-500 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition"
-                          title="Chỉnh sửa slide"
-                        >
-                          <Edit3 size={17} />
-                        </button>
-                        <button
-                          onClick={() => handleDelete(slide.id, slide.title)}
-                          className="p-2 text-slate-500 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition"
-                          title="Xóa slide"
-                        >
-                          <Trash2 size={17} />
-                        </button>
+                      <button disabled={controlsDisabled || Boolean(loadError)} onClick={() => handleToggleActive(slide)} aria-label={`${slide.active !== false ? 'Ẩn' : 'Hiển thị'} slide ${slide.title}`} className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border disabled:opacity-50 ${slide.active !== false ? 'bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100' : 'bg-slate-100 text-slate-500 border-slate-200 hover:bg-slate-200'}`}>
+                        {slide.active !== false ? <Eye size={13} /> : <EyeOff size={13} />}
+                        {slide.active !== false ? 'Hiển thị' : 'Đang ẩn'}
+                      </button>
+                    </td>
+                    <td className="py-4 px-4 text-center">
+                      <div className="flex items-center justify-center gap-1">
+                        <button onClick={() => setPreviewId(slide.id)} className="p-2 text-slate-500 hover:text-primary hover:bg-blue-50 rounded-lg" aria-label={`Xem trước ${slide.title}`}><Eye size={17} /></button>
+                        <button disabled={controlsDisabled || Boolean(loadError)} onClick={() => handleEdit(slide)} className="p-2 text-slate-500 hover:text-amber-600 hover:bg-amber-50 rounded-lg disabled:opacity-50" aria-label={`Chỉnh sửa ${slide.title}`}><Edit3 size={17} /></button>
+                        <button disabled={controlsDisabled || Boolean(loadError)} onClick={() => handleDelete(slide)} className="p-2 text-slate-500 hover:text-rose-600 hover:bg-rose-50 rounded-lg disabled:opacity-50" aria-label={`Xóa ${slide.title}`}><Trash2 size={17} /></button>
                       </div>
                     </td>
                   </tr>
@@ -467,204 +299,43 @@ export default function AdminSliders() {
         )}
       </div>
 
-      {/* Modal Add / Edit Slide */}
-      {(isCreating || editingSlide) && (
+      {(isCreating || editingSlide !== null) && (
         <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full border border-slate-200 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
-            {/* Modal Header */}
-            <div className="px-6 py-4 border-b border-slate-200 flex items-center justify-between bg-slate-50">
-              <div className="flex items-center gap-2.5">
-                <div className="p-2 bg-primary/10 text-primary rounded-lg">
-                  <ImageIcon size={20} />
-                </div>
-                <h3 className="text-lg font-bold text-slate-900">
-                  {isCreating ? 'Thêm Slider Mới Cho Trang Chủ' : 'Chỉnh Sửa Slider Trang Chủ'}
-                </h3>
-              </div>
-              <button 
-                onClick={handleCloseModal}
-                className="p-1.5 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-200/50 transition"
-              >
-                <X size={20} />
-              </button>
+          <div role="dialog" aria-modal="true" aria-labelledby="slider-dialog-title" className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full border border-slate-200 overflow-hidden">
+            <div className="px-4 sm:px-6 py-4 border-b border-slate-200 flex items-center justify-between gap-3 bg-slate-50">
+              <h2 id="slider-dialog-title" className="text-lg font-bold text-slate-900">{isCreating ? 'Thêm Slider Mới' : 'Chỉnh Sửa Slider'}</h2>
+              <button onClick={handleCloseModal} disabled={busy} className="p-1.5 text-slate-400 hover:text-slate-600 rounded-lg disabled:opacity-50" aria-label="Đóng cửa sổ"><X size={20} /></button>
             </div>
-
-            {/* Modal Form */}
-            <form onSubmit={handleSave} className="p-6 space-y-5 max-h-[80vh] overflow-y-auto">
-              {/* Tiêu đề & Thứ tự */}
-              <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
-                <div className="sm:col-span-3 space-y-1.5">
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
-                    Tiêu Đề Slide <span className="text-rose-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={formData.title}
-                    onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                    placeholder="VD: Kiến Tạo Chuỗi Giá Trị Hệ Sinh Thái Ô Tô"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-hidden focus:ring-2 focus:ring-primary/20 focus:border-primary text-sm font-medium"
-                  />
-                </div>
-                <div className="space-y-1.5">
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
-                    Thứ Tự
-                  </label>
-                  <input
-                    type="number"
-                    min="1"
-                    value={formData.order}
-                    onChange={(e) => setFormData({ ...formData, order: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-hidden focus:ring-2 focus:ring-primary/20 focus:border-primary text-sm"
-                  />
-                </div>
-              </div>
-
-              {/* Tagline / Subtitle */}
-              <div className="space-y-1.5">
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
-                  Tagline / Nhãn Phụ Phía Trên
-                </label>
-                <input
-                  type="text"
-                  value={formData.subtitle}
-                  onChange={(e) => setFormData({ ...formData, subtitle: e.target.value })}
-                  placeholder="VD: TẬP ĐOÀN HỆ SINH THÁI Ô TÔ KIM SƠN"
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-hidden focus:ring-2 focus:ring-primary/20 focus:border-primary text-sm"
-                />
-              </div>
-
-              {/* Mô tả ngắn */}
-              <div className="space-y-1.5">
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
-                  Mô Tả Ngắn (Giới thiệu nội dung slide)
-                </label>
-                <textarea
-                  rows="3"
-                  value={formData.description}
-                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  placeholder="Nội dung giới thiệu chi tiết xuất hiện bên dưới tiêu đề..."
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-hidden focus:ring-2 focus:ring-primary/20 focus:border-primary text-sm"
-                />
-              </div>
-
-              {/* URL Hình ảnh & Image Preview */}
-              <div className="space-y-2">
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
-                  Đường Dẫn Hình Ảnh Nền (URL Ảnh chất lượng cao) <span className="text-rose-500">*</span>
-                </label>
-                <input
-                  type="url"
-                  required
-                  value={formData.image}
-                  onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                  placeholder="https://images.unsplash.com/..."
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-hidden focus:ring-2 focus:ring-primary/20 focus:border-primary text-sm font-mono"
-                />
-                {formData.image && (
-                  <div className="relative w-full h-32 rounded-xl overflow-hidden bg-slate-900 border border-slate-200 mt-2">
-                    <img 
-                      src={formData.image} 
-                      alt="Preview" 
-                      className="w-full h-full object-cover"
-                      onError={(e) => {
-                        e.target.style.display = 'none';
-                      }}
-                    />
-                    <div className="absolute bottom-2 left-2 px-2.5 py-1 bg-black/70 backdrop-blur-xs rounded-md text-white text-[11px]">
-                      Hình ảnh mẫu xem trước
-                    </div>
+            <form onSubmit={handleSave} className="p-4 sm:p-6 space-y-5 max-h-[75vh] overflow-y-auto">
+              {formError && <p role="alert" className="p-3 rounded-lg bg-red-50 border border-red-200 text-sm text-red-700">{formError}</p>}
+              <fieldset disabled={busy} className="space-y-5 disabled:opacity-60">
+                <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+                  <div className="sm:col-span-3 space-y-1.5">
+                    <label htmlFor="slide-title" className="block text-xs font-bold uppercase tracking-wider text-slate-700">Tên slide <span className="text-rose-500">*</span></label>
+                    <input id="slide-title" type="text" required maxLength={250} autoFocus value={formData.title} onChange={event => setFormData({ ...formData, title: event.target.value })} placeholder="VD: Showroom VinFast Kim Sơn Biên Hòa" className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary/20 focus:border-primary text-sm" />
+                    <p className="text-xs text-slate-500">Tên dùng để quản lý và mô tả ảnh cho người dùng trình đọc màn hình.</p>
                   </div>
-                )}
-              </div>
-
-              {/* Nút Kêu Gọi Hành Động 1 (Primary Button) */}
-              <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-3">
-                <span className="text-xs font-bold uppercase tracking-wider text-primary block">
-                  Nút Kêu Gọi Chính (Nút 1 - Nổi bật)
-                </span>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-[11px] font-semibold text-slate-600 mb-1">Chữ trên nút</label>
-                    <input
-                      type="text"
-                      value={formData.primaryButtonText}
-                      onChange={(e) => setFormData({ ...formData, primaryButtonText: e.target.value })}
-                      placeholder="VD: Khám Phá 5 Trụ Cột Hoạt Động"
-                      className="w-full px-3 py-2 rounded-lg border border-slate-300 text-xs"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-[11px] font-semibold text-slate-600 mb-1">Đường dẫn liên kết</label>
-                    <input
-                      type="text"
-                      value={formData.primaryButtonLink}
-                      onChange={(e) => setFormData({ ...formData, primaryButtonLink: e.target.value })}
-                      placeholder="VD: /linh-vuc"
-                      className="w-full px-3 py-2 rounded-lg border border-slate-300 text-xs"
-                    />
+                  <div className="space-y-1.5">
+                    <label htmlFor="slide-order" className="block text-xs font-bold uppercase tracking-wider text-slate-700">Thứ tự</label>
+                    <input id="slide-order" type="number" required min="0" max="10000" step="1" value={formData.order} onChange={event => setFormData({ ...formData, order: event.target.value })} className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary/20 focus:border-primary text-sm" />
                   </div>
                 </div>
-              </div>
-
-              {/* Nút Kêu Gọi Hành Động 2 (Secondary Button) */}
-              <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-3">
-                <span className="text-xs font-bold uppercase tracking-wider text-slate-700 block">
-                  Nút Kêu Gọi Phụ (Nút 2 - Khung viền mờ)
-                </span>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-[11px] font-semibold text-slate-600 mb-1">Chữ trên nút</label>
-                    <input
-                      type="text"
-                      value={formData.secondaryButtonText}
-                      onChange={(e) => setFormData({ ...formData, secondaryButtonText: e.target.value })}
-                      placeholder="VD: Hành Trình 12 Năm (2014 - 2026)"
-                      className="w-full px-3 py-2 rounded-lg border border-slate-300 text-xs"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-[11px] font-semibold text-slate-600 mb-1">Đường dẫn liên kết</label>
-                    <input
-                      type="text"
-                      value={formData.secondaryButtonLink}
-                      onChange={(e) => setFormData({ ...formData, secondaryButtonLink: e.target.value })}
-                      placeholder="VD: /about"
-                      className="w-full px-3 py-2 rounded-lg border border-slate-300 text-xs"
-                    />
+                <div className="space-y-2">
+                  <label htmlFor="slide-image" className="block text-xs font-bold uppercase tracking-wider text-slate-700">Đường dẫn hình ảnh <span className="text-rose-500">*</span></label>
+                  <input id="slide-image" type="text" required maxLength={2048} value={formData.image} onChange={event => setFormData({ ...formData, image: event.target.value })} placeholder="https://... hoặc /uploads/ten-anh.webp" className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary/20 focus:border-primary text-sm" />
+                  <p className="text-xs text-slate-500">Dùng ảnh ngang, rõ nét. Nội dung chính nên nằm giữa ảnh để hiển thị tốt trên điện thoại.</p>
+                  <div className="h-48 sm:h-64 rounded-xl overflow-hidden border border-slate-200">
+                    <SlideImage key={formData.image.trim()} src={formData.image.trim()} title={formData.title || 'Xem trước hình ảnh slider'} className="w-full h-full object-cover object-center" />
                   </div>
                 </div>
-              </div>
-
-              {/* Trạng thái kích hoạt */}
-              <div className="flex items-center gap-3 pt-1">
-                <input
-                  type="checkbox"
-                  id="activeSlide"
-                  checked={formData.active}
-                  onChange={(e) => setFormData({ ...formData, active: e.target.checked })}
-                  className="w-4 h-4 text-primary rounded-sm border-slate-300 focus:ring-primary"
-                />
-                <label htmlFor="activeSlide" className="text-sm font-semibold text-slate-700 select-none cursor-pointer">
-                  Kích hoạt hiển thị slide này trên trang chủ ngay sau khi lưu
-                </label>
-              </div>
-
-              {/* Modal Buttons */}
-              <div className="pt-4 border-t border-slate-200 flex items-center justify-end gap-3">
-                <button
-                  type="button"
-                  onClick={handleCloseModal}
-                  className="px-5 py-2.5 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-100 text-sm font-medium transition"
-                >
-                  Hủy Bỏ
-                </button>
-                <button
-                  type="submit"
-                  className="px-6 py-2.5 rounded-xl bg-primary hover:bg-primary-dark text-white font-semibold text-sm shadow-md shadow-primary/20 transition-all hover:scale-105"
-                >
-                  {isCreating ? 'Tạo Slide Mới' : 'Lưu Thay Đổi'}
-                </button>
+                <div className="flex items-center gap-3">
+                  <input type="checkbox" id="activeSlide" checked={formData.active} onChange={event => setFormData({ ...formData, active: event.target.checked })} className="w-4 h-4 text-primary rounded-sm border-slate-300 focus:ring-primary" />
+                  <label htmlFor="activeSlide" className="text-sm font-semibold text-slate-700 cursor-pointer">Hiển thị slide trên trang chủ sau khi lưu</label>
+                </div>
+              </fieldset>
+              <div className="pt-4 border-t border-slate-200 flex flex-wrap items-center justify-end gap-3">
+                <button type="button" onClick={handleCloseModal} disabled={busy} className="px-5 py-2.5 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-100 text-sm font-medium disabled:opacity-50">Hủy Bỏ</button>
+                <button type="submit" disabled={busy} className="px-6 py-2.5 rounded-xl bg-primary hover:bg-primary-dark text-white font-semibold text-sm disabled:opacity-50">{busy ? 'Đang lưu...' : isCreating ? 'Tạo Slide Mới' : 'Lưu Thay Đổi'}</button>
               </div>
             </form>
           </div>

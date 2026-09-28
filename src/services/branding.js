@@ -48,9 +48,6 @@ export function useBranding() {
         } catch (e) {}
 
         applyFavicon(updated.favicon);
-        if (updated.siteTitle && document.title.includes('Kim Sơn')) {
-          document.title = updated.siteTitle;
-        }
       })
       .catch(err => {
         console.warn('Could not load branding settings, using cached:', err.message);

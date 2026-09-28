@@ -19,58 +19,47 @@ import {
   Briefcase,
   Image as ImageIcon
 } from 'lucide-react';
+import { api } from '../../services/api';
 import { useBranding } from '../../services/branding';
 
 export default function AdminLayout() {
   const branding = useBranding();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
+  const [checkingSession, setCheckingSession] = useState(true);
   const location = useLocation();
   const navigate = useNavigate();
 
   const userRole = currentUser?.role || ((currentUser?.id === '1' || currentUser?.username === 'admin') ? 'Admin' : 'User');
-  const isAdmin = userRole === 'Admin' || currentUser?.id === '1' || currentUser?.username === 'admin';
+  const isAdmin = userRole === 'Admin';
   const isLeader = userRole === 'Leader';
   const isUser = !isAdmin && !isLeader;
 
-  // Protect route check and role-based access
   useEffect(() => {
-    const token = localStorage.getItem('kimson_admin_token');
-    if (!token) {
-      navigate('/admin/login');
-      return;
-    }
-    const userStr = localStorage.getItem('kimson_admin_user');
-    if (userStr) {
-      try {
-        const u = JSON.parse(userStr);
-        setCurrentUser(u);
-        const role = u?.role || ((u?.id === '1' || u?.username === 'admin') ? 'Admin' : 'User');
-        const userIsAdmin = role === 'Admin' || u?.id === '1' || u?.username === 'admin';
-        const userIsLeader = role === 'Leader';
+    let active = true;
+    api.getMe().then(user => {
+      if (!active) return;
+      setCurrentUser(user);
+      localStorage.setItem('kimson_admin_user', JSON.stringify(user));
+    }).catch(() => {
+      if (active) { localStorage.removeItem('kimson_admin_user'); navigate('/login', { replace: true }); }
+    }).finally(() => { if (active) setCheckingSession(false); });
+    return () => { active = false; };
+  }, [navigate]);
 
-        // User role: only allowed /admin/portal or /admin
-        if (!userIsAdmin && !userIsLeader) {
-          if (location.pathname !== '/admin/portal' && location.pathname !== '/admin') {
-            navigate('/admin/portal', { replace: true });
-          }
-        } 
-        // Leader role: only allowed /admin/portal, /admin, /admin/users
-        else if (userIsLeader) {
-          if (location.pathname !== '/admin/portal' && location.pathname !== '/admin' && location.pathname !== '/admin/users') {
-            navigate('/admin/portal', { replace: true });
-          }
-        }
-      } catch (e) {
-        console.error(e);
-      }
-    }
-  }, [navigate, location.pathname]);
+  useEffect(() => {
+    if (checkingSession || !currentUser) return;
+    const allowed = currentUser.role === 'Admin' || location.pathname === '/admin' || location.pathname === '/admin/portal' || (currentUser.role === 'Leader' && location.pathname === '/admin/users');
+    if (!allowed) navigate('/admin', { replace: true });
+  }, [checkingSession, currentUser, location.pathname, navigate]);
 
-  const handleLogout = () => {
-    localStorage.removeItem('kimson_admin_token');
-    localStorage.removeItem('kimson_admin_user');
-    navigate('/admin/login');
+  const handleLogout = async () => {
+    try {
+      await api.logout();
+      localStorage.removeItem('kimson_admin_user');
+      localStorage.removeItem('kimson_admin_token');
+      navigate('/login');
+    } catch (error) { alert(error.message); }
   };
 
   const adminNavItems = [
@@ -149,6 +138,7 @@ export default function AdminLayout() {
     );
   };
 
+  if (checkingSession || !currentUser) return <div className="p-12 text-center" role="status">?ang ki?m tra phi?n ??ng nh?p...</div>;
   return (
     <div className="min-h-screen bg-slate-100 flex text-slate-800">
       {/* Mobile Sidebar Overlay */}

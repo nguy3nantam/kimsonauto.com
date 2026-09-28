@@ -43,8 +43,8 @@ export default function AdminLoginPage({ initialMode = 'login' }) {
   const paramMode = searchParams.get('mode') || (location.pathname === '/register' ? 'register' : initialMode);
 
   const [mode, setMode] = useState(paramMode);
-  const [username, setUsername] = useState('admin');
-  const [password, setPassword] = useState('kimson@2026');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [fullName, setFullName] = useState('');
   const [unit, setUnit] = useState('VF Biên Hòa');
   const [department, setDepartment] = useState('Kinh Doanh');
@@ -65,13 +65,8 @@ export default function AdminLoginPage({ initialMode = 'login' }) {
     setMode(newMode);
     setError('');
     setSuccess('');
-    if (newMode === 'login') {
-      if (!username) setUsername('admin');
-      if (!password) setPassword('kimson@2026');
-    } else {
-      setUsername('');
-      setPassword('');
-    }
+    setUsername('');
+    setPassword('');
   };
 
   const handleSubmit = async (e) => {
@@ -83,9 +78,8 @@ export default function AdminLoginPage({ initialMode = 'login' }) {
     try {
       if (mode === 'login') {
         const res = await api.login({ username, password });
-        localStorage.setItem('kimson_admin_token', res.token);
         localStorage.setItem('kimson_admin_user', JSON.stringify(res.user));
-        navigate('/admin/portal');
+        navigate('/admin');
       } else {
         const res = await api.register({
           fullName,
@@ -97,11 +91,10 @@ export default function AdminLoginPage({ initialMode = 'login' }) {
           phone,
           email
         });
-        localStorage.setItem('kimson_admin_token', res.token);
         localStorage.setItem('kimson_admin_user', JSON.stringify(res.user));
         setSuccess('Đăng ký tài khoản thành công! Đang chuyển tiếp...');
         setTimeout(() => {
-          navigate('/admin/portal');
+          navigate('/admin');
         }, 1200);
       }
     } catch (err) {
@@ -315,6 +308,8 @@ export default function AdminLoginPage({ initialMode = 'login' }) {
                 </div>
                 <input
                   type="password"
+                  minLength={mode === 'register' ? 12 : undefined}
+                  autoComplete={mode === 'register' ? 'new-password' : 'current-password'}
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -342,76 +337,6 @@ export default function AdminLoginPage({ initialMode = 'login' }) {
 
           {/* Quick Helper Credentials or Alternate Link */}
           <div className="mt-6 pt-5 border-t border-slate-100 space-y-3">
-            {mode === 'login' ? (
-              <div className="space-y-2">
-                <div className="text-[11px] font-bold text-slate-500 uppercase tracking-wider text-center">
-                  Chọn Tài Khoản Trải Nghiệm 3 Phân Quyền:
-                </div>
-                <div className="grid grid-cols-3 gap-2">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setUsername('admin');
-                      setPassword('kimson@2026');
-                    }}
-                    className={`p-2 rounded-xl text-left border transition-all ${
-                      username === 'admin' 
-                        ? 'bg-amber-500 text-white border-amber-600 shadow-sm' 
-                        : 'bg-amber-50/70 border-amber-200/80 text-amber-900 hover:bg-amber-100'
-                    }`}
-                  >
-                    <div className="text-[10px] font-black uppercase">Admin</div>
-                    <div className="text-[11px] font-bold truncate">Toàn Quyền</div>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setUsername('leader_bienhoa');
-                      setPassword('kimson@2026');
-                    }}
-                    className={`p-2 rounded-xl text-left border transition-all ${
-                      username === 'leader_bienhoa' 
-                        ? 'bg-blue-600 text-white border-blue-700 shadow-sm' 
-                        : 'bg-blue-50/70 border-blue-200/80 text-blue-900 hover:bg-blue-100'
-                    }`}
-                  >
-                    <div className="text-[10px] font-black uppercase">Leader</div>
-                    <div className="text-[11px] font-bold truncate">Biên Hòa</div>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setUsername('user_bienhoa');
-                      setPassword('kimson@2026');
-                    }}
-                    className={`p-2 rounded-xl text-left border transition-all ${
-                      username === 'user_bienhoa' 
-                        ? 'bg-emerald-600 text-white border-emerald-700 shadow-sm' 
-                        : 'bg-emerald-50/70 border-emerald-200/80 text-emerald-900 hover:bg-emerald-100'
-                    }`}
-                  >
-                    <div className="text-[10px] font-black uppercase">User</div>
-                    <div className="text-[11px] font-bold truncate">Chỉ Xem File</div>
-                  </button>
-                </div>
-                <div className="text-center text-[10px] text-slate-400">
-                  Mật khẩu mặc định: <code className="font-bold text-slate-700">kimson@2026</code>
-                </div>
-              </div>
-            ) : (
-              <div className="text-[11px] text-slate-500 text-center">
-                Đã có tài khoản?{' '}
-                <button
-                  onClick={() => handleSwitchMode('login')}
-                  className="text-primary font-bold hover:underline"
-                >
-                  Đăng nhập tại đây
-                </button>
-              </div>
-            )}
-
             <div className="text-center">
               <Link to="/" className="text-xs text-slate-500 hover:text-primary transition-colors inline-block mt-1 font-medium">
                 ← Quay lại trang chủ Kim Sơn

@@ -28,6 +28,25 @@ import {
 import { api } from '../../services/api';
 import { UNIT_OPTIONS, DEPARTMENT_OPTIONS } from './AdminLoginPage';
 
+const emptyFile = {
+  description: '',
+  category: 'Biểu Mẫu Hành Chính',
+  targetUnit: 'all',
+  targetDepartment: 'all'
+};
+const normalize = (value) => String(value || '').trim().toLowerCase();
+const isAll = (value) => !value || ['all', 'tất cả', 'tất cả đơn vị', 'tất cả bộ phận'].includes(normalize(value));
+const formatFileSize = (bytes) => bytes >= 1024 * 1024
+  ? `${(bytes / (1024 * 1024)).toFixed(2)} MB`
+  : `${(bytes / 1024).toFixed(1)} KB`;
+const readFileData = (file) => new Promise((resolve, reject) => {
+  const reader = new FileReader();
+  reader.onload = () => resolve(String(reader.result).split(',')[1]);
+  reader.onerror = () => reject(new Error('Không thể đọc tệp. Vui lòng chọn lại tệp.'));
+  reader.onabort = () => reject(new Error('Đã hủy đọc tệp. Vui lòng thử lại.'));
+  reader.readAsDataURL(file);
+});
+
 export default function AdminPortalHub() {
   const [activeTab, setActiveTab] = useState('announcements'); // 'announcements' | 'files'
   const [currentUser, setCurrentUser] = useState(null);
@@ -56,68 +75,60 @@ export default function AdminPortalHub() {
   const [fileSearch, setFileSearch] = useState('');
   const [isFileModalOpen, setIsFileModalOpen] = useState(false);
   const [downloadSuccess, setDownloadSuccess] = useState('');
-  const [newFile, setNewFile] = useState({
-    name: '',
-    description: '',
-    category: 'Biểu Mẫu Hành Chính',
-    fileSize: '2.5 MB',
-    fileType: 'PDF',
-    targetDepartment: 'Tất Cả'
-  });
+  const [downloadError, setDownloadError] = useState('');
+  const [downloadingId, setDownloadingId] = useState(null);
+  const [newFile, setNewFile] = useState(emptyFile);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [uploadError, setUploadError] = useState('');
+  const [uploading, setUploading] = useState(false);
 
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState('');
 
   useEffect(() => {
-    const userStr = localStorage.getItem('kimson_admin_user');
-    if (userStr) {
-      try {
-        setCurrentUser(JSON.parse(userStr));
-      } catch (e) {
-        console.error('Failed to parse current user:', e);
-      }
-    }
     loadData();
   }, []);
 
+  useEffect(() => {
+    if (!downloadSuccess) return;
+    const timer = setTimeout(() => setDownloadSuccess(''), 4000);
+    return () => clearTimeout(timer);
+  }, [downloadSuccess]);
+
   const loadData = async () => {
     setLoading(true);
+    setLoadError('');
     try {
-      const [annData, fileData] = await Promise.all([
-        api.getAnnouncements().catch(() => []),
-        api.getSharedFiles().catch(() => [])
+      const [user, annData, fileData] = await Promise.all([
+        api.getMe(),
+        api.getAnnouncements(),
+        api.getSharedFiles()
       ]);
+      setCurrentUser(user);
       setAnnouncements(annData);
       setSharedFiles(fileData);
     } catch (err) {
-      console.error('Failed to load portal data:', err);
+      setLoadError(`Không thể tải cổng thông tin: ${err.message}`);
     } finally {
       setLoading(false);
     }
   };
 
-  const userRole = currentUser?.role || ((currentUser?.id === '1' || currentUser?.username === 'admin') ? 'Admin' : 'User');
-  const isAdmin = userRole === 'Admin' || currentUser?.id === '1' || currentUser?.username === 'admin';
-  const isLeader = userRole === 'Leader';
+  const userRole = normalize(currentUser?.role);
+  const isAdmin = ['admin', 'super admin', 'quản trị viên', 'quan tri vien'].includes(userRole);
+  const isLeader = ['leader', 'trưởng bộ phận', 'truong bo phan', 'trưởng phòng', 'truong phong', 'quản lý'].includes(userRole);
   const isUser = !isAdmin && !isLeader;
   const canCreate = isAdmin || isLeader;
 
-  const canDeleteAnnouncement = (item) => {
+  const canDeleteContent = (item) => {
     if (isAdmin) return true;
-    if (isLeader) {
-      return item.author === (currentUser?.fullName || currentUser?.name) ||
-             item.targetUnit === currentUser?.unit ||
-             item.targetDepartment === currentUser?.department;
-    }
-    return false;
-  };
-
-  const canDeleteFile = (item) => {
-    if (isAdmin) return true;
-    if (isLeader) {
-      return item.uploadedBy === (currentUser?.fullName || currentUser?.name) ||
-             item.targetDepartment === currentUser?.department;
-    }
-    return false;
+    if (!isLeader) return false;
+    const inScope = (isAll(item.targetUnit) || normalize(item.targetUnit) === normalize(currentUser?.unit)) &&
+      (isAll(item.targetDepartment) || normalize(item.targetDepartment) === normalize(currentUser?.department));
+    const fullName = currentUser?.fullName || currentUser?.name;
+    const isAuthor = item.authorId ? item.authorId === currentUser?.id :
+      Boolean(fullName && (item.author === fullName || item.uploadedBy === fullName));
+    return inScope && isAuthor;
   };
 
   // -------------------------------------------------------------
@@ -167,30 +178,45 @@ export default function AdminPortalHub() {
   // -------------------------------------------------------------
   // Shared Files Handlers
   // -------------------------------------------------------------
-  const handleCreateSharedFile = async (e) => {
-    e.preventDefault();
-    if (!newFile.name) {
-      alert('Vui lòng nhập tên file tài liệu');
+  const handleSelectFile = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (!/\.(pdf|docx|xlsx|zip)$/i.test(file.name) || !file.size || file.size > 10 * 1024 * 1024 || file.name.length > 250) {
+      setUploadError('Chọn tệp PDF, DOCX, XLSX hoặc ZIP từ 1 byte đến 10 MB, tên tối đa 250 ký tự.');
+      e.target.value = '';
       return;
     }
+    setSelectedFile(file);
+    setUploadError('');
+  };
+
+  const handleCreateSharedFile = async (e) => {
+    e.preventDefault();
+    if (uploading) return;
+    if (!selectedFile) {
+      setUploadError('Vui lòng chọn tệp tài liệu để tải lên.');
+      return;
+    }
+    setUploadError('');
+    setUploading(true);
     try {
-      await api.createSharedFile({
+      const data = await readFileData(selectedFile);
+      const created = await api.createSharedFile({
         ...newFile,
-        targetDepartment: isLeader ? (currentUser?.department || 'Kinh Doanh') : newFile.targetDepartment,
-        uploadedBy: currentUser?.fullName || currentUser?.name || (isLeader ? 'Leader Chi Nhánh' : 'Ban Quản Trị Kim Sơn')
+        name: selectedFile.name,
+        data,
+        targetUnit: isLeader ? currentUser?.unit : newFile.targetUnit,
+        targetDepartment: isLeader ? currentUser?.department : newFile.targetDepartment
       });
+      setSharedFiles((previous) => [created, ...previous]);
       setIsFileModalOpen(false);
-      setNewFile({
-        name: '',
-        description: '',
-        category: 'Biểu Mẫu Hành Chính',
-        fileSize: '2.5 MB',
-        fileType: 'PDF',
-        targetDepartment: isLeader ? (currentUser?.department || 'Kinh Doanh') : 'Tất Cả'
-      });
-      loadData();
+      setNewFile(emptyFile);
+      setSelectedFile(null);
+      setDownloadSuccess(`Đã chia sẻ tài liệu: ${created.name}`);
     } catch (err) {
-      alert('Lỗi thêm file: ' + err.message);
+      setUploadError(`Không thể tải lên tài liệu: ${err.message}`);
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -205,11 +231,39 @@ export default function AdminPortalHub() {
     }
   };
 
-  const handleDownloadSimulation = (file) => {
-    setDownloadSuccess(`Đang tải xuống: ${file.name}`);
-    setTimeout(() => {
-      setDownloadSuccess('');
-    }, 3000);
+  const handleDownloadFile = async (file) => {
+    if (!file.available || downloadingId) return;
+    setDownloadError('');
+    setDownloadSuccess('');
+    setDownloadingId(file.id);
+    try {
+      const response = await fetch(`/api/shared-files/${encodeURIComponent(file.id)}/download`, { credentials: 'same-origin' });
+      if (!response.ok) {
+        if (response.status === 404) {
+          setSharedFiles((previous) => previous.map((item) => item.id === file.id ? { ...item, available: false } : item));
+          throw new Error('Tài liệu chưa có tệp đính kèm hoặc tệp không còn trên máy chủ.');
+        }
+        if (response.status === 401) throw new Error('Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.');
+        if (response.status === 403) throw new Error('Bạn không có quyền tải tài liệu này.');
+        const error = await response.json().catch(() => ({}));
+        throw new Error(error.error || 'Máy chủ không thể tải tài liệu.');
+      }
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = file.name;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      setSharedFiles((previous) => previous.map((item) => item.id === file.id ? { ...item, downloads: (item.downloads || 0) + 1 } : item));
+      setDownloadSuccess(`Đã gửi tệp tới trình duyệt: ${file.name}`);
+    } catch (err) {
+      setDownloadError(`Không thể tải "${file.name}": ${err.message}`);
+    } finally {
+      setDownloadingId(null);
+    }
   };
 
   // -------------------------------------------------------------
@@ -257,11 +311,18 @@ export default function AdminPortalHub() {
     <div className="space-y-6">
       {/* Download Alert Notification */}
       {downloadSuccess && (
-        <div className="fixed top-16 right-6 z-50 animate-in fade-in slide-in-from-top-4 duration-300">
+        <div role="status" className="fixed top-16 inset-x-4 sm:left-auto sm:right-6 sm:max-w-md z-50 animate-in fade-in slide-in-from-top-4 duration-300">
           <div className="bg-emerald-600 text-white px-4 py-3 rounded-2xl shadow-xl flex items-center gap-3 text-xs font-bold border border-emerald-400">
             <CheckCircle2 size={18} />
             <span>{downloadSuccess}</span>
           </div>
+        </div>
+      )}
+
+      {loadError && (
+        <div role="alert" className="flex items-center justify-between gap-3 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+          <span>{loadError}</span>
+          <button type="button" onClick={loadData} disabled={loading} className="shrink-0 font-bold underline">Thử lại</button>
         </div>
       )}
 
@@ -313,10 +374,10 @@ export default function AdminPortalHub() {
 
       {/* Main Mode Tabs Switcher: Thông Báo vs File Dùng Chung */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-2">
-        <div className="flex items-center gap-2 p-1.5 bg-slate-200/80 rounded-2xl">
+        <div className="flex items-center gap-2 p-1.5 bg-slate-200/80 rounded-2xl overflow-x-auto">
           <button
             onClick={() => setActiveTab('announcements')}
-            className={`flex items-center gap-2.5 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all ${
+            className={`flex shrink-0 items-center gap-2.5 px-3 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all ${
               activeTab === 'announcements'
                 ? 'bg-primary text-white shadow-md shadow-primary/25'
                 : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
@@ -333,7 +394,7 @@ export default function AdminPortalHub() {
 
           <button
             onClick={() => setActiveTab('files')}
-            className={`flex items-center gap-2.5 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all ${
+            className={`flex shrink-0 items-center gap-2.5 px-3 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all ${
               activeTab === 'files'
                 ? 'bg-primary text-white shadow-md shadow-primary/25'
                 : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
@@ -508,7 +569,7 @@ export default function AdminPortalHub() {
                         Đọc Chi Tiết →
                       </button>
 
-                      {canDeleteAnnouncement(item) && (
+                      {canDeleteContent(item) && (
                         <button
                           onClick={() => handleDeleteAnnouncement(item.id)}
                           className="p-1.5 text-slate-400 hover:text-red-600 rounded-lg hover:bg-red-50 transition-colors"
@@ -531,6 +592,12 @@ export default function AdminPortalHub() {
       {/* ========================================================= */}
       {activeTab === 'files' && (
         <div className="space-y-5 animate-in fade-in duration-200">
+          {downloadError && (
+            <div role="alert" className="flex items-start gap-2 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+              <AlertCircle size={18} className="shrink-0" />
+              <span>{downloadError}</span>
+            </div>
+          )}
           {/* File Toolbar */}
           <div className="bg-white p-4 rounded-2xl border border-slate-200/90 shadow-xs flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
             <div className="relative flex-1">
@@ -583,7 +650,7 @@ export default function AdminPortalHub() {
             {filteredFiles.length === 0 ? (
               <div className="col-span-full py-16 text-center bg-white rounded-3xl border border-slate-200/90 p-8 text-slate-400">
                 <FolderOpen size={32} className="mx-auto mb-3 text-slate-300" />
-                <p className="text-sm font-semibold">Chưa có file tài liệu nào trong danh mục này.</p>
+                <p className="text-sm font-semibold">{loading ? 'Đang tải tài liệu...' : loadError ? 'Chưa tải được danh sách tài liệu.' : 'Chưa có file tài liệu nào trong danh mục này.'}</p>
               </div>
             ) : (
               filteredFiles.map((file) => (
@@ -602,7 +669,7 @@ export default function AdminPortalHub() {
                         <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-700 uppercase">
                           {file.fileType}
                         </span>
-                        {canDeleteFile(file) && (
+                        {canDeleteContent(file) && (
                           <button
                             onClick={() => handleDeleteSharedFile(file.id)}
                             className="p-1 text-slate-300 hover:text-red-600 rounded-md transition-colors"
@@ -616,7 +683,7 @@ export default function AdminPortalHub() {
 
                     {/* File Title */}
                     <div>
-                      <h4 className="text-sm font-bold text-slate-900 group-hover:text-primary transition-colors line-clamp-2">
+                      <h4 className="text-sm font-bold text-slate-900 group-hover:text-primary transition-colors line-clamp-2 break-all">
                         {file.name}
                       </h4>
                       <p className="text-[11px] text-slate-500 mt-1 line-clamp-2 leading-relaxed">
@@ -629,16 +696,24 @@ export default function AdminPortalHub() {
                       <span className="px-2 py-0.5 rounded-md text-[10px] font-semibold bg-amber-50 text-amber-800 border border-amber-200">
                         {file.category}
                       </span>
-                      {file.targetDepartment && file.targetDepartment !== 'Tất Cả' && (
+                      {!isAll(file.targetUnit) && (
+                        <span className="px-2 py-0.5 rounded-md text-[10px] font-semibold bg-blue-50 text-blue-700 border border-blue-200">
+                          {file.targetUnit}
+                        </span>
+                      )}
+                      {!isAll(file.targetDepartment) && (
                         <span className="px-2 py-0.5 rounded-md text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
                           {file.targetDepartment}
                         </span>
                       )}
                     </div>
+                    {!file.available && (
+                      <p className="text-xs text-amber-700">Chưa có tệp đính kèm. Vui lòng liên hệ người chia sẻ để tải lại tài liệu.</p>
+                    )}
                   </div>
 
                   {/* Card Footer */}
-                  <div className="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+                  <div className="pt-4 mt-4 border-t border-slate-100 flex flex-wrap gap-2 items-center justify-between text-xs">
                     <div className="text-[11px] text-slate-400">
                       <span>{file.fileSize}</span>
                       <span className="mx-1">•</span>
@@ -646,11 +721,12 @@ export default function AdminPortalHub() {
                     </div>
 
                     <button
-                      onClick={() => handleDownloadSimulation(file)}
-                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-primary text-white hover:bg-primary-dark font-bold text-xs shadow-xs transition-all"
+                      onClick={() => handleDownloadFile(file)}
+                      disabled={!file.available || Boolean(downloadingId)}
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-primary text-white hover:bg-primary-dark font-bold text-xs shadow-xs transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       <Download size={13} />
-                      <span>Tải Xuống</span>
+                      <span>{!file.available ? 'Chưa có tệp' : downloadingId === file.id ? 'Đang tải...' : 'Tải Xuống'}</span>
                     </button>
                   </div>
                 </div>
@@ -789,10 +865,12 @@ export default function AdminPortalHub() {
                     Đơn Vị Nhận
                   </label>
                   <select
-                    value={newAnnouncement.targetUnit}
+                    disabled={isLeader}
+                    value={isLeader ? currentUser?.unit || '' : newAnnouncement.targetUnit}
                     onChange={(e) => setNewAnnouncement({ ...newAnnouncement, targetUnit: e.target.value })}
                     className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-primary"
                   >
+                    {isLeader && !UNIT_OPTIONS.includes(currentUser?.unit) && <option value={currentUser?.unit || ''}>{currentUser?.unit || 'Chưa có đơn vị'}</option>}
                     <option value="Tất Cả Đơn Vị">Tất Cả 8 Đơn Vị</option>
                     {UNIT_OPTIONS.map((u) => (
                       <option key={u} value={u}>{u}</option>
@@ -805,10 +883,12 @@ export default function AdminPortalHub() {
                     Bộ Phận Nhận
                   </label>
                   <select
-                    value={newAnnouncement.targetDepartment}
+                    disabled={isLeader}
+                    value={isLeader ? currentUser?.department || '' : newAnnouncement.targetDepartment}
                     onChange={(e) => setNewAnnouncement({ ...newAnnouncement, targetDepartment: e.target.value })}
                     className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-primary"
                   >
+                    {isLeader && !DEPARTMENT_OPTIONS.includes(currentUser?.department) && <option value={currentUser?.department || ''}>{currentUser?.department || 'Chưa có bộ phận'}</option>}
                     <option value="Tất Cả Bộ Phận">Tất Cả 5 Bộ Phận</option>
                     {DEPARTMENT_OPTIONS.map((d) => (
                       <option key={d} value={d}>{d}</option>
@@ -869,41 +949,56 @@ export default function AdminPortalHub() {
       {/* ========================================================= */}
       {isFileModalOpen && (
         <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl max-w-lg w-full shadow-2xl border border-slate-200 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+          <div role="dialog" aria-modal="true" aria-labelledby="shared-file-title" className="bg-white rounded-3xl max-w-lg w-full max-h-[calc(100dvh-2rem)] overflow-y-auto shadow-2xl border border-slate-200 animate-in fade-in zoom-in-95 duration-200">
             <div className="p-6 border-b border-slate-100 flex items-center justify-between">
               <div>
-                <h3 className="text-base font-bold text-slate-900">Chia Sẻ File Dùng Chung Mới</h3>
+                <h3 id="shared-file-title" className="text-base font-bold text-slate-900">Chia Sẻ File Dùng Chung Mới</h3>
                 <p className="text-xs text-slate-500">Tải lên tài liệu, biểu mẫu, catalog dùng chung nội bộ</p>
               </div>
               <button
                 onClick={() => setIsFileModalOpen(false)}
-                className="p-1.5 text-slate-400 hover:text-slate-600 rounded-xl hover:bg-slate-100 transition-colors"
+                disabled={uploading}
+                aria-label="Đóng biểu mẫu chia sẻ tệp"
+                className="p-1.5 text-slate-400 hover:text-slate-600 rounded-xl hover:bg-slate-100 transition-colors disabled:opacity-50"
               >
                 <X size={18} />
               </button>
             </div>
 
             <form onSubmit={handleCreateSharedFile} className="p-6 space-y-4">
+              {uploadError && (
+                <div role="alert" className="flex items-start gap-2 p-3 rounded-xl border border-red-200 bg-red-50 text-xs text-red-700">
+                  <AlertCircle size={16} className="shrink-0" />
+                  <span>{uploadError}</span>
+                </div>
+              )}
+              <fieldset disabled={uploading} className="space-y-4 disabled:opacity-70">
               <div>
-                <label className="block text-xs font-bold text-slate-700 uppercase mb-1.5">
-                  Tên File / Tài Liệu <span className="text-red-500">*</span>
+                <label htmlFor="shared-file-input" className="block text-xs font-bold text-slate-700 uppercase mb-1.5">
+                  Tệp Tài Liệu <span className="text-red-500">*</span>
                 </label>
                 <input
-                  type="text"
-                  required
-                  value={newFile.name}
-                  onChange={(e) => setNewFile({ ...newFile, name: e.target.value })}
-                  placeholder="Ví dụ: Bang_Gia_Dich_Vu_KimSon_2026.pdf"
-                  className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:border-primary"
+                  id="shared-file-input"
+                  type="file"
+                  accept=".pdf,.docx,.xlsx,.zip"
+                  aria-describedby="shared-file-help"
+                  onChange={handleSelectFile}
+                  className="w-full min-w-0 px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs file:mr-3 file:rounded-lg file:border-0 file:bg-primary/10 file:px-3 file:py-1.5 file:font-semibold file:text-primary"
                 />
+                <p id="shared-file-help" className="mt-2 text-xs text-slate-500">PDF, DOCX, XLSX hoặc ZIP. Dung lượng tối đa 10 MB.</p>
+                {selectedFile && (
+                  <p className="mt-2 text-xs font-semibold text-emerald-700 break-all">Đã chọn: {selectedFile.name} ({formatFileSize(selectedFile.size)})</p>
+                )}
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 uppercase mb-1.5">
+                <label htmlFor="shared-file-description" className="block text-xs font-bold text-slate-700 uppercase mb-1.5">
                   Mô Tả Tài Liệu
                 </label>
                 <textarea
+                  id="shared-file-description"
                   rows={2}
+                  maxLength={2000}
                   value={newFile.description}
                   onChange={(e) => setNewFile({ ...newFile, description: e.target.value })}
                   placeholder="Tóm tắt công dụng hoặc hướng dẫn sử dụng tài liệu..."
@@ -911,12 +1006,13 @@ export default function AdminPortalHub() {
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div>
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 uppercase mb-1.5">
+                  <label htmlFor="shared-file-category" className="block text-xs font-bold text-slate-700 uppercase mb-1.5">
                     Danh Mục Tài Liệu
                   </label>
                   <select
+                    id="shared-file-category"
                     value={newFile.category}
                     onChange={(e) => setNewFile({ ...newFile, category: e.target.value })}
                     className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-primary"
@@ -929,67 +1025,67 @@ export default function AdminPortalHub() {
                   </select>
                 </div>
 
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 uppercase mb-1.5">
-                    Định Dạng File
-                  </label>
-                  <select
-                    value={newFile.fileType}
-                    onChange={(e) => setNewFile({ ...newFile, fileType: e.target.value })}
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-primary"
-                  >
-                    <option value="PDF">PDF Document</option>
-                    <option value="DOCX">Microsoft Word (.docx)</option>
-                    <option value="XLSX">Microsoft Excel (.xlsx)</option>
-                    <option value="ZIP">Tập tin nén (.zip)</option>
-                  </select>
-                </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 uppercase mb-1.5">
-                    Dung Lượng Ước Tính
+                  <label htmlFor="shared-file-unit" className="block text-xs font-bold text-slate-700 uppercase mb-1.5">
+                    Đơn Vị Sử Dụng
                   </label>
-                  <input
-                    type="text"
-                    value={newFile.fileSize}
-                    onChange={(e) => setNewFile({ ...newFile, fileSize: e.target.value })}
-                    placeholder="Ví dụ: 3.5 MB"
+                  <select
+                    id="shared-file-unit"
+                    disabled={isLeader}
+                    value={isLeader ? currentUser?.unit || '' : newFile.targetUnit}
+                    onChange={(e) => setNewFile({ ...newFile, targetUnit: e.target.value })}
                     className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-primary"
-                  />
+                  >
+                    {isLeader ? <option value={currentUser?.unit || ''}>{currentUser?.unit || 'Chưa có đơn vị'}</option> : (
+                      <>
+                        <option value="all">Tất Cả Đơn Vị</option>
+                        {UNIT_OPTIONS.map((unit) => <option key={unit} value={unit}>{unit}</option>)}
+                      </>
+                    )}
+                  </select>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 uppercase mb-1.5">
+                  <label htmlFor="shared-file-department" className="block text-xs font-bold text-slate-700 uppercase mb-1.5">
                     Bộ Phận Sử Dụng
                   </label>
                   <select
-                    value={newFile.targetDepartment}
+                    id="shared-file-department"
+                    disabled={isLeader}
+                    value={isLeader ? currentUser?.department || '' : newFile.targetDepartment}
                     onChange={(e) => setNewFile({ ...newFile, targetDepartment: e.target.value })}
                     className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-primary"
                   >
-                    <option value="Tất Cả">Tất Cả Bộ Phận</option>
-                    {DEPARTMENT_OPTIONS.map((d) => (
-                      <option key={d} value={d}>{d}</option>
-                    ))}
+                    {isLeader ? <option value={currentUser?.department || ''}>{currentUser?.department || 'Chưa có bộ phận'}</option> : (
+                      <>
+                        <option value="all">Tất Cả Bộ Phận</option>
+                        {DEPARTMENT_OPTIONS.map((department) => <option key={department} value={department}>{department}</option>)}
+                      </>
+                    )}
                   </select>
                 </div>
               </div>
+              {isLeader && <p className="text-xs text-slate-500">Tài liệu được chia sẻ trong đơn vị và bộ phận của bạn.</p>}
+              </fieldset>
 
               <div className="pt-3 border-t border-slate-100 flex items-center justify-end gap-3">
                 <button
                   type="button"
                   onClick={() => setIsFileModalOpen(false)}
+                  disabled={uploading}
                   className="px-4 py-2 border border-slate-200 text-slate-600 rounded-xl text-xs font-bold hover:bg-slate-50"
                 >
                   Hủy Bỏ
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary text-white rounded-xl text-xs font-bold shadow-glow"
+                  disabled={uploading}
+                  className="px-5 py-2 bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary text-white rounded-xl text-xs font-bold shadow-glow disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Lưu & Chia Sẻ File
+                  {uploading ? 'Đang tải lên...' : 'Tải Lên & Chia Sẻ'}
                 </button>
               </div>
             </form>

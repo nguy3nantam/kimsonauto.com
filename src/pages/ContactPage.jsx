@@ -1,21 +1,24 @@
 import React, { useState } from 'react';
 import { Phone, Mail, MapPin, Clock, Send, CheckCircle2, ShieldAlert, ChevronRight, Navigation, Loader2 } from 'lucide-react';
-import { branchesData } from '../data/branches';
+import { usePublicContent } from '../services/publicContent';
 import { api } from '../services/api';
 
 export default function ContactPage({ onOpenBooking }) {
+  const { settings, branches: branchesData, loading } = usePublicContent();
+  const [submitError, setSubmitError] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [form, setForm] = useState({
     name: '',
     phone: '',
     email: '',
-    branch: branchesData[0].name,
+    branch: '',
     message: '',
   });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setSubmitError('');
     if (!form.name || !form.phone) {
       alert('Vui lòng nhập Họ tên và Số điện thoại!');
       return;
@@ -27,16 +30,15 @@ export default function ContactPage({ onOpenBooking }) {
         name: form.name,
         phone: form.phone,
         email: form.email || '',
-        branch: form.branch || branchesData[0].name,
+        branch: branchesData.some(branch => branch.name === form.branch) ? form.branch : '',
         message: form.message || '',
-        subject: `Yêu cầu tư vấn từ website (${form.branch || 'Biên Hòa'})`,
+        subject: `Yêu cầu tư vấn từ website (${form.branch || 'Tổng đài'})`,
         type: 'contact',
         createdAt: new Date().toISOString()
       });
       setSubmitted(true);
     } catch (err) {
-      console.warn('Contact API note:', err.message);
-      setSubmitted(true);
+      setSubmitError(err.message || 'Không gửi được yêu cầu. Vui lòng thử lại.');
     } finally {
       setSubmitting(false);
     }
@@ -52,7 +54,7 @@ export default function ContactPage({ onOpenBooking }) {
             Đồng Hành Cùng Bạn Mọi Lúc Mọi Nơi
           </h1>
           <p className="text-base text-slate-600">
-            Hệ thống 11 chi nhánh & cơ sở rộng khắp Đồng Nai và TP. Hồ Chí Minh luôn sẵn sàng phục vụ và giải quyết mọi nhu cầu của Quý khách.
+            Hệ thống chi nhánh & cơ sở rộng khắp Đồng Nai và TP. Hồ Chí Minh luôn sẵn sàng phục vụ và giải quyết mọi nhu cầu của Quý khách.
           </p>
         </div>
 
@@ -64,8 +66,8 @@ export default function ContactPage({ onOpenBooking }) {
             </div>
             <div>
               <p className="text-xs text-slate-400 font-bold uppercase">Hotline Tổng Đài</p>
-              <a href="tel:0908123456" className="text-xl font-black text-slate-900 hover:text-primary transition-colors">
-                0908 123 456
+              <a href={settings.hotline ? `tel:${settings.hotline.replace(/[^+\d]/g, '')}` : undefined} className="text-xl font-black text-slate-900 hover:text-primary transition-colors">
+                {settings.hotline}
               </a>
               <p className="text-xs text-slate-500 mt-1">Hỗ trợ tư vấn mua xe & dịch vụ 24/7</p>
             </div>
@@ -77,8 +79,8 @@ export default function ContactPage({ onOpenBooking }) {
             </div>
             <div>
               <p className="text-xs text-red-500 font-bold uppercase">Cứu Hộ Khẩn Cấp</p>
-              <a href="tel:0908123456" className="text-xl font-black text-red-600 hover:text-red-700 transition-colors">
-                0908 123 456
+              <a href={settings.hotline ? `tel:${settings.hotline.replace(/[^+\d]/g, '')}` : undefined} className="text-xl font-black text-red-600 hover:text-red-700 transition-colors">
+                {settings.hotline}
               </a>
               <p className="text-xs text-slate-500 mt-1">Xe sàn trượt, kích bình, kéo xe 15-30 phút</p>
             </div>
@@ -90,8 +92,8 @@ export default function ContactPage({ onOpenBooking }) {
             </div>
             <div>
               <p className="text-xs text-slate-400 font-bold uppercase">Hộp Thư Điện Tử</p>
-              <a href="mailto:contact@kimsonauto.com" className="text-lg font-bold text-slate-900 hover:text-primary transition-colors">
-                contact@kimsonauto.com
+              <a href={settings.email ? `mailto:${settings.email}` : undefined} className="text-lg font-bold text-slate-900 hover:text-primary transition-colors">
+                {settings.email}
               </a>
               <p className="text-xs text-slate-500 mt-1">Phản hồi yêu cầu trong 2 giờ làm việc</p>
             </div>
@@ -101,11 +103,12 @@ export default function ContactPage({ onOpenBooking }) {
         {/* 11 Branches Directory */}
         <div>
           <div className="text-center max-w-2xl mx-auto mb-10">
-            <h2 className="text-2xl sm:text-3xl font-black text-slate-900">Danh Sách 11 Chi Nhánh & Cơ Sở Kim Sơn</h2>
+            <h2 className="text-2xl sm:text-3xl font-black text-slate-900">Danh Sách Chi Nhánh & Cơ Sở Kim Sơn</h2>
             <p className="text-xs text-slate-500 mt-2">Bấm vào số điện thoại để gọi ngay hoặc bấm "Chỉ đường" để mở Google Maps.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {!branchesData.length && <p role="status" className="text-slate-500">{loading.branches ? 'Đang tải chi nhánh...' : 'Danh sách chi nhánh đang được cập nhật.'}</p>}
             {branchesData.map((branch) => (
               <div 
                 key={branch.id}
@@ -138,14 +141,14 @@ export default function ContactPage({ onOpenBooking }) {
                       </a>
                     </div>
 
-                    <div className="flex items-center gap-2">
+                    {branch.hours && <div className="flex items-center gap-2">
                       <Clock size={16} className="text-primary shrink-0" />
                       <span>{branch.hours}</span>
-                    </div>
+                    </div>}
                   </div>
 
                   <div className="flex flex-wrap gap-1.5 mb-4">
-                    {branch.services.map((svc, i) => (
+                    {(branch.features || []).map((svc, i) => (
                       <span key={i} className="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-md font-medium">
                         {svc}
                       </span>
@@ -155,7 +158,7 @@ export default function ContactPage({ onOpenBooking }) {
 
                 <div className="grid grid-cols-2 gap-2 pt-3 border-t border-slate-100">
                   <a
-                    href={branch.mapsUrl}
+                    href={branch.mapsUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(branch.address)}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-colors"
@@ -222,6 +225,7 @@ export default function ContactPage({ onOpenBooking }) {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4 text-xs sm:text-sm">
+                  {submitError && <p role="alert" className="text-red-600">{submitError}</p>}
                   <div>
                     <label className="block font-bold text-slate-700 mb-1">Họ và Tên *</label>
                     <input
@@ -261,10 +265,11 @@ export default function ContactPage({ onOpenBooking }) {
                   <div>
                     <label className="block font-bold text-slate-700 mb-1">Chi Nhánh Cần Liên Hệ</label>
                     <select
-                      value={form.branch}
+                      value={branchesData.some(branch => branch.name === form.branch) ? form.branch : ''}
                       onChange={(e) => setForm({ ...form, branch: e.target.value })}
                       className="w-full p-3 bg-white border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-primary"
                     >
+                      <option value="">Tổng đài / Chưa chọn chi nhánh</option>
                       {branchesData.map((b) => (
                         <option key={b.id} value={b.name}>{b.name} ({b.area})</option>
                       ))}

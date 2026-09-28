@@ -4,6 +4,7 @@ const BASE_URL = '';
 export async function fetchApi(endpoint, options = {}) {
   try {
     const res = await fetch(`${BASE_URL}${endpoint}`, {
+      credentials: 'same-origin',
       headers: {
         'Content-Type': 'application/json',
         ...options.headers,
@@ -13,21 +14,35 @@ export async function fetchApi(endpoint, options = {}) {
 
     if (!res.ok) {
       const err = await res.json().catch(() => ({ error: 'Lỗi máy chủ' }));
-      throw new Error(err.error || `HTTP ${res.status}`);
+      throw Object.assign(new Error(err.error || `HTTP ${res.status}`), { status: res.status });
     }
 
-    return await res.json();
+    const data = await res.json();
+    if (options.method && !['GET', 'HEAD'].includes(options.method.toUpperCase())) {
+      const collection = endpoint.match(/^\/api\/(settings|pillars|branches|esg)(?:\/|\?|$)/)?.[1];
+      if (collection) window.dispatchEvent(new CustomEvent('kimson-content-updated', { detail: collection }));
+    }
+    return data;
   } catch (error) {
-    console.warn(`API call ${endpoint} failed:`, error.message);
+    if (error.status !== 401) console.warn(`API call ${endpoint} failed:`, error.message);
     throw error;
   }
 }
+
+let currentUserRequest;
+const getCurrentUser = () => {
+  if (!currentUserRequest) {
+    currentUserRequest = fetchApi('/api/auth/me').finally(() => { currentUserRequest = null; });
+  }
+  return currentUserRequest;
+};
 
 export const api = {
   // Auth
   login: (credentials) => fetchApi('/api/auth/login', { method: 'POST', body: JSON.stringify(credentials) }),
   register: (userData) => fetchApi('/api/auth/register', { method: 'POST', body: JSON.stringify(userData) }),
-  getMe: () => fetchApi('/api/auth/me'),
+  getMe: getCurrentUser,
+  logout: () => fetchApi('/api/auth/logout', { method: 'POST' }),
 
   // Users / Registrations
   getUsers: (params = '') => {
@@ -75,7 +90,9 @@ export const api = {
   deleteBranch: (id) => fetchApi(`/api/branches/${id}`, { method: 'DELETE' }),
 
   // News
-  getNews: () => fetchApi('/api/news'),
+  getNews: (all = false) => fetchApi(`/api/news${all ? '?all=true' : ''}`),
+  getArticle: (id) => fetchApi(`/api/news/${encodeURIComponent(id)}`),
+  getEsg: () => fetchApi('/api/esg'),
   createNews: (data) => fetchApi('/api/news', { method: 'POST', body: JSON.stringify(data) }),
   updateNews: (id, data) => fetchApi(`/api/news/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
   deleteNews: (id) => fetchApi(`/api/news/${id}`, { method: 'DELETE' }),
@@ -98,6 +115,7 @@ export const api = {
 
   // Sliders
   getSliders: (params = '') => fetchApi(`/api/sliders${params ? `?${params}` : ''}`),
+  reorderSliders: (ids) => fetchApi('/api/sliders/reorder', { method: 'POST', body: JSON.stringify({ ids }) }),
   createSlider: (data) => fetchApi('/api/sliders', { method: 'POST', body: JSON.stringify(data) }),
   updateSlider: (id, data) => fetchApi(`/api/sliders/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
   deleteSlider: (id) => fetchApi(`/api/sliders/${id}`, { method: 'DELETE' }),
