@@ -22,7 +22,6 @@ import { withBasePath } from '../../utils/assets';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [lang, setLang] = useState('VN');
   const [mounted, setMounted] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -290,24 +289,6 @@ export default function Navbar() {
 
         {/* Drawer Footer */}
         <div className="p-6 border-t border-slate-100 bg-slate-50/70 space-y-3 shrink-0">
-          <div className="flex items-center justify-between text-xs">
-            <span className="text-slate-500 font-medium">Ngôn ngữ hiển thị</span>
-            <div className="flex items-center bg-white border border-slate-200 p-0.5 rounded-lg text-xs font-bold text-slate-600">
-              <button
-                onClick={() => setLang('VN')}
-                className={`px-3 py-1 rounded-md transition-all ${lang === 'VN' ? 'bg-primary text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'}`}
-              >
-                VN
-              </button>
-              <button
-                onClick={() => setLang('EN')}
-                className={`px-3 py-1 rounded-md transition-all ${lang === 'EN' ? 'bg-primary text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'}`}
-              >
-                EN
-              </button>
-            </div>
-          </div>
-
           <div className="text-[11px] text-slate-400 text-center pt-2 border-t border-slate-200/60">
             © 2026 Kim Sơn Automobiles. All rights reserved.
           </div>
@@ -357,32 +338,13 @@ export default function Navbar() {
             ))}
           </nav>
 
-          {/* Phía bên phải: Chuyển đổi ngôn ngữ & Nút mở Offcanvas Menu */}
+          {/* Phía bên phải: Nút mở Offcanvas Menu */}
           <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-            {/* Language Switcher */}
-            <div className="hidden sm:flex items-center bg-slate-100 p-0.5 rounded-lg text-[11px] font-bold text-slate-600">
-              <button
-                onClick={() => setLang('VN')}
-                className={`px-2 py-0.5 rounded-md transition-all ${
-                  lang === 'VN' ? 'bg-white text-primary shadow-xs' : 'hover:text-slate-900'
-                }`}
-              >
-                VN
-              </button>
-              <button
-                onClick={() => setLang('EN')}
-                className={`px-2 py-0.5 rounded-md transition-all ${
-                  lang === 'EN' ? 'bg-white text-primary shadow-xs' : 'hover:text-slate-900'
-                }`}
-              >
-                EN
-              </button>
-            </div>
 
             {/* Dropdown Menu Tài Khoản (Đăng Nhập / Đăng Ký) khi rê chuột (Hover) */}
             <div className="relative group">
-              <Link
-                to={isLoggedIn ? (isAdmin ? "/admin/dashboard" : "/admin/portal") : "/admin/login"}
+              <button
+                type="button"
                 className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold transition-all duration-300 shadow-xs ${
                   isLoggedIn
                     ? 'bg-emerald-50 text-emerald-700 hover:bg-emerald-600 hover:text-white border border-emerald-200'
@@ -396,10 +358,10 @@ export default function Navbar() {
                   {isLoggedIn ? (isAdmin ? "Quản Trị" : "Cổng Nội Bộ") : "Đăng Nhập"}
                 </span>
                 <ChevronDown size={11} className="transition-transform duration-200 group-hover:rotate-180 opacity-70 shrink-0" />
-              </Link>
+              </button>
 
               {/* Popover Flyout hiển thị Đăng Ký và Đăng Nhập khi rê chuột vào */}
-              <div className="absolute right-0 top-full pt-1.5 w-60 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-1 group-hover:translate-y-0 pointer-events-none group-hover:pointer-events-auto">
+              <div className="absolute right-0 top-full pt-1.5 w-60 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-200 transform translate-y-1 group-hover:translate-y-0 group-focus-within:translate-y-0 pointer-events-none group-hover:pointer-events-auto group-focus-within:pointer-events-auto">
                 <div className="bg-white/95 backdrop-blur-xl rounded-2xl shadow-xl border border-slate-200/90 p-2 text-slate-800 space-y-1">
                   {!isLoggedIn ? (
                     <>

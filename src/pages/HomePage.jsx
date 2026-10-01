@@ -141,8 +141,8 @@ export default function HomePage() {
               alt={slide.title}
               className="w-full h-full object-cover object-center scale-105"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/85 to-slate-950/40"></div>
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-slate-950/30"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-slate-950/75 via-slate-950/45 to-slate-950/15"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-slate-950/10"></div>
           </div>
         ))}
 
@@ -158,12 +158,12 @@ export default function HomePage() {
                 {slides[currentSlideIndex].subtitle || 'TẬP ĐOÀN HỆ SINH THÁI Ô TÔ KIM SƠN'}
               </div>
 
-              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.2] text-white whitespace-pre-line">
+              <h1 className="text-2xl sm:text-4xl lg:text-5xl font-medium tracking-tight leading-[1.2] text-white whitespace-pre-line">
                 {slides[currentSlideIndex].title}
               </h1>
 
               {slides[currentSlideIndex].description && (
-                <p className="text-base sm:text-lg text-slate-300 font-normal leading-relaxed max-w-2xl">
+                <p className="text-sm sm:text-base text-slate-300 font-normal leading-relaxed max-w-xl">
                   {slides[currentSlideIndex].description}
                 </p>
               )}
