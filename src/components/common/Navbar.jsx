@@ -23,7 +23,6 @@ import { withBasePath } from '../../utils/assets';
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const location = useLocation();
@@ -56,12 +55,6 @@ export default function Navbar() {
 
   useEffect(() => {
     setMounted(true);
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 15);
-    };
-    handleScroll();
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   // 6 mục menu chuẩn: Giới Thiệu, Hoạt Động, Hệ Thống, Phát Triển Bền Vững, Tin Tức, Liên Hệ
@@ -299,11 +292,7 @@ export default function Navbar() {
 
   return (
     <header 
-      className={`sticky top-0 z-40 h-[65px] max-h-[65px] relative flex items-center transition-all duration-500 ease-in-out ${
-        isScrolled
-          ? 'bg-white/95 backdrop-blur-xl shadow-md border-b border-slate-200/80 text-slate-800'
-          : 'bg-gradient-to-r from-white/95 via-amber-50/70 via-yellow-50/45 to-white/95 backdrop-blur-md border-b border-amber-200/50 text-slate-800 animate-header-gradient'
-      }`}
+      className="sticky top-0 z-40 h-[65px] max-h-[65px] relative flex items-center bg-white shadow-md border-b border-slate-200/80 text-slate-800"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full h-full">
         <div className="flex justify-between items-center h-full">
@@ -444,13 +433,6 @@ export default function Navbar() {
           </div>
         </div>
       </div>
-
-      {/* Hiệu ứng dải viền chuyển màu đa sắc động liên tục (Animated Gradient Color Shift Bar) */}
-      <div 
-        className={`absolute bottom-0 left-0 right-0 h-[2px] transition-all duration-500 pointer-events-none bg-gradient-to-r from-primary via-cyan-400 via-indigo-500 to-primary animate-border-gradient ${
-          isScrolled ? 'opacity-100 shadow-[0_1px_8px_rgba(0,98,210,0.35)]' : 'opacity-75'
-        }`} 
-      />
 
       {/* Render Offcanvas Drawer qua React Portal trực tiếp vào document.body để không bị chặn bởi backdrop-filter của header */}
       {mounted && createPortal(offcanvasDrawer, document.body)}
