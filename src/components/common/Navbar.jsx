@@ -166,7 +166,7 @@ export default function Navbar() {
               <img 
                 src={withBasePath('/logo-kimson.png')} 
                 alt="Kim Sơn Automobiles" 
-                className="h-10 w-auto object-contain"
+                className="h-12 w-auto object-contain"
               />
             </Link>
           </div>
@@ -207,8 +207,8 @@ export default function Navbar() {
                     <Icon size={19} />
                   </div>
                   <div>
-                    <div className="text-sm font-bold leading-snug">{link.name}</div>
-                    <div className="text-[11px] text-slate-400 font-normal leading-tight mt-0.5">{link.desc}</div>
+                    <div className="text-base font-bold leading-snug">{link.name}</div>
+                    <div className="text-xs text-slate-400 font-normal leading-tight mt-0.5">{link.desc}</div>
                   </div>
                 </div>
                 <ChevronRight size={16} className={`transition-transform group-hover:translate-x-1 shrink-0 ${active ? 'text-primary' : 'text-slate-300'}`} />
@@ -223,16 +223,16 @@ export default function Navbar() {
                 <Link
                   to="/admin/login"
                   onClick={() => setIsOpen(false)}
-                  className="flex items-center justify-center gap-2 p-3.5 rounded-2xl bg-gradient-to-r from-primary to-primary-dark text-white font-bold text-xs shadow-xs hover:shadow-glow transition-all"
+                  className="flex items-center justify-center gap-2 p-3.5 rounded-2xl bg-gradient-to-r from-primary to-primary-dark text-white font-bold text-sm shadow-xs hover:shadow-glow transition-all"
                 >
-                  <LogIn size={15} />
+                  <LogIn size={17} />
                   <span>Đăng Nhập</span>
                 </Link>
 
                 <Link
                   to="/register"
                   onClick={() => setIsOpen(false)}
-                  className="flex items-center justify-center gap-2 p-3.5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs border border-slate-800 transition-all"
+                  className="flex items-center justify-center gap-2 p-3.5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm border border-slate-800 transition-all"
                 >
                   <UserPlus size={15} />
                   <span>Đăng Ký</span>
@@ -317,7 +317,7 @@ export default function Navbar() {
             <img 
               src={withBasePath('/logo-kimson.png')} 
               alt="Kim Sơn Automobiles" 
-              className="h-8 sm:h-9 w-auto object-contain"
+              className="h-10 sm:h-12 w-auto object-contain"
             />
           </Link>
 
@@ -327,7 +327,7 @@ export default function Navbar() {
               <Link
                 key={link.path}
                 to={link.path}
-                className={`px-3 py-1 rounded-md text-xs font-semibold transition-all duration-300 ${
+                className={`px-3.5 py-1.5 rounded-md text-sm font-semibold transition-all duration-300 ${
                   isActive(link.path)
                     ? 'text-primary bg-gradient-to-r from-primary/15 via-primary-light/10 to-primary/15 font-bold shadow-xs'
                     : 'text-slate-700 hover:text-primary hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary-light/10'
@@ -345,7 +345,7 @@ export default function Navbar() {
             <div className="relative group">
               <button
                 type="button"
-                className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold transition-all duration-300 shadow-xs ${
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-bold transition-all duration-300 shadow-xs ${
                   isLoggedIn
                     ? 'bg-emerald-50 text-emerald-700 hover:bg-emerald-600 hover:text-white border border-emerald-200'
                     : 'bg-primary-subtle text-primary hover:bg-primary hover:text-white border border-primary/20 hover:border-primary'
@@ -353,11 +353,11 @@ export default function Navbar() {
                 title={isLoggedIn ? (isAdmin ? "Bảng quản trị hệ thống" : "Cổng thông tin & file dùng chung") : "Tài khoản hệ thống"}
                 aria-label={isLoggedIn ? "Cổng thành viên" : "Tài khoản"}
               >
-                <User size={13} className="shrink-0" />
+                <User size={15} className="shrink-0" />
                 <span className="hidden sm:inline-block">
                   {isLoggedIn ? (isAdmin ? "Quản Trị" : "Cổng Nội Bộ") : "Đăng Nhập"}
                 </span>
-                <ChevronDown size={11} className="transition-transform duration-200 group-hover:rotate-180 opacity-70 shrink-0" />
+                <ChevronDown size={13} className="transition-transform duration-200 group-hover:rotate-180 opacity-70 shrink-0" />
               </button>
 
               {/* Popover Flyout hiển thị Đăng Ký và Đăng Nhập khi rê chuột vào */}
@@ -365,7 +365,7 @@ export default function Navbar() {
                 <div className="bg-white/95 backdrop-blur-xl rounded-2xl shadow-xl border border-slate-200/90 p-2 text-slate-800 space-y-1">
                   {!isLoggedIn ? (
                     <>
-                      <div className="px-3 py-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                      <div className="px-3 py-1.5 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
                         Tài Khoản Hệ Sinh Thái
                       </div>
 
@@ -374,12 +374,12 @@ export default function Navbar() {
                         to="/admin/login"
                         className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-primary-subtle/80 text-slate-700 hover:text-primary transition-all group/item"
                       >
-                        <div className="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center shrink-0 group-hover/item:bg-primary group-hover/item:text-white transition-colors">
-                          <LogIn size={15} />
+                        <div className="w-9 h-9 rounded-lg bg-primary/10 text-primary flex items-center justify-center shrink-0 group-hover/item:bg-primary group-hover/item:text-white transition-colors">
+                          <LogIn size={17} />
                         </div>
                         <div>
-                          <div className="text-xs font-bold leading-tight">Đăng Nhập</div>
-                          <div className="text-[10px] text-slate-400 leading-tight mt-0.5">Truy cập hệ thống & quản trị</div>
+                          <div className="text-sm font-bold leading-tight">Đăng Nhập</div>
+                          <div className="text-[11px] text-slate-400 leading-tight mt-0.5">Truy cập hệ thống & quản trị</div>
                         </div>
                       </Link>
 
@@ -388,39 +388,39 @@ export default function Navbar() {
                         to="/register"
                         className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 transition-all group/item"
                       >
-                        <div className="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0 group-hover/item:bg-emerald-600 group-hover/item:text-white transition-colors">
-                          <UserPlus size={15} />
+                        <div className="w-9 h-9 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0 group-hover/item:bg-emerald-600 group-hover/item:text-white transition-colors">
+                          <UserPlus size={17} />
                         </div>
                         <div>
-                          <div className="text-xs font-bold leading-tight">Đăng Ký</div>
-                          <div className="text-[10px] text-slate-400 leading-tight mt-0.5">Tạo tài khoản đối tác & B2B</div>
+                          <div className="text-sm font-bold leading-tight">Đăng Ký</div>
+                          <div className="text-[11px] text-slate-400 leading-tight mt-0.5">Tạo tài khoản đối tác & B2B</div>
                         </div>
                       </Link>
                     </>
                   ) : (
                     <>
                       <div className="px-3 py-2 bg-slate-50 rounded-xl mb-1 border border-slate-100">
-                        <div className="text-xs font-bold text-slate-900 leading-tight">
+                        <div className="text-sm font-bold text-slate-900 leading-tight">
                           {currentUser?.fullName || currentUser?.name || 'Thành Viên Kim Sơn'}
                         </div>
-                        <div className="text-[10px] text-slate-500 font-semibold mt-0.5">
+                        <div className="text-[11px] text-slate-500 font-semibold mt-0.5">
                           {currentUser?.unit ? `${currentUser.unit} • ${currentUser.department}` : 'Đang đăng nhập hệ thống'}
                         </div>
                       </div>
 
                       <Link
                         to={isAdmin ? "/admin/dashboard" : "/admin/portal"}
-                        className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-slate-100 text-xs font-bold text-slate-700 hover:text-primary transition-all"
+                        className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-slate-100 text-sm font-bold text-slate-700 hover:text-primary transition-all"
                       >
-                        <ShieldCheck size={15} className="text-primary" />
+                        <ShieldCheck size={17} className="text-primary" />
                         <span>{isAdmin ? "Bảng Quản Trị CMS" : "Thông Báo & File Dùng Chung"}</span>
                       </Link>
 
                       <button
                         onClick={handleLogout}
-                        className="w-full flex items-center gap-2.5 p-2 rounded-xl hover:bg-red-50 text-xs font-bold text-red-600 transition-all text-left"
+                        className="w-full flex items-center gap-2.5 p-2 rounded-xl hover:bg-red-50 text-sm font-bold text-red-600 transition-all text-left"
                       >
-                        <LogOut size={15} />
+                        <LogOut size={17} />
                         <span>Đăng Xuất</span>
                       </button>
                     </>
@@ -432,12 +432,12 @@ export default function Navbar() {
             {/* Nút kích hoạt Offcanvas Menu với hiệu ứng chuyển màu khi hover */}
             <button
               onClick={() => setIsOpen(true)}
-              className="flex items-center gap-1.5 px-2.5 py-1 text-slate-700 hover:text-primary rounded-lg hover:bg-gradient-to-r hover:from-slate-100 hover:to-amber-50/80 transition-all duration-300 border border-transparent hover:border-amber-200/60"
+              className="flex items-center gap-1.5 px-3 py-1.5 text-slate-700 hover:text-primary rounded-lg hover:bg-gradient-to-r hover:from-slate-100 hover:to-amber-50/80 transition-all duration-300 border border-transparent hover:border-amber-200/60"
               title="Mở menu hệ sinh thái"
               aria-label="Mở menu"
             >
-              <Menu size={18} />
-              <span className="hidden sm:inline-block text-xs font-bold uppercase tracking-wider text-slate-700">
+              <Menu size={20} />
+              <span className="hidden sm:inline-block text-sm font-bold uppercase tracking-wider text-slate-700">
                 Menu
               </span>
             </button>
