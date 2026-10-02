@@ -166,7 +166,7 @@ export default function Navbar() {
               <img 
                 src={withBasePath('/logo-kimson.png')} 
                 alt="Kim Sơn Automobiles" 
-                className="h-10 w-auto object-contain hover:scale-105 transition-transform"
+                className="h-10 w-auto object-contain"
               />
             </Link>
           </div>
@@ -317,7 +317,7 @@ export default function Navbar() {
             <img 
               src={withBasePath('/logo-kimson.png')} 
               alt="Kim Sơn Automobiles" 
-              className="h-8 sm:h-9 w-auto object-contain drop-shadow-xs transition-transform duration-300 group-hover:scale-105"
+              className="h-8 sm:h-9 w-auto object-contain"
             />
           </Link>
 

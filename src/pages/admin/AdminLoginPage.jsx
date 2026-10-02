@@ -106,7 +106,7 @@ export default function AdminLoginPage({ initialMode = 'login' }) {
       <div className="w-full max-w-md relative z-10 my-8">
         {/* Brand Card Header */}
         <div className="text-center mb-6">
-          <Link to="/" className="inline-block hover:scale-105 transition-transform mb-3">
+          <Link to="/" className="inline-block mb-3">
             <div
               role="img"
               aria-label="Kim Sơn Automobiles"

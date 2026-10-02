@@ -14,7 +14,7 @@ export default function Footer() {
           {/* Brand & Mission (Col 1-2) */}
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center gap-3">
-              <Link to="/" className="inline-block hover:opacity-90 transition-opacity">
+              <Link to="/" className="inline-block">
                 <div
                   role="img"
                   aria-label="Kim Sơn Automobiles"
