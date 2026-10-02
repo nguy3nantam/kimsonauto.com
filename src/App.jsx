@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation, Navigate, Outlet } from 'react-router-dom';
 
 // Layout & Common Components
@@ -13,6 +13,7 @@ import NetworkPage from './pages/NetworkPage';
 import SustainabilityPage from './pages/SustainabilityPage';
 import NewsPage from './pages/NewsPage';
 import ContactPage from './pages/ContactPage';
+import PillarsPage from './pages/PillarsPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 // Admin Backend Portal Components & Pages
@@ -38,6 +39,7 @@ function BrandingManager() {
 const ROUTE_TITLES = {
   '/': 'Kim Sơn Automobiles - Cổng Thông Tin Hệ Sinh Thái Ô Tô',
   '/about': 'Giới Thiệu - Kim Sơn Automobiles',
+  '/linh-vuc': 'Lĩnh Vực Hoạt Động - 5 Trụ Cột Hệ Sinh Thái - Kim Sơn Automobiles',
   '/mang-luoi': 'Mạng Lưới 11 Chi Nhánh & Cơ Sở - Kim Sơn Automobiles',
   '/phat-trien-ben-vung': 'Phát Triển Bền Vững (ESG) - Kim Sơn Automobiles',
   '/tin-tuc': 'Tin Tức & Thông Cáo Báo Chí - Kim Sơn Automobiles',
@@ -100,9 +102,11 @@ export default function App() {
           <Route path="/tin-tuc" element={<NewsPage />} />
           <Route path="/lien-he" element={<ContactPage />} />
 
+          {/* Pillars / Activities */}
+          <Route path="/linh-vuc" element={<PillarsPage />} />
+          <Route path="/hoat-dong" element={<Navigate to="/linh-vuc" replace />} />
+
           {/* Aliases & Redirects */}
-          <Route path="/linh-vuc" element={<Navigate to="/about" replace />} />
-          <Route path="/hoat-dong" element={<Navigate to="/about" replace />} />
           <Route path="/vehicles" element={<Navigate to="/about" replace />} />
           <Route path="/services" element={<Navigate to="/about" replace />} />
           <Route path="/contact" element={<Navigate to="/lien-he" replace />} />

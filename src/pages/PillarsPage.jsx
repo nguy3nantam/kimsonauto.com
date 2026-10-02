@@ -1,12 +1,10 @@
-import React from 'react';
 import { 
   Car, 
   Wrench, 
   Layers, 
   Sparkles, 
   ShieldAlert, 
-  CheckCircle2, 
-  ArrowRight,
+  CheckCircle2,
   ShieldCheck
 } from 'lucide-react';
 import { ecosystemData } from '../data/ecosystem';
@@ -80,7 +78,7 @@ export default function PillarsPage() {
                   </div>
 
                   <p className="text-xs sm:text-sm font-medium text-slate-700 italic leading-relaxed">
-                    "{pillar.tagline}"
+                    &ldquo;{pillar.tagline}&rdquo;
                   </p>
 
                   <p className="text-sm text-slate-600 leading-relaxed">

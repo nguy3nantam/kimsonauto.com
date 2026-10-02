@@ -1,20 +1,11 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { 
-  Wrench, 
-  Cog, 
-  Palette, 
-  Sparkles, 
-  Layers, 
   ShieldAlert, 
   CheckCircle2, 
   Calendar, 
-  Clock, 
-  PhoneCall, 
-  MapPin, 
-  ArrowRight,
-  ShieldCheck
+  PhoneCall
 } from 'lucide-react';
-import { servicesData, serviceSteps } from '../data/services';
+import { servicesData } from '../data/services';
 import { branchesData } from '../data/branches';
 
 export default function ServicesPage({ onOpenBooking }) {

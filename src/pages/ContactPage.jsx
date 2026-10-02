@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { Phone, Mail, MapPin, Clock, Send, CheckCircle2, ShieldAlert, ChevronRight, Navigation, Loader2 } from 'lucide-react';
+import { useState } from 'react';
+import { Phone, Mail, MapPin, Clock, Send, CheckCircle2, ShieldAlert, Navigation, Loader2 } from 'lucide-react';
 import { branchesData } from '../data/branches';
 import { api } from '../services/api';
 
-export default function ContactPage({ onOpenBooking }) {
+export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [form, setForm] = useState({
@@ -102,7 +102,7 @@ export default function ContactPage({ onOpenBooking }) {
         <div>
           <div className="text-center max-w-2xl mx-auto mb-10">
             <h2 className="text-2xl sm:text-3xl font-black text-slate-900">Danh Sách 11 Chi Nhánh & Cơ Sở Kim Sơn</h2>
-            <p className="text-xs text-slate-500 mt-2">Bấm vào số điện thoại để gọi ngay hoặc bấm "Chỉ đường" để mở Google Maps.</p>
+            <p className="text-xs text-slate-500 mt-2">Bấm vào số điện thoại để gọi ngay hoặc bấm &ldquo;Chỉ đường&rdquo; để mở Google Maps.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

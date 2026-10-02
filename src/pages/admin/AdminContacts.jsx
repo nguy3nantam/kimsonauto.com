@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { Mail, Phone, Building2, CheckCircle2, Clock, Trash2, Search, Filter } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Mail, Phone, Building2, Trash2, Search, Filter } from 'lucide-react';
 import { api } from '../../services/api';
 
 export default function AdminContacts() {
   const [contacts, setContacts] = useState([]);
   const [filterStatus, setFilterStatus] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     loadContacts();
@@ -18,8 +17,6 @@ export default function AdminContacts() {
       setContacts(data);
     } catch (err) {
       console.error('Failed to load contacts:', err);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -167,7 +164,7 @@ export default function AdminContacts() {
                   </span>
                 </div>
                 <p className="text-slate-700 leading-relaxed italic bg-white p-3 rounded-lg border border-slate-100">
-                  "{item.message || 'Không có ghi chú thêm.'}"
+                  &ldquo;{item.message || 'Không có ghi chú thêm.'}&rdquo;
                 </p>
               </div>
             </div>

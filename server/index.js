@@ -704,12 +704,12 @@ app.put('/api/settings', async (req, res) => {
 // ==========================================
 app.post('/api/upload', async (req, res) => {
   try {
-    const { name, data, type } = req.body;
+    const { name, data } = req.body;
     if (!data) {
       return res.status(400).json({ error: 'Không tìm thấy dữ liệu hình ảnh' });
     }
 
-    const matches = data.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+    const matches = data.match(/^data:([A-Za-z-+/]+);base64,(.+)$/);
     let buffer;
     let ext = '.png';
     if (matches && matches.length === 3) {
@@ -740,7 +740,18 @@ app.post('/api/upload', async (req, res) => {
 });
 
 // ==========================================
-// 8. STATIC FILES SERVING & SPA FALLBACK
+// 8. HEALTH CHECK
+// ==========================================
+app.get('/api/health', (req, res) => {
+  res.json({
+    status: 'ok',
+    uptime: Math.round(process.uptime()),
+    timestamp: new Date().toISOString(),
+  });
+});
+
+// ==========================================
+// 9. STATIC FILES SERVING & SPA FALLBACK
 // ==========================================
 const distPath = path.join(__dirname, '..', 'dist');
 app.use(express.static(distPath, {

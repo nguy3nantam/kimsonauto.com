@@ -28,6 +28,10 @@ export function getStoredBranding() {
   return DEFAULT_BRANDING;
 }
 
+export function getSiteTitle() {
+  return getStoredBranding().siteTitle || DEFAULT_BRANDING.siteTitle;
+}
+
 export function applyFavicon(faviconUrl) {
   if (!faviconUrl) return;
   const links = document.querySelectorAll("link[rel*='icon']");
@@ -55,10 +59,13 @@ export function useBranding() {
         setBranding(updated);
         try {
           localStorage.setItem('kimson_branding', JSON.stringify(updated));
-        } catch (e) {}
+        } catch {
+          /* localStorage unavailable — ignore */
+        }
 
         applyFavicon(updated.favicon);
-        if (updated.siteTitle && document.title.includes('Kim Sơn')) {
+        // Only apply branding site title on the homepage so subpages keep their own titles
+        if (updated.siteTitle && window.location.pathname === '/') {
           document.title = updated.siteTitle;
         }
       })
@@ -79,7 +86,9 @@ export function useBranding() {
           };
           try {
             localStorage.setItem('kimson_branding', JSON.stringify(next));
-          } catch (err) {}
+          } catch {
+            /* localStorage unavailable — ignore */
+          }
           applyFavicon(next.favicon);
           return next;
         });

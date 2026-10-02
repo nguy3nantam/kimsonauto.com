@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Layers, Edit3, Check, X, CheckCircle2, Car, Wrench, Sparkles, ShieldAlert, ShieldCheck } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Edit3, X, CheckCircle2 } from 'lucide-react';
 import { api } from '../../services/api';
 
 export default function AdminPillars() {
@@ -7,7 +7,6 @@ export default function AdminPillars() {
   const [editingPillar, setEditingPillar] = useState(null);
   const [formData, setFormData] = useState({});
   const [saveSuccess, setSaveSuccess] = useState(false);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     loadPillars();
@@ -19,8 +18,6 @@ export default function AdminPillars() {
       setPillars(data);
     } catch (err) {
       console.error('Failed to load pillars:', err);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -162,7 +159,7 @@ export default function AdminPillars() {
                     <div>
                       <span className="text-[11px] font-bold text-primary uppercase tracking-wider">{pillar.subtitle}</span>
                       <h3 className="text-lg font-extrabold text-slate-900 mt-0.5">{pillar.title}</h3>
-                      <p className="text-xs text-slate-500 italic mt-1 font-medium">"{pillar.tagline}"</p>
+                      <p className="text-xs text-slate-500 italic mt-1 font-medium">&ldquo;{pillar.tagline}&rdquo;</p>
                       <p className="text-xs text-slate-600 mt-2 line-clamp-2 max-w-3xl leading-relaxed">{pillar.description}</p>
                     </div>
                   </div>

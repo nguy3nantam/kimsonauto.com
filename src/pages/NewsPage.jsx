@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Calendar, Clock, ChevronRight, X } from 'lucide-react';
 import { ecosystemData } from '../data/ecosystem';
 import { api } from '../services/api';

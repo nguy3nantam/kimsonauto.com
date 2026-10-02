@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   ChevronRight, 
   ChevronLeft,
   ArrowRight, 
   ShieldCheck, 
-  Award, 
   Car, 
   Wrench, 
   Layers, 
@@ -13,9 +12,7 @@ import {
   ShieldAlert, 
   MapPin, 
   CheckCircle2, 
-  Globe, 
-  Leaf, 
-  Users 
+  Leaf 
 } from 'lucide-react';
 import { ecosystemData } from '../data/ecosystem';
 import { api } from '../services/api';

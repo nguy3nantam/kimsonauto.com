@@ -1,6 +1,4 @@
-import React from 'react';
 import { Leaf, ShieldCheck, Users, HeartHandshake, CheckCircle2 } from 'lucide-react';
-import { ecosystemData } from '../data/ecosystem';
 
 export default function SustainabilityPage() {
   return (

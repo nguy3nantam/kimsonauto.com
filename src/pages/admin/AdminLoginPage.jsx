@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { 
   Lock, 
@@ -18,25 +18,7 @@ import { api, isStaticDemoMode } from '../../services/api';
 import { useBranding } from '../../services/branding';
 import { DEMO_CREDENTIALS } from '../../services/demoData';
 import { sanitizeAssetUrl, withBasePath } from '../../utils/assets';
-
-export const UNIT_OPTIONS = [
-  'VF Biên Hòa',
-  'VF Bửu Long',
-  'VF Trảng Dài',
-  'VF Long Thành',
-  'VF Long Khánh',
-  'VF Tân Hiệp',
-  'VF Bình Thạnh',
-  'VF GF Q2'
-];
-
-export const DEPARTMENT_OPTIONS = [
-  'Kinh Doanh',
-  'Dịch Vụ',
-  'Kế Toán',
-  'Nhân Sự',
-  'Marketing'
-];
+import { UNIT_OPTIONS, DEPARTMENT_OPTIONS } from '../../data/orgOptions';
 
 export default function AdminLoginPage({ initialMode = 'login' }) {
   const branding = useBranding();

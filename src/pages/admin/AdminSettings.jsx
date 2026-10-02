@@ -1,19 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { 
   Settings, 
   Save, 
   CheckCircle2, 
   Building2, 
-  Phone, 
-  Mail, 
-  Globe, 
   Image as ImageIcon,
   Upload,
   RefreshCw,
-  ExternalLink,
-  Sparkles,
-  Layout,
-  Check,
   AlertCircle
 } from 'lucide-react';
 import { api } from '../../services/api';
@@ -129,7 +122,7 @@ export default function AdminSettings() {
     e.preventDefault();
     try {
       setLoading(true);
-      const updated = await api.updateSettings(settings);
+      await api.updateSettings(settings);
       
       // Update local storage and dispatch event for immediate UI reflection
       const brandingData = {

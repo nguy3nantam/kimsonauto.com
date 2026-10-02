@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate, Outlet } from 'react-router-dom';
 import { 
   LayoutDashboard, 
@@ -13,10 +13,6 @@ import {
   ExternalLink, 
   Menu, 
   X,
-  Bell,
-  ShieldCheck,
-  Building2,
-  Briefcase,
   Image as ImageIcon
 } from 'lucide-react';
 import { useBranding } from '../../services/branding';
@@ -34,7 +30,6 @@ export default function AdminLayout() {
   const userRole = currentUser?.role || ((currentUser?.id === '1' || currentUser?.username === 'admin') ? 'Admin' : 'User');
   const isAdmin = userRole === 'Admin' || currentUser?.id === '1' || currentUser?.username === 'admin';
   const isLeader = userRole === 'Leader';
-  const isUser = !isAdmin && !isLeader;
 
   // Protect route check and role-based access
   useEffect(() => {

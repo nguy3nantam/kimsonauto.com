@@ -1,6 +1,5 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
-import { Phone, Mail, MapPin, ChevronRight, Globe, ShieldCheck } from 'lucide-react';
+import { Phone, Mail, MapPin, ChevronRight, ShieldCheck } from 'lucide-react';
 import { ecosystemData } from '../../data/ecosystem';
 import { useBranding } from '../../services/branding';
 import { sanitizeAssetUrl, withBasePath } from '../../utils/assets';

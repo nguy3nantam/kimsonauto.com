@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
-import { X, CheckCircle2, Calendar, Car, Wrench, Clock, MapPin, User, Phone, FileText, Loader2 } from 'lucide-react';
+import { useState } from 'react';
+import { X, CheckCircle2, Calendar, Car, Wrench, Clock, MapPin, User, Phone, Loader2 } from 'lucide-react';
 import { branchesData } from '../../data/branches';
-import { carsData } from '../../data/cars';
 import { api } from '../../services/api';
 
 export default function BookingModal({ isOpen, onClose, initialType = 'service', selectedCar = null }) {

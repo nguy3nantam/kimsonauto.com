@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { 
   Image as ImageIcon, 
   Plus, 
@@ -10,7 +10,6 @@ import {
   EyeOff, 
   ArrowUp, 
   ArrowDown, 
-  ExternalLink, 
   Sparkles, 
   RefreshCw,
   Sliders,
@@ -43,6 +42,7 @@ export default function AdminSliders() {
 
   useEffect(() => {
     loadSliders();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const showNotification = (text, type = 'success') => {
@@ -305,7 +305,7 @@ export default function AdminSliders() {
           <div className="p-12 text-center text-slate-500">
             <ImageIcon size={40} className="mx-auto mb-3 text-slate-300" />
             <p className="text-base font-semibold text-slate-700">Chưa có slider nào</p>
-            <p className="text-sm text-slate-400 mt-1">Bấm nút "Thêm Slide Mới" để tạo slide đầu tiên cho trang chủ.</p>
+            <p className="text-sm text-slate-400 mt-1">Bấm nút &ldquo;Thêm Slide Mới&rdquo; để tạo slide đầu tiên cho trang chủ.</p>
           </div>
         ) : (
           <div className="overflow-x-auto">

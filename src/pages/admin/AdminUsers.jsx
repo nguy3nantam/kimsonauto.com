@@ -1,44 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { 
-  Users, 
   Building2, 
   Briefcase, 
   Mail, 
   Phone, 
   Search, 
-  Filter, 
   Trash2, 
   Edit3, 
   Plus, 
   X, 
-  CheckCircle2, 
   AlertCircle, 
   Calendar, 
   ShieldCheck, 
-  UserCheck, 
-  RefreshCw,
-  Eye
+  RefreshCw
 } from 'lucide-react';
 import { api } from '../../services/api';
-
-export const UNIT_OPTIONS = [
-  'VF Biên Hòa',
-  'VF Bửu Long',
-  'VF Trảng Dài',
-  'VF Long Thành',
-  'VF Long Khánh',
-  'VF Tân Hiệp',
-  'VF Bình Thạnh',
-  'VF GF Q2'
-];
-
-export const DEPARTMENT_OPTIONS = [
-  'Kinh Doanh',
-  'Dịch Vụ',
-  'Kế Toán',
-  'Nhân Sự',
-  'Marketing'
-];
+import { UNIT_OPTIONS, DEPARTMENT_OPTIONS } from '../../data/orgOptions';
 
 export default function AdminUsers() {
   const [users, setUsers] = useState([]);
@@ -77,6 +54,7 @@ export default function AdminUsers() {
       }
     }
     loadUsers(u);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const userRole = currentUser?.role || ((currentUser?.id === '1' || currentUser?.username === 'admin') ? 'Admin' : 'User');

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Newspaper, Plus, Edit3, Trash2, CheckCircle2, X, Calendar, Clock } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Plus, Edit3, Trash2, X } from 'lucide-react';
 import { api } from '../../services/api';
 
 export default function AdminNews() {
@@ -14,7 +14,6 @@ export default function AdminNews() {
     image: '',
     status: 'published'
   });
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     loadNews();
@@ -26,8 +25,6 @@ export default function AdminNews() {
       setNews(data);
     } catch (err) {
       console.error('Failed to load news:', err);
-    } finally {
-      setLoading(false);
     }
   };
 

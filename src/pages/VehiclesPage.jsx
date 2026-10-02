@@ -1,17 +1,14 @@
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { 
   Search, 
-  Filter, 
   Car, 
   BatteryCharging, 
   Gauge, 
   Users, 
   ShieldCheck, 
-  ChevronRight, 
   X, 
   Calculator, 
-  CheckCircle2,
-  PhoneCall
+  CheckCircle2
 } from 'lucide-react';
 import { carsData, carBrands, carSegments, fuelTypes } from '../data/cars';
 
@@ -20,7 +17,7 @@ export default function VehiclesPage({ onOpenBooking, selectedCar, setSelectedCa
   const [selectedBrand, setSelectedBrand] = useState('Tất Cả');
   const [selectedSegment, setSelectedSegment] = useState('Tất Cả');
   const [selectedFuel, setSelectedFuel] = useState('Tất Cả');
-  const [maxPrice, setMaxPrice] = useState(2500000000);
+  const [maxPrice] = useState(2500000000);
 
   // Loan calculator state
   const [prepayPercent, setPrepayPercent] = useState(20);

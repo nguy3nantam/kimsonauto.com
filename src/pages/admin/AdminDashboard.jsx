@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Layers, 
@@ -7,12 +7,8 @@ import {
   Mail, 
   Users, 
   Building2,
-  Briefcase,
-  CheckCircle2, 
-  Clock, 
-  ArrowUpRight,
-  TrendingUp,
-  AlertCircle
+  Briefcase, 
+  ArrowUpRight
 } from 'lucide-react';
 import { api } from '../../services/api';
 
@@ -30,7 +26,6 @@ export default function AdminDashboard() {
   });
   const [recentContacts, setRecentContacts] = useState([]);
   const [recentUsers, setRecentUsers] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadData() {
@@ -46,8 +41,6 @@ export default function AdminDashboard() {
         if (usersData) setRecentUsers(usersData.slice(0, 5));
       } catch (err) {
         console.error('Error loading dashboard:', err);
-      } finally {
-        setLoading(false);
       }
     }
     loadData();

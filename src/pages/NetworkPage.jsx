@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { MapPin, Phone, ShieldCheck, ChevronRight, Navigation, CheckCircle2 } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { MapPin, Phone, CheckCircle2 } from 'lucide-react';
 import { ecosystemData } from '../data/ecosystem';
 import { api } from '../services/api';
 

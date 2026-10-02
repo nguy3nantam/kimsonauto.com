@@ -1,8 +1,6 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import { withBasePath } from '../utils/assets';
-import { 
-  Award, ShieldCheck, Users, Target, Clock, Wrench, CheckCircle2, 
+import { ShieldCheck, Target, Clock, Wrench, CheckCircle2, 
   MapPin, Phone, Sparkles, ChevronRight, Zap, ExternalLink 
 } from 'lucide-react';
 

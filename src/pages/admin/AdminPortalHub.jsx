@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { 
   Bell, 
   FolderOpen, 
@@ -8,7 +8,6 @@ import {
   Filter, 
   Plus, 
   Trash2, 
-  Eye, 
   Calendar, 
   User, 
   Building2, 
@@ -18,15 +17,11 @@ import {
   Sparkles, 
   X, 
   CheckCircle2, 
-  AlertCircle, 
-  Clock, 
   Pin,
-  ExternalLink,
-  ShieldCheck,
-  Share2
+  ShieldCheck
 } from 'lucide-react';
 import { api } from '../../services/api';
-import { UNIT_OPTIONS, DEPARTMENT_OPTIONS } from './AdminLoginPage';
+import { UNIT_OPTIONS, DEPARTMENT_OPTIONS } from '../../data/orgOptions';
 
 export default function AdminPortalHub() {
   const [activeTab, setActiveTab] = useState('announcements'); // 'announcements' | 'files'
@@ -65,8 +60,6 @@ export default function AdminPortalHub() {
     targetDepartment: 'Tất Cả'
   });
 
-  const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     const userStr = localStorage.getItem('kimson_admin_user');
     if (userStr) {
@@ -80,7 +73,6 @@ export default function AdminPortalHub() {
   }, []);
 
   const loadData = async () => {
-    setLoading(true);
     try {
       const [annData, fileData] = await Promise.all([
         api.getAnnouncements().catch(() => []),
@@ -90,8 +82,6 @@ export default function AdminPortalHub() {
       setSharedFiles(fileData);
     } catch (err) {
       console.error('Failed to load portal data:', err);
-    } finally {
-      setLoading(false);
     }
   };
 
