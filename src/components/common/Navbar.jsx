@@ -299,7 +299,7 @@ export default function Navbar() {
 
   return (
     <header 
-      className={`sticky top-0 z-40 h-12 max-h-12 relative flex items-center transition-all duration-500 ease-in-out ${
+      className={`sticky top-0 z-40 h-[65px] max-h-[65px] relative flex items-center transition-all duration-500 ease-in-out ${
         isScrolled
           ? 'bg-white/95 backdrop-blur-xl shadow-md border-b border-slate-200/80 text-slate-800'
           : 'bg-gradient-to-r from-white/95 via-amber-50/70 via-yellow-50/45 to-white/95 backdrop-blur-md border-b border-amber-200/50 text-slate-800 animate-header-gradient'
