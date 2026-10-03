@@ -47,9 +47,16 @@ export default function ContactPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto">
+          <div className="flex justify-center mb-5">
+            <img
+              src="/logo-kimson.png"
+              alt="Kim Sơn Automobiles"
+              className="h-16 sm:h-20 w-auto"
+            />
+          </div>
           <span className="text-xs font-bold text-primary uppercase tracking-widest">LIÊN HỆ & MẠNG LƯỚI CHI NHÁNH</span>
           <h1 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight mt-2 mb-4">
-            Kim Sơn Automobiles Phát Triển Bền Vững
+            Kim Sơn Automobiles
           </h1>
           <p className="text-base text-slate-600">
             Hệ thống phân phối và cơ sở Kim Sơn Automobiles
