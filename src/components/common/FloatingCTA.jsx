@@ -123,16 +123,16 @@ export default function FloatingCTA() {
         </div>
       )}
 
-      {/* Main Single Sticky Contact Trigger Button */}
+      {/* Main Single Sticky Contact Trigger Button (Icon Only) */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`group relative flex items-center justify-center h-13 px-4 rounded-full shadow-2xl transition-all duration-300 cursor-pointer ${
+        className={`group relative flex items-center justify-center w-12 h-12 sm:w-13 sm:h-13 rounded-full shadow-2xl transition-all duration-300 cursor-pointer ${
           isOpen
             ? 'bg-slate-800 text-white hover:bg-slate-700'
             : 'bg-gradient-to-r from-red-600 via-primary to-amber-600 text-white hover:brightness-110 hover:scale-105'
         }`}
-        title="Liên hệ & Cứu hộ khẩn cấp"
-        aria-label="Liên hệ & Cứu hộ khẩn cấp"
+        title="Liên hệ & Cứu hộ khẩn cấp 24/7"
+        aria-label="Liên hệ & Cứu hộ khẩn cấp 24/7"
       >
         {!isOpen && (
           <span className="absolute -top-1 -right-1 flex h-3.5 w-3.5">
@@ -141,19 +141,11 @@ export default function FloatingCTA() {
           </span>
         )}
 
-        <div className="flex items-center gap-2">
-          {isOpen ? (
-            <>
-              <X size={20} />
-              <span className="text-xs font-bold uppercase tracking-wider">Đóng</span>
-            </>
-          ) : (
-            <>
-              <PhoneCall size={18} className="animate-pulse" />
-              <span className="text-xs font-black uppercase tracking-wider">Liên Hệ 24/7</span>
-            </>
-          )}
-        </div>
+        {isOpen ? (
+          <X size={22} />
+        ) : (
+          <PhoneCall size={22} className="animate-pulse" />
+        )}
       </button>
     </div>
   );
