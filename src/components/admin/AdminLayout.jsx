@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate, Outlet } from 'react-router-dom';
 import { 
   LayoutDashboard, 
-  Layers, 
   MapPin, 
   Newspaper, 
   Mail, 
@@ -35,13 +34,22 @@ export default function AdminLayout() {
   useEffect(() => {
     const token = localStorage.getItem('kimson_admin_token');
     if (!token) {
-      navigate('/admin/login');
+      navigate('/admin/login', { replace: true });
       return;
     }
     const userStr = localStorage.getItem('kimson_admin_user');
-    if (userStr) {
-      try {
-        const u = JSON.parse(userStr);
+    if (!userStr) {
+      localStorage.removeItem('kimson_admin_token');
+      navigate('/admin/login', { replace: true });
+      return;
+    }
+
+    try {
+      const u = JSON.parse(userStr);
+      if (!u || typeof u !== 'object' || !u.id || u.status === 'inactive') {
+        throw new Error('Invalid admin session');
+      }
+
         setCurrentUser(u);
         const role = u?.role || ((u?.id === '1' || u?.username === 'admin') ? 'Admin' : 'User');
         const userIsAdmin = role === 'Admin' || u?.id === '1' || u?.username === 'admin';
@@ -59,9 +67,11 @@ export default function AdminLayout() {
             navigate('/admin/portal', { replace: true });
           }
         }
-      } catch (e) {
-        console.error(e);
-      }
+    } catch (error) {
+      console.warn('Phiên đăng nhập không hợp lệ:', error);
+      localStorage.removeItem('kimson_admin_token');
+      localStorage.removeItem('kimson_admin_user');
+      navigate('/admin/login', { replace: true });
     }
   }, [navigate, location.pathname]);
 
@@ -76,7 +86,6 @@ export default function AdminLayout() {
     { name: 'Tổng Quan', path: '/admin/dashboard', icon: LayoutDashboard },
     { name: 'Slider', path: '/admin/sliders', icon: ImageIcon },
     { name: 'Tài Khoản', path: '/admin/users', icon: Users },
-    { name: 'Nền Tảng Phát Triển', path: '/admin/pillars', icon: Layers },
     { name: 'Hệ Thống', path: '/admin/branches', icon: MapPin },
     { name: 'Tin Tức & Thông Báo', path: '/admin/news', icon: Newspaper },
     { name: 'Đối Tác', path: '/admin/contacts', icon: Mail },

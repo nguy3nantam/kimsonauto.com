@@ -10,7 +10,7 @@ export default function Footer() {
   return (
     <footer className="bg-slate-950 text-slate-400 pt-16 pb-8 border-t border-slate-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-slate-800/80">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-slate-800/80">
           {/* Brand & Mission (Col 1-2) */}
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center gap-3">
@@ -44,24 +44,7 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Nền Tảng Phát Triển (Col 3) */}
-          <div>
-            <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-4 border-l-2 border-primary pl-2.5">
-              Nền Tảng Phát Triển
-            </h4>
-            <ul className="space-y-2 text-xs">
-              {ecosystemData.pillars.map((p) => (
-                <li key={p.id}>
-                  <Link to="/about" className="hover:text-white transition-colors flex items-center gap-1.5">
-                    <ChevronRight size={12} className="text-primary-light" />
-                    <span>{p.subtitle}</span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Liên Kết Tập Đoàn (Col 4) */}
+          {/* Liên Kết Tập Đoàn */}
           <div>
             <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-4 border-l-2 border-primary pl-2.5">
               Thông Tin Tập Đoàn

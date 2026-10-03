@@ -31,7 +31,7 @@ export default function AdminSliders() {
     description: '',
     image: 'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&q=85&w=1920',
     primaryButtonText: 'Hành Trình Phát Triển',
-    primaryButtonLink: '/linh-vuc',
+    primaryButtonLink: '/mang-luoi',
     secondaryButtonText: 'Hành Trình Phát Triển',
     secondaryButtonLink: '/about',
     order: 1,
@@ -85,7 +85,7 @@ export default function AdminSliders() {
       description: slide.description || '',
       image: slide.image || '',
       primaryButtonText: slide.primaryButtonText || 'Khám Phá Thêm',
-      primaryButtonLink: slide.primaryButtonLink || '/linh-vuc',
+      primaryButtonLink: slide.primaryButtonLink || '/mang-luoi',
       secondaryButtonText: slide.secondaryButtonText || 'Liên Hệ',
       secondaryButtonLink: slide.secondaryButtonLink || '/lien-he',
       order: Number(slide.order) || 1,
@@ -590,7 +590,7 @@ export default function AdminSliders() {
                       type="text"
                       value={formData.primaryButtonText}
                       onChange={(e) => setFormData({ ...formData, primaryButtonText: e.target.value })}
-                      placeholder="VD: Khám Phá 5 Trụ Cột Hoạt Động"
+                      placeholder="VD: Khám Phá Hệ Thống Kim Sơn"
                       className="w-full px-3 py-2 rounded-lg border border-slate-300 text-xs"
                     />
                   </div>
@@ -600,7 +600,7 @@ export default function AdminSliders() {
                       type="text"
                       value={formData.primaryButtonLink}
                       onChange={(e) => setFormData({ ...formData, primaryButtonLink: e.target.value })}
-                      placeholder="VD: /linh-vuc"
+                      placeholder="VD: /mang-luoi"
                       className="w-full px-3 py-2 rounded-lg border border-slate-300 text-xs"
                     />
                   </div>

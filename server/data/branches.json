@@ -1,7 +1,7 @@
 [
   {
     "id": "vinfast-bien-hoa",
-    "name": "VinFast Biên Hòa",
+    "name": "VinFast Kim Sơn Biên Hòa",
     "area": "Đồng Nai",
     "address": "643 Quốc Lộ 1, KP. 27, P. Long Bình, TP. Biên Hòa, Tỉnh Đồng Nai",
     "hotline": "0913 75 75 79",
@@ -13,7 +13,8 @@
       "Xưởng Kỹ Thuật",
       "Trạm Sạc Nhanh"
     ],
-    "hotlineService": "0917 300 008"
+    "hotlineService": "0917 300 008",
+    "isMain": true
   },
   {
     "id": "vinfast-buu-long",
@@ -158,12 +159,13 @@
     "address": "Đường Số 37, Khu đô thị An Phú An Khánh, Bình Trưng, TP.Hồ Chí Minh",
     "hotline": "0913 75 75 79",
     "email": "contact@kimsonauto.com",
-    "role": "Trụ Sở Điều Hành Hệ Sinh Thái Kim Sơn (Green Future)",
+    "role": "Văn Phòng Điều Hành Hệ Sinh Thái Kim Sơn (Green Future)",
     "features": [
-      "Trụ Sở Tập Đoàn",
+      "Văn Phòng Điều Hành",
       "Trung Tâm Điều Phối Hệ Sinh Thái",
       "Dự Án Chuyển Đổi Xanh"
     ],
-    "hotlineService": "0917 300 008"
+    "hotlineService": "0917 300 008",
+    "isMain": false
   }
 ]

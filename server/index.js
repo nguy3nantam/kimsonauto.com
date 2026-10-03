@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import path from 'path';
 import fs from 'fs';
+import crypto from 'crypto';
 import { fileURLToPath } from 'url';
 import { readData, writeData } from './db.js';
 
@@ -22,6 +23,25 @@ if (!fs.existsSync(uploadsDir)) {
 }
 app.use('/uploads', express.static(uploadsDir, { maxAge: '7d' }));
 
+// Password Hashing Helper using native PBKDF2
+const hashPassword = (password) => {
+  if (!password) return '';
+  const salt = crypto.randomBytes(16).toString('hex');
+  const hash = crypto.pbkdf2Sync(password, salt, 1000, 64, 'sha512').toString('hex');
+  return `$pbkdf2$${salt}$${hash}`;
+};
+
+const verifyPassword = (inputPassword, storedPassword) => {
+  if (!storedPassword || !inputPassword) return false;
+  if (storedPassword.startsWith('$pbkdf2$')) {
+    const [, , salt, hash] = storedPassword.split('$');
+    const inputHash = crypto.pbkdf2Sync(inputPassword, salt, 1000, 64, 'sha512').toString('hex');
+    return inputHash === hash;
+  }
+  // Backward compatibility with existing plain text passwords
+  return storedPassword === inputPassword;
+};
+
 // ==========================================
 // 1. AUTHENTICATION & ROLE MANAGEMENT API
 // ==========================================
@@ -37,9 +57,20 @@ app.post('/api/auth/login', async (req, res) => {
   const { username, password } = req.body;
   const users = await readData('users') || [];
   
-  const user = users.find(u => u.username === username && u.password === password);
-  if (!user) {
+  const userIndex = users.findIndex(u => u.username === username && verifyPassword(password, u.password));
+  if (userIndex === -1) {
     return res.status(401).json({ error: 'Tài khoản hoặc mật khẩu không chính xác' });
+  }
+
+  const user = users[userIndex];
+  if (user.status === 'inactive') {
+    return res.status(403).json({ error: 'Tài khoản đã bị tạm khóa. Vui lòng liên hệ quản trị viên.' });
+  }
+
+  // Transparently migrate plaintext password to hashed format
+  if (user.password && !user.password.startsWith('$pbkdf2$')) {
+    users[userIndex].password = hashPassword(password);
+    await writeData('users', users);
   }
 
   // Safe user profile with normalized role
@@ -78,7 +109,7 @@ app.post('/api/auth/register', async (req, res) => {
     email: (email || '').trim(),
     phone: (phone || '').trim(),
     username: username.trim(),
-    password,
+    password: hashPassword(password),
     role: 'User',
     status: 'active',
     createdAt: new Date().toISOString()
@@ -191,7 +222,7 @@ app.post('/api/users', async (req, res) => {
     email: (email || '').trim(),
     phone: (phone || '').trim(),
     username: username.trim(),
-    password,
+    password: hashPassword(password),
     role: finalRole,
     status: status || 'active',
     createdAt: new Date().toISOString()
@@ -246,7 +277,7 @@ app.put('/api/users/:id', async (req, res) => {
     ...existing,
     ...updateData,
     fullName: updateData.fullName || updateData.name || existing.fullName || existing.name,
-    password: password ? password : existing.password,
+    password: password ? (password.startsWith('$pbkdf2$') ? password : hashPassword(password)) : existing.password,
     updatedAt: new Date().toISOString()
   };
 
@@ -444,7 +475,7 @@ app.post('/api/sliders', async (req, res) => {
     description: (description || '').trim(),
     image: image.trim(),
     primaryButtonText: (primaryButtonText || 'Khám Phá Thêm').trim(),
-    primaryButtonLink: (primaryButtonLink || '/linh-vuc').trim(),
+    primaryButtonLink: (primaryButtonLink || '/mang-luoi').trim(),
     secondaryButtonText: (secondaryButtonText || 'Liên Hệ').trim(),
     secondaryButtonLink: (secondaryButtonLink || '/lien-he').trim(),
     order: Number(order) || (items.length + 1),
@@ -495,7 +526,6 @@ app.delete('/api/sliders/:id', async (req, res) => {
 // 2. DASHBOARD KPI STATS API
 // ==========================================
 app.get('/api/stats', async (req, res) => {
-  const pillars = await readData('pillars') || [];
   const branches = await readData('branches') || [];
   const news = await readData('news') || [];
   const contacts = await readData('contacts') || [];
@@ -505,7 +535,6 @@ app.get('/api/stats', async (req, res) => {
   const pendingContacts = contacts.filter(c => c.status === 'pending').length;
 
   res.json({
-    totalPillars: pillars.length,
     totalBranches: branches.length,
     totalNews: news.length,
     totalContacts: contacts.length,
@@ -515,28 +544,6 @@ app.get('/api/stats', async (req, res) => {
     totalCustomers: settings.totalCustomers || 50000,
     satisfactionRate: settings.satisfactionRate || '99%'
   });
-});
-
-// ==========================================
-// 3. PILLARS (5 TRỤ CỘT HỆ SINH THÁI) API
-// ==========================================
-app.get('/api/pillars', async (req, res) => {
-  const data = await readData('pillars') || [];
-  res.json(data);
-});
-
-app.put('/api/pillars/:id', async (req, res) => {
-  const { id } = req.params;
-  const pillars = await readData('pillars') || [];
-  const index = pillars.findIndex(p => p.id === id);
-
-  if (index === -1) {
-    return res.status(404).json({ error: 'Không tìm thấy trụ cột này' });
-  }
-
-  pillars[index] = { ...pillars[index], ...req.body };
-  await writeData('pillars', pillars);
-  res.json(pillars[index]);
 });
 
 // ==========================================
@@ -748,6 +755,10 @@ app.get('/api/health', (req, res) => {
     uptime: Math.round(process.uptime()),
     timestamp: new Date().toISOString(),
   });
+});
+
+app.use('/api', (req, res) => {
+  res.status(404).json({ error: 'API endpoint not found' });
 });
 
 // ==========================================

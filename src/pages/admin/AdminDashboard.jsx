@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
-  Layers, 
   MapPin, 
   Newspaper, 
   Mail, 
@@ -14,7 +13,6 @@ import { api } from '../../services/api';
 
 export default function AdminDashboard() {
   const [stats, setStats] = useState({
-    totalPillars: 5,
     totalBranches: 7,
     totalNews: 3,
     totalContacts: 2,
@@ -47,14 +45,6 @@ export default function AdminDashboard() {
   }, []);
 
   const kpis = [
-    {
-      title: 'Trụ Cột Hệ Sinh Thái',
-      value: stats.totalPillars,
-      desc: 'Chuỗi giá trị khép kín',
-      icon: Layers,
-      color: 'from-blue-600 to-blue-700',
-      link: '/admin/pillars'
-    },
     {
       title: 'Mạng Lưới Chi Nhánh',
       value: stats.totalBranches,
@@ -92,7 +82,7 @@ export default function AdminDashboard() {
   return (
     <div className="space-y-8">
       {/* KPI Cards Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {kpis.map((kpi, idx) => {
           const Icon = kpi.icon;
           return (

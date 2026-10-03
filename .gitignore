@@ -5,3 +5,5 @@ dist/
 *.log
 .DS_Store
 server/uploads/
+server/backups/
+*.tar.gz

@@ -82,7 +82,6 @@ const parseQueryLike = (params = '') => {
 const getStats = (store) => {
   const pendingContacts = store.contacts.filter((item) => item.status === 'pending').length;
   return {
-    totalPillars: store.pillars.length,
     totalBranches: store.branches.length,
     totalNews: store.news.length,
     totalContacts: store.contacts.length,
@@ -141,6 +140,10 @@ const demoApi = {
     const user = store.users.find((item) => item.username === username && item.password === password);
     if (!user) {
       throw new Error('Tài khoản hoặc mật khẩu không chính xác');
+    }
+
+    if (user.status === 'inactive') {
+      throw new Error('Tài khoản đã bị tạm khóa. Vui lòng liên hệ quản trị viên.');
     }
 
     return {
@@ -297,19 +300,6 @@ const demoApi = {
 
   getStats() {
     return getStats(loadStore());
-  },
-
-  getPillars() {
-    return loadStore().pillars;
-  },
-
-  updatePillar(id, data) {
-    const store = loadStore();
-    const index = store.pillars.findIndex((item) => item.id === id);
-    if (index === -1) throw new Error('Pillar not found');
-    store.pillars[index] = { ...store.pillars[index], ...data };
-    saveStore(store);
-    return store.pillars[index];
   },
 
   getBranches() {
@@ -598,18 +588,6 @@ export const api = {
     isStaticDemoMode()
       ? demoApi.getStats()
       : fetchApi('/api/stats')
-  ),
-
-  // Pillars
-  getPillars: async () => (
-    isStaticDemoMode()
-      ? demoApi.getPillars()
-      : fetchApi('/api/pillars')
-  ),
-  updatePillar: async (id, data) => (
-    isStaticDemoMode()
-      ? demoApi.updatePillar(id, data)
-      : fetchApi(`/api/pillars/${id}`, { method: 'PUT', body: JSON.stringify(data) })
   ),
 
   // Branches

@@ -166,7 +166,7 @@ export default function AboutPage() {
                 Đồng Hành An Toàn Trên Mọi Chặng Đường
               </h2>
               <p className="text-sm text-slate-600 leading-relaxed">
-                Tại Kim Sơn Automobiles, chúng tôi không chỉ bán xe hay sửa chữa phương tiện, mà chúng tôi trao gửi sự an tâm tuyệt đối cho khách hàng và gia đình. Mọi chiếc xe lăn bánh từ xưởng đều được chăm sóc bằng sự tỉ mỉ của những người thợ tâm huyết nhất.
+                Tại Kim Sơn Automobiles, chúng tôi đồng hành cùng khách hàng, đối tác và cộng đồng để kiến tạo chuỗi giá trị hệ sinh thái dịch vụ, kỹ thuật và giải pháp ô tô toàn diện với sự an tâm tuyệt đối trên mọi hành trình.
               </p>
             </div>
 
@@ -228,7 +228,7 @@ export default function AboutPage() {
         <div className="bg-secondary text-white rounded-3xl p-8 sm:p-12 border border-slate-800 shadow-2xl">
           <div className="text-center max-w-2xl mx-auto mb-12">
             <span className="text-xs font-bold text-primary-light uppercase tracking-wider">HÀNH TRÌNH PHÁT TRIỂN</span>
-            <h3 className="text-3xl font-black mt-1">Cột Mốc Lịch Sử (2014 - 2026)</h3>
+            <h3 className="text-3xl font-black mt-1">Cột Mốc Lịch Sử</h3>
           </div>
 
           <div className="space-y-8 relative before:absolute before:inset-0 before:left-4 md:before:left-1/2 before:w-0.5 before:bg-slate-700">

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Phone, Mail, MapPin, Clock, Send, CheckCircle2, ShieldAlert, Navigation, Loader2 } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, Send, CheckCircle2, ShieldAlert, Navigation, Loader2, Building2 } from 'lucide-react';
 import { branchesData } from '../data/branches';
 import { api } from '../services/api';
 
@@ -111,15 +111,23 @@ export default function ContactPage() {
             {branchesData.map((branch) => (
               <div 
                 key={branch.id}
-                className="bg-white rounded-3xl p-6 border border-slate-200/90 shadow-sm hover:shadow-xl transition-all flex flex-col justify-between"
+                className={`relative rounded-3xl p-6 transition-all duration-300 flex flex-col justify-between overflow-hidden ${
+                  branch.isMain
+                    ? 'bg-gradient-to-br from-amber-50 via-white to-white border-2 border-primary shadow-lg shadow-primary/15 ring-4 ring-primary/10 md:-translate-y-1 hover:-translate-y-2 hover:shadow-xl'
+                    : 'bg-white border border-slate-200/90 shadow-sm hover:shadow-xl hover:-translate-y-1'
+                }`}
               >
+                {branch.isMain && (
+                  <div className="absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r from-primary-dark via-primary to-amber-300" />
+                )}
                 <div>
                   <div className="flex justify-between items-start mb-3">
                     <span className="text-xs font-bold text-primary px-3 py-1 bg-primary-subtle/60 rounded-full">
                       {branch.area}
                     </span>
                     {branch.isMain && (
-                      <span className="text-xs font-bold bg-slate-900 text-white px-2.5 py-0.5 rounded-full">
+                      <span className="inline-flex items-center gap-1.5 text-xs font-black bg-primary text-white px-3 py-1 rounded-full shadow-sm uppercase tracking-wide">
+                        <Building2 size={13} />
                         Trụ Sở
                       </span>
                     )}

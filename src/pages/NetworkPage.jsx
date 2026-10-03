@@ -41,8 +41,15 @@ export default function NetworkPage() {
           {branchesList.map((b) => (
             <div 
               key={b.id}
-              className="bg-white rounded-3xl p-8 border border-slate-200/90 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden"
+              className={`relative rounded-3xl p-8 transition-all duration-300 flex flex-col justify-between overflow-hidden ${
+                b.isMain
+                  ? 'bg-gradient-to-br from-amber-50 via-white to-white border-2 border-primary shadow-lg shadow-primary/15 ring-4 ring-primary/10 md:-translate-y-1 hover:-translate-y-2 hover:shadow-xl'
+                  : 'bg-white border border-slate-200/90 shadow-sm hover:shadow-xl hover:-translate-y-1'
+              }`}
             >
+              {b.isMain && (
+                <div className="absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r from-primary-dark via-primary to-amber-300 z-10" />
+              )}
               {b.image && (
                 <div className="relative aspect-[16/9] -mx-8 -mt-8 mb-6 overflow-hidden">
                   <img 
@@ -57,7 +64,7 @@ export default function NetworkPage() {
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <span className="text-[10px] font-bold text-primary bg-primary-subtle px-3 py-1 rounded-full uppercase tracking-wider">
-                    {b.id === 'gf-kim-son-hcm' ? 'Trụ Sở & Văn Phòng' : b.role.includes('Xưởng') ? 'Xưởng Kỹ Thuật' : 'Showroom & Dịch Vụ'}
+                    {b.isMain ? 'Trụ Sở Kim Sơn' : b.role.includes('Xưởng') ? 'Xưởng Kỹ Thuật' : 'Showroom & Dịch Vụ'}
                   </span>
                   <span className="text-xs text-slate-400 font-semibold">NPP Kim Sơn</span>
                 </div>

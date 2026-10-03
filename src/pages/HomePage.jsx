@@ -4,14 +4,7 @@ import {
   ChevronRight, 
   ChevronLeft,
   ArrowRight, 
-  ShieldCheck, 
-  Car, 
-  Wrench, 
-  Layers, 
-  Sparkles, 
-  ShieldAlert, 
   MapPin, 
-  CheckCircle2, 
   Leaf 
 } from 'lucide-react';
 import { ecosystemData } from '../data/ecosystem';
@@ -25,9 +18,9 @@ const DEFAULT_SLIDES = [
     subtitle: 'TẬP ĐOÀN HỆ SINH THÁI Ô TÔ KIM SƠN',
     description: 'Từ năm 2014, Kim Sơn Automobiles không ngừng mở rộng và hoàn thiện mô hình hệ sinh thái khép kín: Phân phối phương tiện, Kỹ thuật dịch vụ công nghệ cao, Chuỗi cung ứng phụ tùng, Chăm sóc xe chuyên nghiệp và Hạ tầng cứu hộ 24/7.',
     image: 'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&q=85&w=1920',
-    primaryButtonText: 'Hành Trình Phát Triển',
-    primaryButtonLink: '#nen-tang-phat-trien',
-    secondaryButtonText: 'Hành Trình Phát Triển',
+    primaryButtonText: 'Khám Phá Mạng Lưới',
+    primaryButtonLink: '/mang-luoi',
+    secondaryButtonText: 'Về Kim Sơn',
     secondaryButtonLink: '/about'
   },
   {
@@ -36,10 +29,10 @@ const DEFAULT_SLIDES = [
     subtitle: 'MẠNG LƯỚI SHOWROOM & XƯỞNG DỊCH VỤ HIỆN ĐẠI',
     description: 'Sở hữu chuỗi 11 chi nhánh và showroom 3S/1S VinFast tại các vị trí chiến lược: Biên Hòa, Long Thành, Long Khánh, Trảng Dài, Bình Thạnh, Quận 2...',
     image: withBasePath('/vinfast-kimson-bienhoa.jpg'),
-    primaryButtonText: 'Hành Trình Phát Triển',
+    primaryButtonText: 'Hệ Thống Chi Nhánh',
     primaryButtonLink: '/mang-luoi',
-    secondaryButtonText: 'Hành Trình Phát Triển',
-    secondaryButtonLink: '/lien-he'
+    secondaryButtonText: 'Phát Triển Bền Vững',
+    secondaryButtonLink: '/phat-trien-ben-vung'
   },
   {
     id: 'default-3',
@@ -47,15 +40,14 @@ const DEFAULT_SLIDES = [
     subtitle: 'NĂNG LỰC DỊCH VỤ VÀ KỸ THUẬT TIÊN TIẾN',
     description: 'Đội ngũ kỹ sư tay nghề cao, trang thiết bị chẩn đoán chuyên hãng hiện đại, cung ứng phụ tùng chính hãng và mạng lưới xe cứu hộ chuyên dụng túc trực 24/7.',
     image: 'https://images.unsplash.com/photo-1486006920555-c77dce18193b?auto=format&fit=crop&q=85&w=1920',
-    primaryButtonText: 'Hành Trình Phát Triển',
-    primaryButtonLink: '/mang-luoi',
-    secondaryButtonText: 'Hành Trình Phát Triển',
-    secondaryButtonLink: '/lien-he'
+    primaryButtonText: 'Liên Hệ Hợp Tác',
+    primaryButtonLink: '/lien-he',
+    secondaryButtonText: 'Tin Tức & Sự Kiện',
+    secondaryButtonLink: '/tin-tuc'
   }
 ];
 
 export default function HomePage() {
-  const [activePillar, setActivePillar] = useState(ecosystemData.pillars[0]);
   const [slides, setSlides] = useState(DEFAULT_SLIDES);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
@@ -104,17 +96,6 @@ export default function HomePage() {
 
   const nextSlide = () => {
     setCurrentSlideIndex((prev) => (prev + 1) % slides.length);
-  };
-
-  const getPillarIcon = (iconName) => {
-    switch(iconName) {
-      case 'Car': return <Car size={24} />;
-      case 'Wrench': return <Wrench size={24} />;
-      case 'Layers': return <Layers size={24} />;
-      case 'Sparkles': return <Sparkles size={24} />;
-      case 'ShieldAlert': return <ShieldAlert size={24} />;
-      default: return <ShieldCheck size={24} />;
-    }
   };
 
   return (
@@ -294,115 +275,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 4. Nền Tảng Phát Triển */}
-      <section id="nen-tang-phat-trien" className="py-20 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-14">
-            <div className="inline-block text-xs font-bold text-primary uppercase tracking-[0.15em] border-b-2 border-primary pb-1 mb-2.5">
-              NỀN TẢNG PHÁT TRIỂN
-            </div>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-[1.3]">
-              Nền Tảng Phát Triển Của Hệ Sinh Thái
-            </h2>
-            <p className="text-slate-600 text-sm sm:text-base mt-3 leading-relaxed">
-              Mỗi đơn vị thành viên đóng vai trò là một mắt xích hoàn hảo trong việc mang lại giá trị trọn đời cho chiếc xe và sự an tâm của khách hàng.
-            </p>
-          </div>
-
-          {/* Interactive Pillar Showcase */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-            {/* Pillars Navigation (Left - 5 Cols) */}
-            <div className="lg:col-span-5 space-y-3">
-              {ecosystemData.pillars.map((pillar) => {
-                const isSelected = activePillar.id === pillar.id;
-                return (
-                  <button
-                    key={pillar.id}
-                    onClick={() => setActivePillar(pillar)}
-                    className={`w-full text-left p-4 sm:p-5 rounded-2xl transition-all duration-300 border flex items-center gap-4 ${
-                      isSelected
-                        ? 'bg-slate-900 text-white border-slate-900 shadow-xl translate-x-1.5'
-                        : 'bg-white text-slate-700 border-slate-200/90 hover:bg-slate-100 hover:border-slate-300'
-                    }`}
-                  >
-                    <div className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 ${
-                      isSelected ? 'bg-primary text-white shadow-glow' : 'bg-slate-100 text-slate-700'
-                    }`}>
-                      {getPillarIcon(pillar.icon)}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <span className={`text-[10px] font-bold uppercase tracking-wider block ${
-                        isSelected ? 'text-amber-400' : 'text-slate-400'
-                      }`}>
-                        {pillar.badge}
-                      </span>
-                      <h4 className="font-bold text-sm sm:text-base leading-snug mt-0.5 truncate">{pillar.title}</h4>
-                      <p className={`text-xs mt-0.5 truncate ${
-                        isSelected ? 'text-slate-300' : 'text-slate-500'
-                      }`}>
-                        {pillar.subtitle}
-                      </p>
-                    </div>
-                    <ChevronRight size={18} className={isSelected ? 'text-primary-light' : 'text-slate-300'} />
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* Pillar Active Detail Card (Right - 7 Cols) */}
-            <div className="lg:col-span-7 bg-white rounded-3xl overflow-hidden border border-slate-200/90 shadow-xl flex flex-col justify-between">
-              <div className="relative aspect-[16/9] overflow-hidden">
-                <img 
-                  src={activePillar.image} 
-                  alt={activePillar.title} 
-                  className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
-                <div className="absolute bottom-5 left-5 right-5 text-white">
-                  <span className="text-[11px] font-bold text-amber-400 uppercase tracking-widest bg-slate-900/80 backdrop-blur-md px-3 py-1 rounded-full border border-amber-400/30">
-                    {activePillar.category}
-                  </span>
-                  <h3 className="text-xl sm:text-2xl font-extrabold mt-2 text-white leading-snug">{activePillar.title}</h3>
-                  <p className="text-xs sm:text-sm text-slate-300 mt-1 italic font-light">{activePillar.tagline}</p>
-                </div>
-              </div>
-
-              <div className="p-6 sm:p-8 flex-grow flex flex-col justify-between space-y-5">
-                <div>
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-5">
-                    {activePillar.description}
-                  </p>
-
-                  <h5 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-2.5">
-                    Năng Lực Vận Hành Trọng Yếu:
-                  </h5>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                    {activePillar.capabilities.map((cap, i) => (
-                      <div key={i} className="flex items-start gap-2 text-xs text-slate-700 bg-slate-50 p-2.5 rounded-xl border border-slate-100">
-                        <CheckCircle2 size={14} className="text-emerald-500 shrink-0 mt-0.5" />
-                        <span className="leading-snug">{cap}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="pt-4 border-t border-slate-100 flex justify-between items-center text-xs">
-                  <span className="text-slate-400 font-medium">{activePillar.subtitle}</span>
-                  <Link
-                    to="/about"
-                    className="inline-flex items-center gap-1.5 text-primary hover:text-primary-dark font-bold uppercase tracking-wider"
-                  >
-                    <span>Tìm hiểu thêm về Kim Sơn</span>
-                    <ArrowRight size={13} />
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 5. Infrastructure Network */}
+      {/* 4. Infrastructure Network */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">

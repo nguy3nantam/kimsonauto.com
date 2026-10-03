@@ -3,7 +3,7 @@ import { withBasePath } from '../utils/assets';
 export const branchesData = [
   {
     id: 'vinfast-bien-hoa',
-    name: 'VinFast Kim Sơn Biên Hoà',
+    name: 'VinFast Kim Sơn Biên Hòa',
     area: 'Đồng Nai',
     address: '643 Quốc Lộ 1, KP. 27, P. Long Bình, TP. Biên Hòa, Tỉnh Đồng Nai',
     hotline: '0913 75 75 79',
@@ -14,7 +14,7 @@ export const branchesData = [
     services: ['Showroom Xe VinFast', 'Bảo Dưỡng Định Kỳ', 'Xưởng Kỹ Thuật', 'Trạm Sạc Nhanh'],
     mapsUrl: 'https://maps.google.com/?q=643+Quốc+Lộ+1,+P.Long+Bình,+TP.+Biên+Hòa,+Đồng+Nai',
     image: withBasePath('/vinfast-kimson-bienhoa.jpg'),
-    isMain: false
+    isMain: true
   },
   {
     id: 'vinfast-buu-long',
@@ -151,9 +151,9 @@ export const branchesData = [
     hotlineService: '0917 300 008',
     email: 'contact@kimsonauto.com',
     hours: 'Thứ 2 - Thứ 7: 07:30 - 18:00',
-    role: 'Trụ Sở Điều Hành Hệ Sinh Thái Kim Sơn (Green Future)',
-    services: ['Trụ Sở Tập Đoàn', 'Trung Tâm Điều Phối Hệ Sinh Thái', 'Dự Án Chuyển Đổi Xanh'],
+    role: 'Văn Phòng Điều Hành Hệ Sinh Thái Kim Sơn (Green Future)',
+    services: ['Văn Phòng Điều Hành', 'Trung Tâm Điều Phối Hệ Sinh Thái', 'Dự Án Chuyển Đổi Xanh'],
     mapsUrl: 'https://maps.google.com/?q=Đường+Số+37,+An+Phú,+TP.+Thủ+Đức,+TP.+Hồ+Chí+Minh',
-    isMain: true
+    isMain: false
   }
 ];

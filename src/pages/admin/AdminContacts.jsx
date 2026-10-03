@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Mail, Phone, Building2, Trash2, Search, Filter } from 'lucide-react';
+import { Mail, Phone, Building2, Trash2, Search, Filter, Download } from 'lucide-react';
 import { api } from '../../services/api';
 
 export default function AdminContacts() {
@@ -40,6 +40,35 @@ export default function AdminContacts() {
     }
   };
 
+  const handleExportCSV = () => {
+    if (filtered.length === 0) {
+      alert('Không có dữ liệu để xuất');
+      return;
+    }
+    const headers = ['Họ Tên', 'Công Ty', 'Số Điện Thoại', 'Email', 'Nội Dung / Hạng Mục', 'Ghi Chú', 'Trạng Thái', 'Thời Gian Gửi'];
+    const rows = filtered.map(c => [
+      `"${(c.name || '').replace(/"/g, '""')}"`,
+      `"${(c.company || '').replace(/"/g, '""')}"`,
+      `"${(c.phone || '').replace(/"/g, '""')}"`,
+      `"${(c.email || '').replace(/"/g, '""')}"`,
+      `"${(c.service || c.interest || '').replace(/"/g, '""')}"`,
+      `"${(c.message || c.notes || '').replace(/"/g, '""')}"`,
+      `"${c.status === 'completed' ? 'Hoàn tất' : c.status === 'contacted' ? 'Đã liên hệ' : 'Chờ xử lý'}"`,
+      `"${c.createdAt ? new Date(c.createdAt).toLocaleString('vi-VN') : ''}"`
+    ]);
+
+    const csvContent = '\uFEFF' + [headers.join(','), ...rows.map(r => r.join(','))].join('\r\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', `danh_sach_lien_he_${new Date().toISOString().slice(0, 10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
   const filtered = contacts.filter((c) => {
     const matchesStatus = filterStatus === 'all' || c.status === filterStatus;
     const matchesSearch = 
@@ -61,6 +90,14 @@ export default function AdminContacts() {
             Quản trị và theo dõi phản hồi các yêu cầu từ đối tác doanh nghiệp và khách hàng
           </p>
         </div>
+        <button
+          onClick={handleExportCSV}
+          className="inline-flex items-center gap-2 px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold transition-all shadow-sm self-start sm:self-auto cursor-pointer"
+          title="Xuất danh sách ra file Excel / CSV"
+        >
+          <Download size={15} />
+          <span>Xuất File CSV</span>
+        </button>
       </div>
 
       {/* Filter and Search Bar */}
