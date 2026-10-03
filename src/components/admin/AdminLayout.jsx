@@ -73,9 +73,9 @@ export default function AdminLayout() {
 
   const adminNavItems = [
     { name: 'Thông Báo & File Dùng Chung', path: '/admin/portal', icon: FolderOpen },
-    { name: 'Tổng Quan Hệ Sinh Thái', path: '/admin/dashboard', icon: LayoutDashboard },
-    { name: 'Slider Trang Chủ', path: '/admin/sliders', icon: ImageIcon },
-    { name: 'Người Đăng Ký & Phân Quyền', path: '/admin/users', icon: Users },
+    { name: 'Tổng Quan', path: '/admin/dashboard', icon: LayoutDashboard },
+    { name: 'Slider', path: '/admin/sliders', icon: ImageIcon },
+    { name: 'Tài Khoản', path: '/admin/users', icon: Users },
     { name: 'Nền Tảng Phát Triển', path: '/admin/pillars', icon: Layers },
     { name: 'Mạng Lưới 11 Chi Nhánh', path: '/admin/branches', icon: MapPin },
     { name: 'Tin Tức & Thông Cáo', path: '/admin/news', icon: Newspaper },
@@ -186,9 +186,6 @@ export default function AdminLayout() {
 
           {/* Navigation Items */}
           <nav className="p-4 space-y-1.5">
-            <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider px-3 mb-2">
-              {isAdmin ? 'Quản Trị Hệ Sinh Thái' : isLeader ? 'Quản Trị Cấp Chi Nhánh' : 'Cổng Thông Tin Thành Viên'}
-            </div>
             {navItems.map((item) => {
               const Icon = item.icon;
               const active = isActive(item.path);
