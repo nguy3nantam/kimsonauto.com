@@ -79,7 +79,7 @@ export default function AdminLayout() {
     { name: 'Nền Tảng Phát Triển', path: '/admin/pillars', icon: Layers },
     { name: 'Hệ Thống', path: '/admin/branches', icon: MapPin },
     { name: 'Tin Tức & Thông Báo', path: '/admin/news', icon: Newspaper },
-    { name: 'Yêu Cầu Hợp Tác B2B', path: '/admin/contacts', icon: Mail },
+    { name: 'Đối Tác', path: '/admin/contacts', icon: Mail },
     { name: 'Cài Đặt & Thông Tin', path: '/admin/settings', icon: Settings },
   ];
 
