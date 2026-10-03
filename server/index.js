@@ -762,7 +762,7 @@ app.use('/api', (req, res) => {
 });
 
 // ==========================================
-// 9. STATIC FILES SERVING & SPA FALLBACK
+// 9. STATIC FILES SERVING & SPA FALLBACK WITH DYNAMIC SEO
 // ==========================================
 const distPath = path.join(__dirname, '..', 'dist');
 app.use(express.static(distPath, {
@@ -774,9 +774,61 @@ app.use(express.static(distPath, {
   }
 }));
 
-app.get('*', (req, res) => {
-  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
-  res.sendFile(path.join(distPath, 'index.html'));
+const PAGE_SEO = {
+  '/': {
+    title: 'Kim Sơn Automobiles - Cổng Thông Tin Hệ Sinh Thái Ô Tô',
+    desc: 'Tổ hợp hệ sinh thái ô tô toàn diện từ năm 2014 với chuỗi 11 chi nhánh & showroom VinFast, trung tâm kỹ thuật dịch vụ và cứu hộ 24/7 tại Đồng Nai và TP.HCM.'
+  },
+  '/about': {
+    title: 'Giới Thiệu - Kim Sơn Automobiles (2014 - 2026)',
+    desc: 'Hành trình hơn 12 năm kiến tạo chuỗi giá trị hệ sinh thái ô tô toàn diện của Kim Sơn Automobiles.'
+  },
+  '/mang-luoi': {
+    title: 'Hệ Thống 11 Chi Nhánh & Cơ Sở - Kim Sơn Automobiles',
+    desc: 'Mạng lưới 11 showroom 3S/1S VinFast và trung tâm dịch vụ kỹ thuật ủy quyền tại Đồng Nai và TP.HCM.'
+  },
+  '/phat-trien-ben-vung': {
+    title: 'Phát Triển Bền Vững (ESG) - Kim Sơn Automobiles',
+    desc: 'Cam kết chuyển đổi xanh, năng lượng sạch và chuẩn mực phát triển bền vững của Kim Sơn Automobiles.'
+  },
+  '/tin-tuc': {
+    title: 'Tin Tức & Thông Cáo Báo Chí - Kim Sơn Automobiles',
+    desc: 'Cập nhật tin tức sự kiện, thông cáo báo chí và hoạt động hợp tác chiến lược của Hệ sinh thái Kim Sơn.'
+  },
+  '/lien-he': {
+    title: 'Liên Hệ & Hợp Tác Doanh Nghiệp - Kim Sơn Automobiles',
+    desc: 'Trụ sở điều hành, liên hệ hợp tác B2B và tổng đài cứu hộ khẩn cấp 24/7 (Hotline: 0917 300 008).'
+  }
+};
+
+app.get('*', async (req, res) => {
+  try {
+    const indexPath = path.join(distPath, 'index.html');
+    let html = await fs.promises.readFile(indexPath, 'utf-8');
+    const pathClean = req.path.replace(/\/+$/, '') || '/';
+    const seo = PAGE_SEO[pathClean];
+
+    if (seo) {
+      const pageUrl = `https://kimsonauto.com${pathClean === '/' ? '' : pathClean}`;
+      html = html
+        .replace(/<title>.*?<\/title>/, `<title>${seo.title}</title>`)
+        .replace(/<meta name="title" content=".*?" \/>/, `<meta name="title" content="${seo.title}" />`)
+        .replace(/<meta name="description" content=".*?" \/>/, `<meta name="description" content="${seo.desc}" />`)
+        .replace(/<meta property="og:title" content=".*?" \/>/, `<meta property="og:title" content="${seo.title}" />`)
+        .replace(/<meta property="og:description" content=".*?" \/>/, `<meta property="og:description" content="${seo.desc}" />`)
+        .replace(/<meta property="og:url" content=".*?" \/>/, `<meta property="og:url" content="${pageUrl}" />`)
+        .replace(/<link rel="canonical" href=".*?" \/>/, `<link rel="canonical" href="${pageUrl}" />`)
+        .replace(/<meta name="twitter:title" content=".*?" \/>/, `<meta name="twitter:title" content="${seo.title}" />`)
+        .replace(/<meta name="twitter:description" content=".*?" \/>/, `<meta name="twitter:description" content="${seo.desc}" />`)
+        .replace(/<meta name="twitter:url" content=".*?" \/>/, `<meta name="twitter:url" content="${pageUrl}" />`);
+    }
+
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+    res.send(html);
+  } catch (err) {
+    res.sendFile(path.join(distPath, 'index.html'));
+  }
 });
 
 // START SERVER
