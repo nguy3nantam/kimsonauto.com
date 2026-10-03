@@ -113,7 +113,7 @@ export default function AboutPage() {
                   </div>
                   <div className="flex items-center gap-2.5 text-xs text-slate-300">
                     <Phone size={16} className="text-primary-light shrink-0" />
-                    <span>Hotline: <strong className="text-white font-mono">0908 123 456</strong></span>
+                    <span>Hotline: <strong className="text-white font-mono">0913 75 75 79</strong></span>
                   </div>
                 </div>
               </div>

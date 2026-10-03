@@ -173,7 +173,7 @@ export default function BookingModal({ isOpen, onClose, initialType = 'service',
                     <input
                       type="tel"
                       required
-                      placeholder="0908 xxx xxx"
+                      placeholder="0913 xxx xxx"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                       className="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-primary focus:bg-white outline-none"

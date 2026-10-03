@@ -77,8 +77,8 @@ export default function SustainabilityPage() {
           </div>
           <div className="shrink-0 text-center">
             <p className="text-xs text-slate-400 mb-1">Hotline Phản Ứng Nhanh</p>
-            <a href="tel:0908123456" className="text-2xl font-black text-amber-400 hover:underline">
-              0908 123 456
+            <a href="tel:0913757579" className="text-2xl font-black text-amber-400 hover:underline">
+              0913 75 75 79
             </a>
           </div>
         </div>

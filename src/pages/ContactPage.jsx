@@ -64,8 +64,8 @@ export default function ContactPage() {
             </div>
             <div>
               <p className="text-xs text-slate-400 font-bold uppercase">Hotline Tổng Đài</p>
-              <a href="tel:0908123456" className="text-xl font-black text-slate-900 hover:text-primary transition-colors">
-                0908 123 456
+              <a href="tel:0913757579" className="text-xl font-black text-slate-900 hover:text-primary transition-colors">
+                0913 75 75 79
               </a>
               <p className="text-xs text-slate-500 mt-1">Hỗ trợ tư vấn mua xe & dịch vụ 24/7</p>
             </div>
@@ -77,8 +77,8 @@ export default function ContactPage() {
             </div>
             <div>
               <p className="text-xs text-red-500 font-bold uppercase">Cứu Hộ Khẩn Cấp</p>
-              <a href="tel:0908123456" className="text-xl font-black text-red-600 hover:text-red-700 transition-colors">
-                0908 123 456
+              <a href="tel:0913757579" className="text-xl font-black text-red-600 hover:text-red-700 transition-colors">
+                0913 75 75 79
               </a>
               <p className="text-xs text-slate-500 mt-1">Xe sàn trượt, kích bình, kéo xe 15-30 phút</p>
             </div>
@@ -240,7 +240,7 @@ export default function ContactPage() {
                       <input
                         type="tel"
                         required
-                        placeholder="0908 xxx xxx"
+                        placeholder="0913 xxx xxx"
                         value={form.phone}
                         onChange={(e) => setForm({ ...form, phone: e.target.value })}
                         className="w-full p-3 bg-white border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-primary"

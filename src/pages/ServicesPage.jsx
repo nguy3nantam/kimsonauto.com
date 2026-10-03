@@ -63,11 +63,11 @@ export default function ServicesPage({ onOpenBooking }) {
             </p>
           </div>
           <a
-            href="tel:0908123456"
+            href="tel:0913757579"
             className="shrink-0 bg-white text-primary hover:bg-slate-100 px-8 py-4 rounded-2xl font-black text-lg shadow-xl transition-transform hover:scale-105 flex items-center gap-2"
           >
             <PhoneCall size={20} className="text-primary animate-pulse" />
-            <span>0908 123 456</span>
+            <span>0913 75 75 79</span>
           </a>
         </div>
 
@@ -225,7 +225,7 @@ export default function ServicesPage({ onOpenBooking }) {
                     <input
                       type="tel"
                       required
-                      placeholder="0908 xxx xxx"
+                      placeholder="0913 xxx xxx"
                       value={bookingForm.phone}
                       onChange={(e) => setBookingForm({ ...bookingForm, phone: e.target.value })}
                       className="w-full p-3 rounded-xl bg-slate-800 border border-slate-700 text-white outline-none focus:ring-2 focus:ring-primary"

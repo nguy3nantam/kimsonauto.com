@@ -272,7 +272,7 @@ export default function AdminLoginPage({ initialMode = 'login' }) {
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
                         className="w-full pl-9 pr-3 py-2.5 bg-white border border-amber-200/80 focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-xl text-slate-800 text-sm placeholder:text-slate-400 focus:outline-none transition-all shadow-2xs"
-                        placeholder="0908 xxx xxx"
+                        placeholder="0913 xxx xxx"
                       />
                     </div>
                   </div>

@@ -4,8 +4,8 @@ export const ecosystemData = {
   name: 'KIM SƠN ECOSYSTEM',
   legalName: 'HỆ SINH THÁI Ô TÔ KIM SƠN (KIM SƠN AUTOMOBILES)',
   foundingYear: 2014,
-  headquarters: 'Số 18 Đường Số 7, Phường An Phú, TP. Thủ Đức, TP. Hồ Chí Minh',
-  hotline: '0908 123 456',
+  headquarters: 'Số 643 Quốc Lộ 1, Khu Phố 27, Phường Long Bình, Thành Phố Đồng Nai',
+  hotline: '0913 75 75 79',
   email: 'contact@kimsonauto.com',
   website: 'kimsonauto.com',
   slogan: 'Kiến Tạo Giá Trị - Nâng Tầm Trải Nghiệm Ô Tô Việt',
@@ -165,7 +165,7 @@ export const ecosystemData = {
       name: 'VinFast Kim Sơn Biên Hoà',
       role: 'Showroom & Trung Tâm Dịch Vụ Xe Điện VinFast',
       address: '643 Quốc Lộ 1, KP. 27, P. Long Bình, TP. Biên Hòa, Tỉnh Đồng Nai',
-      hotline: '0908 123 456',
+      hotline: '0913 75 75 79',
       image: withBasePath('/vinfast-kimson-bienhoa.jpg'),
       features: ['Showroom Xe VinFast', 'Bảo Dưỡng Định Kỳ', 'Xưởng Kỹ Thuật', 'Trạm Sạc Nhanh']
     },
@@ -246,7 +246,7 @@ export const ecosystemData = {
       name: 'GF Kim Sơn Hồ Chí Minh',
       role: 'Trụ Sở Điều Hành Hệ Sinh Thái Kim Sơn (Green Future)',
       address: 'Đường Số 37, Khu đô thị An Phú An Khánh, Bình Trưng, TP.Hồ Chí Minh',
-      hotline: '0908 123 456',
+      hotline: '0913 75 75 79',
       features: ['Trụ Sở Tập Đoàn', 'Trung Tâm Điều Phối Hệ Sinh Thái', 'Dự Án Chuyển Đổi Xanh']
     }
   ],

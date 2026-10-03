@@ -153,7 +153,7 @@ export default function AdminBranches() {
                   required
                   value={formData.hotline || ''}
                   onChange={(e) => setFormData({ ...formData, hotline: e.target.value })}
-                  placeholder="VD: 0908 123 456"
+                  placeholder="VD: 0913 75 75 79"
                   className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-mono focus:outline-none focus:border-primary"
                 />
               </div>
