@@ -548,27 +548,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* 8. Corporate Partnership CTA */}
-      <section className="bg-gradient-to-r from-slate-900 to-slate-950 text-white py-14 border-t border-slate-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-5">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight leading-[1.3]">
-            Kết Nối Hợp Tác Cùng Kim Sơn Ecosystem
-          </h2>
-          <p className="text-xs sm:text-sm text-slate-400 max-w-2xl mx-auto leading-relaxed">
-            Chúng tôi luôn chào đón các cơ hội hợp tác chiến lược cùng các nhà sản xuất ô tô, đối tác phụ trợ, chuỗi cung ứng và doanh nghiệp vận tải.
-          </p>
-          <div className="pt-2">
-            <Link
-              to="/lien-he"
-              className="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white px-7 py-3 rounded-full font-bold text-xs uppercase tracking-wider shadow-glow transition-all"
-            >
-              <span>Liên Hệ Hợp Tác Doanh Nghiệp</span>
-              <ChevronRight size={14} />
-            </Link>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }
