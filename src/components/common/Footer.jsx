@@ -82,7 +82,7 @@ export default function Footer() {
               <li>
                 <Link to="/phat-trien-ben-vung" className="hover:text-white transition-colors flex items-center gap-1.5">
                   <ChevronRight size={12} className="text-primary-light" />
-                  <span>Phát Triển Bền Vững & ESG</span>
+                  <span>Phát Triển & ESG</span>
                 </Link>
               </li>
               <li>

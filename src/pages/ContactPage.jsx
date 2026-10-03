@@ -49,7 +49,7 @@ export default function ContactPage() {
         <div className="text-center max-w-3xl mx-auto">
           <span className="text-xs font-bold text-primary uppercase tracking-widest">LIÊN HỆ & MẠNG LƯỚI CHI NHÁNH</span>
           <h1 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight mt-2 mb-4">
-            Đồng Hành Cùng Bạn Mọi Lúc Mọi Nơi
+            Kim Sơn Automobiles Phát Triển Bền Vững
           </h1>
           <p className="text-base text-slate-600">
             Hệ thống 11 chi nhánh & cơ sở rộng khắp Đồng Nai và TP. Hồ Chí Minh luôn sẵn sàng phục vụ và giải quyết mọi nhu cầu của Quý khách.

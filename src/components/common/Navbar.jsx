@@ -77,11 +77,11 @@ export default function Navbar() {
       desc: 'Mạng lưới 11 chi nhánh & cơ sở tại Đồng Nai & TP.HCM',
       icon: MapPin 
     },
-    { 
-      name: 'Phát Triển Bền Vững', 
-      path: '/phat-trien-ben-vung', 
+    {
+      name: 'Phát Triển',
+      path: '/phat-trien-ben-vung',
       desc: 'Chuyển đổi xanh & chuẩn mực ESG',
-      icon: Leaf 
+      icon: Leaf
     },
     { 
       name: 'Tin Tức', 
