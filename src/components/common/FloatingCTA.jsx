@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUp, PhoneCall, ShieldAlert, Mail, X, ChevronRight } from 'lucide-react';
 import { ecosystemData } from '../../data/ecosystem';
+import { withBasePath } from '../../utils/assets';
 
 export default function FloatingCTA() {
   const [isOpen, setIsOpen] = useState(false);
@@ -55,14 +56,22 @@ export default function FloatingCTA() {
       {/* Popover Menu when Open */}
       {isOpen && (
         <div className="w-72 sm:w-80 bg-slate-950/95 backdrop-blur-xl border border-slate-800 rounded-2xl shadow-2xl overflow-hidden p-3.5 space-y-2 animate-in fade-in slide-in-from-bottom-3 duration-200">
-          <div className="flex items-center justify-between px-2 pb-2 border-b border-slate-800/80">
-            <div>
-              <p className="text-xs font-black uppercase tracking-wider text-slate-400">Hỗ Trợ & Kết Nối</p>
-              <p className="text-sm font-black text-white">Kim Sơn Automobiles</p>
+          <div className="flex items-center gap-3 px-2 pb-2.5 border-b border-slate-800/80">
+            <div className="relative w-10 h-10 rounded-full overflow-hidden ring-2 ring-emerald-500 shrink-0 shadow-md">
+              <img 
+                src={withBasePath('/support-agent.jpg')} 
+                alt="CSKH Kim Sơn" 
+                className="w-full h-full object-cover" 
+              />
+              <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-500 border border-white"></span>
+            </div>
+            <div className="flex-grow min-w-0">
+              <p className="text-xs font-black uppercase tracking-wider text-emerald-400">Trực Tuyến 24/7</p>
+              <p className="text-sm font-black text-white truncate">Tổng Đài & Cứu Hộ Kim Sơn</p>
             </div>
             <button
               onClick={() => setIsOpen(false)}
-              className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/80 transition-colors"
+              className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/80 transition-colors cursor-pointer"
               title="Đóng"
             >
               <X size={16} />
@@ -123,28 +132,32 @@ export default function FloatingCTA() {
         </div>
       )}
 
-      {/* Main Single Sticky Contact Trigger Button (Icon Only) */}
+      {/* Main Single Sticky Contact Trigger Button (Call Center Girl Avatar) */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`group relative flex items-center justify-center w-12 h-12 sm:w-13 sm:h-13 rounded-full shadow-2xl transition-all duration-300 cursor-pointer ${
+        className={`group relative flex items-center justify-center w-14 h-14 sm:w-15 sm:h-15 rounded-full shadow-2xl transition-all duration-300 cursor-pointer ${
           isOpen
-            ? 'bg-slate-800 text-white hover:bg-slate-700'
-            : 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-emerald-900/30 hover:shadow-emerald-600/40 hover:scale-105'
+            ? 'bg-slate-900 text-white hover:bg-slate-800 border-2 border-slate-700'
+            : 'bg-white p-0.5 ring-3 ring-emerald-500/80 hover:ring-emerald-400 hover:scale-105 shadow-emerald-950/40'
         }`}
-        title="Liên hệ & Cứu hộ khẩn cấp 24/7"
-        aria-label="Liên hệ & Cứu hộ khẩn cấp 24/7"
+        title="Tổng đài hỗ trợ & Cứu hộ 24/7"
+        aria-label="Tổng đài hỗ trợ & Cứu hộ 24/7"
       >
-        {!isOpen && (
-          <span className="absolute -top-1 -right-1 flex h-3.5 w-3.5">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-emerald-500 border-2 border-white"></span>
-          </span>
-        )}
-
-        {isOpen ? (
-          <X size={22} />
+        {!isOpen ? (
+          <>
+            <img 
+              src={withBasePath('/support-agent.jpg')} 
+              alt="Hỗ trợ tổng đài Kim Sơn" 
+              className="w-full h-full object-cover rounded-full group-hover:scale-105 transition-transform duration-300"
+            />
+            {/* Green Online Radar Pulse Badge */}
+            <span className="absolute -top-0.5 -right-0.5 flex h-4 w-4">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-4 w-4 bg-emerald-500 border-2 border-white shadow-sm"></span>
+            </span>
+          </>
         ) : (
-          <PhoneCall size={22} className="animate-pulse" />
+          <X size={24} className="text-white" />
         )}
       </button>
     </div>
