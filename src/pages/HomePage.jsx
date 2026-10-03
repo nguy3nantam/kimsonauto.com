@@ -159,12 +159,6 @@ export default function HomePage() {
                 {slides[currentSlideIndex].title}
               </h1>
 
-              {slides[currentSlideIndex].description && (
-                <p className="text-sm sm:text-base text-slate-300 font-normal leading-relaxed max-w-xl">
-                  {slides[currentSlideIndex].description}
-                </p>
-              )}
-
               <div className="flex flex-col sm:flex-row gap-4 pt-3">
                 {slides[currentSlideIndex].primaryButtonText && (
                   <Link 
