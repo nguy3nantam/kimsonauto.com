@@ -77,8 +77,8 @@ export default function ContactPage() {
             </div>
             <div>
               <p className="text-xs text-red-500 font-bold uppercase">Cứu Hộ Khẩn Cấp</p>
-              <a href="tel:0913757579" className="text-xl font-black text-red-600 hover:text-red-700 transition-colors">
-                0913 75 75 79
+              <a href="tel:0917300008" className="text-xl font-black text-red-600 hover:text-red-700 transition-colors">
+                0917 300 008
               </a>
               <p className="text-xs text-slate-500 mt-1">Xe sàn trượt, kích bình, kéo xe 15-30 phút</p>
             </div>
