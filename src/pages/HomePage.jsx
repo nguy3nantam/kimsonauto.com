@@ -126,35 +126,41 @@ export default function HomePage() {
 
         {/* Slide Content */}
         {slides[currentSlideIndex] && (
-          <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full">
+          <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 w-full">
             <div 
               key={currentSlideIndex} 
-              className="max-w-3xl space-y-6 animate-in fade-in slide-in-from-bottom-3 duration-500"
+              className="max-w-2xl space-y-4 sm:space-y-5 animate-in fade-in slide-in-from-bottom-3 duration-500"
             >
-              <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-primary/20 border border-primary/40 text-primary-light text-xs font-semibold tracking-[0.15em] uppercase">
-                <span className="w-2 h-2 rounded-full bg-primary animate-ping"></span>
-                {slides[currentSlideIndex].subtitle || 'TẬP ĐOÀN HỆ SINH THÁI Ô TÔ KIM SƠN'}
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-primary/20 border border-primary/40 text-primary-light text-[11px] sm:text-xs font-semibold tracking-wider uppercase">
+                <span className="w-1.5 h-1.5 rounded-full bg-primary animate-ping"></span>
+                <span>{slides[currentSlideIndex].subtitle || 'TẬP ĐOÀN HỆ SINH THÁI Ô TÔ KIM SƠN'}</span>
               </div>
 
-              <h1 className="text-2xl sm:text-4xl lg:text-5xl font-medium tracking-tight leading-[1.2] text-white whitespace-pre-line">
+              <h1 className="text-xl sm:text-3xl lg:text-[2.25rem] font-bold tracking-tight leading-[1.3] text-white whitespace-pre-line">
                 {slides[currentSlideIndex].title}
               </h1>
 
-              <div className="flex flex-col items-start gap-4 pt-3">
+              {slides[currentSlideIndex].description && (
+                <p className="text-xs sm:text-sm text-slate-200/90 leading-relaxed font-normal max-w-xl">
+                  {slides[currentSlideIndex].description}
+                </p>
+              )}
+
+              <div className="flex flex-wrap items-center gap-3 pt-2">
                 {slides[currentSlideIndex].primaryButtonText && (
                   <Link 
                     to={slides[currentSlideIndex].primaryButtonLink || '/about'} 
-                    className="inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-dark text-white px-7 py-3.5 rounded-xl font-semibold text-xs sm:text-sm uppercase tracking-wider shadow-glow transition-all hover:scale-105"
+                    className="inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-dark text-white px-5 sm:px-6 py-2.5 sm:py-3 rounded-xl font-bold text-xs uppercase tracking-wider shadow-glow transition-all hover:scale-105"
                   >
                     <span>{slides[currentSlideIndex].primaryButtonText}</span>
-                    <ChevronRight size={16} />
+                    <ChevronRight size={15} />
                   </Link>
                 )}
 
                 {slides[currentSlideIndex].secondaryButtonText && (
                   <Link 
                     to={slides[currentSlideIndex].secondaryButtonLink || '/about'} 
-                    className="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/20 px-7 py-3.5 rounded-xl font-semibold text-xs sm:text-sm uppercase tracking-wider backdrop-blur-md transition-all hover:scale-105"
+                    className="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/20 px-5 sm:px-6 py-2.5 sm:py-3 rounded-xl font-bold text-xs uppercase tracking-wider backdrop-blur-md transition-all hover:scale-105"
                   >
                     <span>{slides[currentSlideIndex].secondaryButtonText}</span>
                   </Link>
