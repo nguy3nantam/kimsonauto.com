@@ -32,7 +32,7 @@ export default function AdminSliders() {
     image: 'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&q=85&w=1920',
     primaryButtonText: 'Khám Phá 5 Trụ Cột Hoạt Động',
     primaryButtonLink: '/linh-vuc',
-    secondaryButtonText: 'Hành Trình 12 Năm (2014 - 2026)',
+    secondaryButtonText: 'Lịch Sử Phát Triển',
     secondaryButtonLink: '/about',
     order: 1,
     active: true
@@ -619,7 +619,7 @@ export default function AdminSliders() {
                       type="text"
                       value={formData.secondaryButtonText}
                       onChange={(e) => setFormData({ ...formData, secondaryButtonText: e.target.value })}
-                      placeholder="VD: Hành Trình 12 Năm (2014 - 2026)"
+                      placeholder="VD: Lịch Sử Phát Triển"
                       className="w-full px-3 py-2 rounded-lg border border-slate-300 text-xs"
                     />
                   </div>
