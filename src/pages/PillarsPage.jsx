@@ -30,7 +30,7 @@ export default function PillarsPage() {
             LĨNH VỰC HOẠT ĐỘNG
           </div>
           <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-[1.3]">
-            5 Trụ Cột Hoạt Động Cốt Lõi
+            Hệ Thống Nhà Phân Phối Kim Sơn
           </h1>
           <p className="text-slate-600 text-sm sm:text-base mt-3 leading-relaxed">
             Hệ sinh thái Kim Sơn Automobiles vận hành đồng bộ và bổ trợ lẫn nhau, tạo nên sức mạnh tổng hợp phục vụ trọn vẹn mọi nhu cầu về phương tiện ô tô.

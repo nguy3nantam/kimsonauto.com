@@ -45,7 +45,7 @@ export default function AdminPillars() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-black text-slate-900 tracking-tight">
-            5 Trụ Cột Hoạt Động Cốt Lõi
+            Hệ Thống Nhà Phân Phối Kim Sơn
           </h1>
           <p className="text-xs sm:text-sm text-slate-500">
             Quản lý và chỉnh sửa thông tin các lĩnh vực kinh doanh trong hệ sinh thái
