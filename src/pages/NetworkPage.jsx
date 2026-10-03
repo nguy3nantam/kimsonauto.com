@@ -59,7 +59,7 @@ export default function NetworkPage() {
                   <span className="text-[10px] font-bold text-primary bg-primary-subtle px-3 py-1 rounded-full uppercase tracking-wider">
                     {b.id === 'gf-kim-son-hcm' ? 'Trụ Sở & Văn Phòng' : b.role.includes('Xưởng') ? 'Xưởng Kỹ Thuật' : 'Showroom & Dịch Vụ'}
                   </span>
-                  <span className="text-xs text-slate-400 font-semibold">Đông Nam Bộ</span>
+                  <span className="text-xs text-slate-400 font-semibold">NPP Kim Sơn</span>
                 </div>
 
                 <h3 className="text-xl font-black text-slate-900 leading-tight">

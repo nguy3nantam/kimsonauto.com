@@ -43,7 +43,7 @@ export default function AboutPage() {
             Kim Sơn Automobiles
           </h1>
           <p className="text-base text-slate-600">
-            Hơn 12 năm kiến tạo niềm tin và khẳng định vị thế dẫn đầu trong lĩnh vực kinh doanh xe và chăm sóc kỹ thuật ô tô tại Đông Nam Bộ.
+            Hơn 12 năm kiến tạo niềm tin và khẳng định vị thế dẫn đầu trong lĩnh vực kinh doanh xe và chăm sóc kỹ thuật ô tô thuộc NPP Kim Sơn.
           </p>
         </div>
 
@@ -173,7 +173,7 @@ export default function AboutPage() {
             <div>
               <span className="text-xs font-bold text-primary uppercase">Tầm nhìn</span>
               <h2 className="text-2xl sm:text-3xl font-black text-slate-900 mt-1 mb-3">
-                Hệ Sinh Thái Ô Tô Số 1 Khu Vực Đông Nam Bộ
+                Hệ Sinh Thái Ô Tô Số 1 Thuộc NPP Kim Sơn
               </h2>
               <p className="text-sm text-slate-600 leading-relaxed">
                 Đón đầu làn sóng chuyển đổi năng lượng xanh, Kim Sơn tiếp tục mở rộng quy mô, nâng cao chất lượng dịch vụ xe điện và xe truyền thống, trở thành điểm đến tin cậy của hàng trăm nghìn chủ xe.

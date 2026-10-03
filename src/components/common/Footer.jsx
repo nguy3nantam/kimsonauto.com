@@ -25,7 +25,7 @@ export default function Footer() {
             </div>
 
             <p className="text-xs sm:text-sm text-slate-400 leading-relaxed max-w-md">
-              Hệ sinh thái ô tô Kim Sơn (Kim Sơn Automobiles) là tổ hợp dịch vụ và kỹ thuật ô tô toàn diện hàng đầu khu vực Đông Nam Bộ, kiến tạo chuỗi giá trị khép kín từ kinh doanh, sửa chữa kỹ thuật cao, phụ tùng chính phẩm đến cứu hộ giao thông 24/7.
+              Hệ sinh thái ô tô Kim Sơn (Kim Sơn Automobiles) là tổ hợp dịch vụ và kỹ thuật ô tô toàn diện thuộc NPP Kim Sơn, kiến tạo chuỗi giá trị khép kín từ kinh doanh, sửa chữa kỹ thuật cao, phụ tùng chính phẩm đến cứu hộ giao thông 24/7.
             </p>
 
             <div className="pt-2 space-y-2 text-xs text-slate-300">

@@ -102,7 +102,7 @@ export const ecosystemData = {
       badge: 'Nền Tảng An Sinh',
       tagline: 'Điểm tựa khẩn cấp vững vàng trên mọi hành trình giao thông',
       summary: 'Đội xe cứu hộ chuyên dụng sàn trượt hiện đại ứng trực 24/7/365, tiếp cận hiện trường nhanh chóng trong 15-30 phút.',
-      description: 'Hạ tầng cứu hộ giao thông Kim Sơn là mắt xích an sinh quan trọng của hệ sinh thái, bảo vệ người điều khiển phương tiện trước mọi rủi ro dọc tuyến Quốc lộ 51, cao tốc Long Thành - Dầu Giây và các đô thị lớn tại Đông Nam Bộ.',
+      description: 'Hạ tầng cứu hộ giao thông Kim Sơn là mắt xích an sinh quan trọng của hệ sinh thái, bảo vệ người điều khiển phương tiện trước mọi rủi ro dọc tuyến Quốc lộ 51, cao tốc Long Thành - Dầu Giây và các đô thị lớn thuộc NPP Kim Sơn.',
       capabilities: [
         'Đội xe cứu hộ sàn trượt hiện đại, kéo cẩu an toàn không xước gầm',
         'Tổng đài ứng cứu khẩn cấp 24/7 phục vụ 365 ngày không nghỉ',

@@ -234,7 +234,7 @@ export default function HomePage() {
                 Mô Hình Hệ Sinh Thái Ô Tô Toàn Diện & Khép Kín
               </h2>
               <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-                Được xây dựng trên triết lý lấy chất lượng kỹ thuật làm nền tảng và sự hài lòng của khách hàng làm trung tâm, Kim Sơn Automobiles đã khẳng định vị thế là một trong những hệ sinh thái dịch vụ ô tô phát triển nhanh và uy tín nhất tại khu vực kinh tế trọng điểm Đông Nam Bộ.
+                Được xây dựng trên triết lý lấy chất lượng kỹ thuật làm nền tảng và sự hài lòng của khách hàng làm trung tâm, Kim Sơn Automobiles đã khẳng định vị thế là một trong những hệ sinh thái dịch vụ ô tô phát triển nhanh và uy tín nhất thuộc NPP Kim Sơn.
               </p>
               <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
                 Chúng tôi kết nối liền mạch từ khâu phân phối xe ô tô thế hệ mới (hợp tác chiến lược cùng VinFast), bảo dưỡng đại tu đạt chuẩn quốc tế, cung cấp phụ tùng linh kiện chính ngạch, đến chăm sóc thẩm mỹ xe và bảo vệ an toàn giao thông trên mọi cung đường.
@@ -266,7 +266,7 @@ export default function HomePage() {
                   <span>Showroom 3S Trọng Điểm</span>
                 </div>
                 <p className="text-base font-black text-white font-display">VinFast Kim Sơn Biên Hoà</p>
-                <p className="text-xs text-slate-300 mt-1 leading-relaxed">Cơ sở quy mô hiện đại kết nối trục kinh tế Đông Nam Bộ.</p>
+                <p className="text-xs text-slate-300 mt-1 leading-relaxed">Cơ sở quy mô hiện đại kết nối trục kinh tế thuộc NPP Kim Sơn.</p>
               </div>
             </div>
           </div>
