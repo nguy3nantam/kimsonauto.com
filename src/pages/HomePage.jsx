@@ -159,7 +159,7 @@ export default function HomePage() {
                 {slides[currentSlideIndex].title}
               </h1>
 
-              <div className="flex flex-col sm:flex-row gap-4 pt-3">
+              <div className="flex flex-col items-start gap-4 pt-3">
                 {slides[currentSlideIndex].primaryButtonText && (
                   <Link 
                     to={slides[currentSlideIndex].primaryButtonLink || '/about'} 
