@@ -77,8 +77,8 @@ export default function AdminLayout() {
     { name: 'Slider', path: '/admin/sliders', icon: ImageIcon },
     { name: 'Tài Khoản', path: '/admin/users', icon: Users },
     { name: 'Nền Tảng Phát Triển', path: '/admin/pillars', icon: Layers },
-    { name: 'Mạng Lưới 11 Chi Nhánh', path: '/admin/branches', icon: MapPin },
-    { name: 'Tin Tức & Thông Cáo', path: '/admin/news', icon: Newspaper },
+    { name: 'Hệ Thống', path: '/admin/branches', icon: MapPin },
+    { name: 'Tin Tức & Thông Báo', path: '/admin/news', icon: Newspaper },
     { name: 'Yêu Cầu Hợp Tác B2B', path: '/admin/contacts', icon: Mail },
     { name: 'Cài Đặt & Thông Tin', path: '/admin/settings', icon: Settings },
   ];
