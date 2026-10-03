@@ -129,15 +129,15 @@ export default function FloatingCTA() {
         className={`group relative flex items-center justify-center w-12 h-12 sm:w-13 sm:h-13 rounded-full shadow-2xl transition-all duration-300 cursor-pointer ${
           isOpen
             ? 'bg-slate-800 text-white hover:bg-slate-700'
-            : 'bg-gradient-to-r from-red-600 via-primary to-amber-600 text-white hover:brightness-110 hover:scale-105'
+            : 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-emerald-900/30 hover:shadow-emerald-600/40 hover:scale-105'
         }`}
         title="Liên hệ & Cứu hộ khẩn cấp 24/7"
         aria-label="Liên hệ & Cứu hộ khẩn cấp 24/7"
       >
         {!isOpen && (
           <span className="absolute -top-1 -right-1 flex h-3.5 w-3.5">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-red-500 border-2 border-white"></span>
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-emerald-500 border-2 border-white"></span>
           </span>
         )}
 
