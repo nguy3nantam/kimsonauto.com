@@ -30,9 +30,9 @@ export default function AdminSliders() {
     subtitle: 'TẬP ĐOÀN HỆ SINH THÁI Ô TÔ KIM SƠN',
     description: '',
     image: 'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&q=85&w=1920',
-    primaryButtonText: 'Khám Phá 5 Trụ Cột Hoạt Động',
+    primaryButtonText: 'Hành Trình Phát Triển',
     primaryButtonLink: '/linh-vuc',
-    secondaryButtonText: 'Lịch Sử Phát Triển',
+    secondaryButtonText: 'Hành Trình Phát Triển',
     secondaryButtonLink: '/about',
     order: 1,
     active: true

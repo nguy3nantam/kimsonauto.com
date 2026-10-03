@@ -25,9 +25,9 @@ const DEFAULT_SLIDES = [
     subtitle: 'TẬP ĐOÀN HỆ SINH THÁI Ô TÔ KIM SƠN',
     description: 'Từ năm 2014, Kim Sơn Automobiles không ngừng mở rộng và hoàn thiện mô hình hệ sinh thái khép kín: Phân phối phương tiện, Kỹ thuật dịch vụ công nghệ cao, Chuỗi cung ứng phụ tùng, Chăm sóc xe chuyên nghiệp và Hạ tầng cứu hộ 24/7.',
     image: 'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&q=85&w=1920',
-    primaryButtonText: 'Khám Phá Nền Tảng Phát Triển',
+    primaryButtonText: 'Hành Trình Phát Triển',
     primaryButtonLink: '#nen-tang-phat-trien',
-    secondaryButtonText: 'Lịch Sử Phát Triển',
+    secondaryButtonText: 'Hành Trình Phát Triển',
     secondaryButtonLink: '/about'
   },
   {
@@ -36,9 +36,9 @@ const DEFAULT_SLIDES = [
     subtitle: 'MẠNG LƯỚI SHOWROOM & XƯỞNG DỊCH VỤ HIỆN ĐẠI',
     description: 'Sở hữu chuỗi 11 chi nhánh và showroom 3S/1S VinFast tại các vị trí chiến lược: Biên Hòa, Long Thành, Long Khánh, Trảng Dài, Bình Thạnh, Quận 2...',
     image: withBasePath('/vinfast-kimson-bienhoa.jpg'),
-    primaryButtonText: 'Khám Phá Mạng Lưới Chi Nhánh',
+    primaryButtonText: 'Hành Trình Phát Triển',
     primaryButtonLink: '/mang-luoi',
-    secondaryButtonText: 'Đăng Ký Lái Thử & Tư Vấn',
+    secondaryButtonText: 'Hành Trình Phát Triển',
     secondaryButtonLink: '/lien-he'
   },
   {
@@ -47,9 +47,9 @@ const DEFAULT_SLIDES = [
     subtitle: 'NĂNG LỰC DỊCH VỤ VÀ KỸ THUẬT TIÊN TIẾN',
     description: 'Đội ngũ kỹ sư tay nghề cao, trang thiết bị chẩn đoán chuyên hãng hiện đại, cung ứng phụ tùng chính hãng và mạng lưới xe cứu hộ chuyên dụng túc trực 24/7.',
     image: 'https://images.unsplash.com/photo-1486006920555-c77dce18193b?auto=format&fit=crop&q=85&w=1920',
-    primaryButtonText: 'Tìm Hiểu Mạng Lưới Chi Nhánh',
+    primaryButtonText: 'Hành Trình Phát Triển',
     primaryButtonLink: '/mang-luoi',
-    secondaryButtonText: 'Hotline Cứu Hộ 24/7',
+    secondaryButtonText: 'Hành Trình Phát Triển',
     secondaryButtonLink: '/lien-he'
   }
 ];
