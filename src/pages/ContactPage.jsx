@@ -100,11 +100,6 @@ export default function ContactPage() {
 
         {/* 11 Branches Directory */}
         <div>
-          <div className="text-center max-w-2xl mx-auto mb-10">
-            <h2 className="text-2xl sm:text-3xl font-black text-slate-900">Danh Sách 11 Chi Nhánh & Cơ Sở Kim Sơn</h2>
-            <p className="text-xs text-slate-500 mt-2">Bấm vào số điện thoại để gọi ngay hoặc bấm &ldquo;Chỉ đường&rdquo; để mở Google Maps.</p>
-          </div>
-
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {branchesData.map((branch) => (
               <div 
