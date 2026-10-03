@@ -52,7 +52,7 @@ export default function ContactPage() {
             Kim Sơn Automobiles Phát Triển Bền Vững
           </h1>
           <p className="text-base text-slate-600">
-            Hệ thống 11 chi nhánh & cơ sở rộng khắp Đồng Nai và TP. Hồ Chí Minh luôn sẵn sàng phục vụ và giải quyết mọi nhu cầu của Quý khách.
+            Hệ thống phân phối và cơ sở Kim Sơn Automobiles
           </p>
         </div>
 
