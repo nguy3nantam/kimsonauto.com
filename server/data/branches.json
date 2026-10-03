@@ -7,97 +7,149 @@
     "hotline": "0913 75 75 79",
     "email": "bienhoa@kimsonauto.com",
     "role": "Showroom & Trung Tâm Dịch Vụ Xe Điện VinFast",
-    "features": ["Showroom Xe VinFast", "Bảo Dưỡng Định Kỳ", "Xưởng Kỹ Thuật", "Trạm Sạc Nhanh"]
+    "features": [
+      "Showroom Xe VinFast",
+      "Bảo Dưỡng Định Kỳ",
+      "Xưởng Kỹ Thuật",
+      "Trạm Sạc Nhanh"
+    ],
+    "hotlineService": "0917 300 008"
   },
   {
     "id": "vinfast-buu-long",
     "name": "VinFast Bửu Long",
     "area": "Đồng Nai",
     "address": "1/1 Nguyễn Ái Quốc, P. Trấn Biên, TP. Biên Hòa, Tỉnh Đồng Nai",
-    "hotline": "0908 123 457",
+    "hotline": "0917 300 009",
     "email": "buulong@kimsonauto.com",
     "role": "Showroom & Trạm Dịch Vụ Nhanh Bửu Long",
-    "features": ["Trưng Bày Xe VinFast", "Bảo Dưỡng Nhanh", "Chăm Sóc & Spa Xe"]
+    "features": [
+      "Trưng Bày Xe VinFast",
+      "Bảo Dưỡng Nhanh",
+      "Chăm Sóc & Spa Xe"
+    ],
+    "hotlineService": "0917 300 008"
   },
   {
     "id": "vinfast-trang-dai",
     "name": "VinFast Trảng Dài",
     "area": "Đồng Nai",
     "address": "179 Trần Văn Xã, Tổ 2, KP. 5, P. Trảng Dài, TP. Biên Hòa, Tỉnh Đồng Nai",
-    "hotline": "0908 123 458",
+    "hotline": "0937 20 53 53",
     "email": "trangdai@kimsonauto.com",
     "role": "Showroom & Dịch Vụ Kỹ Thuật Trảng Dài",
-    "features": ["Showroom Xe Điện", "Sửa Chữa Điện - Lạnh", "Bảo Dưỡng Định Kỳ"]
+    "features": [
+      "Showroom Xe Điện",
+      "Sửa Chữa Điện - Lạnh",
+      "Bảo Dưỡng Định Kỳ"
+    ],
+    "hotlineService": "0917 300 008"
   },
   {
     "id": "xuong-tan-hiep",
     "name": "Xưởng Dịch Vụ Tân Hiệp",
     "area": "Đồng Nai",
     "address": "H17, Khu phố 5, P. Tam Hiệp, TP. Biên Hòa, Tỉnh Đồng Nai",
-    "hotline": "0908 123 459",
+    "hotline": "0913 75 75 79",
     "email": "tanhiep@kimsonauto.com",
     "role": "Trung Tâm Kỹ Thuật Công Nghệ Cao Tân Hiệp",
-    "features": ["Đại Tu Động Cơ & Hộp Số", "Phòng Sơn Sấy Hấp Chuẩn", "Cân Chỉnh Thước Lái 3D", "Chẩn Đoán Pin Cao Áp"]
+    "features": [
+      "Đại Tu Động Cơ & Hộp Số",
+      "Phòng Sơn Sấy Hấp Chuẩn",
+      "Cân Chỉnh Thước Lái 3D",
+      "Chẩn Đoán Pin Cao Áp"
+    ],
+    "hotlineService": "0912 34 34 79"
   },
   {
     "id": "vinfast-trang-bom",
     "name": "VinFast Trảng Bom",
     "area": "Đồng Nai",
     "address": "125-127 Đường 29/4, KP. 5, Xã Trảng Bom, Huyện Trảng Bom, Tỉnh Đồng Nai",
-    "hotline": "0908 123 460",
+    "hotline": "0913 75 75 79",
     "email": "trangbom@kimsonauto.com",
     "role": "Showroom & Trung Tâm Tiếp Nhận Dịch Vụ Trảng Bom",
-    "features": ["Showroom Xe VinFast", "Bảo Dưỡng Xe Định Kỳ", "Phụ Tùng Chính Hãng"]
+    "features": [
+      "Showroom Xe VinFast",
+      "Bảo Dưỡng Xe Định Kỳ",
+      "Phụ Tùng Chính Hãng"
+    ],
+    "hotlineService": "0917 300 008"
   },
   {
     "id": "vinfast-long-khanh",
     "name": "VinFast Long Khánh",
     "area": "Đồng Nai",
     "address": "Quốc Lộ 1A, Tổ 6, Nông Doanh, P. Hàng Gòn, TP. Long Khánh, Tỉnh Đồng Nai",
-    "hotline": "0908 123 461",
+    "hotline": "0937 02 55 33",
     "email": "longkhanh@kimsonauto.com",
     "role": "Showroom & Trung Tâm Dịch Vụ Cửa Ngõ Long Khánh",
-    "features": ["Showroom VinFast", "Xưởng Bảo Dưỡng", "Cứu Hộ Giao Thông 24/7"]
+    "features": [
+      "Showroom VinFast",
+      "Xưởng Bảo Dưỡng",
+      "Cứu Hộ Giao Thông 24/7"
+    ],
+    "hotlineService": "0908 745 123"
   },
   {
     "id": "vinfast-long-thanh-1",
     "name": "VinFast Long Thành",
     "area": "Đồng Nai",
     "address": "Quốc Lộ 51, Tổ 1, Ấp Long Phú, Xã Phước Thái, Huyện Long Thành, Tỉnh Đồng Nai",
-    "hotline": "0908 123 462",
+    "hotline": "0908 01 08 99",
     "email": "longthanh1@kimsonauto.com",
     "role": "Tổ Hợp Dịch Vụ & Tiếp Nhận Long Thành 1",
-    "features": ["Showroom VinFast", "Trạm Cứu Hộ Quốc Lộ 51", "Bảo Dưỡng Kỹ Thuật"]
+    "features": [
+      "Showroom VinFast",
+      "Trạm Cứu Hộ Quốc Lộ 51",
+      "Bảo Dưỡng Kỹ Thuật"
+    ],
+    "hotlineService": "0937 40 33 11"
   },
   {
     "id": "vinfast-long-thanh-2",
     "name": "VinFast Long Thành 2",
     "area": "Đồng Nai",
     "address": "Tổ 29 Trường Chinh, Khu Phước Hải, Huyện Long Thành, Tỉnh Đồng Nai",
-    "hotline": "0908 123 463",
+    "hotline": "0908 01 08 99",
     "email": "longthanh2@kimsonauto.com",
     "role": "Trung Tâm Dịch Vụ & Trải Nghiệm Xe Long Thành 2",
-    "features": ["Showroom Trưng Bày", "Bảo Dưỡng Xe Điện", "Trạm Sạc Nhanh"]
+    "features": [
+      "Showroom Trưng Bày",
+      "Bảo Dưỡng Xe Điện",
+      "Trạm Sạc Nhanh"
+    ],
+    "hotlineService": "0937 40 33 11"
   },
   {
     "id": "vinfast-long-thanh-3",
     "name": "VinFast Long Thành 3",
     "area": "Đồng Nai",
     "address": "Đường Hùng Vương, KP. Phước Lai, Huyện Nhơn Trạch, Tỉnh Đồng Nai",
-    "hotline": "0908 123 464",
+    "hotline": "0908 01 08 99",
     "email": "longthanh3@kimsonauto.com",
     "role": "Chi Nhánh Kỹ Thuật & Dịch Vụ Nhơn Trạch",
-    "features": ["Bảo Dưỡng Xe Doanh Nghiệp", "Đồng Sơn Nhanh", "Cứu Hộ Giao Thông 24/7"]
+    "features": [
+      "Bảo Dưỡng Xe Doanh Nghiệp",
+      "Đồng Sơn Nhanh",
+      "Cứu Hộ Giao Thông 24/7"
+    ],
+    "hotlineService": "0937 40 33 11"
   },
   {
     "id": "vinfast-binh-thanh",
     "name": "VinFast Bình Thạnh",
     "area": "TP. Hồ Chí Minh",
     "address": "182_184_188 Quốc Lộ 13, Khu phố 53, Phường Bình Thạnh, TP.HCM",
-    "hotline": "0908 123 465",
+    "hotline": "0913 75 75 79",
     "email": "binhthanh@kimsonauto.com",
     "role": "Showroom & Trung Tâm Dịch Vụ Trọng Điểm Bình Thạnh",
-    "features": ["Showroom Xe Điện VinFast", "Trung Tâm Bảo Dưỡng Tiêu Chuẩn", "Cung Ứng Phụ Tùng"]
+    "features": [
+      "Showroom Xe Điện VinFast",
+      "Trung Tâm Bảo Dưỡng Tiêu Chuẩn",
+      "Cung Ứng Phụ Tùng"
+    ],
+    "hotlineService": "0917 300 008"
   },
   {
     "id": "gf-kim-son-hcm",
@@ -107,6 +159,11 @@
     "hotline": "0913 75 75 79",
     "email": "contact@kimsonauto.com",
     "role": "Trụ Sở Điều Hành Hệ Sinh Thái Kim Sơn (Green Future)",
-    "features": ["Trụ Sở Tập Đoàn", "Trung Tâm Điều Phối Hệ Sinh Thái", "Dự Án Chuyển Đổi Xanh"]
+    "features": [
+      "Trụ Sở Tập Đoàn",
+      "Trung Tâm Điều Phối Hệ Sinh Thái",
+      "Dự Án Chuyển Đổi Xanh"
+    ],
+    "hotlineService": "0917 300 008"
   }
 ]

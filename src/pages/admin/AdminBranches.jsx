@@ -204,7 +204,8 @@ export default function AdminBranches() {
                     {b.address}
                   </td>
                   <td className="py-4 px-6 font-mono font-semibold text-primary">
-                    {b.hotline}
+                    <div>{b.hotline}</div>
+                    {b.hotlineService && <div className="text-red-500 text-[11px]">DV: {b.hotlineService}</div>}
                   </td>
                   <td className="py-4 px-6 text-slate-600">
                     {b.role}

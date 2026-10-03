@@ -129,9 +129,18 @@ export default function ContactPage() {
                     <div className="flex items-center gap-2">
                       <Phone size={16} className="text-primary shrink-0" />
                       <a href={`tel:${branch.hotline.replace(/\s+/g, '')}`} className="font-bold text-slate-900 hover:text-primary">
-                        {branch.hotline}
+                        KD: {branch.hotline}
                       </a>
                     </div>
+
+                    {branch.hotlineService && (
+                      <div className="flex items-center gap-2">
+                        <Phone size={16} className="text-red-500 shrink-0" />
+                        <a href={`tel:${branch.hotlineService.replace(/\s+/g, '')}`} className="font-bold text-slate-900 hover:text-red-500">
+                          DV: {branch.hotlineService}
+                        </a>
+                      </div>
+                    )}
 
                     <div className="flex items-center gap-2">
                       <Clock size={16} className="text-primary shrink-0" />

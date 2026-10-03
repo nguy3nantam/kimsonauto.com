@@ -133,7 +133,9 @@ export default function BookingModal({ isOpen, onClose, initialType = 'service',
                 <div><strong>Dòng xe:</strong> {formData.carModel || 'Theo yêu cầu'}</div>
                 <div><strong>Thời gian mong muốn:</strong> {formData.date || 'Sớm nhất'} ({formData.timeSlot})</div>
                 <div><strong>Cơ sở tiếp nhận:</strong> {selectedBranch.address}</div>
-                <div><strong>Hotline chi nhánh:</strong> <span className="text-primary font-bold">{selectedBranch.hotline}</span></div>
+                <div><strong>Hotline chi nhánh:</strong> <span className="text-primary font-bold">{selectedBranch.hotline}</span>
+                  {selectedBranch.hotlineService && <span className="text-slate-500"> | DV: <strong className="text-red-500">{selectedBranch.hotlineService}</strong></span>}
+                </div>
               </div>
 
               <button

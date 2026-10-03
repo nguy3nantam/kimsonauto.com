@@ -77,8 +77,14 @@ export default function NetworkPage() {
                   </div>
                   <div className="flex items-center gap-2.5">
                     <Phone size={16} className="text-primary shrink-0" />
-                    <span>Hotline: <strong className="text-slate-900">{b.hotline}</strong></span>
+                    <span>KD: <strong className="text-slate-900">{b.hotline}</strong></span>
                   </div>
+                  {b.hotlineService && (
+                    <div className="flex items-center gap-2.5">
+                      <Phone size={16} className="text-red-500 shrink-0" />
+                      <span>DV: <strong className="text-slate-900">{b.hotlineService}</strong></span>
+                    </div>
+                  )}
                 </div>
 
                 <div className="pt-2 border-t border-slate-100">
