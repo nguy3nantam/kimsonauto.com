@@ -6,6 +6,23 @@ export default {
   ],
   theme: {
     extend: {
+      screens: {
+        xs: '480px',
+      },
+      keyframes: {
+        'fade-up': {
+          '0%': { opacity: '0', transform: 'translateY(14px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        'hero-progress': {
+          '0%': { transform: 'scaleX(0)' },
+          '100%': { transform: 'scaleX(1)' },
+        },
+      },
+      animation: {
+        'fade-up': 'fade-up 0.6s cubic-bezier(0.4, 0, 0.2, 1) both',
+        'hero-progress': 'hero-progress 6.5s linear forwards',
+      },
       colors: {
         primary: {
           DEFAULT: '#c98e00', // Màu vàng hoàng kim sang trọng chuẩn logo Kim Sơn Automobiles
