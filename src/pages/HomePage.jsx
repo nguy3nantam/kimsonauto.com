@@ -25,7 +25,7 @@ const DEFAULT_SLIDES = [
   },
   {
     id: 'default-2',
-    title: 'Đại Lý Ủy Quyền VinFast\nHàng Đầu Khu Vực Phía Nam',
+    title: 'Kim Sơn Automobiles\nNhà Phân Phối VinFast Miền Nam',
     subtitle: 'MẠNG LƯỚI SHOWROOM & XƯỞNG DỊCH VỤ HIỆN ĐẠI',
     description: 'Sở hữu chuỗi 11 chi nhánh và showroom 3S/1S VinFast tại các vị trí chiến lược: Biên Hòa, Long Thành, Long Khánh, Trảng Dài, Bình Thạnh, Quận 2...',
     image: withBasePath('/vinfast-kimson-bienhoa.jpg'),
