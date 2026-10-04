@@ -27,7 +27,7 @@ const DEFAULT_SLIDES = [
     id: 'default-2',
     title: 'Kim Sơn Automobiles\nNhà Phân Phối VinFast Miền Nam',
     subtitle: 'MẠNG LƯỚI SHOWROOM & XƯỞNG DỊCH VỤ HIỆN ĐẠI',
-    description: 'Sở hữu chuỗi 11 chi nhánh và showroom 3S/1S VinFast tại các vị trí chiến lược: Biên Hòa, Long Thành, Long Khánh, Trảng Dài, Bình Thạnh, Quận 2...',
+    description: 'Kim Sơn Automobiles với hệ thống Showroom phủ khắp Miền Nam. Đem đến trải nghiệm hiện đại, thân thiện, uy tín đến với Quý Khách.',
     image: withBasePath('/vinfast-kimson-bienhoa.jpg'),
     primaryButtonText: 'Hệ Thống Chi Nhánh',
     primaryButtonLink: '/mang-luoi',
