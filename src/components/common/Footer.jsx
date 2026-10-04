@@ -119,7 +119,7 @@ export default function Footer() {
 
         {/* Bottom Bar */}
         <div className="pt-8 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 gap-4">
-          <p>© 2026 KIM SƠN AUTOMOBILES ECOSYSTEM. Bảo lưu mọi quyền.</p>
+          <p>© 2026 KIM SƠN AUTOMOBILES Design by Tamdev</p>
           <div className="flex gap-6 text-[11px]">
             <span>Chính sách bảo mật</span>
             <span>Điều khoản sử dụng</span>
