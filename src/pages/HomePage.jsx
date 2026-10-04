@@ -362,7 +362,7 @@ export default function HomePage() {
                   to="/mang-luoi"
                   className="inline-flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-wider transition-all"
                 >
-                  <span>Xem toàn bộ mạng lưới chi nhánh & bản đồ</span>
+                  <span>Hệ Thống Showroom Kim Sơn</span>
                   <ChevronRight size={14} />
                 </Link>
               </div>
