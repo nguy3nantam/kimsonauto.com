@@ -56,12 +56,12 @@ export default function FloatingCTA() {
       {isOpen && (
         <div className="w-72 sm:w-80 bg-slate-950/95 backdrop-blur-xl border border-slate-800 rounded-2xl shadow-2xl overflow-hidden p-3.5 space-y-2 animate-in fade-in slide-in-from-bottom-3 duration-200">
           <div className="flex items-center gap-3 px-2 pb-2.5 border-b border-slate-800/80">
-            <div className="relative w-10 h-10 rounded-full bg-emerald-500/15 ring-2 ring-emerald-500 shrink-0 shadow-md flex items-center justify-center">
-              <MessageCircle size={20} className="text-emerald-400" />
-              <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-500 border border-white"></span>
+            <div className="relative w-10 h-10 rounded-full bg-sky-400/15 ring-2 ring-sky-400 shrink-0 shadow-md flex items-center justify-center">
+              <MessageCircle size={20} className="text-sky-400" />
+              <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-sky-400 border border-white"></span>
             </div>
             <div className="flex-grow min-w-0">
-              <p className="text-xs font-black uppercase tracking-wider text-emerald-400">Trực Tuyến 24/7</p>
+              <p className="text-xs font-black uppercase tracking-wider text-sky-400">Trực Tuyến 24/7</p>
               <p className="text-sm font-black text-white truncate">Tổng Đài & Cứu Hộ Kim Sơn</p>
             </div>
             <button
@@ -133,7 +133,7 @@ export default function FloatingCTA() {
         className={`group relative flex items-center justify-center w-14 h-14 sm:w-15 sm:h-15 rounded-full shadow-2xl transition-all duration-300 cursor-pointer ${
           isOpen
             ? 'bg-slate-900 text-white hover:bg-slate-800 border-2 border-slate-700'
-            : 'bg-emerald-500 text-white ring-3 ring-emerald-500/40 hover:bg-emerald-400 hover:ring-emerald-300/60 hover:scale-105 shadow-emerald-950/40'
+            : 'bg-sky-400 text-white ring-3 ring-sky-400/40 hover:bg-sky-300 hover:ring-sky-300/60 hover:scale-105 shadow-sky-950/40'
         }`}
         title="Tổng đài hỗ trợ & Cứu hộ 24/7"
         aria-label="Tổng đài hỗ trợ & Cứu hộ 24/7"
@@ -143,8 +143,8 @@ export default function FloatingCTA() {
             <MessageCircle size={22} strokeWidth={2.2} className="group-hover:scale-110 transition-transform duration-300" />
             {/* Green Online Radar Pulse Badge */}
             <span className="absolute -top-0.5 -right-0.5 flex h-4 w-4">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-4 w-4 bg-emerald-500 border-2 border-white shadow-sm"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-300 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-4 w-4 bg-sky-400 border-2 border-white shadow-sm"></span>
             </span>
           </>
         ) : (
