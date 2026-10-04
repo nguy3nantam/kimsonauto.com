@@ -1,8 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowUp, PhoneCall, ShieldAlert, Mail, X, ChevronRight } from 'lucide-react';
+import { ArrowUp, PhoneCall, ShieldAlert, Mail, X, ChevronRight, MessageCircle } from 'lucide-react';
 import { ecosystemData } from '../../data/ecosystem';
-import { withBasePath } from '../../utils/assets';
 
 export default function FloatingCTA() {
   const [isOpen, setIsOpen] = useState(false);
@@ -57,12 +56,8 @@ export default function FloatingCTA() {
       {isOpen && (
         <div className="w-72 sm:w-80 bg-slate-950/95 backdrop-blur-xl border border-slate-800 rounded-2xl shadow-2xl overflow-hidden p-3.5 space-y-2 animate-in fade-in slide-in-from-bottom-3 duration-200">
           <div className="flex items-center gap-3 px-2 pb-2.5 border-b border-slate-800/80">
-            <div className="relative w-10 h-10 rounded-full overflow-hidden ring-2 ring-emerald-500 shrink-0 shadow-md">
-              <img 
-                src={withBasePath('/support-agent.svg')} 
-                alt="CSKH Kim Sơn" 
-                className="w-full h-full object-cover bg-emerald-50" 
-              />
+            <div className="relative w-10 h-10 rounded-full bg-emerald-500/15 ring-2 ring-emerald-500 shrink-0 shadow-md flex items-center justify-center">
+              <MessageCircle size={20} className="text-emerald-400" />
               <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-500 border border-white"></span>
             </div>
             <div className="flex-grow min-w-0">
@@ -138,18 +133,14 @@ export default function FloatingCTA() {
         className={`group relative flex items-center justify-center w-14 h-14 sm:w-15 sm:h-15 rounded-full shadow-2xl transition-all duration-300 cursor-pointer ${
           isOpen
             ? 'bg-slate-900 text-white hover:bg-slate-800 border-2 border-slate-700'
-            : 'bg-white p-0.5 ring-3 ring-emerald-500/80 hover:ring-emerald-400 hover:scale-105 shadow-emerald-950/40'
+            : 'bg-emerald-500 text-white ring-3 ring-emerald-500/40 hover:bg-emerald-400 hover:ring-emerald-300/60 hover:scale-105 shadow-emerald-950/40'
         }`}
         title="Tổng đài hỗ trợ & Cứu hộ 24/7"
         aria-label="Tổng đài hỗ trợ & Cứu hộ 24/7"
       >
         {!isOpen ? (
           <>
-            <img 
-              src={withBasePath('/support-agent.svg')} 
-              alt="Hỗ trợ tổng đài Kim Sơn" 
-              className="w-full h-full object-cover rounded-full bg-emerald-50 group-hover:scale-105 transition-transform duration-300"
-            />
+            <MessageCircle size={26} strokeWidth={2.2} className="group-hover:scale-110 transition-transform duration-300" />
             {/* Green Online Radar Pulse Badge */}
             <span className="absolute -top-0.5 -right-0.5 flex h-4 w-4">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
