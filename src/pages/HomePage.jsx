@@ -53,6 +53,7 @@ export default function HomePage() {
   const [isPaused, setIsPaused] = useState(false);
   const touchStartX = useRef(null);
   const touchStartY = useRef(null);
+  const newsScrollRef = useRef(null);
 
   const [homeNews, setHomeNews] = useState(ecosystemData.news);
 
@@ -131,6 +132,15 @@ export default function HomePage() {
     if (slides.length <= 1) return;
     if (e.key === 'ArrowLeft') prevSlide();
     if (e.key === 'ArrowRight') nextSlide();
+  };
+
+  // Carousel Tin Tức: cuộn ngang theo từng thẻ
+  const scrollNews = (dir) => {
+    const el = newsScrollRef.current;
+    if (!el) return;
+    const card = el.querySelector('[data-news-card]');
+    const amount = card ? card.offsetWidth + 24 : el.clientWidth * 0.85;
+    el.scrollBy({ left: dir * amount, behavior: 'smooth' });
   };
 
   return (
@@ -320,27 +330,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 3. By The Numbers (Các Con Số Ấn Tượng) */}
-      <section className="py-14 bg-slate-950 text-white border-y border-slate-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 lg:grid-cols-6 gap-6 sm:gap-8 text-center divide-y sm:divide-y-0 sm:divide-x divide-slate-800">
-            {ecosystemData.stats.map((stat, i) => (
-              <div key={i} className="pt-4 sm:pt-0">
-                <div className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-primary-light mb-1 font-display tracking-tight">
-                  {stat.number}
-                </div>
-                <div className="text-xs font-semibold text-white uppercase tracking-wider mb-1">
-                  {stat.label}
-                </div>
-                <div className="text-[11px] text-slate-400">
-                  {stat.desc}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* 4. Infrastructure Network */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -381,7 +370,7 @@ export default function HomePage() {
 
             <div className="bg-slate-950 text-white p-8 sm:p-10 rounded-3xl border border-slate-900 space-y-6">
               <div className="border-b border-slate-800 pb-5">
-                <span className="text-xs font-bold text-amber-400 uppercase tracking-widest">TIÊU CHUẨN CƠ SỞ VẬT CHẤT</span>
+                <span className="text-xs font-bold text-primary-light uppercase tracking-widest">TIÊU CHUẨN CƠ SỞ VẬT CHẤT</span>
                 <h3 className="text-xl sm:text-2xl font-extrabold text-white mt-1 leading-snug">Đồng Bộ Quy Chuẩn Kỹ Thuật Số</h3>
               </div>
 
@@ -427,7 +416,7 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
             {ecosystemData.sustainability.map((item, idx) => (
               <div key={idx} className="bg-slate-900/90 p-7 rounded-3xl border border-slate-800 hover:border-slate-700 transition-all">
-                <div className="text-amber-400 font-black text-xl mb-3 font-display">0{idx + 1}</div>
+                <div className="text-primary-light font-black text-xl mb-3 font-display">0{idx + 1}</div>
                 <h3 className="text-base sm:text-lg font-bold text-white mb-2 leading-snug">{item.title}</h3>
                 <p className="text-xs text-slate-400 leading-relaxed">{item.desc}</p>
               </div>
@@ -436,10 +425,10 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 7. Corporate Press & News */}
+      {/* 7. Corporate Press & News (Carousel) */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-14">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-10">
             <div>
               <div className="inline-block text-xs font-bold text-primary uppercase tracking-[0.15em] border-b-2 border-primary pb-1 mb-2">
                 TRUYỀN THÔNG & ĐỐI NGOẠI
@@ -448,14 +437,40 @@ export default function HomePage() {
                 Tin Tức & Sự Kiện Hệ Sinh Thái
               </h2>
             </div>
-            <Link to="/tin-tuc" className="text-primary font-bold text-xs uppercase tracking-wider hover:underline flex items-center gap-1">
-              Xem tất cả thông cáo <ChevronRight size={14} />
-            </Link>
+            <div className="flex items-center gap-3">
+              <Link to="/tin-tuc" className="text-primary font-bold text-xs uppercase tracking-wider hover:underline flex items-center gap-1">
+                Xem tất cả <ChevronRight size={14} />
+              </Link>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => scrollNews(-1)}
+                  aria-label="Tin tức trước"
+                  className="w-10 h-10 rounded-full bg-slate-100 hover:bg-primary text-slate-700 hover:text-white flex items-center justify-center transition-all cursor-pointer"
+                >
+                  <ChevronLeft size={18} />
+                </button>
+                <button
+                  onClick={() => scrollNews(1)}
+                  aria-label="Tin tức tiếp theo"
+                  className="w-10 h-10 rounded-full bg-slate-100 hover:bg-primary text-slate-700 hover:text-white flex items-center justify-center transition-all cursor-pointer"
+                >
+                  <ChevronRight size={18} />
+                </button>
+              </div>
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {homeNews.slice(0, 3).map((item) => (
-              <div key={item.id} className="bg-slate-50 rounded-3xl overflow-hidden border border-slate-200/90 hover:shadow-xl transition-all flex flex-col justify-between">
+          {/* Carousel: cuộn ngang, snap từng thẻ */}
+          <div
+            ref={newsScrollRef}
+            className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-4 -mx-4 px-4 sm:mx-0 sm:px-0 scroll-smooth [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+          >
+            {homeNews.map((item) => (
+              <div
+                key={item.id}
+                data-news-card
+                className="snap-start shrink-0 w-[85%] xs:w-[75%] sm:w-[55%] md:w-[48%] lg:w-[calc((100%-3rem)/3)] bg-slate-50 rounded-3xl overflow-hidden border border-slate-200/90 hover:shadow-xl transition-all flex flex-col justify-between"
+              >
                 <div className="aspect-[16/10] overflow-hidden">
                   <img src={item.image} alt={item.title} loading="lazy" className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
                 </div>
@@ -465,7 +480,7 @@ export default function HomePage() {
                       <span className="font-bold text-primary uppercase">{item.category}</span>
                       <span>{item.date}</span>
                     </div>
-                    <h4 className="font-bold text-slate-900 text-base mb-2 hover:text-primary transition-colors leading-snug">
+                    <h4 className="font-bold text-slate-900 text-base mb-2 hover:text-primary transition-colors leading-snug line-clamp-2">
                       {item.title}
                     </h4>
                     <p className="text-slate-600 text-xs line-clamp-3 leading-relaxed">
@@ -473,7 +488,7 @@ export default function HomePage() {
                     </p>
                   </div>
                   <Link to="/tin-tuc" className="pt-4 text-primary font-bold text-xs flex items-center gap-1">
-                    Đọc tiếp <ChevronRight size={14} />
+                    Tìm hiểu thêm <ChevronRight size={14} />
                   </Link>
                 </div>
               </div>

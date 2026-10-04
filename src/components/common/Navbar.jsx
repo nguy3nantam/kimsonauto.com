@@ -421,7 +421,7 @@ export default function Navbar() {
             {/* Nút kích hoạt Offcanvas Menu với hiệu ứng chuyển màu khi hover */}
             <button
               onClick={() => setIsOpen(true)}
-              className="flex items-center gap-1.5 px-3 py-1.5 text-slate-700 hover:text-primary rounded-lg hover:bg-gradient-to-r hover:from-slate-100 hover:to-amber-50/80 transition-all duration-300 border border-transparent hover:border-amber-200/60"
+              className="flex items-center gap-1.5 px-3 py-1.5 text-slate-700 hover:text-primary rounded-lg hover:bg-gradient-to-r hover:from-slate-100 hover:to-primary-subtle/80 transition-all duration-300 border border-transparent hover:border-primary/30"
               title="Mở menu hệ sinh thái"
               aria-label="Mở menu"
             >

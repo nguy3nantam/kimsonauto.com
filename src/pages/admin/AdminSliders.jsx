@@ -232,7 +232,7 @@ export default function AdminSliders() {
         <div className="bg-slate-950 rounded-2xl overflow-hidden border border-slate-800 shadow-xl">
           <div className="px-6 py-3 bg-slate-900 border-b border-slate-800 flex items-center justify-between text-xs text-slate-400">
             <div className="flex items-center gap-2 font-medium">
-              <Sparkles size={14} className="text-amber-400" />
+              <Sparkles size={14} className="text-primary-light" />
               <span>Xem trước hiển thị: <strong>{previewSlide.title}</strong></span>
             </div>
             <div className="flex items-center gap-3">
@@ -445,7 +445,7 @@ export default function AdminSliders() {
                         </button>
                         <button
                           onClick={() => handleEdit(slide)}
-                          className="p-2 text-slate-500 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition"
+                          className="p-2 text-slate-500 hover:text-primary hover:bg-primary-subtle rounded-lg transition"
                           title="Chỉnh sửa slide"
                         >
                           <Edit3 size={17} />

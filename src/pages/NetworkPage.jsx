@@ -43,12 +43,12 @@ export default function NetworkPage() {
               key={b.id}
               className={`relative rounded-3xl p-8 transition-all duration-300 flex flex-col justify-between overflow-hidden ${
                 b.isMain
-                  ? 'bg-gradient-to-br from-amber-50 via-white to-white border-2 border-primary shadow-lg shadow-primary/15 ring-4 ring-primary/10 md:-translate-y-1 hover:-translate-y-2 hover:shadow-xl'
+                  ? 'bg-gradient-to-br from-primary-subtle via-white to-white border-2 border-primary shadow-lg shadow-primary/15 ring-4 ring-primary/10 md:-translate-y-1 hover:-translate-y-2 hover:shadow-xl'
                   : 'bg-white border border-slate-200/90 shadow-sm hover:shadow-xl hover:-translate-y-1'
               }`}
             >
               {b.isMain && (
-                <div className="absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r from-primary-dark via-primary to-amber-300 z-10" />
+                <div className="absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r from-primary-dark via-primary to-primary-light z-10" />
               )}
               {b.image && (
                 <div className="relative aspect-[16/9] -mx-8 -mt-8 mb-6 overflow-hidden">

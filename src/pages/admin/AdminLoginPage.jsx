@@ -98,10 +98,10 @@ export default function AdminLoginPage({ initialMode = 'login' }) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-amber-50/40 to-yellow-50/30 flex flex-col justify-center items-center p-4 sm:p-6 relative overflow-hidden selection:bg-primary selection:text-white">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-primary-subtle/40 to-primary-subtle/30 flex flex-col justify-center items-center p-4 sm:p-6 relative overflow-hidden selection:bg-primary selection:text-white">
       {/* Background Decorative Glow */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-10 right-1/4 w-80 h-80 bg-amber-400/10 rounded-full blur-2xl pointer-events-none" />
+      <div className="absolute bottom-10 right-1/4 w-80 h-80 bg-primary/10 rounded-full blur-2xl pointer-events-none" />
 
       <div className="w-full max-w-md relative z-10 my-8">
         {/* Brand Card Header */}
@@ -122,7 +122,7 @@ export default function AdminLoginPage({ initialMode = 'login' }) {
         {/* Form Box - Style Màu Trắng & Viền Vàng Hoàng Kim */}
         <div className="bg-white border-2 border-primary rounded-3xl p-6 sm:p-8 shadow-xl shadow-primary/10 backdrop-blur-md">
           {/* Mode Tabs Switcher */}
-          <div className="grid grid-cols-2 gap-1.5 p-1.5 bg-amber-50/80 rounded-2xl mb-6 border border-amber-200/80">
+          <div className="grid grid-cols-2 gap-1.5 p-1.5 bg-primary-subtle/80 rounded-2xl mb-6 border border-primary/30">
             <button
               type="button"
               onClick={() => handleSwitchMode('login')}
@@ -186,7 +186,7 @@ export default function AdminLoginPage({ initialMode = 'login' }) {
                       required
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
-                      className="w-full pl-10 pr-4 py-2.5 bg-white border border-amber-200/80 focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-xl text-slate-800 text-sm placeholder:text-slate-400 focus:outline-none transition-all shadow-2xs"
+                      className="w-full pl-10 pr-4 py-2.5 bg-white border border-primary/30 focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-xl text-slate-800 text-sm placeholder:text-slate-400 focus:outline-none transition-all shadow-2xs"
                       placeholder="Nguyễn Văn A"
                     />
                   </div>
@@ -205,7 +205,7 @@ export default function AdminLoginPage({ initialMode = 'login' }) {
                       <select
                         value={unit}
                         onChange={(e) => setUnit(e.target.value)}
-                        className="w-full pl-9 pr-3 py-2.5 bg-white border border-amber-200/80 focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-xl text-slate-800 text-xs sm:text-sm font-semibold focus:outline-none transition-all cursor-pointer shadow-2xs appearance-none"
+                        className="w-full pl-9 pr-3 py-2.5 bg-white border border-primary/30 focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-xl text-slate-800 text-xs sm:text-sm font-semibold focus:outline-none transition-all cursor-pointer shadow-2xs appearance-none"
                       >
                         {UNIT_OPTIONS.map((u) => (
                           <option key={u} value={u} className="bg-white text-slate-800">
@@ -227,7 +227,7 @@ export default function AdminLoginPage({ initialMode = 'login' }) {
                       <select
                         value={department}
                         onChange={(e) => setDepartment(e.target.value)}
-                        className="w-full pl-9 pr-3 py-2.5 bg-white border border-amber-200/80 focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-xl text-slate-800 text-xs sm:text-sm font-semibold focus:outline-none transition-all cursor-pointer shadow-2xs appearance-none"
+                        className="w-full pl-9 pr-3 py-2.5 bg-white border border-primary/30 focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-xl text-slate-800 text-xs sm:text-sm font-semibold focus:outline-none transition-all cursor-pointer shadow-2xs appearance-none"
                       >
                         {DEPARTMENT_OPTIONS.map((d) => (
                           <option key={d} value={d} className="bg-white text-slate-800">
@@ -253,7 +253,7 @@ export default function AdminLoginPage({ initialMode = 'login' }) {
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="w-full pl-9 pr-3 py-2.5 bg-white border border-amber-200/80 focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-xl text-slate-800 text-sm placeholder:text-slate-400 focus:outline-none transition-all shadow-2xs"
+                        className="w-full pl-9 pr-3 py-2.5 bg-white border border-primary/30 focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-xl text-slate-800 text-sm placeholder:text-slate-400 focus:outline-none transition-all shadow-2xs"
                         placeholder="email@kimsonauto.com"
                       />
                     </div>
@@ -271,7 +271,7 @@ export default function AdminLoginPage({ initialMode = 'login' }) {
                         type="tel"
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
-                        className="w-full pl-9 pr-3 py-2.5 bg-white border border-amber-200/80 focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-xl text-slate-800 text-sm placeholder:text-slate-400 focus:outline-none transition-all shadow-2xs"
+                        className="w-full pl-9 pr-3 py-2.5 bg-white border border-primary/30 focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-xl text-slate-800 text-sm placeholder:text-slate-400 focus:outline-none transition-all shadow-2xs"
                         placeholder="0908 xxx xxx"
                       />
                     </div>
@@ -293,7 +293,7 @@ export default function AdminLoginPage({ initialMode = 'login' }) {
                   required
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 bg-white border border-amber-200/80 focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-xl text-slate-800 text-sm placeholder:text-slate-400 focus:outline-none transition-all shadow-2xs"
+                  className="w-full pl-10 pr-4 py-2.5 bg-white border border-primary/30 focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-xl text-slate-800 text-sm placeholder:text-slate-400 focus:outline-none transition-all shadow-2xs"
                   placeholder={mode === 'login' ? 'Nhập tên đăng nhập' : 'Tạo tên đăng nhập (viết liền)'}
                 />
               </div>
@@ -312,7 +312,7 @@ export default function AdminLoginPage({ initialMode = 'login' }) {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 bg-white border border-amber-200/80 focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-xl text-slate-800 text-sm placeholder:text-slate-400 focus:outline-none transition-all shadow-2xs"
+                  className="w-full pl-10 pr-4 py-2.5 bg-white border border-primary/30 focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-xl text-slate-800 text-sm placeholder:text-slate-400 focus:outline-none transition-all shadow-2xs"
                   placeholder={mode === 'login' ? 'Nhập mật khẩu' : 'Mật khẩu tối thiểu 6 ký tự'}
                 />
               </div>
@@ -350,8 +350,8 @@ export default function AdminLoginPage({ initialMode = 'login' }) {
                     }}
                     className={`p-2 rounded-xl text-left border transition-all ${
                       username === 'admin' 
-                        ? 'bg-amber-500 text-white border-amber-600 shadow-sm' 
-                        : 'bg-amber-50/70 border-amber-200/80 text-amber-900 hover:bg-amber-100'
+                        ? 'bg-primary-subtle0 text-white border-primary-dark shadow-sm' 
+                        : 'bg-primary-subtle/70 border-primary/30 text-primary-dark hover:bg-primary/10'
                     }`}
                   >
                     <div className="text-[10px] font-black uppercase">Admin</div>

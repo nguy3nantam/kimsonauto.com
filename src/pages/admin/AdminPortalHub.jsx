@@ -237,7 +237,7 @@ export default function AdminPortalHub() {
         return <FileSpreadsheet className="text-emerald-500" size={28} />;
       case 'ZIP':
       case 'RAR':
-        return <FileArchive className="text-amber-500" size={28} />;
+        return <FileArchive className="text-primary" size={28} />;
       default:
         return <FileText className="text-blue-500" size={28} />;
     }
@@ -436,7 +436,7 @@ export default function AdminPortalHub() {
                     item.priority === 'urgent'
                       ? 'border-red-300 ring-1 ring-red-200/80 bg-red-50/10'
                       : item.priority === 'high'
-                      ? 'border-amber-300'
+                      ? 'border-primary/40'
                       : 'border-slate-200/90'
                   }`}
                 >
@@ -455,13 +455,13 @@ export default function AdminPortalHub() {
                           item.priority === 'urgent'
                             ? 'bg-red-100 text-red-700 border border-red-200'
                             : item.priority === 'high'
-                            ? 'bg-amber-100 text-amber-700 border border-amber-200'
+                            ? 'bg-primary/10 text-primary border border-primary/30'
                             : 'bg-slate-100 text-slate-700'
                         }`}>
                           {item.priority === 'urgent' ? 'Khẩn Cấp' : item.priority === 'high' ? 'Quan Trọng' : 'Thông Thường'}
                         </span>
 
-                        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-800 border border-amber-200">
+                        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-primary-subtle text-primary-dark border border-primary/30">
                           {item.category}
                         </span>
                       </div>
@@ -493,7 +493,7 @@ export default function AdminPortalHub() {
                     <div className="flex items-center gap-2">
                       <button
                         onClick={() => setSelectedAnnouncement(item)}
-                        className="px-3 py-1.5 rounded-lg bg-amber-50 hover:bg-primary hover:text-white text-primary text-xs font-bold transition-all"
+                        className="px-3 py-1.5 rounded-lg bg-primary-subtle hover:bg-primary hover:text-white text-primary text-xs font-bold transition-all"
                       >
                         Đọc Chi Tiết →
                       </button>
@@ -584,7 +584,7 @@ export default function AdminPortalHub() {
                   <div className="space-y-3">
                     {/* Header Icon & Type */}
                     <div className="flex items-start justify-between">
-                      <div className="p-3 rounded-2xl bg-slate-50 border border-slate-100 group-hover:bg-amber-50/50 transition-colors">
+                      <div className="p-3 rounded-2xl bg-slate-50 border border-slate-100 group-hover:bg-primary-subtle/50 transition-colors">
                         {getFileIcon(file.fileType)}
                       </div>
 
@@ -616,7 +616,7 @@ export default function AdminPortalHub() {
 
                     {/* Category & Dept Badges */}
                     <div className="flex flex-wrap items-center gap-1.5 pt-1">
-                      <span className="px-2 py-0.5 rounded-md text-[10px] font-semibold bg-amber-50 text-amber-800 border border-amber-200">
+                      <span className="px-2 py-0.5 rounded-md text-[10px] font-semibold bg-primary-subtle text-primary-dark border border-primary/30">
                         {file.category}
                       </span>
                       {file.targetDepartment && file.targetDepartment !== 'Tất Cả' && (

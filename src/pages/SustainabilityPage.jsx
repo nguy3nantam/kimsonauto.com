@@ -49,7 +49,7 @@ export default function SustainabilityPage() {
           </div>
 
           <div className="bg-white p-8 rounded-3xl border border-slate-200/90 shadow-sm space-y-4">
-            <div className="w-12 h-12 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center font-bold">
+            <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center font-bold">
               <ShieldCheck size={24} />
             </div>
             <h3 className="text-xl font-black text-slate-900">Quản Trị (Governance)</h3>
@@ -57,8 +57,8 @@ export default function SustainabilityPage() {
               Vận hành hệ thống quản trị minh bạch, kiểm soát chất lượng phụ tùng chính ngạch 100% có hóa đơn chứng từ xuất xứ rõ ràng. Tôn trọng đạo đức kinh doanh và quyền lợi cao nhất của khách hàng.
             </p>
             <div className="pt-2 space-y-2 text-xs text-slate-700">
-              <div className="flex items-center gap-2"><CheckCircle2 size={14} className="text-amber-500" /> Quy trình kiểm định chất lượng KCS độc lập</div>
-              <div className="flex items-center gap-2"><CheckCircle2 size={14} className="text-amber-500" /> Minh bạch báo giá và quy tắc ứng xử chuẩn mực</div>
+              <div className="flex items-center gap-2"><CheckCircle2 size={14} className="text-primary" /> Quy trình kiểm định chất lượng KCS độc lập</div>
+              <div className="flex items-center gap-2"><CheckCircle2 size={14} className="text-primary" /> Minh bạch báo giá và quy tắc ứng xử chuẩn mực</div>
             </div>
           </div>
         </div>
@@ -66,7 +66,7 @@ export default function SustainabilityPage() {
         {/* Community Rescue Banner */}
         <div className="bg-slate-950 text-white p-8 sm:p-12 rounded-3xl border border-slate-900 flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="space-y-3 max-w-2xl">
-            <div className="inline-flex items-center gap-2 text-xs font-bold text-amber-400 uppercase tracking-widest">
+            <div className="inline-flex items-center gap-2 text-xs font-bold text-primary-light uppercase tracking-widest">
               <HeartHandshake size={16} />
               CỨU TRỢ & AN SINH CỘNG ĐỒNG
             </div>
@@ -77,7 +77,7 @@ export default function SustainabilityPage() {
           </div>
           <div className="shrink-0 text-center">
             <p className="text-xs text-slate-400 mb-1">Hotline Phản Ứng Nhanh</p>
-            <a href="tel:0913757579" className="text-2xl font-black text-amber-400 hover:underline">
+            <a href="tel:0913757579" className="text-2xl font-black text-primary-light hover:underline">
               0913 75 75 79
             </a>
           </div>

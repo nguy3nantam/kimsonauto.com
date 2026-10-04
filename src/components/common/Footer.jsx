@@ -35,7 +35,7 @@ export default function Footer() {
               </div>
               <div className="flex items-center gap-2.5">
                 <Phone size={16} className="text-primary shrink-0" />
-                <span>Tổng Đài Điều Hành: <strong className="text-amber-400">{ecosystemData.hotline}</strong></span>
+                <span>Tổng Đài Điều Hành: <strong className="text-primary-light">{ecosystemData.hotline}</strong></span>
               </div>
               <div className="flex items-center gap-2.5">
                 <Mail size={16} className="text-primary shrink-0" />

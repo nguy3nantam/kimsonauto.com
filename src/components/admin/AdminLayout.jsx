@@ -106,7 +106,7 @@ export default function AdminLayout() {
   const getRoleBadge = () => {
     if (isAdmin) {
       return (
-        <span className="text-[9px] font-black text-amber-300 uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-500/20 border border-amber-400/40 shrink-0">
+        <span className="text-[9px] font-black text-primary-light uppercase tracking-wider px-2 py-0.5 rounded-full bg-primary-subtle0/20 border border-primary/40 shrink-0">
           ADMIN
         </span>
       );
@@ -128,7 +128,7 @@ export default function AdminLayout() {
   const getHeaderRoleBadge = () => {
     if (isAdmin) {
       return (
-        <span className="px-2.5 py-1 rounded-full bg-amber-50 border border-amber-300 text-amber-700 text-xs font-black">
+        <span className="px-2.5 py-1 rounded-full bg-primary-subtle border border-primary/40 text-primary text-xs font-black">
           Toàn Quyền Admin
         </span>
       );
@@ -278,7 +278,7 @@ export default function AdminLayout() {
 
               <div className={`w-9 h-9 rounded-xl flex items-center justify-center font-black text-xs shadow-xs ${
                 isAdmin 
-                  ? 'bg-gradient-to-br from-amber-500 to-amber-700 text-white'
+                  ? 'bg-gradient-to-br from-primary-subtle0 to-primary-dark text-white'
                   : isLeader 
                   ? 'bg-gradient-to-br from-blue-600 to-blue-800 text-white'
                   : 'bg-gradient-to-br from-emerald-600 to-emerald-800 text-white'

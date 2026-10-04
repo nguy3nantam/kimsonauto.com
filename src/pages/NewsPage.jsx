@@ -75,7 +75,7 @@ export default function NewsPage() {
                 </div>
 
                 <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-primary">
-                  <span>Xem thông cáo chi tiết</span>
+                  <span>Tìm hiểu thêm</span>
                   <ChevronRight size={14} />
                 </div>
               </div>

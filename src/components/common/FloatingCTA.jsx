@@ -44,11 +44,11 @@ export default function FloatingCTA() {
       {showScrollTop && (
         <button
           onClick={scrollToTop}
-          className="w-10 h-10 rounded-full bg-slate-800/90 hover:bg-slate-700 text-slate-200 hover:text-white flex items-center justify-center shadow-lg transition-all duration-200 hover:scale-105 border border-slate-700 cursor-pointer"
+          className="w-14 h-14 sm:w-15 sm:h-15 rounded-full bg-slate-800/90 hover:bg-slate-700 text-slate-200 hover:text-white flex items-center justify-center shadow-2xl transition-all duration-300 hover:scale-105 border border-slate-700 cursor-pointer"
           title="Lên đầu trang"
           aria-label="Lên đầu trang"
         >
-          <ArrowUp size={17} />
+          <ArrowUp size={22} strokeWidth={2.2} className="hover:-translate-y-0.5 transition-transform duration-300" />
         </button>
       )}
 
@@ -101,11 +101,11 @@ export default function FloatingCTA() {
               <PhoneCall size={18} />
             </div>
             <div className="flex-grow min-w-0">
-              <span className="text-[11px] font-bold text-amber-400 uppercase tracking-wider">Tổng Đài Điều Hành</span>
+              <span className="text-[11px] font-bold text-primary-light uppercase tracking-wider">Tổng Đài Điều Hành</span>
               <p className="text-sm font-black text-white tracking-wide">{ecosystemData.hotline}</p>
               <p className="text-[10px] text-slate-400 truncate">Hỗ trợ thông tin & mạng lưới</p>
             </div>
-            <ChevronRight size={16} className="text-slate-500 group-hover:text-amber-400 group-hover:translate-x-0.5 transition-all" />
+            <ChevronRight size={16} className="text-slate-500 group-hover:text-primary-light group-hover:translate-x-0.5 transition-all" />
           </a>
 
           {/* Trang Liên Hệ & Đối Tác */}
@@ -140,7 +140,7 @@ export default function FloatingCTA() {
       >
         {!isOpen ? (
           <>
-            <MessageCircle size={26} strokeWidth={2.2} className="group-hover:scale-110 transition-transform duration-300" />
+            <MessageCircle size={22} strokeWidth={2.2} className="group-hover:scale-110 transition-transform duration-300" />
             {/* Green Online Radar Pulse Badge */}
             <span className="absolute -top-0.5 -right-0.5 flex h-4 w-4">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>

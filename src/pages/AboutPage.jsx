@@ -62,7 +62,7 @@ export default function AboutPage() {
               {/* Badge Over Photo */}
               <div className="absolute top-4 left-4 sm:top-6 sm:left-6 flex flex-wrap gap-2 z-10">
                 <span className="bg-primary/90 backdrop-blur-md text-white text-[11px] font-bold px-3 py-1.5 rounded-full uppercase tracking-wider shadow-lg flex items-center gap-1.5">
-                  <Sparkles size={13} className="text-amber-300" />
+                  <Sparkles size={13} className="text-primary-light" />
                   <span>Showroom 3S Trọng Điểm</span>
                 </span>
                 <span className="bg-slate-900/80 backdrop-blur-md text-slate-200 text-[11px] font-semibold px-3 py-1.5 rounded-full border border-white/10 hidden sm:inline-flex items-center gap-1.5">
