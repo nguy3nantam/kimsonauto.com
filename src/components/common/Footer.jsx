@@ -10,7 +10,7 @@ export default function Footer() {
   return (
     <footer className="bg-slate-950 text-slate-400 pt-16 pb-8 border-t border-slate-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-slate-800/80">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-slate-800/80">
           {/* Brand & Mission (Col 1-2) */}
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center gap-3">
@@ -25,7 +25,7 @@ export default function Footer() {
             </div>
 
             <p className="text-xs sm:text-sm text-slate-400 leading-relaxed max-w-md">
-              Hệ sinh thái ô tô Kim Sơn (Kim Sơn Automobiles) là tổ hợp dịch vụ và kỹ thuật ô tô toàn diện thuộc NPP Kim Sơn, kiến tạo chuỗi giá trị khép kín từ kinh doanh, sửa chữa kỹ thuật cao, phụ tùng chính phẩm đến cứu hộ giao thông 24/7.
+              Hệ sinh thái ô tô Kim Sơn (Kim Sơn Automobiles) là tổ hợp dịch vụ và kỹ thuật ô tô toàn diện hàng đầu khu vực Đông Nam Bộ, kiến tạo chuỗi giá trị khép kín từ kinh doanh, sửa chữa kỹ thuật cao, phụ tùng chính phẩm đến cứu hộ giao thông 24/7.
             </p>
 
             <div className="pt-2 space-y-2 text-xs text-slate-300">
@@ -44,7 +44,24 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Liên Kết Tập Đoàn */}
+          {/* Nền Tảng Phát Triển (Col 3) */}
+          <div>
+            <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-4 border-l-2 border-primary pl-2.5">
+              Nền Tảng Phát Triển
+            </h4>
+            <ul className="space-y-2 text-xs">
+              {ecosystemData.pillars.map((p) => (
+                <li key={p.id}>
+                  <Link to="/about" className="hover:text-white transition-colors flex items-center gap-1.5">
+                    <ChevronRight size={12} className="text-primary-light" />
+                    <span>{p.subtitle}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Liên Kết Tập Đoàn (Col 4) */}
           <div>
             <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-4 border-l-2 border-primary pl-2.5">
               Thông Tin Tập Đoàn
@@ -65,7 +82,7 @@ export default function Footer() {
               <li>
                 <Link to="/phat-trien-ben-vung" className="hover:text-white transition-colors flex items-center gap-1.5">
                   <ChevronRight size={12} className="text-primary-light" />
-                  <span>Phát Triển & ESG</span>
+                  <span>Phát Triển Bền Vững & ESG</span>
                 </Link>
               </li>
               <li>

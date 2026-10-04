@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Phone, Mail, MapPin, Clock, Send, CheckCircle2, ShieldAlert, Navigation, Loader2, Building2 } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, Send, CheckCircle2, ShieldAlert, Navigation, Loader2 } from 'lucide-react';
 import { branchesData } from '../data/branches';
 import { api } from '../services/api';
 
@@ -47,19 +47,12 @@ export default function ContactPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto">
-          <div className="flex justify-center mb-5">
-            <img
-              src="/logo-kimson.png"
-              alt="Kim Sơn Automobiles"
-              className="h-16 sm:h-20 w-auto"
-            />
-          </div>
           <span className="text-xs font-bold text-primary uppercase tracking-widest">LIÊN HỆ & MẠNG LƯỚI CHI NHÁNH</span>
           <h1 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight mt-2 mb-4">
-            Kim Sơn Automobiles
+            Đồng Hành Cùng Bạn Mọi Lúc Mọi Nơi
           </h1>
           <p className="text-base text-slate-600">
-            Hệ thống phân phối và cơ sở Kim Sơn Automobiles
+            Hệ thống 11 chi nhánh & cơ sở rộng khắp Đồng Nai và TP. Hồ Chí Minh luôn sẵn sàng phục vụ và giải quyết mọi nhu cầu của Quý khách.
           </p>
         </div>
 
@@ -71,8 +64,8 @@ export default function ContactPage() {
             </div>
             <div>
               <p className="text-xs text-slate-400 font-bold uppercase">Hotline Tổng Đài</p>
-              <a href="tel:0913757579" className="text-xl font-black text-slate-900 hover:text-primary transition-colors">
-                0913 75 75 79
+              <a href="tel:0908123456" className="text-xl font-black text-slate-900 hover:text-primary transition-colors">
+                0908 123 456
               </a>
               <p className="text-xs text-slate-500 mt-1">Hỗ trợ tư vấn mua xe & dịch vụ 24/7</p>
             </div>
@@ -84,8 +77,8 @@ export default function ContactPage() {
             </div>
             <div>
               <p className="text-xs text-red-500 font-bold uppercase">Cứu Hộ Khẩn Cấp</p>
-              <a href="tel:0917300008" className="text-xl font-black text-red-600 hover:text-red-700 transition-colors">
-                0917 300 008
+              <a href="tel:0908123456" className="text-xl font-black text-red-600 hover:text-red-700 transition-colors">
+                0908 123 456
               </a>
               <p className="text-xs text-slate-500 mt-1">Xe sàn trượt, kích bình, kéo xe 15-30 phút</p>
             </div>
@@ -107,27 +100,24 @@ export default function ContactPage() {
 
         {/* 11 Branches Directory */}
         <div>
+          <div className="text-center max-w-2xl mx-auto mb-10">
+            <h2 className="text-2xl sm:text-3xl font-black text-slate-900">Danh Sách 11 Chi Nhánh & Cơ Sở Kim Sơn</h2>
+            <p className="text-xs text-slate-500 mt-2">Bấm vào số điện thoại để gọi ngay hoặc bấm &ldquo;Chỉ đường&rdquo; để mở Google Maps.</p>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {branchesData.map((branch) => (
               <div 
                 key={branch.id}
-                className={`relative rounded-3xl p-6 transition-all duration-300 flex flex-col justify-between overflow-hidden ${
-                  branch.isMain
-                    ? 'bg-gradient-to-br from-amber-50 via-white to-white border-2 border-primary shadow-lg shadow-primary/15 ring-4 ring-primary/10 md:-translate-y-1 hover:-translate-y-2 hover:shadow-xl'
-                    : 'bg-white border border-slate-200/90 shadow-sm hover:shadow-xl hover:-translate-y-1'
-                }`}
+                className="bg-white rounded-3xl p-6 border border-slate-200/90 shadow-sm hover:shadow-xl transition-all flex flex-col justify-between"
               >
-                {branch.isMain && (
-                  <div className="absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r from-primary-dark via-primary to-amber-300" />
-                )}
                 <div>
                   <div className="flex justify-between items-start mb-3">
                     <span className="text-xs font-bold text-primary px-3 py-1 bg-primary-subtle/60 rounded-full">
                       {branch.area}
                     </span>
                     {branch.isMain && (
-                      <span className="inline-flex items-center gap-1.5 text-xs font-black bg-primary text-white px-3 py-1 rounded-full shadow-sm uppercase tracking-wide">
-                        <Building2 size={13} />
+                      <span className="text-xs font-bold bg-slate-900 text-white px-2.5 py-0.5 rounded-full">
                         Trụ Sở
                       </span>
                     )}
@@ -144,18 +134,9 @@ export default function ContactPage() {
                     <div className="flex items-center gap-2">
                       <Phone size={16} className="text-primary shrink-0" />
                       <a href={`tel:${branch.hotline.replace(/\s+/g, '')}`} className="font-bold text-slate-900 hover:text-primary">
-                        KD: {branch.hotline}
+                        {branch.hotline}
                       </a>
                     </div>
-
-                    {branch.hotlineService && (
-                      <div className="flex items-center gap-2">
-                        <Phone size={16} className="text-red-500 shrink-0" />
-                        <a href={`tel:${branch.hotlineService.replace(/\s+/g, '')}`} className="font-bold text-slate-900 hover:text-red-500">
-                          DV: {branch.hotlineService}
-                        </a>
-                      </div>
-                    )}
 
                     <div className="flex items-center gap-2">
                       <Clock size={16} className="text-primary shrink-0" />
@@ -259,7 +240,7 @@ export default function ContactPage() {
                       <input
                         type="tel"
                         required
-                        placeholder="0913 xxx xxx"
+                        placeholder="0908 xxx xxx"
                         value={form.phone}
                         onChange={(e) => setForm({ ...form, phone: e.target.value })}
                         className="w-full p-3 bg-white border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-primary"

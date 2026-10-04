@@ -720,7 +720,7 @@ export default function AdminUsers() {
                     type="tel"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    placeholder="0913 xxx xxx"
+                    placeholder="0908 xxx xxx"
                     className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:border-primary"
                   />
                 </div>

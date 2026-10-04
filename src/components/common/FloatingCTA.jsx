@@ -59,9 +59,9 @@ export default function FloatingCTA() {
           <div className="flex items-center gap-3 px-2 pb-2.5 border-b border-slate-800/80">
             <div className="relative w-10 h-10 rounded-full overflow-hidden ring-2 ring-emerald-500 shrink-0 shadow-md">
               <img 
-                src={withBasePath('/support-agent.jpg')} 
+                src={withBasePath('/support-agent.svg')} 
                 alt="CSKH Kim Sơn" 
-                className="w-full h-full object-cover" 
+                className="w-full h-full object-cover bg-emerald-50" 
               />
               <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-500 border border-white"></span>
             </div>
@@ -146,9 +146,9 @@ export default function FloatingCTA() {
         {!isOpen ? (
           <>
             <img 
-              src={withBasePath('/support-agent.jpg')} 
+              src={withBasePath('/support-agent.svg')} 
               alt="Hỗ trợ tổng đài Kim Sơn" 
-              className="w-full h-full object-cover rounded-full group-hover:scale-105 transition-transform duration-300"
+              className="w-full h-full object-cover rounded-full bg-emerald-50 group-hover:scale-105 transition-transform duration-300"
             />
             {/* Green Online Radar Pulse Badge */}
             <span className="absolute -top-0.5 -right-0.5 flex h-4 w-4">

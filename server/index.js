@@ -2,7 +2,6 @@ import express from 'express';
 import cors from 'cors';
 import path from 'path';
 import fs from 'fs';
-import crypto from 'crypto';
 import { fileURLToPath } from 'url';
 import { readData, writeData } from './db.js';
 
@@ -23,25 +22,6 @@ if (!fs.existsSync(uploadsDir)) {
 }
 app.use('/uploads', express.static(uploadsDir, { maxAge: '7d' }));
 
-// Password Hashing Helper using native PBKDF2
-const hashPassword = (password) => {
-  if (!password) return '';
-  const salt = crypto.randomBytes(16).toString('hex');
-  const hash = crypto.pbkdf2Sync(password, salt, 1000, 64, 'sha512').toString('hex');
-  return `$pbkdf2$${salt}$${hash}`;
-};
-
-const verifyPassword = (inputPassword, storedPassword) => {
-  if (!storedPassword || !inputPassword) return false;
-  if (storedPassword.startsWith('$pbkdf2$')) {
-    const [, , salt, hash] = storedPassword.split('$');
-    const inputHash = crypto.pbkdf2Sync(inputPassword, salt, 1000, 64, 'sha512').toString('hex');
-    return inputHash === hash;
-  }
-  // Backward compatibility with existing plain text passwords
-  return storedPassword === inputPassword;
-};
-
 // ==========================================
 // 1. AUTHENTICATION & ROLE MANAGEMENT API
 // ==========================================
@@ -57,20 +37,9 @@ app.post('/api/auth/login', async (req, res) => {
   const { username, password } = req.body;
   const users = await readData('users') || [];
   
-  const userIndex = users.findIndex(u => u.username === username && verifyPassword(password, u.password));
-  if (userIndex === -1) {
+  const user = users.find(u => u.username === username && u.password === password);
+  if (!user) {
     return res.status(401).json({ error: 'Tài khoản hoặc mật khẩu không chính xác' });
-  }
-
-  const user = users[userIndex];
-  if (user.status === 'inactive') {
-    return res.status(403).json({ error: 'Tài khoản đã bị tạm khóa. Vui lòng liên hệ quản trị viên.' });
-  }
-
-  // Transparently migrate plaintext password to hashed format
-  if (user.password && !user.password.startsWith('$pbkdf2$')) {
-    users[userIndex].password = hashPassword(password);
-    await writeData('users', users);
   }
 
   // Safe user profile with normalized role
@@ -109,7 +78,7 @@ app.post('/api/auth/register', async (req, res) => {
     email: (email || '').trim(),
     phone: (phone || '').trim(),
     username: username.trim(),
-    password: hashPassword(password),
+    password,
     role: 'User',
     status: 'active',
     createdAt: new Date().toISOString()
@@ -222,7 +191,7 @@ app.post('/api/users', async (req, res) => {
     email: (email || '').trim(),
     phone: (phone || '').trim(),
     username: username.trim(),
-    password: hashPassword(password),
+    password,
     role: finalRole,
     status: status || 'active',
     createdAt: new Date().toISOString()
@@ -277,7 +246,7 @@ app.put('/api/users/:id', async (req, res) => {
     ...existing,
     ...updateData,
     fullName: updateData.fullName || updateData.name || existing.fullName || existing.name,
-    password: password ? (password.startsWith('$pbkdf2$') ? password : hashPassword(password)) : existing.password,
+    password: password ? password : existing.password,
     updatedAt: new Date().toISOString()
   };
 
@@ -475,7 +444,7 @@ app.post('/api/sliders', async (req, res) => {
     description: (description || '').trim(),
     image: image.trim(),
     primaryButtonText: (primaryButtonText || 'Khám Phá Thêm').trim(),
-    primaryButtonLink: (primaryButtonLink || '/mang-luoi').trim(),
+    primaryButtonLink: (primaryButtonLink || '/linh-vuc').trim(),
     secondaryButtonText: (secondaryButtonText || 'Liên Hệ').trim(),
     secondaryButtonLink: (secondaryButtonLink || '/lien-he').trim(),
     order: Number(order) || (items.length + 1),
@@ -526,6 +495,7 @@ app.delete('/api/sliders/:id', async (req, res) => {
 // 2. DASHBOARD KPI STATS API
 // ==========================================
 app.get('/api/stats', async (req, res) => {
+  const pillars = await readData('pillars') || [];
   const branches = await readData('branches') || [];
   const news = await readData('news') || [];
   const contacts = await readData('contacts') || [];
@@ -535,6 +505,7 @@ app.get('/api/stats', async (req, res) => {
   const pendingContacts = contacts.filter(c => c.status === 'pending').length;
 
   res.json({
+    totalPillars: pillars.length,
     totalBranches: branches.length,
     totalNews: news.length,
     totalContacts: contacts.length,
@@ -544,6 +515,28 @@ app.get('/api/stats', async (req, res) => {
     totalCustomers: settings.totalCustomers || 50000,
     satisfactionRate: settings.satisfactionRate || '99%'
   });
+});
+
+// ==========================================
+// 3. PILLARS (5 TRỤ CỘT HỆ SINH THÁI) API
+// ==========================================
+app.get('/api/pillars', async (req, res) => {
+  const data = await readData('pillars') || [];
+  res.json(data);
+});
+
+app.put('/api/pillars/:id', async (req, res) => {
+  const { id } = req.params;
+  const pillars = await readData('pillars') || [];
+  const index = pillars.findIndex(p => p.id === id);
+
+  if (index === -1) {
+    return res.status(404).json({ error: 'Không tìm thấy trụ cột này' });
+  }
+
+  pillars[index] = { ...pillars[index], ...req.body };
+  await writeData('pillars', pillars);
+  res.json(pillars[index]);
 });
 
 // ==========================================
@@ -757,12 +750,8 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-app.use('/api', (req, res) => {
-  res.status(404).json({ error: 'API endpoint not found' });
-});
-
 // ==========================================
-// 9. STATIC FILES SERVING & SPA FALLBACK WITH DYNAMIC SEO
+// 9. STATIC FILES SERVING & SPA FALLBACK
 // ==========================================
 const distPath = path.join(__dirname, '..', 'dist');
 app.use(express.static(distPath, {
@@ -774,61 +763,9 @@ app.use(express.static(distPath, {
   }
 }));
 
-const PAGE_SEO = {
-  '/': {
-    title: 'Kim Sơn Automobiles - Cổng Thông Tin Hệ Sinh Thái Ô Tô',
-    desc: 'Tổ hợp hệ sinh thái ô tô toàn diện từ năm 2014 với chuỗi 11 chi nhánh & showroom VinFast, trung tâm kỹ thuật dịch vụ và cứu hộ 24/7 tại Đồng Nai và TP.HCM.'
-  },
-  '/about': {
-    title: 'Giới Thiệu - Kim Sơn Automobiles (2014 - 2026)',
-    desc: 'Hành trình hơn 12 năm kiến tạo chuỗi giá trị hệ sinh thái ô tô toàn diện của Kim Sơn Automobiles.'
-  },
-  '/mang-luoi': {
-    title: 'Hệ Thống 11 Chi Nhánh & Cơ Sở - Kim Sơn Automobiles',
-    desc: 'Mạng lưới 11 showroom 3S/1S VinFast và trung tâm dịch vụ kỹ thuật ủy quyền tại Đồng Nai và TP.HCM.'
-  },
-  '/phat-trien-ben-vung': {
-    title: 'Phát Triển Bền Vững (ESG) - Kim Sơn Automobiles',
-    desc: 'Cam kết chuyển đổi xanh, năng lượng sạch và chuẩn mực phát triển bền vững của Kim Sơn Automobiles.'
-  },
-  '/tin-tuc': {
-    title: 'Tin Tức & Thông Cáo Báo Chí - Kim Sơn Automobiles',
-    desc: 'Cập nhật tin tức sự kiện, thông cáo báo chí và hoạt động hợp tác chiến lược của Hệ sinh thái Kim Sơn.'
-  },
-  '/lien-he': {
-    title: 'Liên Hệ & Hợp Tác Doanh Nghiệp - Kim Sơn Automobiles',
-    desc: 'Trụ sở điều hành, liên hệ hợp tác B2B và tổng đài cứu hộ khẩn cấp 24/7 (Hotline: 0917 300 008).'
-  }
-};
-
-app.get('*', async (req, res) => {
-  try {
-    const indexPath = path.join(distPath, 'index.html');
-    let html = await fs.promises.readFile(indexPath, 'utf-8');
-    const pathClean = req.path.replace(/\/+$/, '') || '/';
-    const seo = PAGE_SEO[pathClean];
-
-    if (seo) {
-      const pageUrl = `https://kimsonauto.com${pathClean === '/' ? '' : pathClean}`;
-      html = html
-        .replace(/<title>.*?<\/title>/, `<title>${seo.title}</title>`)
-        .replace(/<meta name="title" content=".*?" \/>/, `<meta name="title" content="${seo.title}" />`)
-        .replace(/<meta name="description" content=".*?" \/>/, `<meta name="description" content="${seo.desc}" />`)
-        .replace(/<meta property="og:title" content=".*?" \/>/, `<meta property="og:title" content="${seo.title}" />`)
-        .replace(/<meta property="og:description" content=".*?" \/>/, `<meta property="og:description" content="${seo.desc}" />`)
-        .replace(/<meta property="og:url" content=".*?" \/>/, `<meta property="og:url" content="${pageUrl}" />`)
-        .replace(/<link rel="canonical" href=".*?" \/>/, `<link rel="canonical" href="${pageUrl}" />`)
-        .replace(/<meta name="twitter:title" content=".*?" \/>/, `<meta name="twitter:title" content="${seo.title}" />`)
-        .replace(/<meta name="twitter:description" content=".*?" \/>/, `<meta name="twitter:description" content="${seo.desc}" />`)
-        .replace(/<meta name="twitter:url" content=".*?" \/>/, `<meta name="twitter:url" content="${pageUrl}" />`);
-    }
-
-    res.setHeader('Content-Type', 'text/html; charset=utf-8');
-    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
-    res.send(html);
-  } catch (err) {
-    res.sendFile(path.join(distPath, 'index.html'));
-  }
+app.get('*', (req, res) => {
+  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+  res.sendFile(path.join(distPath, 'index.html'));
 });
 
 // START SERVER

@@ -13,6 +13,7 @@ import NetworkPage from './pages/NetworkPage';
 import SustainabilityPage from './pages/SustainabilityPage';
 import NewsPage from './pages/NewsPage';
 import ContactPage from './pages/ContactPage';
+import PillarsPage from './pages/PillarsPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 // Admin Backend Portal Components & Pages
@@ -20,6 +21,7 @@ import AdminLoginPage from './pages/admin/AdminLoginPage';
 import AdminLayout from './components/admin/AdminLayout';
 import AdminPortalHub from './pages/admin/AdminPortalHub';
 import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminPillars from './pages/admin/AdminPillars';
 import AdminBranches from './pages/admin/AdminBranches';
 import AdminNews from './pages/admin/AdminNews';
 import AdminContacts from './pages/admin/AdminContacts';
@@ -37,20 +39,22 @@ function BrandingManager() {
 const ROUTE_TITLES = {
   '/': 'Kim Sơn Automobiles - Cổng Thông Tin Hệ Sinh Thái Ô Tô',
   '/about': 'Giới Thiệu - Kim Sơn Automobiles',
-  '/mang-luoi': 'Hệ Thống Chi Nhánh & Cơ Sở - Kim Sơn Automobiles',
+  '/linh-vuc': 'Lĩnh Vực Hoạt Động - 5 Trụ Cột Hệ Sinh Thái - Kim Sơn Automobiles',
+  '/mang-luoi': 'Mạng Lưới 11 Chi Nhánh & Cơ Sở - Kim Sơn Automobiles',
   '/phat-trien-ben-vung': 'Phát Triển Bền Vững (ESG) - Kim Sơn Automobiles',
   '/tin-tuc': 'Tin Tức & Thông Cáo Báo Chí - Kim Sơn Automobiles',
-  '/lien-he': 'Liên Hệ & Mạng Lưới Chi Nhánh - Kim Sơn Automobiles',
+  '/lien-he': 'Liên Hệ & Hợp Tác B2B - Kim Sơn Automobiles',
   '/admin/login': 'Đăng Nhập Quản Trị - Kim Sơn Automobiles',
   '/register': 'Đăng Ký Thành Viên - Kim Sơn Automobiles',
   '/admin': 'Cổng Quản Trị - Kim Sơn Automobiles',
   '/admin/portal': 'Thông Báo & File Dùng Chung - Kim Sơn Portal',
   '/admin/dashboard': 'Tổng Quan Hệ Sinh Thái - Kim Sơn Admin',
   '/admin/sliders': 'Quản Lý Slider Trang Chủ - Kim Sơn Admin',
-  '/admin/users': 'Tài Khoản - Kim Sơn Admin',
-  '/admin/branches': 'Hệ Thống - Kim Sơn Admin',
-  '/admin/news': 'Tin Tức & Thông Báo - Kim Sơn Admin',
-  '/admin/contacts': 'Đối Tác - Kim Sơn Admin',
+  '/admin/users': 'Quản Lý Người Đăng Ký - Kim Sơn Admin',
+  '/admin/pillars': 'Nền Tảng Phát Triển - Kim Sơn Admin',
+  '/admin/branches': 'Mạng Lưới Chi Nhánh - Kim Sơn Admin',
+  '/admin/news': 'Quản Lý Tin Tức - Kim Sơn Admin',
+  '/admin/contacts': 'Yêu Cầu Hợp Tác - Kim Sơn Admin',
   '/admin/settings': 'Cài Đặt Hệ Thống - Kim Sơn Admin',
 };
 
@@ -98,8 +102,9 @@ export default function App() {
           <Route path="/tin-tuc" element={<NewsPage />} />
           <Route path="/lien-he" element={<ContactPage />} />
 
-          <Route path="/linh-vuc" element={<Navigate to="/mang-luoi" replace />} />
-          <Route path="/hoat-dong" element={<Navigate to="/mang-luoi" replace />} />
+          {/* Pillars / Activities */}
+          <Route path="/linh-vuc" element={<PillarsPage />} />
+          <Route path="/hoat-dong" element={<Navigate to="/linh-vuc" replace />} />
 
           {/* Aliases & Redirects */}
           <Route path="/vehicles" element={<Navigate to="/about" replace />} />
@@ -121,6 +126,7 @@ export default function App() {
           <Route path="portal" element={<AdminPortalHub />} />
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="sliders" element={<AdminSliders />} />
+          <Route path="pillars" element={<AdminPillars />} />
           <Route path="branches" element={<AdminBranches />} />
           <Route path="news" element={<AdminNews />} />
           <Route path="contacts" element={<AdminContacts />} />

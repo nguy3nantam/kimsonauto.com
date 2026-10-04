@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate, Outlet } from 'react-router-dom';
 import { 
   LayoutDashboard, 
+  Layers, 
   MapPin, 
   Newspaper, 
   Mail, 
@@ -34,22 +35,13 @@ export default function AdminLayout() {
   useEffect(() => {
     const token = localStorage.getItem('kimson_admin_token');
     if (!token) {
-      navigate('/admin/login', { replace: true });
+      navigate('/admin/login');
       return;
     }
     const userStr = localStorage.getItem('kimson_admin_user');
-    if (!userStr) {
-      localStorage.removeItem('kimson_admin_token');
-      navigate('/admin/login', { replace: true });
-      return;
-    }
-
-    try {
-      const u = JSON.parse(userStr);
-      if (!u || typeof u !== 'object' || !u.id || u.status === 'inactive') {
-        throw new Error('Invalid admin session');
-      }
-
+    if (userStr) {
+      try {
+        const u = JSON.parse(userStr);
         setCurrentUser(u);
         const role = u?.role || ((u?.id === '1' || u?.username === 'admin') ? 'Admin' : 'User');
         const userIsAdmin = role === 'Admin' || u?.id === '1' || u?.username === 'admin';
@@ -67,11 +59,9 @@ export default function AdminLayout() {
             navigate('/admin/portal', { replace: true });
           }
         }
-    } catch (error) {
-      console.warn('Phiên đăng nhập không hợp lệ:', error);
-      localStorage.removeItem('kimson_admin_token');
-      localStorage.removeItem('kimson_admin_user');
-      navigate('/admin/login', { replace: true });
+      } catch (e) {
+        console.error(e);
+      }
     }
   }, [navigate, location.pathname]);
 
@@ -83,12 +73,13 @@ export default function AdminLayout() {
 
   const adminNavItems = [
     { name: 'Thông Báo & File Dùng Chung', path: '/admin/portal', icon: FolderOpen },
-    { name: 'Tổng Quan', path: '/admin/dashboard', icon: LayoutDashboard },
-    { name: 'Slider', path: '/admin/sliders', icon: ImageIcon },
-    { name: 'Tài Khoản', path: '/admin/users', icon: Users },
-    { name: 'Hệ Thống', path: '/admin/branches', icon: MapPin },
-    { name: 'Tin Tức & Thông Báo', path: '/admin/news', icon: Newspaper },
-    { name: 'Đối Tác', path: '/admin/contacts', icon: Mail },
+    { name: 'Tổng Quan Hệ Sinh Thái', path: '/admin/dashboard', icon: LayoutDashboard },
+    { name: 'Slider Trang Chủ', path: '/admin/sliders', icon: ImageIcon },
+    { name: 'Người Đăng Ký & Phân Quyền', path: '/admin/users', icon: Users },
+    { name: 'Nền Tảng Phát Triển', path: '/admin/pillars', icon: Layers },
+    { name: 'Mạng Lưới 11 Chi Nhánh', path: '/admin/branches', icon: MapPin },
+    { name: 'Tin Tức & Thông Cáo', path: '/admin/news', icon: Newspaper },
+    { name: 'Yêu Cầu Hợp Tác B2B', path: '/admin/contacts', icon: Mail },
     { name: 'Cài Đặt & Thông Tin', path: '/admin/settings', icon: Settings },
   ];
 
@@ -195,6 +186,9 @@ export default function AdminLayout() {
 
           {/* Navigation Items */}
           <nav className="p-4 space-y-1.5">
+            <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider px-3 mb-2">
+              {isAdmin ? 'Quản Trị Hệ Sinh Thái' : isLeader ? 'Quản Trị Cấp Chi Nhánh' : 'Cổng Thông Tin Thành Viên'}
+            </div>
             {navItems.map((item) => {
               const Icon = item.icon;
               const active = isActive(item.path);

@@ -153,7 +153,7 @@ export default function AdminBranches() {
                   required
                   value={formData.hotline || ''}
                   onChange={(e) => setFormData({ ...formData, hotline: e.target.value })}
-                  placeholder="VD: 0913 75 75 79"
+                  placeholder="VD: 0908 123 456"
                   className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-mono focus:outline-none focus:border-primary"
                 />
               </div>
@@ -204,8 +204,7 @@ export default function AdminBranches() {
                     {b.address}
                   </td>
                   <td className="py-4 px-6 font-mono font-semibold text-primary">
-                    <div>{b.hotline}</div>
-                    {b.hotlineService && <div className="text-red-500 text-[11px]">DV: {b.hotlineService}</div>}
+                    {b.hotline}
                   </td>
                   <td className="py-4 px-6 text-slate-600">
                     {b.role}
