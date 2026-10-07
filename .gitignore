@@ -9,6 +9,8 @@ dist/
 server/data/*.sqlite*
 server/data/*credentials*
 server/uploads/
+server/backups/
 backups/
+*.tar.gz
 test-results/
 playwright-report/

@@ -82,7 +82,7 @@ export function requireUser(req) {
 }
 export function requireRole(req, ...roles) {
   const user = requireUser(req);
-  if (!roles.includes(user.role)) throw httpError(403, 'B?n kh?ng c? quy?n th?c hi?n thao t?c n?y');
+  if (!roles.includes(user.role)) throw httpError(403, 'Bạn không có quyền thực hiện thao tác này');
   return user;
 }
 const isAll = value => !value || ['all', 'tất cả', 'tất cả đơn vị', 'tất cả bộ phận'].includes(norm(value));

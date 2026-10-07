@@ -1,7 +1,6 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
-import { 
-  Award, ShieldCheck, Users, Target, Clock, Wrench, CheckCircle2, 
+import { withBasePath } from '../utils/assets';
+import { ShieldCheck, Target, Clock, Wrench, CheckCircle2, 
   MapPin, Phone, Sparkles, ChevronRight, Zap, ExternalLink 
 } from 'lucide-react';
 
@@ -44,7 +43,7 @@ export default function AboutPage() {
             Kim Sơn Automobiles
           </h1>
           <p className="text-base text-slate-600">
-            Hơn 12 năm kiến tạo niềm tin và khẳng định vị thế dẫn đầu trong lĩnh vực kinh doanh xe và chăm sóc kỹ thuật ô tô tại Đông Nam Bộ.
+            Hơn 12 năm kiến tạo niềm tin và khẳng định vị thế dẫn đầu trong lĩnh vực kinh doanh xe và chăm sóc kỹ thuật ô tô thuộc NPP Kim Sơn.
           </p>
         </div>
 
@@ -54,7 +53,7 @@ export default function AboutPage() {
             {/* Image Box */}
             <div className="lg:col-span-7 relative group overflow-hidden min-h-[340px] sm:min-h-[440px] flex items-center bg-black">
               <img 
-                src="/vinfast-kimson-bienhoa.jpg" 
+                src={withBasePath('/vinfast-kimson-bienhoa.jpg')} 
                 alt="Showroom VinFast Kim Sơn Biên Hoà" 
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
@@ -63,7 +62,7 @@ export default function AboutPage() {
               {/* Badge Over Photo */}
               <div className="absolute top-4 left-4 sm:top-6 sm:left-6 flex flex-wrap gap-2 z-10">
                 <span className="bg-primary/90 backdrop-blur-md text-white text-[11px] font-bold px-3 py-1.5 rounded-full uppercase tracking-wider shadow-lg flex items-center gap-1.5">
-                  <Sparkles size={13} className="text-amber-300" />
+                  <Sparkles size={13} className="text-primary-light" />
                   <span>Showroom 3S Trọng Điểm</span>
                 </span>
                 <span className="bg-slate-900/80 backdrop-blur-md text-slate-200 text-[11px] font-semibold px-3 py-1.5 rounded-full border border-white/10 hidden sm:inline-flex items-center gap-1.5">
@@ -114,7 +113,7 @@ export default function AboutPage() {
                   </div>
                   <div className="flex items-center gap-2.5 text-xs text-slate-300">
                     <Phone size={16} className="text-primary-light shrink-0" />
-                    <span>Hotline: <strong className="text-white font-mono">0908 123 456</strong></span>
+                    <span>Hotline: <strong className="text-white font-mono">0913 75 75 79</strong></span>
                   </div>
                 </div>
               </div>
@@ -167,14 +166,14 @@ export default function AboutPage() {
                 Đồng Hành An Toàn Trên Mọi Chặng Đường
               </h2>
               <p className="text-sm text-slate-600 leading-relaxed">
-                Tại Kim Sơn Automobiles, chúng tôi không chỉ bán xe hay sửa chữa phương tiện, mà chúng tôi trao gửi sự an tâm tuyệt đối cho khách hàng và gia đình. Mọi chiếc xe lăn bánh từ xưởng đều được chăm sóc bằng sự tỉ mỉ của những người thợ tâm huyết nhất.
+                Tại Kim Sơn Automobiles, chúng tôi đồng hành cùng khách hàng, đối tác và cộng đồng để kiến tạo chuỗi giá trị hệ sinh thái dịch vụ, kỹ thuật và giải pháp ô tô toàn diện với sự an tâm tuyệt đối trên mọi hành trình.
               </p>
             </div>
 
             <div>
               <span className="text-xs font-bold text-primary uppercase">Tầm nhìn</span>
               <h2 className="text-2xl sm:text-3xl font-black text-slate-900 mt-1 mb-3">
-                Hệ Sinh Thái Ô Tô Số 1 Khu Vực Đông Nam Bộ
+                Hệ Sinh Thái Ô Tô Số 1 Thuộc NPP Kim Sơn
               </h2>
               <p className="text-sm text-slate-600 leading-relaxed">
                 Đón đầu làn sóng chuyển đổi năng lượng xanh, Kim Sơn tiếp tục mở rộng quy mô, nâng cao chất lượng dịch vụ xe điện và xe truyền thống, trở thành điểm đến tin cậy của hàng trăm nghìn chủ xe.
@@ -229,7 +228,7 @@ export default function AboutPage() {
         <div className="bg-secondary text-white rounded-3xl p-8 sm:p-12 border border-slate-800 shadow-2xl">
           <div className="text-center max-w-2xl mx-auto mb-12">
             <span className="text-xs font-bold text-primary-light uppercase tracking-wider">HÀNH TRÌNH PHÁT TRIỂN</span>
-            <h3 className="text-3xl font-black mt-1">Cột Mốc Lịch Sử (2014 - 2026)</h3>
+            <h3 className="text-3xl font-black mt-1">Cột Mốc Lịch Sử</h3>
           </div>
 
           <div className="space-y-8 relative before:absolute before:inset-0 before:left-4 md:before:left-1/2 before:w-0.5 before:bg-slate-700">

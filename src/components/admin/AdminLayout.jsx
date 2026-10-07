@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate, Outlet } from 'react-router-dom';
 import { 
   LayoutDashboard, 
@@ -13,17 +13,16 @@ import {
   ExternalLink, 
   Menu, 
   X,
-  Bell,
-  ShieldCheck,
-  Building2,
-  Briefcase,
   Image as ImageIcon
 } from 'lucide-react';
 import { api } from '../../services/api';
 import { useBranding } from '../../services/branding';
+import { sanitizeAssetUrl, withBasePath } from '../../utils/assets';
 
 export default function AdminLayout() {
   const branding = useBranding();
+  const logoWhiteSrc = encodeURI(sanitizeAssetUrl(branding.logoWhite, withBasePath('/logo-kimson-white.png')));
+  const logoSrc = encodeURI(sanitizeAssetUrl(branding.logo, withBasePath('/logo-kimson.png')));
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const [checkingSession, setCheckingSession] = useState(true);
@@ -33,7 +32,6 @@ export default function AdminLayout() {
   const userRole = currentUser?.role || ((currentUser?.id === '1' || currentUser?.username === 'admin') ? 'Admin' : 'User');
   const isAdmin = userRole === 'Admin';
   const isLeader = userRole === 'Leader';
-  const isUser = !isAdmin && !isLeader;
 
   useEffect(() => {
     let active = true;
@@ -97,7 +95,7 @@ export default function AdminLayout() {
   const getRoleBadge = () => {
     if (isAdmin) {
       return (
-        <span className="text-[9px] font-black text-amber-300 uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-500/20 border border-amber-400/40 shrink-0">
+        <span className="text-[9px] font-black text-primary-light uppercase tracking-wider px-2 py-0.5 rounded-full bg-primary-subtle0/20 border border-primary/40 shrink-0">
           ADMIN
         </span>
       );
@@ -119,7 +117,7 @@ export default function AdminLayout() {
   const getHeaderRoleBadge = () => {
     if (isAdmin) {
       return (
-        <span className="px-2.5 py-1 rounded-full bg-amber-50 border border-amber-300 text-amber-700 text-xs font-black">
+        <span className="px-2.5 py-1 rounded-full bg-primary-subtle border border-primary/40 text-primary text-xs font-black">
           Toàn Quyền Admin
         </span>
       );
@@ -159,10 +157,11 @@ export default function AdminLayout() {
           {/* Brand Logo Header */}
           <div className="h-20 px-6 border-b border-slate-800 flex items-center justify-between">
             <Link to="/admin" className="flex items-center gap-2.5">
-              <img 
-                src={branding.logoWhite || '/logo-kimson-white.png'} 
-                alt="Kim Sơn Automobiles" 
-                className="h-10 w-auto object-contain"
+              <div
+                role="img"
+                aria-label="Kim Sơn Automobiles"
+                className="h-10 w-32 bg-center bg-contain bg-no-repeat"
+                style={{ backgroundImage: `url("${logoWhiteSrc}")` }}
               />
               {getRoleBadge()}
             </Link>
@@ -239,7 +238,12 @@ export default function AdminLayout() {
             </button>
             <div className="flex items-center gap-3">
               <Link to="/admin" className="lg:hidden">
-                <img src={branding.logo || '/logo-kimson.png'} alt="Kim Sơn Automobiles" className="h-7 w-auto object-contain" />
+                <div
+                  role="img"
+                  aria-label="Kim Sơn Automobiles"
+                  className="h-7 w-24 bg-center bg-contain bg-no-repeat"
+                  style={{ backgroundImage: `url("${logoSrc}")` }}
+                />
               </Link>
               <h2 className="text-base sm:text-xl font-extrabold text-slate-900 tracking-tight">
                 {isAdmin ? 'Bảng Quản Trị Hệ Sinh Thái Kim Sơn' : isLeader ? `Quản Trị Chi Nhánh: ${currentUser?.unit || ''}` : 'Cổng Thông Tin & File Dùng Chung'}
@@ -264,7 +268,7 @@ export default function AdminLayout() {
 
               <div className={`w-9 h-9 rounded-xl flex items-center justify-center font-black text-xs shadow-xs ${
                 isAdmin 
-                  ? 'bg-gradient-to-br from-amber-500 to-amber-700 text-white'
+                  ? 'bg-gradient-to-br from-primary-subtle0 to-primary-dark text-white'
                   : isLeader 
                   ? 'bg-gradient-to-br from-blue-600 to-blue-800 text-white'
                   : 'bg-gradient-to-br from-emerald-600 to-emerald-800 text-white'

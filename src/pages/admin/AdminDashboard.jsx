@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Layers, 
@@ -7,12 +7,8 @@ import {
   Mail, 
   Users, 
   Building2,
-  Briefcase,
-  CheckCircle2, 
-  Clock, 
-  ArrowUpRight,
-  TrendingUp,
-  AlertCircle
+  Briefcase, 
+  ArrowUpRight
 } from 'lucide-react';
 import { api } from '../../services/api';
 
@@ -30,7 +26,6 @@ export default function AdminDashboard() {
   });
   const [recentContacts, setRecentContacts] = useState([]);
   const [recentUsers, setRecentUsers] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadData() {
@@ -46,8 +41,6 @@ export default function AdminDashboard() {
         if (usersData) setRecentUsers(usersData.slice(0, 5));
       } catch (err) {
         console.error('Error loading dashboard:', err);
-      } finally {
-        setLoading(false);
       }
     }
     loadData();
@@ -83,7 +76,7 @@ export default function AdminDashboard() {
       value: stats.pendingContacts,
       desc: `Tổng số: ${stats.totalContacts} liên hệ`,
       icon: Mail,
-      color: 'from-amber-600 to-amber-700',
+      color: 'from-primary-dark to-primary-dark',
       link: '/admin/contacts'
     },
     {
@@ -180,7 +173,7 @@ export default function AdminDashboard() {
                     <td className="py-3.5 px-6">
                       <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold ${
                         c.status === 'pending'
-                          ? 'bg-amber-50 text-amber-700 border border-amber-200'
+                          ? 'bg-primary-subtle text-primary border border-primary/30'
                           : c.status === 'contacted'
                           ? 'bg-blue-50 text-blue-700 border border-blue-200'
                           : 'bg-emerald-50 text-emerald-700 border border-emerald-200'

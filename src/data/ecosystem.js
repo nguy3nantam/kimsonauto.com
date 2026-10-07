@@ -1,16 +1,18 @@
+import { withBasePath } from '../utils/assets';
+
 export const ecosystemData = {
   name: 'KIM SƠN ECOSYSTEM',
   legalName: 'HỆ SINH THÁI Ô TÔ KIM SƠN (KIM SƠN AUTOMOBILES)',
   foundingYear: 2014,
-  headquarters: 'Số 18 Đường Số 7, Phường An Phú, TP. Thủ Đức, TP. Hồ Chí Minh',
-  hotline: '0908 123 456',
+  headquarters: 'Số 643 Quốc Lộ 1, Khu Phố 27, Phường Long Bình, Thành Phố Đồng Nai',
+  hotline: '0913 75 75 79',
   email: 'contact@kimsonauto.com',
   website: 'kimsonauto.com',
   slogan: 'Kiến Tạo Giá Trị - Nâng Tầm Trải Nghiệm Ô Tô Việt',
   
   stats: [
     { number: '12+', label: 'Năm Hình Thành & Phát Triển', desc: 'Từ nền tảng xưởng kỹ thuật năm 2014' },
-    { number: '05', label: 'Nền Tảng Phát Triển', desc: 'Chuỗi giá trị ô tô khép kín' },
+    { number: '24/7', label: 'Hỗ Trợ & Cứu Hộ', desc: 'Đồng hành trên mọi hành trình' },
     { number: '11+', label: 'Cơ Sở & Showroom Dịch Vụ', desc: 'Bao phủ Đồng Nai & TP. Hồ Chí Minh' },
     { number: '300+', label: 'Kỹ Sư & Chuyên Viên Kỹ Thuật', desc: 'Đào tạo bài bản theo quy chuẩn quốc tế' },
     { number: '50.000+', label: 'Khách Hàng & Đối Tác Tin Chọn', desc: 'Đồng hành trên mọi nẻo đường' },
@@ -35,7 +37,7 @@ export const ecosystemData = {
         'Kiểm định chất lượng 160 bước chuẩn kỹ thuật cho xe đã qua sử dụng',
         'Giải pháp sở hữu xe trọn gói cho cá nhân, doanh nghiệp và đối tác vận tải'
       ],
-      image: '/vinfast-kimson-bienhoa.jpg'
+      image: withBasePath('/vinfast-kimson-bienhoa.jpg')
     },
     {
       id: 'engineering',
@@ -100,7 +102,7 @@ export const ecosystemData = {
       badge: 'Nền Tảng An Sinh',
       tagline: 'Điểm tựa khẩn cấp vững vàng trên mọi hành trình giao thông',
       summary: 'Đội xe cứu hộ chuyên dụng sàn trượt hiện đại ứng trực 24/7/365, tiếp cận hiện trường nhanh chóng trong 15-30 phút.',
-      description: 'Hạ tầng cứu hộ giao thông Kim Sơn là mắt xích an sinh quan trọng của hệ sinh thái, bảo vệ người điều khiển phương tiện trước mọi rủi ro dọc tuyến Quốc lộ 51, cao tốc Long Thành - Dầu Giây và các đô thị lớn tại Đông Nam Bộ.',
+      description: 'Hạ tầng cứu hộ giao thông Kim Sơn là mắt xích an sinh quan trọng của hệ sinh thái, bảo vệ người điều khiển phương tiện trước mọi rủi ro dọc tuyến Quốc lộ 51, cao tốc Long Thành - Dầu Giây và các đô thị lớn thuộc NPP Kim Sơn.',
       capabilities: [
         'Đội xe cứu hộ sàn trượt hiện đại, kéo cẩu an toàn không xước gầm',
         'Tổng đài ứng cứu khẩn cấp 24/7 phục vụ 365 ngày không nghỉ',
@@ -136,7 +138,7 @@ export const ecosystemData = {
     {
       year: '2026',
       title: 'Hệ Sinh Thái Ô Tô Kim Sơn Toàn Diện',
-      description: 'Chính thức định vị mô hình Hệ Sinh Thái Ô Tô đa lĩnh vực với 5 trụ cột kinh doanh và chuỗi 11 chi nhánh, showroom trọng điểm kết nối giữa TP.HCM và Đồng Nai.'
+      description: 'Chính thức định vị mô hình Hệ Sinh Thái Ô Tô toàn diện với chuỗi 11 chi nhánh và showroom trọng điểm kết nối giữa TP.HCM và Đồng Nai.'
     }
   ],
 
@@ -160,12 +162,13 @@ export const ecosystemData = {
   branches: [
     {
       id: 'vinfast-bien-hoa',
-      name: 'VinFast Kim Sơn Biên Hoà',
+      name: 'VinFast Kim Sơn Biên Hòa',
       role: 'Showroom & Trung Tâm Dịch Vụ Xe Điện VinFast',
       address: '643 Quốc Lộ 1, KP. 27, P. Long Bình, TP. Biên Hòa, Tỉnh Đồng Nai',
-      hotline: '0908 123 456',
-      image: '/vinfast-kimson-bienhoa.jpg',
-      features: ['Showroom Xe VinFast', 'Bảo Dưỡng Định Kỳ', 'Xưởng Kỹ Thuật', 'Trạm Sạc Nhanh']
+      hotline: '0913 75 75 79',
+      image: withBasePath('/vinfast-kimson-bienhoa.jpg'),
+      features: ['Showroom Xe VinFast', 'Bảo Dưỡng Định Kỳ', 'Xưởng Kỹ Thuật', 'Trạm Sạc Nhanh'],
+      isMain: true
     },
     {
       id: 'vinfast-buu-long',
@@ -242,10 +245,11 @@ export const ecosystemData = {
     {
       id: 'gf-kim-son-hcm',
       name: 'GF Kim Sơn Hồ Chí Minh',
-      role: 'Trụ Sở Điều Hành Hệ Sinh Thái Kim Sơn (Green Future)',
+      role: 'Văn Phòng Điều Hành Hệ Sinh Thái Kim Sơn (Green Future)',
       address: 'Đường Số 37, Khu đô thị An Phú An Khánh, Bình Trưng, TP.Hồ Chí Minh',
-      hotline: '0908 123 456',
-      features: ['Trụ Sở Tập Đoàn', 'Trung Tâm Điều Phối Hệ Sinh Thái', 'Dự Án Chuyển Đổi Xanh']
+      hotline: '0913 75 75 79',
+      features: ['Văn Phòng Điều Hành', 'Trung Tâm Điều Phối Hệ Sinh Thái', 'Dự Án Chuyển Đổi Xanh'],
+      isMain: false
     }
   ],
 
@@ -258,7 +262,7 @@ export const ecosystemData = {
       date: '25/09/2026',
       readTime: '4 phút đọc',
       image: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&q=80&w=900',
-      summary: 'Hoàn thiện 5 trụ cột hoạt động khép kín, tiếp tục mở rộng mạng lưới trạm dịch vụ đón đầu các hạ tầng giao thông trọng điểm phía Nam.'
+      summary: 'Tiếp tục mở rộng mạng lưới showroom và trạm dịch vụ, đón đầu các hạ tầng giao thông trọng điểm phía Nam.'
     },
     {
       id: '2',

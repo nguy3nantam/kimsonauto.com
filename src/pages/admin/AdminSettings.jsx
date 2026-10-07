@@ -1,23 +1,17 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { 
   Settings, 
   Save, 
   CheckCircle2, 
   Building2, 
-  Phone, 
-  Mail, 
-  Globe, 
   Image as ImageIcon,
   Upload,
   RefreshCw,
-  ExternalLink,
-  Sparkles,
-  Layout,
-  Check,
   AlertCircle
 } from 'lucide-react';
 import { api } from '../../services/api';
 import { DEFAULT_BRANDING, applyFavicon } from '../../services/branding';
+import { withBasePath } from '../../utils/assets';
 
 export default function AdminSettings() {
   const [activeTab, setActiveTab] = useState('branding'); // 'branding' | 'general'
@@ -128,7 +122,7 @@ export default function AdminSettings() {
     e.preventDefault();
     try {
       setLoading(true);
-      const updated = await api.updateSettings(settings);
+      await api.updateSettings(settings);
       
       // Update local storage and dispatch event for immediate UI reflection
       const brandingData = {
@@ -156,11 +150,11 @@ export default function AdminSettings() {
   };
 
   const presets = {
-    logoDefault: '/logo-kimson.png',
-    logoWhite: '/logo-kimson-white.png',
-    favicon3D: '/favicon.png',
-    favicon32: '/favicon-32x32.png',
-    faviconApple: '/apple-touch-icon.png'
+    logoDefault: withBasePath('/logo-kimson.png'),
+    logoWhite: withBasePath('/logo-kimson-white.png'),
+    favicon3D: withBasePath('/favicon.png'),
+    favicon32: withBasePath('/favicon-32x32.png'),
+    faviconApple: withBasePath('/apple-touch-icon.png')
   };
 
   return (
@@ -168,7 +162,7 @@ export default function AdminSettings() {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-slate-200/90 shadow-xs">
         <div className="flex items-center gap-3">
-          <div className="p-2.5 bg-amber-50 text-primary rounded-xl">
+          <div className="p-2.5 bg-primary-subtle text-primary rounded-xl">
             <Settings size={24} />
           </div>
           <div>
@@ -332,7 +326,7 @@ export default function AdminSettings() {
             <div className="bg-white rounded-2xl border border-slate-200/90 shadow-xs p-6 space-y-4">
               <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                 <div className="flex items-center gap-2">
-                  <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-primary-subtle0" />
                   <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider">
                     2. Logo Website Bản Nền Tối (Dark / White Logo)
                   </h3>

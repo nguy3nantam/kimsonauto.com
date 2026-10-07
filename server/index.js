@@ -32,7 +32,7 @@ const limiter = (prefix, limit) => (req, res, next) => {
   }
   if (++bucket.count > limit) {
     res.set('Retry-After', String(Math.ceil((bucket.until - now) / 1000)));
-    return res.status(429).json({ error: 'Qu? nhi?u y?u c?u. Vui l?ng th? l?i sau ?t ph?t.' });
+    return res.status(429).json({ error: 'Quá nhiều yêu cầu. Vui lòng thử lại sau ít phút.' });
   }
   next();
 };
@@ -67,8 +67,8 @@ const text = z.string().trim().max(2000);
 const short = z.string().trim().max(250);
 const required = short.min(1);
 const email = z.union([z.literal(''), z.string().email().max(250)]);
-const image = z.string().max(2048).refine(value => !value || /^\/(?!\/)/.test(value) || /^https:\/\//.test(value), '???ng d?n ?nh ph?i l? HTTPS ho?c ???ng d?n n?i b?');
-const password = z.string().min(12, 'M?t kh?u c?n ?t nh?t 12 k? t?').max(128);
+const image = z.string().max(2048).refine(value => !value || /^\/(?!\/)/.test(value) || /^https:\/\//.test(value), 'Đường dẫn ảnh phải là HTTPS hoặc đường dẫn nội bộ');
+const password = z.string().min(12, 'Mật khẩu cần ít nhất 12 ký tự').max(128);
 const role = z.enum(['Admin', 'Leader', 'User']);
 const userFields = z.object({ username: z.string().trim().min(3).max(80).regex(/^[a-zA-Z0-9_.-]+$/), password, fullName: required, name: short.optional(), unit: short, department: short, email: email.optional(), phone: short.optional(), role, status: z.enum(['active', 'inactive']) });
 const contact = z.object({ name: required, fullName: short.optional(), phone: z.string().trim().min(6).max(30).regex(/^[+\d ()-]+$/), email: email.optional(), company: short.optional(), branch: short.optional(), message: text.optional(), subject: short.optional(), type: z.enum(['contact', 'booking', 'testdrive']).optional(), service: short.optional(), serviceType: short.optional(), carModel: short.optional(), date: short.optional(), timeSlot: short.optional() });
@@ -84,19 +84,19 @@ const input = (schema, req) => schema.parse(req.body);
 const stamp = () => new Date().toISOString();
 const findItem = (items, id) => {
   const item = items.find(x => String(x.id) === id);
-  if (!item) throw httpError(404, 'Kh?ng t?m th?y d? li?u');
+  if (!item) throw httpError(404, 'Không tìm thấy dữ liệu');
   return item;
 };
 const checkUserScope = (actor, target) => {
   if (actor.role === 'Admin') return;
-  if (actor.role !== 'Leader' || target.role !== 'User' || !actor.unit || !actor.department || norm(actor.unit) !== norm(target.unit) || norm(actor.department) !== norm(target.department)) throw httpError(403, 'B?n kh?ng c? quy?n qu?n l? ng??i d?ng n?y');
+  if (actor.role !== 'Leader' || target.role !== 'User' || !actor.unit || !actor.department || norm(actor.unit) !== norm(target.unit) || norm(actor.department) !== norm(target.department)) throw httpError(403, 'Bạn không có quyền quản lý người dùng này');
 };
 
 app.get('/api/health', route((_req, res) => { database.prepare('SELECT 1').get(); res.json({ status: 'ok' }); }));
 app.post('/api/auth/login', route(async (req, res) => {
   const data = input(z.object({ username: required, password: z.string().min(1).max(128) }), req);
   const user = readData('users').find(u => norm(u.username) === norm(data.username));
-  if (!user || user.status !== 'active' || !await verifyPassword(data.password, user.passwordHash)) throw httpError(401, 'T?i kho?n ho?c m?t kh?u kh?ng ch?nh x?c');
+  if (!user || user.status !== 'active' || !await verifyPassword(data.password, user.passwordHash)) throw httpError(401, 'Tài khoản hoặc mật khẩu không chính xác');
   createSession(req, res, user); audit(user, 'login', user.id); res.json({ user: profile(user) });
 }));
 app.post('/api/auth/logout', route((req, res) => { logout(req, res); res.json({ success: true }); }));
@@ -107,7 +107,7 @@ app.post('/api/auth/register', route(async (req, res) => {
   delete data.password;
   const user = { ...data, id: randomUUID(), role: 'User', status: 'active', passwordHash, createdAt: stamp() };
   updateData('users', users => {
-    if (users.some(u => norm(u.username) === norm(user.username))) throw httpError(409, 'T?n t?i kho?n ?? t?n t?i');
+    if (users.some(u => norm(u.username) === norm(user.username))) throw httpError(409, 'Tên tài khoản đã tồn tại');
     users.push(user);
   });
   createSession(req, res, user); audit(user, 'register', user.id); res.status(201).json({ user: profile(user) });
@@ -127,7 +127,7 @@ app.post('/api/users', route(async (req, res) => {
   const passwordHash = await hashPassword(data.password); delete data.password;
   const user = { ...data, id: randomUUID(), passwordHash, createdAt: stamp() };
   updateData('users', users => {
-    if (users.some(u => norm(u.username) === norm(user.username))) throw httpError(409, 'T?n t?i kho?n ?? t?n t?i');
+    if (users.some(u => norm(u.username) === norm(user.username))) throw httpError(409, 'Tên tài khoản đã tồn tại');
     users.push(user);
   });
   audit(actor, 'users.create', user.id); res.status(201).json(profile(user));
@@ -140,7 +140,7 @@ app.put('/api/users/:id', route(async (req, res) => {
   const user = updateData('users', users => {
     const target = findItem(users, req.params.id); checkUserScope(actor, target);
     if (actor.role === 'Leader') { data.role = 'User'; data.unit = actor.unit; data.department = actor.department; }
-    if (target.role === 'Admin' && target.status === 'active' && (data.role && data.role !== 'Admin' || data.status === 'inactive') && users.filter(u => u.role === 'Admin' && u.status === 'active').length <= 1) throw httpError(400, 'C?n gi? ?t nh?t m?t qu?n tr? vi?n ?ang ho?t ??ng');
+    if (target.role === 'Admin' && target.status === 'active' && (data.role && data.role !== 'Admin' || data.status === 'inactive') && users.filter(u => u.role === 'Admin' && u.status === 'active').length <= 1) throw httpError(400, 'Cần giữ ít nhất một quản trị viên đang hoạt động');
     Object.assign(target, data, { updatedAt: stamp() }); return target;
   });
   if (data.passwordHash || data.status || data.role) revokeSessions(user.id);
@@ -150,7 +150,7 @@ app.delete('/api/users/:id', route((req, res) => {
   const actor = requireRole(req, 'Admin', 'Leader');
   updateData('users', users => {
     const target = findItem(users, req.params.id); checkUserScope(actor, target);
-    if (target.id === actor.id || target.role === 'Admin') throw httpError(400, 'Kh?ng th? x?a t?i kho?n qu?n tr? vi?n');
+    if (target.id === actor.id || target.role === 'Admin') throw httpError(400, 'Không thể xóa tài khoản quản trị viên');
     users.splice(users.indexOf(target), 1);
   });
   revokeSessions(req.params.id); audit(actor, 'users.delete', req.params.id); res.json({ success: true });
@@ -168,7 +168,7 @@ for (const name of ['branches', 'news', 'pillars', 'esg', 'sliders']) {
   app.post(`/api/${name}`, route((req, res) => {
     const actor = requireRole(req, 'Admin'); const data = input(schemas[name], req);
     const item = { ...data, id: randomUUID(), createdAt: stamp() };
-    if (name === 'news') { item.date ||= new Date().toLocaleDateString('vi-VN'); item.readTime ||= '3 ph?t ??c'; }
+    if (name === 'news') { item.date ||= new Date().toLocaleDateString('vi-VN'); item.readTime ||= '3 phút đọc'; }
     updateData(name, items => { items.push(item); }); audit(actor, `${name}.create`, item.id); res.status(201).json(item);
   }));
   app.put(`/api/${name}/:id`, route((req, res) => {
@@ -186,14 +186,14 @@ app.post('/api/sliders/reorder', route((req, res) => {
   const actor = requireRole(req, 'Admin');
   const { ids } = input(z.object({ ids: z.array(required).max(1000) }), req);
   const items = updateData('sliders', slides => {
-    if (ids.length !== slides.length || new Set(ids).size !== ids.length || ids.some(id => !slides.some(s => s.id === id))) throw httpError(409, 'Danh s?ch slider ?? thay ??i. Vui l?ng t?i l?i.');
+    if (ids.length !== slides.length || new Set(ids).size !== ids.length || ids.some(id => !slides.some(s => s.id === id))) throw httpError(409, 'Danh sách slider đã thay đổi. Vui lòng tải lại.');
     slides.forEach(s => { s.order = ids.indexOf(s.id) + 1; }); return slides;
   });
   audit(actor, 'sliders.reorder'); res.json(items);
 }));
 app.get('/api/news/:id', route((req, res) => {
   const item = findItem(readData('news'), req.params.id);
-  if (item.status !== 'published') throw httpError(404, 'Kh?ng t?m th?y b?i vi?t');
+  if (item.status !== 'published') throw httpError(404, 'Không tìm thấy bài viết');
   res.json(item);
 }));
 app.get('/api/settings', route((_req, res) => res.json(readData('settings'))));
@@ -237,7 +237,7 @@ for (const name of ['announcements', 'shared-files']) {
     const actor = requireRole(req, 'Admin', 'Leader');
     const item = updateData(name, items => {
       const target = findItem(items, req.params.id);
-      if (!canManage(target, actor)) throw httpError(403, 'B?n kh?ng c? quy?n x?a n?i dung n?y');
+      if (!canManage(target, actor)) throw httpError(403, 'Bạn không có quyền xóa nội dung này');
       items.splice(items.indexOf(target), 1); return target;
     });
     if (name === 'shared-files' && item.storageName) await fs.unlink(path.join(uploads, 'documents', path.basename(item.storageName))).catch(error => { if (error.code !== 'ENOENT') console.error('Document cleanup failed', error.code); });
@@ -260,7 +260,7 @@ app.post('/api/upload', route(async (req, res) => {
     const meta = await processor.metadata();
     if (!['jpeg', 'png', 'webp', 'gif', 'avif'].includes(meta.format)) throw new Error();
     output = await processor.rotate().resize({ width: 2560, height: 2560, fit: 'inside', withoutEnlargement: true }).webp({ quality: 85 }).toBuffer();
-  } catch { throw httpError(400, 'Ch? ch?p nh?n ?nh PNG, JPEG, WebP, GIF ho?c AVIF h?p l?'); }
+  } catch { throw httpError(400, 'Chỉ chấp nhận ảnh PNG, JPEG, WebP, GIF hoặc AVIF hợp lệ'); }
   const name = `${randomUUID()}.webp`; await fs.writeFile(path.join(uploads, 'images', name), output, { flag: 'wx' });
   audit(actor, 'image.upload', name); res.status(201).json({ url: `/uploads/images/${name}`, name });
 }));
@@ -274,7 +274,7 @@ app.post('/api/shared-files', route(async (req, res) => {
   const buffer = decodeFile(data.data); const ext = path.extname(data.name).toLowerCase();
   const isPdf = ext === '.pdf' && buffer.subarray(0, 5).toString() === '%PDF-';
   const isZip = ['.docx', '.xlsx', '.zip'].includes(ext) && buffer[0] === 0x50 && buffer[1] === 0x4b && buffer[2] === 3 && buffer[3] === 4;
-  if (!isPdf && !isZip) throw httpError(400, 'Ch? ch?p nh?n PDF, DOCX, XLSX ho?c ZIP h?p l?');
+  if (!isPdf && !isZip) throw httpError(400, 'Chỉ chấp nhận PDF, DOCX, XLSX hoặc ZIP hợp lệ');
   const storageName = `${randomUUID()}${ext}`; const location = path.join(uploads, 'documents', storageName);
   const item = { id: randomUUID(), name: path.basename(data.name), description: data.description || '', category: data.category, fileSize: `${(buffer.length / 1024).toFixed(1)} KB`, fileType: ext.slice(1).toUpperCase(), targetUnit: actor.role === 'Leader' ? actor.unit : data.targetUnit || 'all', targetDepartment: actor.role === 'Leader' ? actor.department : data.targetDepartment || 'all', uploadedBy: actor.fullName, authorId: actor.id, storageName, downloads: 0, createdAt: stamp() };
   await fs.writeFile(location, buffer, { flag: 'wx' });
@@ -283,10 +283,10 @@ app.post('/api/shared-files', route(async (req, res) => {
 }));
 app.get('/api/shared-files/:id/download', route(async (req, res) => {
   const user = requireUser(req); const item = findItem(readData('shared-files'), req.params.id);
-  if (!inScope(item, user)) throw httpError(403, 'B?n kh?ng c? quy?n t?i t?i li?u n?y');
-  if (!item.storageName) throw httpError(404, 'T?i li?u c? ch?a c? file ??nh k?m');
+  if (!inScope(item, user)) throw httpError(403, 'Bạn không có quyền tải tài liệu này');
+  if (!item.storageName) throw httpError(404, 'Tài liệu có chứa chưa có file đính kèm');
   const file = path.join(uploads, 'documents', path.basename(item.storageName));
-  try { await fs.access(file); } catch { throw httpError(404, 'Kh?ng t?m th?y file ??nh k?m'); }
+  try { await fs.access(file); } catch { throw httpError(404, 'Không tìm thấy file đính kèm'); }
   updateData('shared-files', items => { findItem(items, item.id).downloads = (item.downloads || 0) + 1; });
   res.download(file, item.name);
 }));
@@ -314,7 +314,7 @@ app.use((error, _req, res, _next) => {
   if (error instanceof z.ZodError) return res.status(400).json({ error: error.issues.map(i => `${i.path.join('.')}: ${i.message}`).join('; ') });
   const status = error.status || (error instanceof SyntaxError ? 400 : 500);
   if (status >= 500) console.error('Request failed:', error.message);
-  res.status(status).json({ error: status >= 500 ? 'Kh?ng th? l?u ho?c t?i d? li?u. Vui l?ng th? l?i.' : status === 413 ? 'File qu? l?n' : error.message });
+  res.status(status).json({ error: status >= 500 ? 'Không thể lưu hoặc tải dữ liệu. Vui lòng thử lại.' : status === 413 ? 'File quá lớn' : error.message });
 });
 const server = app.listen(process.env.PORT || 80, '0.0.0.0', () => console.log(`Kim Son server ready on port ${server.address().port}`));
 process.on('SIGTERM', () => server.close(() => { database.close(); process.exit(0); }));

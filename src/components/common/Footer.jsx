@@ -1,6 +1,5 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
-import { Phone, Mail, MapPin, ChevronRight, Globe, ShieldCheck } from 'lucide-react';
+import { Phone, Mail, MapPin, ChevronRight, ShieldCheck } from 'lucide-react';
 import { usePublicContent } from '../../services/publicContent';
 
 export default function Footer() {
@@ -12,7 +11,7 @@ export default function Footer() {
           {/* Brand & Mission (Col 1-2) */}
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center gap-3">
-              <Link to="/" className="inline-block hover:opacity-90 transition-opacity">
+              <Link to="/" className="inline-block">
                 <img 
                   src={settings.logoWhite || '/logo-kimson-white.png'}
                   alt="Kim Sơn Automobiles" 
@@ -116,7 +115,7 @@ export default function Footer() {
 
         {/* Bottom Bar */}
         <div className="pt-8 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 gap-4">
-          <p>© 2026 KIM SƠN AUTOMOBILES ECOSYSTEM. Bảo lưu mọi quyền.</p>
+          <p>© 2026 KIM SƠN AUTOMOBILES Design by Tamdev</p>
           <div className="flex gap-6 text-[11px]">
             <span>Chính sách bảo mật</span>
             <span>Điều khoản sử dụng</span>

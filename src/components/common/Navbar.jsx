@@ -19,11 +19,11 @@ import {
   LogOut,
   ShieldCheck
 } from 'lucide-react';
+import { withBasePath } from '../../utils/assets';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const location = useLocation();
@@ -48,12 +48,6 @@ export default function Navbar() {
 
   useEffect(() => {
     setMounted(true);
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 15);
-    };
-    handleScroll();
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   // 6 mục menu chuẩn: Giới Thiệu, Hoạt Động, Hệ Thống, Phát Triển Bền Vững, Tin Tức, Liên Hệ
@@ -156,9 +150,9 @@ export default function Navbar() {
           <div className="flex items-center gap-3">
             <Link to="/" onClick={() => setIsOpen(false)}>
               <img 
-                src="/logo-kimson.png" 
+                src={withBasePath('/logo-kimson.png')} 
                 alt="Kim Sơn Automobiles" 
-                className="h-10 w-auto object-contain hover:scale-105 transition-transform"
+                className="h-12 w-auto object-contain"
               />
             </Link>
           </div>
@@ -199,8 +193,8 @@ export default function Navbar() {
                     <Icon size={19} />
                   </div>
                   <div>
-                    <div className="text-sm font-bold leading-snug">{link.name}</div>
-                    <div className="text-[11px] text-slate-400 font-normal leading-tight mt-0.5">{link.desc}</div>
+                    <div className="text-base font-bold leading-snug">{link.name}</div>
+                    <div className="text-xs text-slate-400 font-normal leading-tight mt-0.5">{link.desc}</div>
                   </div>
                 </div>
                 <ChevronRight size={16} className={`transition-transform group-hover:translate-x-1 shrink-0 ${active ? 'text-primary' : 'text-slate-300'}`} />
@@ -215,16 +209,16 @@ export default function Navbar() {
                 <Link
                   to="/login"
                   onClick={() => setIsOpen(false)}
-                  className="flex items-center justify-center gap-2 p-3.5 rounded-2xl bg-gradient-to-r from-primary to-primary-dark text-white font-bold text-xs shadow-xs hover:shadow-glow transition-all"
+                  className="flex items-center justify-center gap-2 p-3.5 rounded-2xl bg-gradient-to-r from-primary to-primary-dark text-white font-bold text-sm shadow-xs hover:shadow-glow transition-all"
                 >
-                  <LogIn size={15} />
+                  <LogIn size={17} />
                   <span>Đăng Nhập</span>
                 </Link>
 
                 <Link
                   to="/register"
                   onClick={() => setIsOpen(false)}
-                  className="flex items-center justify-center gap-2 p-3.5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs border border-slate-800 transition-all"
+                  className="flex items-center justify-center gap-2 p-3.5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm border border-slate-800 transition-all"
                 >
                   <UserPlus size={15} />
                   <span>Đăng Ký</span>
@@ -281,11 +275,6 @@ export default function Navbar() {
 
         {/* Drawer Footer */}
         <div className="p-6 border-t border-slate-100 bg-slate-50/70 space-y-3 shrink-0">
-          <div className="flex items-center justify-between text-xs">
-            <span className="text-slate-500 font-medium">Ngôn ngữ hiển thị</span>
-            <div className="flex items-center bg-white border border-slate-200 p-0.5 rounded-lg text-xs font-bold text-slate-600">
-            </div>
-          </div>
 
           <div className="text-[11px] text-slate-400 text-center pt-2 border-t border-slate-200/60">
             © 2026 Kim Sơn Automobiles. All rights reserved.
@@ -297,11 +286,7 @@ export default function Navbar() {
 
   return (
     <header 
-      className={`sticky top-0 z-40 h-12 max-h-12 relative flex items-center transition-all duration-500 ease-in-out ${
-        isScrolled
-          ? 'bg-white/95 backdrop-blur-xl shadow-md border-b border-slate-200/80 text-slate-800'
-          : 'bg-gradient-to-r from-white/95 via-amber-50/70 via-yellow-50/45 to-white/95 backdrop-blur-md border-b border-amber-200/50 text-slate-800 animate-header-gradient'
-      }`}
+      className="sticky top-0 z-40 h-[65px] max-h-[65px] relative flex items-center bg-white shadow-md border-b border-slate-200/80 text-slate-800"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full h-full">
         <div className="flex justify-between items-center h-full">
@@ -313,9 +298,9 @@ export default function Navbar() {
             aria-label="Trang Chủ Kim Sơn Automobiles"
           >
             <img 
-              src="/logo-kimson.png" 
+              src={withBasePath('/logo-kimson.png')} 
               alt="Kim Sơn Automobiles" 
-              className="h-8 sm:h-9 w-auto object-contain drop-shadow-xs transition-transform duration-300 group-hover:scale-105"
+              className="h-10 sm:h-12 w-auto object-contain"
             />
           </Link>
 
@@ -325,7 +310,7 @@ export default function Navbar() {
               <Link
                 key={link.path}
                 to={link.path}
-                className={`px-3 py-1 rounded-md text-xs font-semibold transition-all duration-300 ${
+                className={`px-3.5 py-1.5 rounded-md text-sm font-semibold transition-all duration-300 ${
                   isActive(link.path)
                     ? 'text-primary bg-gradient-to-r from-primary/15 via-primary-light/10 to-primary/15 font-bold shadow-xs'
                     : 'text-slate-700 hover:text-primary hover:bg-gradient-to-r hover:from-primary/10 hover:to-primary-light/10'
@@ -336,17 +321,14 @@ export default function Navbar() {
             ))}
           </nav>
 
-          {/* Phía bên phải: Chuyển đổi ngôn ngữ & Nút mở Offcanvas Menu */}
+          {/* Phía bên phải: Nút mở Offcanvas Menu */}
           <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-            {/* Language Switcher */}
-            <div className="hidden sm:flex items-center bg-slate-100 p-0.5 rounded-lg text-[11px] font-bold text-slate-600">
-            </div>
 
             {/* Dropdown Menu Tài Khoản (Đăng Nhập / Đăng Ký) khi rê chuột (Hover) */}
             <div className="relative group">
-              <Link
-                to={isLoggedIn ? "/admin" : "/login"}
-                className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold transition-all duration-300 shadow-xs ${
+              <button
+                type="button"
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-bold transition-all duration-300 shadow-xs ${
                   isLoggedIn
                     ? 'bg-emerald-50 text-emerald-700 hover:bg-emerald-600 hover:text-white border border-emerald-200'
                     : 'bg-primary-subtle text-primary hover:bg-primary hover:text-white border border-primary/20 hover:border-primary'
@@ -354,19 +336,19 @@ export default function Navbar() {
                 title={isLoggedIn ? (isAdmin ? "Bảng quản trị hệ thống" : "Cổng thông tin & file dùng chung") : "Tài khoản hệ thống"}
                 aria-label={isLoggedIn ? "Cổng thành viên" : "Tài khoản"}
               >
-                <User size={13} className="shrink-0" />
+                <User size={15} className="shrink-0" />
                 <span className="hidden sm:inline-block">
                   {isLoggedIn ? (isAdmin ? "Quản Trị" : "Cổng Nội Bộ") : "Đăng Nhập"}
                 </span>
-                <ChevronDown size={11} className="transition-transform duration-200 group-hover:rotate-180 opacity-70 shrink-0" />
-              </Link>
+                <ChevronDown size={13} className="transition-transform duration-200 group-hover:rotate-180 opacity-70 shrink-0" />
+              </button>
 
               {/* Popover Flyout hiển thị Đăng Ký và Đăng Nhập khi rê chuột vào */}
-              <div className="absolute right-0 top-full pt-1.5 w-60 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-1 group-hover:translate-y-0 pointer-events-none group-hover:pointer-events-auto">
+              <div className="absolute right-0 top-full pt-1.5 w-60 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-200 transform translate-y-1 group-hover:translate-y-0 group-focus-within:translate-y-0 pointer-events-none group-hover:pointer-events-auto group-focus-within:pointer-events-auto">
                 <div className="bg-white/95 backdrop-blur-xl rounded-2xl shadow-xl border border-slate-200/90 p-2 text-slate-800 space-y-1">
                   {!isLoggedIn ? (
                     <>
-                      <div className="px-3 py-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                      <div className="px-3 py-1.5 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
                         Tài Khoản Hệ Sinh Thái
                       </div>
 
@@ -375,12 +357,12 @@ export default function Navbar() {
                         to="/login"
                         className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-primary-subtle/80 text-slate-700 hover:text-primary transition-all group/item"
                       >
-                        <div className="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center shrink-0 group-hover/item:bg-primary group-hover/item:text-white transition-colors">
-                          <LogIn size={15} />
+                        <div className="w-9 h-9 rounded-lg bg-primary/10 text-primary flex items-center justify-center shrink-0 group-hover/item:bg-primary group-hover/item:text-white transition-colors">
+                          <LogIn size={17} />
                         </div>
                         <div>
-                          <div className="text-xs font-bold leading-tight">Đăng Nhập</div>
-                          <div className="text-[10px] text-slate-400 leading-tight mt-0.5">Truy cập hệ thống & quản trị</div>
+                          <div className="text-sm font-bold leading-tight">Đăng Nhập</div>
+                          <div className="text-[11px] text-slate-400 leading-tight mt-0.5">Truy cập hệ thống & quản trị</div>
                         </div>
                       </Link>
 
@@ -389,39 +371,39 @@ export default function Navbar() {
                         to="/register"
                         className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 transition-all group/item"
                       >
-                        <div className="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0 group-hover/item:bg-emerald-600 group-hover/item:text-white transition-colors">
-                          <UserPlus size={15} />
+                        <div className="w-9 h-9 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0 group-hover/item:bg-emerald-600 group-hover/item:text-white transition-colors">
+                          <UserPlus size={17} />
                         </div>
                         <div>
-                          <div className="text-xs font-bold leading-tight">Đăng Ký</div>
-                          <div className="text-[10px] text-slate-400 leading-tight mt-0.5">Tạo tài khoản đối tác & B2B</div>
+                          <div className="text-sm font-bold leading-tight">Đăng Ký</div>
+                          <div className="text-[11px] text-slate-400 leading-tight mt-0.5">Tạo tài khoản đối tác & B2B</div>
                         </div>
                       </Link>
                     </>
                   ) : (
                     <>
                       <div className="px-3 py-2 bg-slate-50 rounded-xl mb-1 border border-slate-100">
-                        <div className="text-xs font-bold text-slate-900 leading-tight">
+                        <div className="text-sm font-bold text-slate-900 leading-tight">
                           {currentUser?.fullName || currentUser?.name || 'Thành Viên Kim Sơn'}
                         </div>
-                        <div className="text-[10px] text-slate-500 font-semibold mt-0.5">
+                        <div className="text-[11px] text-slate-500 font-semibold mt-0.5">
                           {currentUser?.unit ? `${currentUser.unit} • ${currentUser.department}` : 'Đang đăng nhập hệ thống'}
                         </div>
                       </div>
 
                       <Link
                         to={isAdmin ? "/admin/dashboard" : "/admin/portal"}
-                        className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-slate-100 text-xs font-bold text-slate-700 hover:text-primary transition-all"
+                        className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-slate-100 text-sm font-bold text-slate-700 hover:text-primary transition-all"
                       >
-                        <ShieldCheck size={15} className="text-primary" />
+                        <ShieldCheck size={17} className="text-primary" />
                         <span>{isAdmin ? "Bảng Quản Trị CMS" : "Thông Báo & File Dùng Chung"}</span>
                       </Link>
 
                       <button
                         onClick={handleLogout}
-                        className="w-full flex items-center gap-2.5 p-2 rounded-xl hover:bg-red-50 text-xs font-bold text-red-600 transition-all text-left"
+                        className="w-full flex items-center gap-2.5 p-2 rounded-xl hover:bg-red-50 text-sm font-bold text-red-600 transition-all text-left"
                       >
-                        <LogOut size={15} />
+                        <LogOut size={17} />
                         <span>Đăng Xuất</span>
                       </button>
                     </>
@@ -433,12 +415,12 @@ export default function Navbar() {
             {/* Nút kích hoạt Offcanvas Menu với hiệu ứng chuyển màu khi hover */}
             <button
               onClick={() => setIsOpen(true)}
-              className="flex items-center gap-1.5 px-2.5 py-1 text-slate-700 hover:text-primary rounded-lg hover:bg-gradient-to-r hover:from-slate-100 hover:to-amber-50/80 transition-all duration-300 border border-transparent hover:border-amber-200/60"
+              className="flex items-center gap-1.5 px-3 py-1.5 text-slate-700 hover:text-primary rounded-lg hover:bg-gradient-to-r hover:from-slate-100 hover:to-primary-subtle/80 transition-all duration-300 border border-transparent hover:border-primary/30"
               title="Mở menu hệ sinh thái"
               aria-label="Mở menu"
             >
-              <Menu size={18} />
-              <span className="hidden sm:inline-block text-xs font-bold uppercase tracking-wider text-slate-700">
+              <Menu size={20} />
+              <span className="hidden sm:inline-block text-sm font-bold uppercase tracking-wider text-slate-700">
                 Menu
               </span>
             </button>
@@ -446,16 +428,8 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Hiệu ứng dải viền chuyển màu đa sắc động liên tục (Animated Gradient Color Shift Bar) */}
-      <div 
-        className={`absolute bottom-0 left-0 right-0 h-[2px] transition-all duration-500 pointer-events-none bg-gradient-to-r from-primary via-cyan-400 via-indigo-500 to-primary animate-border-gradient ${
-          isScrolled ? 'opacity-100 shadow-[0_1px_8px_rgba(0,98,210,0.35)]' : 'opacity-75'
-        }`} 
-      />
-
       {/* Render Offcanvas Drawer qua React Portal trực tiếp vào document.body để không bị chặn bởi backdrop-filter của header */}
       {mounted && createPortal(offcanvasDrawer, document.body)}
     </header>
   );
 }
-

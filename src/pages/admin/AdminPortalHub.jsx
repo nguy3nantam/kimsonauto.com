@@ -26,7 +26,7 @@ import {
   Share2
 } from 'lucide-react';
 import { api } from '../../services/api';
-import { UNIT_OPTIONS, DEPARTMENT_OPTIONS } from './AdminLoginPage';
+import { UNIT_OPTIONS, DEPARTMENT_OPTIONS } from '../../data/orgOptions';
 
 const emptyFile = {
   description: '',

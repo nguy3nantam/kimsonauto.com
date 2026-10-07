@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { MapPin, Plus, Edit3, Trash2, Phone, CheckCircle2, X } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { MapPin, Plus, Edit3, Trash2, X } from 'lucide-react';
 import { api } from '../../services/api';
 
 export default function AdminBranches() {
@@ -13,7 +13,6 @@ export default function AdminBranches() {
     hotline: '',
     features: ['']
   });
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     loadBranches();
@@ -25,8 +24,6 @@ export default function AdminBranches() {
       setBranches(data);
     } catch (err) {
       console.error('Failed to load branches:', err);
-    } finally {
-      setLoading(false);
     }
   };
 

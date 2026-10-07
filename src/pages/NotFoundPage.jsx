@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import { Car, Home, Phone } from 'lucide-react';
 
@@ -24,7 +23,7 @@ export default function NotFoundPage() {
             <span>Về Trang Chủ</span>
           </Link>
           <a
-            href="tel:0908123456"
+            href="tel:0913757579"
             className="flex-1 inline-flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-800 py-3 rounded-xl font-bold text-sm transition-all"
           >
             <Phone size={16} />

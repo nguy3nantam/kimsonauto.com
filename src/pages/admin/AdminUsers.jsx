@@ -1,44 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { 
-  Users, 
   Building2, 
   Briefcase, 
   Mail, 
   Phone, 
   Search, 
-  Filter, 
   Trash2, 
   Edit3, 
   Plus, 
   X, 
-  CheckCircle2, 
   AlertCircle, 
   Calendar, 
   ShieldCheck, 
-  UserCheck, 
-  RefreshCw,
-  Eye
+  RefreshCw
 } from 'lucide-react';
 import { api } from '../../services/api';
-
-export const UNIT_OPTIONS = [
-  'VF Biên Hòa',
-  'VF Bửu Long',
-  'VF Trảng Dài',
-  'VF Long Thành',
-  'VF Long Khánh',
-  'VF Tân Hiệp',
-  'VF Bình Thạnh',
-  'VF GF Q2'
-];
-
-export const DEPARTMENT_OPTIONS = [
-  'Kinh Doanh',
-  'Dịch Vụ',
-  'Kế Toán',
-  'Nhân Sự',
-  'Marketing'
-];
+import { UNIT_OPTIONS, DEPARTMENT_OPTIONS } from '../../data/orgOptions';
 
 export default function AdminUsers() {
   const [users, setUsers] = useState([]);
@@ -263,7 +240,7 @@ export default function AdminUsers() {
       case 'Dịch Vụ':
         return 'bg-emerald-50 text-emerald-700 border-emerald-200';
       case 'Kế Toán':
-        return 'bg-amber-50 text-amber-700 border-amber-200';
+        return 'bg-primary-subtle text-primary border-primary/30';
       case 'Nhân Sự':
         return 'bg-purple-50 text-purple-700 border-purple-200';
       case 'Marketing':
@@ -550,8 +527,8 @@ export default function AdminUsers() {
                       {/* Vai Trò */}
                       <td className="py-3.5 px-5">
                         {user.role === 'Admin' || isDefaultAdmin ? (
-                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-black bg-amber-50 text-amber-800 border border-amber-300">
-                            <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-black bg-primary-subtle text-primary-dark border border-primary/40">
+                            <span className="w-1.5 h-1.5 rounded-full bg-primary-subtle0" />
                             <span>Admin</span>
                           </span>
                         ) : user.role === 'Leader' ? (

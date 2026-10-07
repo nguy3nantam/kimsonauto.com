@@ -1,28 +1,85 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" prefix="og: https://ogp.me/ns#">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-    <link rel="icon" type="image/png" href="/favicon.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="%BASE_URL%favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="%BASE_URL%favicon-16x16.png" />
+    <link rel="icon" type="image/png" href="%BASE_URL%favicon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="%BASE_URL%apple-touch-icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#c98e00" />
-    <title>Kim Sơn Automobiles - Cổng Thông Tin Hệ Sinh Thái Ô Tô</title>
-    <meta name="description" content="Kim Sơn Automobiles Ecosystem - Tổ hợp hệ sinh thái ô tô toàn diện từ năm 2014 với các nền tảng phát triển bền vững và mạng lưới 11 chi nhánh, trung tâm dịch vụ tại Đồng Nai và TP.HCM." />
-    <meta name="keywords" content="Kim Sơn Automobiles, hệ sinh thái Kim Sơn, VinFast Đồng Nai, VinFast Kim Sơn Biên Hòa, xưởng dịch vụ Kim Sơn, cứu hộ ô tô 24/7" />
+    <meta name="theme-color" content="#1464F4" />
     
-    <!-- Open Graph / Facebook -->
+    <!-- Primary Meta Tags -->
+    <title>Kim Sơn Automobiles - Cổng Thông Tin Hệ Sinh Thái Ô Tô</title>
+    <meta name="title" content="Kim Sơn Automobiles - Cổng Thông Tin Hệ Sinh Thái Ô Tô" />
+    <meta name="description" content="Kim Sơn Automobiles - Tổ hợp hệ sinh thái ô tô toàn diện từ năm 2014 với chuỗi 11 chi nhánh & showroom VinFast, trung tâm kỹ thuật dịch vụ và cứu hộ 24/7 tại Đồng Nai và TP.HCM." />
+    <meta name="keywords" content="Kim Sơn Automobiles, hệ sinh thái Kim Sơn, VinFast Đồng Nai, VinFast Kim Sơn Biên Hòa, xưởng dịch vụ Kim Sơn, cứu hộ ô tô 24/7, NPP Kim Sơn" />
+    <meta name="author" content="Kim Sơn Automobiles" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://kimsonauto.com/" />
+    
+    <!-- Open Graph / Facebook / Zalo -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Kim Sơn Automobiles - Hệ Sinh Thái Ô Tô Toàn Diện" />
-    <meta property="og:description" content="Cổng thông tin chính thức giới thiệu hệ sinh thái và các nền tảng phát triển của Kim Sơn Automobiles." />
-    <meta property="og:image" content="/logo-square.png" />
+    <meta property="og:url" content="https://kimsonauto.com/" />
+    <meta property="og:site_name" content="Kim Sơn Automobiles" />
+    <meta property="og:title" content="Kim Sơn Automobiles - Cổng Thông Tin Hệ Sinh Thái Ô Tô" />
+    <meta property="og:description" content="Tổ hợp hệ sinh thái ô tô toàn diện từ năm 2014 với chuỗi 11 chi nhánh & showroom VinFast, trung tâm kỹ thuật dịch vụ và cứu hộ 24/7 tại Đồng Nai và TP.HCM." />
+    <meta property="og:image" content="https://kimsonauto.com/og-image.jpg" />
+    <meta property="og:image:secure_url" content="https://kimsonauto.com/og-image.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1024" />
+    <meta property="og:image:height" content="1024" />
+    <meta property="og:image:alt" content="Kim Sơn Automobiles - Hệ Sinh Thái Ô Tô Toàn Diện" />
     <meta property="og:locale" content="vi_VN" />
 
-    <!-- Google Fonts: Inter (Clean, Modern, Slender & Highly Legible) -->
+    <!-- Twitter / X Cards -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://kimsonauto.com/" />
+    <meta name="twitter:title" content="Kim Sơn Automobiles - Cổng Thông Tin Hệ Sinh Thái Ô Tô" />
+    <meta name="twitter:description" content="Tổ hợp hệ sinh thái ô tô toàn diện từ năm 2014 với chuỗi 11 chi nhánh & showroom VinFast, trung tâm kỹ thuật dịch vụ và cứu hộ 24/7 tại Đồng Nai và TP.HCM." />
+    <meta name="twitter:image" content="https://kimsonauto.com/og-image.jpg" />
+
+    <!-- Structured Data (JSON-LD Schema) for Google & Search Bots -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "AutomotiveBusiness",
+      "name": "Kim Sơn Automobiles",
+      "alternateName": "Hệ Sinh Thái Ô Tô Kim Sơn",
+      "url": "https://kimsonauto.com/",
+      "logo": "https://kimsonauto.com/og-image.jpg",
+      "image": "https://kimsonauto.com/og-image.jpg",
+      "description": "Tổ hợp hệ sinh thái ô tô toàn diện từ năm 2014 với chuỗi 11 chi nhánh, đại lý ủy quyền VinFast và trung tâm kỹ thuật cứu hộ 24/7.",
+      "telephone": "+84913757579",
+      "priceRange": "$$",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Số 643 Quốc Lộ 1, Khu Phố 27, Phường Long Bình",
+        "addressLocality": "Thành phố Biên Hòa",
+        "addressRegion": "Đồng Nai",
+        "addressCountry": "VN"
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ],
+        "opens": "07:30",
+        "closes": "18:00"
+      }
+    }
+    </script>
+
+    <!-- Google Fonts: Mulish (formerly Muli) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
   </head>
   <body>
     <div id="root"></div>
