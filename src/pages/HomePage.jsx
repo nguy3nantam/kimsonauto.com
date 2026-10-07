@@ -170,7 +170,7 @@ export default function HomePage() {
               src={slide.image}
               alt={slide.title}
               loading={idx === 0 ? 'eager' : 'lazy'}
-              fetchPriority={idx === 0 ? 'high' : 'auto'}
+              fetchpriority={idx === 0 ? 'high' : 'auto'}
               decoding="async"
               className="w-full h-full object-cover object-[68%_center] sm:object-center lg:scale-105 lg:transition-transform lg:duration-700 lg:ease-out"
             />
