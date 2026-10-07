@@ -1,0 +1,1 @@
+var e=[`VF Biên Hòa`,`VF Bửu Long`,`VF Trảng Dài`,`VF Long Thành`,`VF Long Khánh`,`VF Tân Hiệp`,`VF Bình Thạnh`,`VF GF Q2`],t=[`Kinh Doanh`,`Dịch Vụ`,`Kế Toán`,`Nhân Sự`,`Marketing`];export{e as n,t};

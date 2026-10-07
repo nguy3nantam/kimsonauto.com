@@ -1,0 +1,1 @@
+function e(e=``){return!e||/^(https?:)?\/\//.test(e)||e.startsWith(`data:`)||e.startsWith(`/`)?e:`/${e.replace(/^\/+/,``)}`}function t(t,n=``){if(!t||typeof t!=`string`)return n;let r=t.trim();return r?/^https?:\/\//i.test(r)||/^data:image\//i.test(r)||r.startsWith(`/`)?r:r.startsWith(`/`)||/^[a-zA-Z0-9._/-]+$/.test(r)?e(r):n:n}export{e as n,t};
