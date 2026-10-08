@@ -91,3 +91,18 @@ a {
 
 /* Flat: bỏ glass/blur — nền đặc, không backdrop-filter */
 
+/* Mượt: fade-in nhẹ mỗi khi chuyển trang (tự tắt với prefers-reduced-motion) */
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.page-enter {
+  animation: page-enter 0.28s ease-out both;
+}
+

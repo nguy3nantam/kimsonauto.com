@@ -281,7 +281,9 @@ export default function AdminLayout() {
 
         {/* Page Content Body */}
         <main className="p-4 sm:p-6 flex-1 overflow-y-auto">
-          <Outlet />
+          <div key={location.pathname} className="page-enter">
+            <Outlet />
+          </div>
         </main>
       </div>
     </div>

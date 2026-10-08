@@ -77,13 +77,16 @@ function PublicMetadata() {
 
 // Public Website Layout Wrapper
 function PublicLayout() {
+  const { pathname } = useLocation();
   return (
     <PublicContentProvider>
     <PublicMetadata />
     <div className="min-h-screen flex flex-col bg-white text-slate-800 font-sans selection:bg-primary selection:text-white">
       <Navbar />
       <main className="flex-grow">
-        <Outlet />
+        <div key={pathname} className="page-enter">
+          <Outlet />
+        </div>
       </main>
       <Footer />
       <FloatingCTA />
