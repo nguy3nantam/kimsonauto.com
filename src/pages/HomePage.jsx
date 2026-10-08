@@ -4,8 +4,7 @@ import {
   ChevronRight, 
   ChevronLeft,
   ArrowRight, 
-  MapPin, 
-  Leaf 
+  MapPin 
 } from 'lucide-react';
 import { ecosystemData } from '../data/ecosystem';
 import { api } from '../services/api';
@@ -355,10 +354,6 @@ export default function HomePage() {
       <section className="py-20 bg-slate-950 text-white relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-14">
-            <div className="inline-flex items-center gap-2 text-xs font-bold text-emerald-400 uppercase tracking-widest bg-emerald-950/80 px-4 py-1.5 rounded-full border border-emerald-800 mb-2.5">
-              <Leaf size={14} />
-              PHÁT TRIỂN BỀN VỮNG & TRÁCH NHIỆM XÃ HỘI
-            </div>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight leading-[1.3]">
               Đồng Hành Cùng Kỷ Nguyên Di Chuyển Xanh
             </h2>
