@@ -241,7 +241,7 @@ export default function HomePage() {
                 TỔNG QUAN HỆ SINH THÁI
               </div>
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-[1.3]">
-                Mô Hình Hệ Sinh Thái Ô Tô Toàn Diện & Khép Kín
+                Hệ Thống Showroom Kim Sơn Automobiles
               </h2>
               <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
                 Được xây dựng trên triết lý lấy chất lượng kỹ thuật làm nền tảng và sự hài lòng của khách hàng làm trung tâm, Kim Sơn Automobiles đã khẳng định vị thế là một trong những hệ sinh thái dịch vụ ô tô phát triển nhanh và uy tín nhất thuộc NPP Kim Sơn.
