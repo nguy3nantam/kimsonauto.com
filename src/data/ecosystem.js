@@ -251,36 +251,5 @@ export const ecosystemData = {
       features: ['Văn Phòng Điều Hành', 'Trung Tâm Điều Phối Hệ Sinh Thái', 'Dự Án Chuyển Đổi Xanh'],
       isMain: false
     }
-  ],
-
-  // Tin tức tập đoàn & Truyền thông
-  news: [
-    {
-      id: '1',
-      title: 'Kim Sơn Automobiles Công Bố Chiến Lược Hệ Sinh Thái Ô Tô Giai Đoạn 2026 - 2030',
-      category: 'Thông Cáo Báo Chí',
-      date: '25/09/2026',
-      readTime: '4 phút đọc',
-      image: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&q=80&w=900',
-      summary: 'Tiếp tục mở rộng mạng lưới showroom và trạm dịch vụ, đón đầu các hạ tầng giao thông trọng điểm phía Nam.'
-    },
-    {
-      id: '2',
-      title: 'Đẩy Mạnh Chuyển Đổi Xanh: Kim Sơn Nâng Cấp 100% Xưởng Kỹ Thuật Đạt Chuẩn Xe Điện',
-      category: 'Phát Triển Bền Vững',
-      date: '20/09/2026',
-      readTime: '5 phút đọc',
-      image: 'https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&q=80&w=900',
-      summary: 'Trang bị trạm chẩn đoán chuyên dụng, thiết bị bảo hộ pin cao áp và đào tạo chuyên sâu cho toàn bộ kỹ sư theo tiêu chuẩn toàn cầu.'
-    },
-    {
-      id: '3',
-      title: 'Kim Sơn Đưa Vào Hoạt Động Trạm Cứu Hộ Giao Thông Đón Đầu Sân Bay Quốc Tế Long Thành',
-      category: 'Hạ Tầng & Cơ Sở',
-      date: '15/09/2026',
-      readTime: '3 phút đọc',
-      image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&q=80&w=900',
-      summary: 'Đội xe cứu hộ chuyên dụng sàn trượt hiện đại túc trực 24/7 sẵn sàng hỗ trợ kỹ thuật và giải tỏa sự cố trên các tuyến cao tốc huyết mạch.'
-    }
   ]
 };

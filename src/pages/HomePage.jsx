@@ -55,7 +55,7 @@ export default function HomePage() {
   const touchStartY = useRef(null);
   const newsScrollRef = useRef(null);
 
-  const [homeNews, setHomeNews] = useState(ecosystemData.news);
+  const [homeNews, setHomeNews] = useState([]);
 
   useEffect(() => {
     let isMounted = true;
@@ -426,6 +426,7 @@ export default function HomePage() {
       </section>
 
       {/* 7. Corporate Press & News (Carousel) */}
+      {homeNews.length > 0 && (
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-10">
@@ -496,6 +497,7 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+      )}
     </div>
   );
 }
