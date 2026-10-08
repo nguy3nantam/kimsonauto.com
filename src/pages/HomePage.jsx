@@ -179,52 +179,6 @@ export default function HomePage() {
           </div>
         ))}
 
-        {/* Slide Content */}
-        {slides[currentSlideIndex] && (
-          <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 w-full">
-            <div
-              key={currentSlideIndex}
-              className="max-w-2xl space-y-3.5 sm:space-y-5 animate-fade-up"
-            >
-              <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-1 rounded-full bg-primary/20 border border-primary/40 text-primary-light text-[10px] xs:text-[11px] sm:text-xs font-semibold tracking-wider uppercase">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary animate-ping"></span>
-                <span className="line-clamp-1">{slides[currentSlideIndex].subtitle || 'TẬP ĐOÀN HỆ SINH THÁI Ô TÔ KIM SƠN'}</span>
-              </div>
-
-              <h1 className="text-[1.5rem] xs:text-3xl sm:text-3xl lg:text-[2.25rem] font-bold tracking-tight leading-[1.25] sm:leading-[1.3] text-white whitespace-pre-line drop-shadow-sm">
-                {slides[currentSlideIndex].title}
-              </h1>
-
-              {slides[currentSlideIndex].description && (
-                <p className="text-[13px] xs:text-sm text-slate-200/90 leading-relaxed font-normal max-w-xl line-clamp-4 sm:line-clamp-none">
-                  {slides[currentSlideIndex].description}
-                </p>
-              )}
-
-              <div className="flex flex-col xs:flex-row flex-wrap items-stretch xs:items-center gap-2.5 sm:gap-3 pt-1.5 sm:pt-2">
-                {slides[currentSlideIndex].primaryButtonText && (
-                  <Link
-                    to={slides[currentSlideIndex].primaryButtonLink || '/about'}
-                    className="inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-dark text-white px-5 sm:px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-wider shadow-glow transition-all hover:scale-[1.03] active:scale-95"
-                  >
-                    <span>{slides[currentSlideIndex].primaryButtonText}</span>
-                    <ChevronRight size={15} />
-                  </Link>
-                )}
-
-                {slides[currentSlideIndex].secondaryButtonText && (
-                  <Link
-                    to={slides[currentSlideIndex].secondaryButtonLink || '/about'}
-                    className="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/20 px-5 sm:px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-wider backdrop-blur-md transition-all hover:scale-[1.03] active:scale-95"
-                  >
-                    <span>{slides[currentSlideIndex].secondaryButtonText}</span>
-                  </Link>
-                )}
-              </div>
-            </div>
-          </div>
-        )}
-
         {/* Prev / Next Controls (từ tablet trở lên) */}
         {slides.length > 1 && (
           <>
@@ -339,7 +293,7 @@ export default function HomePage() {
                 QUY MÔ HẠ TẦNG
               </div>
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-[1.3]">
-                Mạng Lưới 11 Chi Nhánh & Cơ Sở Kết Nối Vùng Trọng Điểm
+                Hệ Thống Showroom Kim Sơn Automobiles
               </h2>
               <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
                 Hệ thống cơ sở của Kim Sơn Automobiles tọa lạc tại các vị trí chiến lược dọc theo trục kinh tế TP. Hồ Chí Minh - Đồng Nai (Biên Hòa, Long Khánh, Long Thành, Nhơn Trạch, Trảng Bom, Bình Thạnh, Thủ Đức), sẵn sàng tiếp nhận và phục vụ với diện tích xưởng dịch vụ hàng nghìn mét vuông.
