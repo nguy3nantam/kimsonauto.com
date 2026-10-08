@@ -60,8 +60,8 @@ export default function ContactPage({ onOpenBooking }) {
 
         {/* Quick Contact Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-white p-6 rounded-3xl border border-slate-200/90 shadow-sm flex items-start gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
+          <div className="bg-white p-6 rounded-lg border border-slate-200/90 flex items-start gap-4">
+            <div className="w-12 h-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center shrink-0">
               <Phone size={24} />
             </div>
             <div>
@@ -73,9 +73,9 @@ export default function ContactPage({ onOpenBooking }) {
             </div>
           </div>
 
-          <div className="bg-white p-6 rounded-3xl border border-slate-200/90 shadow-sm flex items-start gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-red-100 text-red-600 flex items-center justify-center shrink-0">
-              <ShieldAlert size={24} className="animate-pulse" />
+          <div className="bg-white p-6 rounded-lg border border-slate-200/90 flex items-start gap-4">
+            <div className="w-12 h-12 rounded-lg bg-red-100 text-red-600 flex items-center justify-center shrink-0">
+              <ShieldAlert size={24} className="" />
             </div>
             <div>
               <p className="text-xs text-red-500 font-bold uppercase">Cứu Hộ Khẩn Cấp</p>
@@ -86,8 +86,8 @@ export default function ContactPage({ onOpenBooking }) {
             </div>
           </div>
 
-          <div className="bg-white p-6 rounded-3xl border border-slate-200/90 shadow-sm flex items-start gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
+          <div className="bg-white p-6 rounded-lg border border-slate-200/90 flex items-start gap-4">
+            <div className="w-12 h-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center shrink-0">
               <Mail size={24} />
             </div>
             <div>
@@ -112,7 +112,7 @@ export default function ContactPage({ onOpenBooking }) {
             {branchesData.map((branch) => (
               <div 
                 key={branch.id}
-                className="bg-white rounded-3xl p-6 border border-slate-200/90 shadow-sm hover:shadow-xl transition-all flex flex-col justify-between"
+                className="bg-white rounded-lg p-6 border border-slate-200/90 transition-all flex flex-col justify-between"
               >
                 <div>
                   <div className="flex justify-between items-start mb-3">
@@ -161,7 +161,7 @@ export default function ContactPage({ onOpenBooking }) {
                     href={branch.mapsUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(branch.address)}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-colors"
+                    className="py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-md text-xs font-bold flex items-center justify-center gap-1.5 transition-colors"
                   >
                     <Navigation size={14} />
                     <span>Chỉ Đường</span>
@@ -169,7 +169,7 @@ export default function ContactPage({ onOpenBooking }) {
 
                   <a
                     href={`tel:${branch.hotline.replace(/\s+/g, '')}`}
-                    className="py-2.5 bg-primary hover:bg-primary-dark text-white rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-colors shadow-sm"
+                    className="py-2.5 bg-primary hover:bg-primary-dark text-white rounded-md text-xs font-bold flex items-center justify-center gap-1.5 transition-colors"
                   >
                     <Phone size={14} />
                     <span>Gọi Ngay</span>
@@ -181,8 +181,8 @@ export default function ContactPage({ onOpenBooking }) {
         </div>
 
         {/* Contact Inquiry Form */}
-        <div className="bg-white rounded-3xl p-8 sm:p-12 border border-slate-200 shadow-md">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="bg-white rounded-lg p-6 sm:p-12 border border-slate-200">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
             <div>
               <span className="text-xs font-bold text-primary uppercase">GỬI PHẢN HỒI / TƯ VẤN</span>
               <h2 className="text-2xl sm:text-3xl font-black text-slate-900 mt-1 mb-4">
@@ -208,7 +208,7 @@ export default function ContactPage({ onOpenBooking }) {
               </div>
             </div>
 
-            <div className="bg-slate-50 p-6 sm:p-8 rounded-2xl border border-slate-200">
+            <div className="bg-slate-50 p-6 sm:p-6 rounded-lg border border-slate-200">
               {submitted ? (
                 <div className="text-center py-8 space-y-4">
                   <CheckCircle2 size={48} className="text-emerald-500 mx-auto" />
@@ -218,7 +218,7 @@ export default function ContactPage({ onOpenBooking }) {
                   </p>
                   <button
                     onClick={() => setSubmitted(false)}
-                    className="bg-primary text-white px-6 py-2 rounded-xl text-xs font-bold"
+                    className="bg-primary text-white px-6 py-2 rounded-md text-xs font-bold"
                   >
                     Gửi tin nhắn khác
                   </button>
@@ -234,7 +234,7 @@ export default function ContactPage({ onOpenBooking }) {
                       placeholder="Nguyễn Văn A"
                       value={form.name}
                       onChange={(e) => setForm({ ...form, name: e.target.value })}
-                      className="w-full p-3 bg-white border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-primary"
+                      className="w-full p-3 bg-white border border-slate-200 rounded-md outline-none focus:ring-2 focus:ring-primary"
                     />
                   </div>
 
@@ -247,7 +247,7 @@ export default function ContactPage({ onOpenBooking }) {
                         placeholder="0908 xxx xxx"
                         value={form.phone}
                         onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                        className="w-full p-3 bg-white border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-primary"
+                        className="w-full p-3 bg-white border border-slate-200 rounded-md outline-none focus:ring-2 focus:ring-primary"
                       />
                     </div>
                     <div>
@@ -257,7 +257,7 @@ export default function ContactPage({ onOpenBooking }) {
                         placeholder="email@example.com"
                         value={form.email}
                         onChange={(e) => setForm({ ...form, email: e.target.value })}
-                        className="w-full p-3 bg-white border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-primary"
+                        className="w-full p-3 bg-white border border-slate-200 rounded-md outline-none focus:ring-2 focus:ring-primary"
                       />
                     </div>
                   </div>
@@ -267,7 +267,7 @@ export default function ContactPage({ onOpenBooking }) {
                     <select
                       value={branchesData.some(branch => branch.name === form.branch) ? form.branch : ''}
                       onChange={(e) => setForm({ ...form, branch: e.target.value })}
-                      className="w-full p-3 bg-white border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-primary"
+                      className="w-full p-3 bg-white border border-slate-200 rounded-md outline-none focus:ring-2 focus:ring-primary"
                     >
                       <option value="">Tổng đài / Chưa chọn chi nhánh</option>
                       {branchesData.map((b) => (
@@ -283,14 +283,14 @@ export default function ContactPage({ onOpenBooking }) {
                       placeholder="Quý khách muốn tìm hiểu xe gì hoặc cần hỗ trợ dịch vụ nào?..."
                       value={form.message}
                       onChange={(e) => setForm({ ...form, message: e.target.value })}
-                      className="w-full p-3 bg-white border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-primary"
+                      className="w-full p-3 bg-white border border-slate-200 rounded-md outline-none focus:ring-2 focus:ring-primary"
                     ></textarea>
                   </div>
 
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="w-full py-3.5 bg-primary hover:bg-primary-dark text-white rounded-xl font-bold text-sm shadow-glow transition-all flex items-center justify-center gap-2 disabled:opacity-60 cursor-pointer"
+                    className="w-full py-3.5 bg-primary hover:bg-primary-dark text-white rounded-md font-bold text-sm transition-all flex items-center justify-center gap-2 disabled:opacity-60 cursor-pointer"
                   >
                     {submitting ? (
                       <>

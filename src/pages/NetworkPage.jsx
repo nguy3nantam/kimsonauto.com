@@ -5,7 +5,7 @@ export default function NetworkPage() {
   const { branches: branchesList, loading } = usePublicContent();
 
   return (
-    <div className="bg-slate-50 min-h-screen py-16">
+    <div className="bg-slate-50 min-h-screen py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto">
@@ -26,14 +26,14 @@ export default function NetworkPage() {
           {branchesList.map((b) => (
             <div 
               key={b.id}
-              className={`relative rounded-3xl p-8 transition-all duration-300 flex flex-col justify-between overflow-hidden ${
+              className={`relative rounded-lg p-6 transition-all duration-300 flex flex-col justify-between overflow-hidden ${
                 b.isMain
-                  ? 'bg-gradient-to-br from-primary-subtle via-white to-white border-2 border-primary shadow-lg shadow-primary/15 ring-4 ring-primary/10 md:-translate-y-1 hover:-translate-y-2 hover:shadow-xl'
-                  : 'bg-white border border-slate-200/90 shadow-sm hover:shadow-xl hover:-translate-y-1'
+                  ? 'bg-white border-2 border-primary md:-translate-y-1'
+                  : 'bg-white border border-slate-200/90'
               }`}
             >
               {b.isMain && (
-                <div className="absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r from-primary-dark via-primary to-primary-light z-10" />
+                <div className="absolute inset-x-0 top-0 h-1.5 bg-primary z-10" />
               )}
               {b.image && (
                 <div className="relative aspect-[16/9] -mx-8 -mt-8 mb-6 overflow-hidden">
@@ -41,9 +41,9 @@ export default function NetworkPage() {
                     src={b.image} 
                     alt={b.name} 
                     loading="lazy"
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" 
+                    className="w-full h-full object-cover transition-transform duration-500" 
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent pointer-events-none" />
+                  <div className="absolute inset-0 bg-slate-950/35 pointer-events-none" />
                 </div>
               )}
               <div className="space-y-4">

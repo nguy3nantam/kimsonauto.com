@@ -88,7 +88,7 @@ export default function AdminNews() {
 
         <button
           onClick={handleCreateOpen}
-          className="inline-flex items-center gap-2 px-4 py-2.5 bg-primary text-white font-bold rounded-xl text-xs shadow-glow hover:bg-primary-dark transition-all"
+          className="inline-flex items-center gap-2 px-4 py-2.5 bg-primary text-white font-bold rounded-md text-xs hover:bg-primary-dark transition-all"
         >
           <Plus size={16} />
           <span>Đăng Bài Viết Mới</span>
@@ -97,7 +97,7 @@ export default function AdminNews() {
 
       {/* Editor Modal Box */}
       {(isCreating || editingArticle) && (
-        <div className="bg-white rounded-2xl border-2 border-primary/30 shadow-lg p-6 animate-fadeIn">
+        <div className="bg-white rounded-lg border-2 border-primary/30 p-6">
           <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
             <h3 className="text-sm font-extrabold text-slate-900">
               {isCreating ? 'Soạn Thảo Bài Viết Mới' : 'Cập Nhật Bài Viết'}
@@ -120,7 +120,7 @@ export default function AdminNews() {
                   value={formData.title || ''}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                   placeholder="Nhập tiêu đề thông cáo..."
-                  className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:border-primary"
+                  className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-md text-xs font-semibold focus:outline-none focus:border-primary"
                 />
               </div>
 
@@ -129,7 +129,7 @@ export default function AdminNews() {
                 <select
                   value={formData.category || 'Thông Cáo Báo Chí'}
                   onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                  className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-primary focus:outline-none focus:border-primary"
+                  className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-md text-xs font-bold text-primary focus:outline-none focus:border-primary"
                 >
                   <option value="Thông Cáo Báo Chí">Thông Cáo Báo Chí</option>
                   <option value="Phát Triển Bền Vững">Phát Triển Bền Vững</option>
@@ -147,7 +147,7 @@ export default function AdminNews() {
                 value={formData.summary || ''}
                 onChange={(e) => setFormData({ ...formData, summary: e.target.value })}
                 placeholder="Tóm tắt nội dung chính trong 1-2 câu..."
-                className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-primary"
+                className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-md text-xs focus:outline-none focus:border-primary"
               />
             </div>
 
@@ -159,7 +159,7 @@ export default function AdminNews() {
                 value={formData.content || ''}
                 onChange={(e) => setFormData({ ...formData, content: e.target.value })}
                 placeholder="Nội dung bài viết đầy đủ..."
-                className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-primary"
+                className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-md text-xs focus:outline-none focus:border-primary"
               />
             </div>
 
@@ -170,7 +170,7 @@ export default function AdminNews() {
                 value={formData.image || ''}
                 onChange={(e) => setFormData({ ...formData, image: e.target.value })}
                 placeholder="URL hình ảnh Unsplash hoặc CDN"
-                className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-primary"
+                className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-md text-xs focus:outline-none focus:border-primary"
               />
             </div>
 
@@ -178,13 +178,13 @@ export default function AdminNews() {
               <button
                 type="button"
                 onClick={() => { setIsCreating(false); setEditingArticle(null); }}
-                className="px-4 py-2 border border-slate-200 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-50"
+                className="px-4 py-2 border border-slate-200 rounded-md text-xs font-bold text-slate-600 hover:bg-slate-50"
               >
                 Hủy
               </button>
               <button
                 type="submit"
-                className="px-5 py-2 bg-primary text-white rounded-xl text-xs font-bold hover:bg-primary-dark transition-colors"
+                className="px-5 py-2 bg-primary text-white rounded-md text-xs font-bold hover:bg-primary-dark transition-colors"
               >
                 {isCreating ? 'Đăng Bài Viết' : 'Lưu Thay Đổi'}
               </button>
@@ -194,7 +194,7 @@ export default function AdminNews() {
       )}
 
       {/* News List */}
-      <div className="bg-white rounded-2xl border border-slate-200/90 shadow-xs overflow-hidden">
+      <div className="bg-white rounded-lg border border-slate-200/90 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead className="bg-slate-50 text-slate-500 uppercase tracking-wider text-[10px] border-b border-slate-100 font-bold">

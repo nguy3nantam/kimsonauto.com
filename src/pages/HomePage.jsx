@@ -151,7 +151,7 @@ export default function HomePage() {
         aria-label="Banner giới thiệu hệ sinh thái Kim Sơn"
         tabIndex={0}
         onKeyDown={handleKeyDown}
-        className="relative flex items-center justify-center text-white overflow-hidden bg-slate-950 h-[68svh] min-h-[460px] max-h-[560px] xs:min-h-[540px] sm:h-[600px] sm:max-h-none md:h-[660px] lg:h-auto lg:min-h-[720px] focus:outline-none"
+        className="relative flex items-center justify-center text-white overflow-hidden bg-slate-950 h-[52svh] min-h-[360px] max-h-[460px] xs:min-h-[420px] sm:h-[460px] sm:max-h-none md:h-[500px] lg:h-auto lg:min-h-[560px] focus:outline-none"
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
         onTouchStart={handleTouchStart}
@@ -171,10 +171,10 @@ export default function HomePage() {
               loading={idx === 0 ? 'eager' : 'lazy'}
               fetchpriority={idx === 0 ? 'high' : 'auto'}
               decoding="async"
-              className="w-full h-full object-cover object-[68%_center] sm:object-center lg:scale-105 lg:transition-transform lg:duration-700 lg:ease-out"
+              className="w-full h-full object-cover object-[68%_center] sm:object-center"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-slate-950/85 via-slate-950/55 to-slate-950/20 sm:from-slate-950/75 sm:via-slate-950/45 sm:to-slate-950/15"></div>
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-slate-950/10"></div>
+            <div className="absolute inset-0 bg-slate-950/55"></div>
+            <div className="absolute inset-0 bg-slate-950/45"></div>
           </div>
         ))}
 
@@ -184,14 +184,14 @@ export default function HomePage() {
             <button
               onClick={prevSlide}
               aria-label="Slide trước"
-              className="absolute left-3 md:left-6 lg:left-8 top-1/2 -translate-y-1/2 z-30 p-2.5 md:p-3 rounded-full bg-slate-900/50 hover:bg-primary text-white border border-white/20 backdrop-blur-md transition-all duration-200 hover:scale-110 hidden md:flex items-center justify-center shadow-xl cursor-pointer"
+              className="absolute left-3 md:left-6 lg:left-8 top-1/2 -translate-y-1/2 z-30 p-2.5 md:p-3 rounded-full bg-slate-900/50 hover:bg-primary text-white border border-white/20 transition-all duration-200 hidden md:flex items-center justify-center cursor-pointer"
             >
               <ChevronLeft size={22} />
             </button>
             <button
               onClick={nextSlide}
               aria-label="Slide tiếp theo"
-              className="absolute right-3 md:right-6 lg:right-8 top-1/2 -translate-y-1/2 z-30 p-2.5 md:p-3 rounded-full bg-slate-900/50 hover:bg-primary text-white border border-white/20 backdrop-blur-md transition-all duration-200 hover:scale-110 hidden md:flex items-center justify-center shadow-xl cursor-pointer"
+              className="absolute right-3 md:right-6 lg:right-8 top-1/2 -translate-y-1/2 z-30 p-2.5 md:p-3 rounded-full bg-slate-900/50 hover:bg-primary text-white border border-white/20 transition-all duration-200 hidden md:flex items-center justify-center cursor-pointer"
             >
               <ChevronRight size={22} />
             </button>
@@ -200,7 +200,7 @@ export default function HomePage() {
 
         {/* Pagination: chấm + thanh tiến trình (tối ưu cảm ứng) */}
         {slides.length > 1 && (
-          <div className="absolute bottom-5 sm:bottom-6 md:bottom-8 z-30 left-1/2 -translate-x-1/2 flex items-center gap-1.5 sm:gap-2.5 bg-slate-950/60 backdrop-blur-md px-3 sm:px-4 py-2 rounded-full border border-white/10">
+          <div className="absolute bottom-5 sm:bottom-6 md:bottom-8 z-30 left-1/2 -translate-x-1/2 flex items-center gap-1.5 sm:gap-2.5 bg-slate-950/60 px-3 sm:px-4 py-2 rounded-full border border-white/10">
             {slides.map((_, idx) => (
               <button
                 key={idx}
@@ -212,7 +212,7 @@ export default function HomePage() {
                 <span
                   className={`block transition-all duration-300 rounded-full overflow-hidden ${
                     idx === currentSlideIndex
-                      ? 'w-8 sm:w-9 h-2 bg-white/25 shadow-glow'
+                      ? 'w-8 sm:w-9 h-2 bg-white/25'
                       : 'w-2 h-2 bg-white/40 group-hover/dot:bg-white/80'
                   }`}
                 >
@@ -233,9 +233,9 @@ export default function HomePage() {
       </section>
 
       {/* 2. Overview Introduction (Về Hệ Sinh Thái Kim Sơn) */}
-      <section className="py-20 bg-white">
+      <section className="py-12 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-center">
             <div className="space-y-5">
               <div className="inline-block text-xs font-bold text-primary uppercase tracking-[0.15em] border-b-2 border-primary pb-1">
                 TỔNG QUAN HỆ SINH THÁI
@@ -262,17 +262,17 @@ export default function HomePage() {
             </div>
 
             <div className="relative group">
-              <div className="aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border border-slate-200">
+              <div className="aspect-[4/3] rounded-lg overflow-hidden border border-slate-200">
                 <img 
                   src={withBasePath('/vinfast-kimson-bienhoa.jpg')} 
                   alt="VinFast Kim Sơn Biên Hoà" 
                   loading="lazy"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  className="w-full h-full object-cover transition-transform duration-700"
                 />
               </div>
-              <div className="absolute -bottom-5 -left-5 bg-slate-900/95 backdrop-blur-md text-white p-5 rounded-2xl shadow-xl border border-slate-800 hidden sm:block max-w-xs">
+              <div className="absolute -bottom-5 -left-5 bg-slate-900/95 text-white p-5 rounded-lg border border-slate-800 hidden sm:block max-w-xs">
                 <div className="flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-wider mb-1">
-                  <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                  <span className="w-2 h-2 rounded-full bg-primary" />
                   <span>Showroom 3S Trọng Điểm</span>
                 </div>
                 <p className="text-base font-black text-white font-display">VinFast Kim Sơn Biên Hoà</p>
@@ -284,9 +284,9 @@ export default function HomePage() {
       </section>
 
       {/* 4. Infrastructure Network */}
-      <section className="py-20 bg-white">
+      <section className="py-12 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-center">
             <div className="space-y-5">
               <div className="inline-block text-xs font-bold text-primary uppercase tracking-[0.15em] border-b-2 border-primary pb-1">
                 QUY MÔ HẠ TẦNG
@@ -300,7 +300,7 @@ export default function HomePage() {
 
               <div className="space-y-2.5 pt-2">
                 {ecosystemData.branches.slice(0, 4).map((b) => (
-                  <div key={b.id} className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 flex items-start gap-3">
+                  <div key={b.id} className="p-3.5 rounded-md bg-slate-50 border border-slate-200/80 flex items-start gap-3">
                     <MapPin size={17} className="text-primary shrink-0 mt-0.5" />
                     <div>
                       <h4 className="font-bold text-slate-900 text-xs sm:text-sm">{b.name}</h4>
@@ -313,7 +313,7 @@ export default function HomePage() {
               <div className="pt-2">
                 <Link
                   to="/mang-luoi"
-                  className="inline-flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-wider transition-all"
+                  className="inline-flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white px-6 py-3 rounded-md font-bold text-xs uppercase tracking-wider transition-all"
                 >
                   <span>Hệ Thống Showroom Kim Sơn</span>
                   <ChevronRight size={14} />
@@ -321,7 +321,7 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="bg-slate-950 text-white p-8 sm:p-10 rounded-3xl border border-slate-900 space-y-6">
+            <div className="bg-slate-950 text-white p-6 sm:p-10 rounded-lg border border-slate-900 space-y-6">
               <div className="border-b border-slate-800 pb-5">
                 <span className="text-xs font-bold text-primary-light uppercase tracking-widest">TIÊU CHUẨN CƠ SỞ VẬT CHẤT</span>
                 <h3 className="text-xl sm:text-2xl font-extrabold text-white mt-1 leading-snug">Đồng Bộ Quy Chuẩn Kỹ Thuật Số</h3>
@@ -351,11 +351,11 @@ export default function HomePage() {
       </section>
 
       {/* 6. Sustainability Commitment */}
-      <section className="py-20 bg-slate-950 text-white relative overflow-hidden">
+      <section className="py-12 bg-slate-950 text-white relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center max-w-3xl mx-auto mb-14">
+          <div className="text-center max-w-3xl mx-auto mb-10">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight leading-[1.3]">
-              Đồng Hành Cùng Kỷ Nguyên Di Chuyển Xanh
+              Vươn Mình Cùng Kỷ Nguyên Xanh Kiến Tạo Tương Lai
             </h2>
             <p className="text-slate-400 text-sm sm:text-base mt-3 leading-relaxed">
               Kim Sơn cam kết hướng tới mục tiêu phát triển bền vững thông qua việc đẩy mạnh dịch vụ ô tô điện không phát thải và đào tạo nhân tài kỹ thuật cho tương lai.
@@ -364,7 +364,7 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
             {ecosystemData.sustainability.map((item, idx) => (
-              <div key={idx} className="bg-slate-900/90 p-7 rounded-3xl border border-slate-800 hover:border-slate-700 transition-all">
+              <div key={idx} className="bg-slate-900/90 p-7 rounded-lg border border-slate-800 hover:border-slate-700 transition-all">
                 <div className="text-primary-light font-black text-xl mb-3 font-display">0{idx + 1}</div>
                 <h3 className="text-base sm:text-lg font-bold text-white mb-2 leading-snug">{item.title}</h3>
                 <p className="text-xs text-slate-400 leading-relaxed">{item.desc}</p>
@@ -376,7 +376,7 @@ export default function HomePage() {
 
       {/* 7. Corporate Press & News (Carousel) */}
       {homeNews.length > 0 && (
-      <section className="py-20 bg-white">
+      <section className="py-12 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-10">
             <div>
@@ -419,10 +419,10 @@ export default function HomePage() {
               <div
                 key={item.id}
                 data-news-card
-                className="snap-start shrink-0 w-[85%] xs:w-[75%] sm:w-[55%] md:w-[48%] lg:w-[calc((100%-3rem)/3)] bg-slate-50 rounded-3xl overflow-hidden border border-slate-200/90 hover:shadow-xl transition-all flex flex-col justify-between"
+                className="snap-start shrink-0 w-[85%] xs:w-[75%] sm:w-[55%] md:w-[48%] lg:w-[calc((100%-3rem)/3)] bg-slate-50 rounded-lg overflow-hidden border border-slate-200/90 transition-all flex flex-col justify-between"
               >
                 <div className="aspect-[16/10] overflow-hidden">
-                  <img src={item.image} alt={item.title} loading="lazy" className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+                  <img src={item.image} alt={item.title} loading="lazy" className="w-full h-full object-cover transition-transform duration-500" />
                 </div>
                 <div className="p-6 flex-grow flex flex-col justify-between">
                   <div>

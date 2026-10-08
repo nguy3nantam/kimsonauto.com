@@ -54,7 +54,7 @@ export default function AdminPillars() {
       </div>
 
       {saveSuccess && (
-        <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-bold flex items-center gap-2">
+        <div className="p-4 rounded-md bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-bold flex items-center gap-2">
           <CheckCircle2 size={16} />
           <span>Cập nhật trụ cột thành công! Dữ liệu đã được lưu trữ vào hệ thống.</span>
         </div>
@@ -68,7 +68,7 @@ export default function AdminPillars() {
           return (
             <div 
               key={pillar.id}
-              className="bg-white rounded-2xl border border-slate-200/90 shadow-xs p-6 overflow-hidden transition-all"
+              className="bg-white rounded-lg border border-slate-200/90 p-6 overflow-hidden transition-all"
             >
               {isEditing ? (
                 <form onSubmit={handleSave} className="space-y-4">
@@ -90,7 +90,7 @@ export default function AdminPillars() {
                         type="text"
                         value={formData.title || ''}
                         onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                        className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:border-primary"
+                        className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-md text-xs font-semibold focus:outline-none focus:border-primary"
                       />
                     </div>
                     <div>
@@ -99,7 +99,7 @@ export default function AdminPillars() {
                         type="text"
                         value={formData.subtitle || ''}
                         onChange={(e) => setFormData({ ...formData, subtitle: e.target.value })}
-                        className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:border-primary"
+                        className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-md text-xs font-semibold focus:outline-none focus:border-primary"
                       />
                     </div>
                   </div>
@@ -110,7 +110,7 @@ export default function AdminPillars() {
                       type="text"
                       value={formData.tagline || ''}
                       onChange={(e) => setFormData({ ...formData, tagline: e.target.value })}
-                      className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-primary"
+                      className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-md text-xs focus:outline-none focus:border-primary"
                     />
                   </div>
 
@@ -120,7 +120,7 @@ export default function AdminPillars() {
                       rows={3}
                       value={formData.description || ''}
                       onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                      className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-primary"
+                      className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-md text-xs focus:outline-none focus:border-primary"
                     />
                   </div>
 
@@ -130,7 +130,7 @@ export default function AdminPillars() {
                       type="text"
                       value={formData.image || ''}
                       onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                      className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-primary"
+                      className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-md text-xs focus:outline-none focus:border-primary"
                     />
                   </div>
 
@@ -138,13 +138,13 @@ export default function AdminPillars() {
                     <button
                       type="button"
                       onClick={() => setEditingPillar(null)}
-                      className="px-4 py-2 border border-slate-200 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-50"
+                      className="px-4 py-2 border border-slate-200 rounded-md text-xs font-bold text-slate-600 hover:bg-slate-50"
                     >
                       Hủy
                     </button>
                     <button
                       type="submit"
-                      className="px-5 py-2 bg-primary text-white rounded-xl text-xs font-bold hover:bg-primary-dark transition-colors"
+                      className="px-5 py-2 bg-primary text-white rounded-md text-xs font-bold hover:bg-primary-dark transition-colors"
                     >
                       Lưu Thay Đổi
                     </button>
@@ -153,7 +153,7 @@ export default function AdminPillars() {
               ) : (
                 <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center font-bold text-lg shrink-0">
+                    <div className="w-12 h-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center font-bold text-lg shrink-0">
                       0{index + 1}
                     </div>
                     <div>
@@ -167,7 +167,7 @@ export default function AdminPillars() {
                   <div className="flex items-center gap-3 self-end lg:self-center shrink-0">
                     <button
                       onClick={() => handleEdit(pillar)}
-                      className="flex items-center gap-1.5 px-4 py-2 bg-slate-100 hover:bg-primary hover:text-white rounded-xl text-xs font-bold text-slate-700 transition-colors"
+                      className="flex items-center gap-1.5 px-4 py-2 bg-slate-100 hover:bg-primary hover:text-white rounded-md text-xs font-bold text-slate-700 transition-colors"
                     >
                       <Edit3 size={14} />
                       <span>Chỉnh Sửa</span>

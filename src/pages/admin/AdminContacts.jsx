@@ -64,7 +64,7 @@ export default function AdminContacts() {
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="bg-white p-4 rounded-2xl border border-slate-200/90 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div className="bg-white p-4 rounded-lg border border-slate-200/90 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="relative w-full sm:w-80">
           <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
           <input
@@ -72,7 +72,7 @@ export default function AdminContacts() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Tìm theo tên, công ty, SĐT..."
-            className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-primary"
+            className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-md text-xs focus:outline-none focus:border-primary"
           />
         </div>
 
@@ -81,7 +81,7 @@ export default function AdminContacts() {
           <select
             value={filterStatus}
             onChange={(e) => setFilterStatus(e.target.value)}
-            className="p-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 focus:outline-none focus:border-primary"
+            className="p-2 bg-slate-50 border border-slate-200 rounded-md text-xs font-bold text-slate-700 focus:outline-none focus:border-primary"
           >
             <option value="all">Tất cả trạng thái</option>
             <option value="pending">Chờ xử lý</option>
@@ -94,14 +94,14 @@ export default function AdminContacts() {
       {/* Contacts List */}
       <div className="grid grid-cols-1 gap-4">
         {filtered.length === 0 ? (
-          <div className="bg-white p-12 rounded-2xl border border-slate-200 text-center text-slate-400 text-sm">
+          <div className="bg-white p-12 rounded-lg border border-slate-200 text-center text-slate-400 text-sm">
             Không tìm thấy yêu cầu liên hệ nào phù hợp.
           </div>
         ) : (
           filtered.map((item) => (
             <div 
               key={item.id}
-              className="bg-white p-6 rounded-2xl border border-slate-200/90 shadow-xs hover:shadow-md transition-all space-y-4"
+              className="bg-white p-6 rounded-lg border border-slate-200/90 transition-all space-y-4"
             >
               <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 pb-3 border-b border-slate-100">
                 <div>
@@ -132,7 +132,7 @@ export default function AdminContacts() {
                   <select
                     value={item.status}
                     onChange={(e) => handleStatusChange(item.id, e.target.value)}
-                    className={`text-xs font-bold px-3 py-1.5 rounded-xl border focus:outline-none ${
+                    className={`text-xs font-bold px-3 py-1.5 rounded-md border focus:outline-none ${
                       item.status === 'pending'
                         ? 'bg-primary-subtle text-primary border-primary/40'
                         : item.status === 'contacted'
@@ -156,7 +156,7 @@ export default function AdminContacts() {
               </div>
 
               {/* Message Details */}
-              <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 space-y-2 text-xs">
+              <div className="bg-slate-50 p-4 rounded-md border border-slate-100 space-y-2 text-xs">
                 <div className="flex items-center justify-between text-slate-500 font-medium">
                   <span>Dịch vụ / Hạng mục: <strong className="text-slate-900">{item.service || 'Hợp tác B2B'}</strong></span>
                   <span className="text-slate-400">

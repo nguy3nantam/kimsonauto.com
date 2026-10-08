@@ -22,7 +22,7 @@ export default function PillarsPage() {
   };
 
   return (
-    <div className="bg-slate-50 min-h-screen py-16">
+    <div className="bg-slate-50 min-h-screen py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto">
@@ -42,7 +42,7 @@ export default function PillarsPage() {
           {ecosystemData.pillars.map((pillar, idx) => (
             <div 
               key={pillar.id}
-              className={`bg-white rounded-3xl overflow-hidden border border-slate-200/90 shadow-md hover:shadow-xl transition-all duration-300 grid grid-cols-1 lg:grid-cols-12 items-stretch ${
+              className={`bg-white rounded-lg overflow-hidden border border-slate-200/90 transition-all duration-300 grid grid-cols-1 lg:grid-cols-12 items-stretch ${
                 idx % 2 === 1 ? 'lg:grid-flow-dense' : ''
               }`}
             >
@@ -55,7 +55,7 @@ export default function PillarsPage() {
                   alt={pillar.title} 
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent flex items-end p-6">
+                <div className="absolute inset-0 bg-slate-950/40 flex items-end p-6">
                   <span className="text-xs font-bold text-white bg-primary px-3 py-1 rounded-full uppercase tracking-wider">
                     Trụ Cột 0{idx + 1}
                   </span>
@@ -63,12 +63,12 @@ export default function PillarsPage() {
               </div>
 
               {/* Content (7 cols) */}
-              <div className={`lg:col-span-7 p-8 sm:p-12 flex flex-col justify-between space-y-6 ${
+              <div className={`lg:col-span-7 p-6 sm:p-12 flex flex-col justify-between space-y-6 ${
                 idx % 2 === 1 ? 'lg:col-start-1' : ''
               }`}>
                 <div className="space-y-4">
                   <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                    <div className="w-12 h-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center shrink-0">
                       {getPillarIcon(pillar.icon)}
                     </div>
                     <div>
@@ -91,7 +91,7 @@ export default function PillarsPage() {
                     </h4>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                       {pillar.capabilities.map((cap, i) => (
-                        <div key={i} className="flex items-start gap-2 text-xs text-slate-700 bg-slate-50 p-3 rounded-xl border border-slate-100">
+                        <div key={i} className="flex items-start gap-2 text-xs text-slate-700 bg-slate-50 p-3 rounded-md border border-slate-100">
                           <CheckCircle2 size={15} className="text-emerald-500 shrink-0 mt-0.5" />
                           <span>{cap}</span>
                         </div>

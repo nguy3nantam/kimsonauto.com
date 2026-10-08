@@ -52,7 +52,7 @@ export default function AdminDashboard() {
       value: stats.totalPillars,
       desc: 'Chuỗi giá trị khép kín',
       icon: Layers,
-      color: 'from-blue-600 to-blue-700',
+      color: 'bg-blue-600',
       link: '/admin/pillars'
     },
     {
@@ -60,7 +60,7 @@ export default function AdminDashboard() {
       value: stats.totalBranches,
       desc: 'Bao phủ TP.HCM & Đồng Nai',
       icon: MapPin,
-      color: 'from-cyan-600 to-cyan-700',
+      color: 'bg-cyan-600',
       link: '/admin/branches'
     },
     {
@@ -68,7 +68,7 @@ export default function AdminDashboard() {
       value: stats.totalNews,
       desc: 'Thông cáo đã xuất bản',
       icon: Newspaper,
-      color: 'from-indigo-600 to-indigo-700',
+      color: 'bg-indigo-600',
       link: '/admin/news'
     },
     {
@@ -76,7 +76,7 @@ export default function AdminDashboard() {
       value: stats.pendingContacts,
       desc: `Tổng số: ${stats.totalContacts} liên hệ`,
       icon: Mail,
-      color: 'from-primary-dark to-primary-dark',
+      color: 'bg-primary-dark',
       link: '/admin/contacts'
     },
     {
@@ -84,7 +84,7 @@ export default function AdminDashboard() {
       value: stats.totalUsers || 8,
       desc: '8 đơn vị & 5 bộ phận',
       icon: Users,
-      color: 'from-rose-600 to-rose-700',
+      color: 'bg-rose-600',
       link: '/admin/users'
     }
   ];
@@ -99,10 +99,10 @@ export default function AdminDashboard() {
             <Link
               key={idx}
               to={kpi.link}
-              className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition-all group flex flex-col justify-between"
+              className="bg-white p-6 rounded-lg border border-slate-200/80 transition-all group flex flex-col justify-between"
             >
               <div className="flex items-center justify-between mb-4">
-                <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${kpi.color} text-white flex items-center justify-center shadow-xs`}>
+                <div className={`w-12 h-12 rounded-md ${kpi.color} text-white flex items-center justify-center`}>
                   <Icon size={22} />
                 </div>
                 <ArrowUpRight size={18} className="text-slate-300 group-hover:text-primary transition-colors" />
@@ -120,7 +120,7 @@ export default function AdminDashboard() {
       </div>
 
       {/* Recent B2B Inquiries Section */}
-      <div className="bg-white rounded-2xl border border-slate-200/90 shadow-xs overflow-hidden">
+      <div className="bg-white rounded-lg border border-slate-200/90 overflow-hidden">
         <div className="p-6 border-b border-slate-100 flex items-center justify-between flex-wrap gap-4">
           <div>
             <h3 className="text-base font-extrabold text-slate-900 tracking-tight">
@@ -193,7 +193,7 @@ export default function AdminDashboard() {
       </div>
 
       {/* Recent Registered Users Section */}
-      <div className="bg-white rounded-2xl border border-slate-200/90 shadow-xs overflow-hidden">
+      <div className="bg-white rounded-lg border border-slate-200/90 overflow-hidden">
         <div className="p-6 border-b border-slate-100 flex items-center justify-between flex-wrap gap-4">
           <div>
             <h3 className="text-base font-extrabold text-slate-900 tracking-tight flex items-center gap-2">

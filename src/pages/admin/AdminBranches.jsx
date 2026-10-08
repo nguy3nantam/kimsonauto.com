@@ -86,7 +86,7 @@ export default function AdminBranches() {
 
         <button
           onClick={handleCreateOpen}
-          className="inline-flex items-center gap-2 px-4 py-2.5 bg-primary text-white font-bold rounded-xl text-xs shadow-glow hover:bg-primary-dark transition-all"
+          className="inline-flex items-center gap-2 px-4 py-2.5 bg-primary text-white font-bold rounded-md text-xs hover:bg-primary-dark transition-all"
         >
           <Plus size={16} />
           <span>Thêm Chi Nhánh Mới</span>
@@ -95,7 +95,7 @@ export default function AdminBranches() {
 
       {/* Create / Edit Form Modal Box */}
       {(isCreating || editingBranch) && (
-        <div className="bg-white rounded-2xl border-2 border-primary/30 shadow-lg p-6 animate-fadeIn">
+        <div className="bg-white rounded-lg border-2 border-primary/30 p-6">
           <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
             <h3 className="text-sm font-extrabold text-slate-900">
               {isCreating ? 'Thêm Chi Nhánh / Cơ Sở Mới' : 'Cập Nhật Thông Tin Chi Nhánh'}
@@ -118,7 +118,7 @@ export default function AdminBranches() {
                   value={formData.name || ''}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   placeholder="VD: Chi Nhánh Kỹ Thuật Long Thành"
-                  className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:border-primary"
+                  className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-md text-xs font-semibold focus:outline-none focus:border-primary"
                 />
               </div>
               <div>
@@ -129,7 +129,7 @@ export default function AdminBranches() {
                   value={formData.role || ''}
                   onChange={(e) => setFormData({ ...formData, role: e.target.value })}
                   placeholder="VD: Trung tâm kỹ thuật công nghệ cao"
-                  className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-primary"
+                  className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-md text-xs focus:outline-none focus:border-primary"
                 />
               </div>
             </div>
@@ -143,7 +143,7 @@ export default function AdminBranches() {
                   value={formData.address || ''}
                   onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                   placeholder="Số nhà, tên đường, phường/xã, tỉnh thành"
-                  className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-primary"
+                  className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-md text-xs focus:outline-none focus:border-primary"
                 />
               </div>
               <div>
@@ -154,7 +154,7 @@ export default function AdminBranches() {
                   value={formData.hotline || ''}
                   onChange={(e) => setFormData({ ...formData, hotline: e.target.value })}
                   placeholder="VD: 0908 123 456"
-                  className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-mono focus:outline-none focus:border-primary"
+                  className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono focus:outline-none focus:border-primary"
                 />
               </div>
             </div>
@@ -163,13 +163,13 @@ export default function AdminBranches() {
               <button
                 type="button"
                 onClick={() => { setIsCreating(false); setEditingBranch(null); }}
-                className="px-4 py-2 border border-slate-200 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-50"
+                className="px-4 py-2 border border-slate-200 rounded-md text-xs font-bold text-slate-600 hover:bg-slate-50"
               >
                 Hủy
               </button>
               <button
                 type="submit"
-                className="px-5 py-2 bg-primary text-white rounded-xl text-xs font-bold hover:bg-primary-dark transition-colors"
+                className="px-5 py-2 bg-primary text-white rounded-md text-xs font-bold hover:bg-primary-dark transition-colors"
               >
                 {isCreating ? 'Tạo Chi Nhánh' : 'Lưu Thay Đổi'}
               </button>
@@ -179,7 +179,7 @@ export default function AdminBranches() {
       )}
 
       {/* Branches Table */}
-      <div className="bg-white rounded-2xl border border-slate-200/90 shadow-xs overflow-hidden">
+      <div className="bg-white rounded-lg border border-slate-200/90 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead className="bg-slate-50 text-slate-500 uppercase tracking-wider text-[10px] border-b border-slate-100 font-bold">

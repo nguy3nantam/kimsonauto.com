@@ -254,9 +254,9 @@ export default function AdminUsers() {
     <div className="space-y-6">
       {/* Leader Permission Scope Banner */}
       {isLeader && (
-        <div className="bg-gradient-to-r from-blue-900 via-slate-900 to-indigo-950 text-white rounded-3xl p-5 sm:p-6 shadow-md border border-blue-700/60 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="bg-slate-900 text-white rounded-lg p-5 sm:p-6 border border-blue-700/60 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-blue-500/20 border border-blue-400/40 flex items-center justify-center text-blue-300 shrink-0">
+            <div className="w-12 h-12 rounded-lg bg-blue-500/20 border border-blue-400/40 flex items-center justify-center text-blue-300 shrink-0">
               <ShieldCheck size={26} />
             </div>
             <div>
@@ -272,7 +272,7 @@ export default function AdminUsers() {
             </div>
           </div>
           <div className="flex items-center gap-2 self-start sm:self-center shrink-0">
-            <span className="px-3.5 py-1.5 rounded-xl bg-blue-500/20 text-blue-200 border border-blue-400/40 text-xs font-bold">
+            <span className="px-3.5 py-1.5 rounded-md bg-blue-500/20 text-blue-200 border border-blue-400/40 text-xs font-bold">
               {filteredUsers.length} Nhân sự trực thuộc
             </span>
           </div>
@@ -301,7 +301,7 @@ export default function AdminUsers() {
           <button
             onClick={() => loadUsers(currentUser)}
             disabled={loading}
-            className="p-2.5 bg-white border border-slate-200 rounded-xl text-slate-600 hover:text-primary hover:border-primary transition-colors shadow-xs"
+            className="p-2.5 bg-white border border-slate-200 rounded-md text-slate-600 hover:text-primary hover:border-primary transition-colors"
             title="Tải lại danh sách"
           >
             <RefreshCw size={16} className={loading ? 'animate-spin' : ''} />
@@ -309,7 +309,7 @@ export default function AdminUsers() {
 
           <button
             onClick={handleOpenCreateModal}
-            className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary text-white text-xs font-bold rounded-xl shadow-glow transition-all"
+            className="flex items-center gap-2 px-4 py-2.5 bg-primary hover:bg-primary-dark text-white text-xs font-bold rounded-md transition-all"
           >
             <Plus size={16} />
             <span>{isLeader ? 'Thêm Nhân Viên Chi Nhánh' : 'Thêm Thành Viên Mới'}</span>
@@ -326,10 +326,10 @@ export default function AdminUsers() {
               <div 
                 key={dept} 
                 onClick={() => setFilterDepartment(filterDepartment === dept ? 'all' : dept)}
-                className={`p-4 rounded-2xl border transition-all cursor-pointer ${
+                className={`p-4 rounded-lg border transition-all cursor-pointer ${
                   filterDepartment === dept 
-                    ? 'bg-slate-900 text-white border-slate-800 shadow-md ring-2 ring-primary/40' 
-                    : 'bg-white hover:bg-slate-50/80 border-slate-200/90 shadow-xs'
+                    ? 'bg-slate-900 text-white border-slate-800 ring-2 ring-primary/40' 
+                    : 'bg-white hover:bg-slate-50/80 border-slate-200/90'
                 }`}
               >
                 <div className="flex items-center justify-between mb-2">
@@ -351,7 +351,7 @@ export default function AdminUsers() {
       )}
 
       {/* Search & Filter Toolbar */}
-      <div className="bg-white p-4 rounded-2xl border border-slate-200/90 shadow-xs flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
+      <div className="bg-white p-4 rounded-lg border border-slate-200/90 flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
         {/* Search */}
         <div className="relative flex-1">
           <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
@@ -360,7 +360,7 @@ export default function AdminUsers() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Tìm theo họ tên, tài khoản, email, số điện thoại..."
-            className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-primary text-slate-800 transition-colors"
+            className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-md text-xs focus:outline-none focus:border-primary text-slate-800 transition-colors"
           />
         </div>
 
@@ -370,7 +370,7 @@ export default function AdminUsers() {
           {isAdmin ? (
             <>
               {/* Đơn Vị Filter */}
-              <div className="flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-1.5 w-full sm:w-auto">
+              <div className="flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded-md px-2.5 py-1.5 w-full sm:w-auto">
                 <Building2 size={14} className="text-slate-400 shrink-0" />
                 <select
                   value={filterUnit}
@@ -387,7 +387,7 @@ export default function AdminUsers() {
               </div>
 
               {/* Bộ Phận Filter */}
-              <div className="flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-1.5 w-full sm:w-auto">
+              <div className="flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded-md px-2.5 py-1.5 w-full sm:w-auto">
                 <Briefcase size={14} className="text-slate-400 shrink-0" />
                 <select
                   value={filterDepartment}
@@ -405,7 +405,7 @@ export default function AdminUsers() {
             </>
           ) : (
             /* Leader Scope Indicator */
-            <div className="flex items-center gap-2 px-3 py-1.5 bg-blue-50 border border-blue-200 rounded-xl text-xs font-bold text-blue-800">
+            <div className="flex items-center gap-2 px-3 py-1.5 bg-blue-50 border border-blue-200 rounded-md text-xs font-bold text-blue-800">
               <Building2 size={14} className="text-blue-600" />
               <span>{currentUser?.unit} • {currentUser?.department}</span>
             </div>
@@ -427,7 +427,7 @@ export default function AdminUsers() {
       </div>
 
       {/* Users Table */}
-      <div className="bg-white rounded-2xl border border-slate-200/90 shadow-xs overflow-hidden">
+      <div className="bg-white rounded-lg border border-slate-200/90 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead className="bg-slate-50 text-slate-500 uppercase tracking-wider text-[10px] border-b border-slate-100 font-bold">
@@ -463,9 +463,9 @@ export default function AdminUsers() {
                       {/* Name & Username */}
                       <td className="py-3.5 px-5">
                         <div className="flex items-center gap-3">
-                          <div className={`w-9 h-9 rounded-xl flex items-center justify-center text-xs font-black shadow-xs ${
+                          <div className={`w-9 h-9 rounded-md flex items-center justify-center text-xs font-black ${
                             isDefaultAdmin 
-                              ? 'bg-gradient-to-br from-primary to-primary-dark text-white' 
+                              ? 'bg-primary text-white' 
                               : 'bg-slate-100 text-slate-700 border border-slate-200'
                           }`}>
                             {(user.fullName || user.name || user.username || 'U').charAt(0).toUpperCase()}
@@ -589,8 +589,8 @@ export default function AdminUsers() {
 
       {/* Modal Add / Edit User */}
       {modalOpen && (
-        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl max-w-lg w-full shadow-2xl border border-slate-200 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+        <div className="fixed inset-0 z-50 bg-slate-900/60 flex items-center justify-center p-4">
+          <div className="bg-white rounded-lg max-w-lg w-full border border-slate-200 overflow-hidden fade-in zoom-in-95 duration-200">
             {/* Modal Header */}
             <div className="p-5 sm:p-6 border-b border-slate-100 flex items-center justify-between">
               <div>
@@ -603,7 +603,7 @@ export default function AdminUsers() {
               </div>
               <button
                 onClick={handleCloseModal}
-                className="p-2 text-slate-400 hover:text-slate-600 rounded-xl hover:bg-slate-100 transition-colors"
+                className="p-2 text-slate-400 hover:text-slate-600 rounded-md hover:bg-slate-100 transition-colors"
               >
                 <X size={18} />
               </button>
@@ -612,7 +612,7 @@ export default function AdminUsers() {
             {/* Modal Body */}
             <form onSubmit={handleFormSubmit} className="p-5 sm:p-6 space-y-4">
               {formError && (
-                <div className="flex items-center gap-2 p-3 rounded-xl bg-red-50 border border-red-200 text-red-600 text-xs">
+                <div className="flex items-center gap-2 p-3 rounded-md bg-red-50 border border-red-200 text-red-600 text-xs">
                   <AlertCircle size={16} className="shrink-0" />
                   <span>{formError}</span>
                 </div>
@@ -629,13 +629,13 @@ export default function AdminUsers() {
                   value={formData.fullName}
                   onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                   placeholder="Ví dụ: Nguyễn Văn An"
-                  className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:border-primary"
+                  className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-md text-xs sm:text-sm focus:outline-none focus:border-primary"
                 />
               </div>
 
               {/* Unit & Department Dropdowns */}
               {isLeader ? (
-                <div className="p-3.5 bg-blue-50/80 border border-blue-200 rounded-2xl flex items-center justify-between">
+                <div className="p-3.5 bg-blue-50/80 border border-blue-200 rounded-lg flex items-center justify-between">
                   <div className="space-y-0.5">
                     <span className="text-[10px] uppercase font-bold text-blue-600 tracking-wider">
                       Phạm Vi Chi Nhánh & Bộ Phận
@@ -663,7 +663,7 @@ export default function AdminUsers() {
                       <select
                         value={formData.unit}
                         onChange={(e) => setFormData({ ...formData, unit: e.target.value })}
-                        className="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm font-semibold text-slate-800 focus:outline-none focus:border-primary cursor-pointer"
+                        className="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-md text-xs sm:text-sm font-semibold text-slate-800 focus:outline-none focus:border-primary cursor-pointer"
                       >
                         {UNIT_OPTIONS.map((u) => (
                           <option key={u} value={u}>
@@ -683,7 +683,7 @@ export default function AdminUsers() {
                       <select
                         value={formData.department}
                         onChange={(e) => setFormData({ ...formData, department: e.target.value })}
-                        className="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm font-semibold text-slate-800 focus:outline-none focus:border-primary cursor-pointer"
+                        className="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-md text-xs sm:text-sm font-semibold text-slate-800 focus:outline-none focus:border-primary cursor-pointer"
                       >
                         {DEPARTMENT_OPTIONS.map((d) => (
                           <option key={d} value={d}>
@@ -707,7 +707,7 @@ export default function AdminUsers() {
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     placeholder="email@kimsonauto.com"
-                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:border-primary"
+                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-md text-xs sm:text-sm focus:outline-none focus:border-primary"
                   />
                 </div>
 
@@ -720,7 +720,7 @@ export default function AdminUsers() {
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     placeholder="0908 xxx xxx"
-                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:border-primary"
+                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-md text-xs sm:text-sm focus:outline-none focus:border-primary"
                   />
                 </div>
               </div>
@@ -738,7 +738,7 @@ export default function AdminUsers() {
                     value={formData.username}
                     onChange={(e) => setFormData({ ...formData, username: e.target.value })}
                     placeholder="ten.nguoidung"
-                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:border-primary disabled:opacity-60 disabled:cursor-not-allowed"
+                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-md text-xs sm:text-sm focus:outline-none focus:border-primary disabled:opacity-60 disabled:cursor-not-allowed"
                   />
                 </div>
 
@@ -752,7 +752,7 @@ export default function AdminUsers() {
                     value={formData.password}
                     onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                     placeholder={editingUser ? '••••••••' : 'Nhập mật khẩu'}
-                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:border-primary"
+                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-md text-xs sm:text-sm focus:outline-none focus:border-primary"
                   />
                 </div>
               </div>
@@ -768,7 +768,7 @@ export default function AdminUsers() {
                       <select
                         disabled
                         value="User"
-                        className="w-full px-3.5 py-2.5 bg-slate-100 border border-slate-200 rounded-xl text-xs sm:text-sm font-bold text-slate-700 cursor-not-allowed"
+                        className="w-full px-3.5 py-2.5 bg-slate-100 border border-slate-200 rounded-md text-xs sm:text-sm font-bold text-slate-700 cursor-not-allowed"
                       >
                         <option value="User">User (Nhân Viên Chi Nhánh)</option>
                       </select>
@@ -778,7 +778,7 @@ export default function AdminUsers() {
                     <select
                       value={formData.role}
                       onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                      className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm font-semibold text-slate-800 focus:outline-none focus:border-primary cursor-pointer"
+                      className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-md text-xs sm:text-sm font-semibold text-slate-800 focus:outline-none focus:border-primary cursor-pointer"
                     >
                       <option value="Admin">Admin (Toàn Quyền Quản Trị)</option>
                       <option value="Leader">Leader (Quản Lý Chi Nhánh & Bộ Phận)</option>
@@ -794,7 +794,7 @@ export default function AdminUsers() {
                   <select
                     value={formData.status}
                     onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm font-semibold text-slate-800 focus:outline-none focus:border-primary cursor-pointer"
+                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-md text-xs sm:text-sm font-semibold text-slate-800 focus:outline-none focus:border-primary cursor-pointer"
                   >
                     <option value="active">Hoạt động (Active)</option>
                     <option value="inactive">Tạm khóa (Inactive)</option>
@@ -807,14 +807,14 @@ export default function AdminUsers() {
                 <button
                   type="button"
                   onClick={handleCloseModal}
-                  className="px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50 transition-colors"
+                  className="px-4 py-2.5 rounded-md border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50 transition-colors"
                 >
                   Hủy Bỏ
                 </button>
                 <button
                   type="submit"
                   disabled={formSubmitting}
-                  className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary text-white text-xs font-bold shadow-glow transition-all disabled:opacity-50"
+                  className="px-5 py-2.5 rounded-md bg-primary hover:bg-primary-dark text-white text-xs font-bold transition-all disabled:opacity-50"
                 >
                   {formSubmitting ? 'Đang lưu...' : editingUser ? 'Cập Nhật Thành Viên' : 'Tạo Thành Viên'}
                 </button>

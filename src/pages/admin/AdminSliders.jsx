@@ -188,7 +188,7 @@ export default function AdminSliders() {
   return (
     <div className="space-y-8">
       {message && (
-        <div role={message.type === 'error' ? 'alert' : 'status'} className={`p-4 rounded-xl flex items-center justify-between gap-3 text-sm font-medium border ${message.type === 'error' ? 'bg-red-50 text-red-700 border-red-200' : 'bg-emerald-50 text-emerald-700 border-emerald-200'}`}>
+        <div role={message.type === 'error' ? 'alert' : 'status'} className={`p-4 rounded-md flex items-center justify-between gap-3 text-sm font-medium border ${message.type === 'error' ? 'bg-red-50 text-red-700 border-red-200' : 'bg-emerald-50 text-emerald-700 border-emerald-200'}`}>
           <div className="flex items-center gap-2">
             {message.type === 'error' ? <AlertCircle size={18} className="shrink-0" /> : <CheckCircle2 size={18} className="shrink-0" />}
             <span>{message.text}</span>
@@ -197,28 +197,28 @@ export default function AdminSliders() {
         </div>
       )}
 
-      <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-slate-200 shadow-xs">
+      <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-4 bg-white p-6 rounded-lg border border-slate-200">
         <div className="flex items-center gap-3">
-          <div className="p-2.5 bg-blue-50 text-primary rounded-xl"><Sliders size={24} /></div>
+          <div className="p-2.5 bg-blue-50 text-primary rounded-md"><Sliders size={24} /></div>
           <div>
             <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Quản Lý Slider Trang Chủ</h1>
             <p className="text-sm text-slate-500 mt-0.5">Quản lý hình ảnh, thứ tự và trạng thái hiển thị của banner trang chủ.</p>
           </div>
         </div>
         <div className="flex flex-wrap items-center gap-3">
-          <button onClick={loadSliders} disabled={controlsDisabled} className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-50 text-sm font-medium disabled:opacity-50">
+          <button onClick={loadSliders} disabled={controlsDisabled} className="inline-flex items-center gap-2 px-4 py-2.5 rounded-md border border-slate-200 text-slate-700 hover:bg-slate-50 text-sm font-medium disabled:opacity-50">
             <RefreshCw size={16} className={loading ? 'animate-spin' : ''} /> Làm Mới
           </button>
-          <button onClick={handleCreateOpen} disabled={controlsDisabled || Boolean(loadError)} className="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white px-5 py-2.5 rounded-xl font-semibold text-sm disabled:opacity-50">
+          <button onClick={handleCreateOpen} disabled={controlsDisabled || Boolean(loadError)} className="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white px-5 py-2.5 rounded-md font-semibold text-sm disabled:opacity-50">
             <Plus size={18} /> Thêm Slide Mới
           </button>
         </div>
       </div>
 
-      {loadError && <p role="alert" className="p-4 rounded-xl bg-red-50 border border-red-200 text-sm text-red-700">{loadError} Bấm Làm Mới để thử lại.</p>}
+      {loadError && <p role="alert" className="p-4 rounded-md bg-red-50 border border-red-200 text-sm text-red-700">{loadError} Bấm Làm Mới để thử lại.</p>}
 
       {previewSlide && (
-        <div className="bg-slate-950 rounded-2xl overflow-hidden border border-slate-800 shadow-xl">
+        <div className="bg-slate-950 rounded-lg overflow-hidden border border-slate-800">
           <div className="px-4 sm:px-6 py-3 bg-slate-900 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-300">
             <span className="break-words">Xem trước: <strong>{previewSlide.title}</strong></span>
             <div className="flex flex-wrap items-center gap-3 shrink-0">
@@ -235,7 +235,7 @@ export default function AdminSliders() {
         </div>
       )}
 
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
+      <div className="bg-white rounded-lg border border-slate-200 overflow-hidden">
         <div className="p-6 border-b border-slate-200">
           <h2 className="text-lg font-bold text-slate-900">Danh Sách Slide ({sliders.length})</h2>
           <p className="text-xs text-slate-500 mt-0.5">Chỉ các slide đang hiển thị được tự động chuyển trên trang chủ theo thứ tự đã sắp xếp.</p>
@@ -243,7 +243,7 @@ export default function AdminSliders() {
         {loading ? (
           <div className="p-12 text-center text-slate-400" role="status"><RefreshCw size={28} className="animate-spin mx-auto mb-3 text-primary" /><p className="text-sm">Đang tải danh sách slide...</p></div>
         ) : loadError && sliders.length === 0 ? (
-          <p className="p-8 text-center text-sm text-slate-500">Danh sách chưa tải được. Vui lòng thử lại.</p>
+          <p className="p-6 text-center text-sm text-slate-500">Danh sách chưa tải được. Vui lòng thử lại.</p>
         ) : sliders.length === 0 ? (
           <div className="p-12 text-center text-slate-500">
             <ImageIcon size={40} className="mx-auto mb-3 text-slate-300" />
@@ -273,7 +273,7 @@ export default function AdminSliders() {
                       </div>
                     </td>
                     <td className="py-4 px-4">
-                      <button onClick={() => setPreviewId(slide.id)} aria-label={`Xem trước ${slide.title}`} className="block w-36 h-20 rounded-xl overflow-hidden border border-slate-200">
+                      <button onClick={() => setPreviewId(slide.id)} aria-label={`Xem trước ${slide.title}`} className="block w-36 h-20 rounded-md overflow-hidden border border-slate-200">
                         <SlideImage key={slide.image} src={slide.image} title={slide.title} className="w-full h-full object-cover object-center" />
                       </button>
                     </td>
@@ -300,8 +300,8 @@ export default function AdminSliders() {
       </div>
 
       {(isCreating || editingSlide !== null) && (
-        <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div role="dialog" aria-modal="true" aria-labelledby="slider-dialog-title" className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full border border-slate-200 overflow-hidden">
+        <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 flex items-center justify-center p-4">
+          <div role="dialog" aria-modal="true" aria-labelledby="slider-dialog-title" className="bg-white rounded-lg max-w-2xl w-full border border-slate-200 overflow-hidden">
             <div className="px-4 sm:px-6 py-4 border-b border-slate-200 flex items-center justify-between gap-3 bg-slate-50">
               <h2 id="slider-dialog-title" className="text-lg font-bold text-slate-900">{isCreating ? 'Thêm Slider Mới' : 'Chỉnh Sửa Slider'}</h2>
               <button onClick={handleCloseModal} disabled={busy} className="p-1.5 text-slate-400 hover:text-slate-600 rounded-lg disabled:opacity-50" aria-label="Đóng cửa sổ"><X size={20} /></button>
@@ -312,19 +312,19 @@ export default function AdminSliders() {
                 <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
                   <div className="sm:col-span-3 space-y-1.5">
                     <label htmlFor="slide-title" className="block text-xs font-bold uppercase tracking-wider text-slate-700">Tên slide <span className="text-rose-500">*</span></label>
-                    <input id="slide-title" type="text" required maxLength={250} autoFocus value={formData.title} onChange={event => setFormData({ ...formData, title: event.target.value })} placeholder="VD: Showroom VinFast Kim Sơn Biên Hòa" className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary/20 focus:border-primary text-sm" />
+                    <input id="slide-title" type="text" required maxLength={250} autoFocus value={formData.title} onChange={event => setFormData({ ...formData, title: event.target.value })} placeholder="VD: Showroom VinFast Kim Sơn Biên Hòa" className="w-full px-3.5 py-2.5 rounded-md border border-slate-300 focus:ring-2 focus:ring-primary/20 focus:border-primary text-sm" />
                     <p className="text-xs text-slate-500">Tên dùng để quản lý và mô tả ảnh cho người dùng trình đọc màn hình.</p>
                   </div>
                   <div className="space-y-1.5">
                     <label htmlFor="slide-order" className="block text-xs font-bold uppercase tracking-wider text-slate-700">Thứ tự</label>
-                    <input id="slide-order" type="number" required min="0" max="10000" step="1" value={formData.order} onChange={event => setFormData({ ...formData, order: event.target.value })} className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary/20 focus:border-primary text-sm" />
+                    <input id="slide-order" type="number" required min="0" max="10000" step="1" value={formData.order} onChange={event => setFormData({ ...formData, order: event.target.value })} className="w-full px-3.5 py-2.5 rounded-md border border-slate-300 focus:ring-2 focus:ring-primary/20 focus:border-primary text-sm" />
                   </div>
                 </div>
                 <div className="space-y-2">
                   <label htmlFor="slide-image" className="block text-xs font-bold uppercase tracking-wider text-slate-700">Đường dẫn hình ảnh <span className="text-rose-500">*</span></label>
-                  <input id="slide-image" type="text" required maxLength={2048} value={formData.image} onChange={event => setFormData({ ...formData, image: event.target.value })} placeholder="https://... hoặc /uploads/ten-anh.webp" className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary/20 focus:border-primary text-sm" />
+                  <input id="slide-image" type="text" required maxLength={2048} value={formData.image} onChange={event => setFormData({ ...formData, image: event.target.value })} placeholder="https://... hoặc /uploads/ten-anh.webp" className="w-full px-3.5 py-2.5 rounded-md border border-slate-300 focus:ring-2 focus:ring-primary/20 focus:border-primary text-sm" />
                   <p className="text-xs text-slate-500">Dùng ảnh ngang, rõ nét. Nội dung chính nên nằm giữa ảnh để hiển thị tốt trên điện thoại.</p>
-                  <div className="h-48 sm:h-64 rounded-xl overflow-hidden border border-slate-200">
+                  <div className="h-48 sm:h-64 rounded-md overflow-hidden border border-slate-200">
                     <SlideImage key={formData.image.trim()} src={formData.image.trim()} title={formData.title || 'Xem trước hình ảnh slider'} className="w-full h-full object-cover object-center" />
                   </div>
                 </div>
@@ -334,8 +334,8 @@ export default function AdminSliders() {
                 </div>
               </fieldset>
               <div className="pt-4 border-t border-slate-200 flex flex-wrap items-center justify-end gap-3">
-                <button type="button" onClick={handleCloseModal} disabled={busy} className="px-5 py-2.5 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-100 text-sm font-medium disabled:opacity-50">Hủy Bỏ</button>
-                <button type="submit" disabled={busy} className="px-6 py-2.5 rounded-xl bg-primary hover:bg-primary-dark text-white font-semibold text-sm disabled:opacity-50">{busy ? 'Đang lưu...' : isCreating ? 'Tạo Slide Mới' : 'Lưu Thay Đổi'}</button>
+                <button type="button" onClick={handleCloseModal} disabled={busy} className="px-5 py-2.5 rounded-md border border-slate-200 text-slate-600 hover:bg-slate-100 text-sm font-medium disabled:opacity-50">Hủy Bỏ</button>
+                <button type="submit" disabled={busy} className="px-6 py-2.5 rounded-md bg-primary hover:bg-primary-dark text-white font-semibold text-sm disabled:opacity-50">{busy ? 'Đang lưu...' : isCreating ? 'Tạo Slide Mới' : 'Lưu Thay Đổi'}</button>
               </div>
             </form>
           </div>

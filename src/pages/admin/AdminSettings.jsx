@@ -160,9 +160,9 @@ export default function AdminSettings() {
   return (
     <div className="space-y-6 max-w-5xl">
       {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-slate-200/90 shadow-xs">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-lg border border-slate-200/90">
         <div className="flex items-center gap-3">
-          <div className="p-2.5 bg-primary-subtle text-primary rounded-xl">
+          <div className="p-2.5 bg-primary-subtle text-primary rounded-md">
             <Settings size={24} />
           </div>
           <div>
@@ -177,7 +177,7 @@ export default function AdminSettings() {
 
         <button
           onClick={loadSettings}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-50 text-xs font-semibold transition"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-md border border-slate-200 text-slate-700 hover:bg-slate-50 text-xs font-semibold transition"
           title="Tải lại cài đặt"
         >
           <RefreshCw size={15} className={loading ? 'animate-spin' : ''} />
@@ -190,9 +190,9 @@ export default function AdminSettings() {
         <button
           type="button"
           onClick={() => setActiveTab('branding')}
-          className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all cursor-pointer ${
+          className={`flex items-center gap-2 px-5 py-2.5 rounded-md font-bold text-xs uppercase tracking-wider transition-all cursor-pointer ${
             activeTab === 'branding'
-              ? 'bg-primary text-white shadow-md shadow-primary/25'
+              ? 'bg-primary text-white'
               : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
           }`}
         >
@@ -203,9 +203,9 @@ export default function AdminSettings() {
         <button
           type="button"
           onClick={() => setActiveTab('general')}
-          className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all cursor-pointer ${
+          className={`flex items-center gap-2 px-5 py-2.5 rounded-md font-bold text-xs uppercase tracking-wider transition-all cursor-pointer ${
             activeTab === 'general'
-              ? 'bg-primary text-white shadow-md shadow-primary/25'
+              ? 'bg-primary text-white'
               : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
           }`}
         >
@@ -216,7 +216,7 @@ export default function AdminSettings() {
 
       {/* Toast Alert Messages */}
       {saved && (
-        <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold flex items-center justify-between shadow-xs animate-in fade-in">
+        <div className="p-4 rounded-md bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold flex items-center justify-between fade-in">
           <div className="flex items-center gap-2">
             <CheckCircle2 size={18} className="text-emerald-600" />
             <span>Đã lưu toàn bộ cấu hình Logo, Favicon và thông tin website thành công!</span>
@@ -225,7 +225,7 @@ export default function AdminSettings() {
       )}
 
       {errorMsg && (
-        <div className="p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs font-bold flex items-center gap-2 shadow-xs">
+        <div className="p-4 rounded-md bg-rose-50 border border-rose-200 text-rose-800 text-xs font-bold flex items-center gap-2">
           <AlertCircle size={18} className="text-rose-600" />
           <span>{errorMsg}</span>
         </div>
@@ -239,7 +239,7 @@ export default function AdminSettings() {
         {activeTab === 'branding' && (
           <div className="space-y-6">
             {/* 1. LOGO NỀN SÁNG (PRIMARY LOGO) */}
-            <div className="bg-white rounded-2xl border border-slate-200/90 shadow-xs p-6 space-y-4">
+            <div className="bg-white rounded-lg border border-slate-200/90 p-6 space-y-4">
               <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                 <div className="flex items-center gap-2">
                   <span className="w-2.5 h-2.5 rounded-full bg-primary" />
@@ -265,7 +265,7 @@ export default function AdminSettings() {
                         value={settings.logo || ''}
                         onChange={(e) => setSettings({ ...settings, logo: e.target.value })}
                         placeholder="/logo-kimson.png hoặc https://..."
-                        className="flex-1 p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-mono text-slate-800 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20"
+                        className="flex-1 p-2.5 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono text-slate-800 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20"
                       />
                       <input 
                         type="file" 
@@ -278,7 +278,7 @@ export default function AdminSettings() {
                         type="button"
                         onClick={() => fileInputLogoRef.current?.click()}
                         disabled={uploadingField === 'logo'}
-                        className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs transition cursor-pointer shrink-0"
+                        className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs transition cursor-pointer shrink-0"
                       >
                         <Upload size={14} />
                         <span>{uploadingField === 'logo' ? 'Đang tải...' : 'Tải Từ Máy'}</span>
@@ -301,11 +301,11 @@ export default function AdminSettings() {
 
                 {/* Live Preview (Col 8-12) */}
                 <div className="lg:col-span-5">
-                  <div className="p-4 rounded-xl border border-dashed border-slate-300 bg-slate-50/60 text-center space-y-2">
+                  <div className="p-4 rounded-md border border-dashed border-slate-300 bg-slate-50/60 text-center space-y-2">
                     <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">
                       Xem Trước Trên Nền Sáng (Navbar Header)
                     </span>
-                    <div className="h-16 flex items-center justify-center bg-white rounded-lg border border-slate-200 p-2 shadow-2xs">
+                    <div className="h-16 flex items-center justify-center bg-white rounded-lg border border-slate-200 p-2">
                       {settings.logo ? (
                         <img 
                           src={settings.logo} 
@@ -323,7 +323,7 @@ export default function AdminSettings() {
             </div>
 
             {/* 2. LOGO NỀN TỐI (DARK / WHITE LOGO) */}
-            <div className="bg-white rounded-2xl border border-slate-200/90 shadow-xs p-6 space-y-4">
+            <div className="bg-white rounded-lg border border-slate-200/90 p-6 space-y-4">
               <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                 <div className="flex items-center gap-2">
                   <span className="w-2.5 h-2.5 rounded-full bg-primary-subtle0" />
@@ -349,7 +349,7 @@ export default function AdminSettings() {
                         value={settings.logoWhite || ''}
                         onChange={(e) => setSettings({ ...settings, logoWhite: e.target.value })}
                         placeholder="/logo-kimson-white.png hoặc https://..."
-                        className="flex-1 p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-mono text-slate-800 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20"
+                        className="flex-1 p-2.5 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono text-slate-800 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20"
                       />
                       <input 
                         type="file" 
@@ -362,7 +362,7 @@ export default function AdminSettings() {
                         type="button"
                         onClick={() => fileInputLogoWhiteRef.current?.click()}
                         disabled={uploadingField === 'logoWhite'}
-                        className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs transition cursor-pointer shrink-0"
+                        className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs transition cursor-pointer shrink-0"
                       >
                         <Upload size={14} />
                         <span>{uploadingField === 'logoWhite' ? 'Đang tải...' : 'Tải Từ Máy'}</span>
@@ -385,11 +385,11 @@ export default function AdminSettings() {
 
                 {/* Live Preview trên nền tối */}
                 <div className="lg:col-span-5">
-                  <div className="p-4 rounded-xl border border-dashed border-slate-300 bg-slate-50/60 text-center space-y-2">
+                  <div className="p-4 rounded-md border border-dashed border-slate-300 bg-slate-50/60 text-center space-y-2">
                     <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">
                       Xem Trước Trên Nền Tối (Footer & Admin Sidebar)
                     </span>
-                    <div className="h-16 flex items-center justify-center bg-slate-950 rounded-lg border border-slate-800 p-2 shadow-2xs">
+                    <div className="h-16 flex items-center justify-center bg-slate-950 rounded-lg border border-slate-800 p-2">
                       {settings.logoWhite ? (
                         <img 
                           src={settings.logoWhite} 
@@ -407,7 +407,7 @@ export default function AdminSettings() {
             </div>
 
             {/* 3. FAVICON TAB TRÌNH DUYỆT (FAVICON & APP ICON) */}
-            <div className="bg-white rounded-2xl border border-slate-200/90 shadow-xs p-6 space-y-4">
+            <div className="bg-white rounded-lg border border-slate-200/90 p-6 space-y-4">
               <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                 <div className="flex items-center gap-2">
                   <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
@@ -436,7 +436,7 @@ export default function AdminSettings() {
                           applyFavicon(e.target.value);
                         }}
                         placeholder="/favicon.png hoặc https://..."
-                        className="flex-1 p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-mono text-slate-800 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20"
+                        className="flex-1 p-2.5 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono text-slate-800 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20"
                       />
                       <input 
                         type="file" 
@@ -449,7 +449,7 @@ export default function AdminSettings() {
                         type="button"
                         onClick={() => fileInputFaviconRef.current?.click()}
                         disabled={uploadingField === 'favicon'}
-                        className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs transition cursor-pointer shrink-0"
+                        className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs transition cursor-pointer shrink-0"
                       >
                         <Upload size={14} />
                         <span>{uploadingField === 'favicon' ? 'Đang tải...' : 'Tải Từ Máy'}</span>
@@ -485,13 +485,13 @@ export default function AdminSettings() {
 
                 {/* Live Preview: Browser Tab Mockup */}
                 <div className="lg:col-span-5">
-                  <div className="p-4 rounded-xl border border-dashed border-slate-300 bg-slate-50/60 text-center space-y-2">
+                  <div className="p-4 rounded-md border border-dashed border-slate-300 bg-slate-50/60 text-center space-y-2">
                     <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">
                       Mô Phỏng Tab Trình Duyệt Thực Tế
                     </span>
-                    <div className="bg-slate-200/80 p-2 rounded-xl text-left shadow-2xs">
+                    <div className="bg-slate-200/80 p-2 rounded-md text-left">
                       {/* Browser Tab Component */}
-                      <div className="inline-flex items-center gap-2 bg-white px-3 py-1.5 rounded-t-lg border-t border-x border-slate-300/80 shadow-xs max-w-full">
+                      <div className="inline-flex items-center gap-2 bg-white px-3 py-1.5 rounded-t-lg border-t border-x border-slate-300/80 max-w-full">
                         {settings.favicon ? (
                           <img 
                             src={settings.favicon} 
@@ -514,7 +514,7 @@ export default function AdminSettings() {
             </div>
 
             {/* 4. TIÊU ĐỀ WEBSITE (SITE TITLE) */}
-            <div className="bg-white rounded-2xl border border-slate-200/90 shadow-xs p-6 space-y-3">
+            <div className="bg-white rounded-lg border border-slate-200/90 p-6 space-y-3">
               <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider">
                 4. Tiêu Đề Thẻ Trình Duyệt (Website Title)
               </h3>
@@ -526,7 +526,7 @@ export default function AdminSettings() {
                 value={settings.siteTitle || ''}
                 onChange={(e) => setSettings({ ...settings, siteTitle: e.target.value })}
                 placeholder="VD: Kim Sơn Automobiles - Cổng Thông Tin Hệ Sinh Thái Ô Tô"
-                className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:outline-none focus:border-primary"
+                className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-md text-xs font-medium text-slate-800 focus:outline-none focus:border-primary"
               />
             </div>
           </div>
@@ -536,7 +536,7 @@ export default function AdminSettings() {
         {/* TAB 2: GENERAL SETTINGS (THÔNG TIN TẬP ĐOÀN)         */}
         {/* ==================================================== */}
         {activeTab === 'general' && (
-          <div className="bg-white rounded-2xl border border-slate-200/90 shadow-xs p-6 sm:p-8 space-y-6">
+          <div className="bg-white rounded-lg border border-slate-200/90 p-6 sm:p-6 space-y-6">
             <div>
               <h3 className="text-sm font-extrabold text-slate-900 uppercase tracking-wider mb-4 border-b border-slate-100 pb-2">
                 1. Định Danh Doanh Nghiệp
@@ -548,7 +548,7 @@ export default function AdminSettings() {
                     type="text"
                     value={settings.name || ''}
                     onChange={(e) => setSettings({ ...settings, name: e.target.value })}
-                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:border-primary"
+                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-md text-xs font-semibold focus:outline-none focus:border-primary"
                   />
                 </div>
                 <div>
@@ -557,7 +557,7 @@ export default function AdminSettings() {
                     type="text"
                     value={settings.legalName || ''}
                     onChange={(e) => setSettings({ ...settings, legalName: e.target.value })}
-                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:border-primary"
+                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-md text-xs font-semibold focus:outline-none focus:border-primary"
                   />
                 </div>
               </div>
@@ -574,7 +574,7 @@ export default function AdminSettings() {
                     type="text"
                     value={settings.headquarters || ''}
                     onChange={(e) => setSettings({ ...settings, headquarters: e.target.value })}
-                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-primary"
+                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-md text-xs focus:outline-none focus:border-primary"
                   />
                 </div>
 
@@ -585,7 +585,7 @@ export default function AdminSettings() {
                       type="text"
                       value={settings.hotline || ''}
                       onChange={(e) => setSettings({ ...settings, hotline: e.target.value })}
-                      className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-mono font-bold text-primary focus:outline-none focus:border-primary"
+                      className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono font-bold text-primary focus:outline-none focus:border-primary"
                     />
                   </div>
                   <div>
@@ -594,7 +594,7 @@ export default function AdminSettings() {
                       type="email"
                       value={settings.email || ''}
                       onChange={(e) => setSettings({ ...settings, email: e.target.value })}
-                      className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-mono focus:outline-none focus:border-primary"
+                      className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono focus:outline-none focus:border-primary"
                     />
                   </div>
                   <div>
@@ -603,7 +603,7 @@ export default function AdminSettings() {
                       type="text"
                       value={settings.website || ''}
                       onChange={(e) => setSettings({ ...settings, website: e.target.value })}
-                      className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-mono focus:outline-none focus:border-primary"
+                      className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono focus:outline-none focus:border-primary"
                     />
                   </div>
                 </div>
@@ -621,7 +621,7 @@ export default function AdminSettings() {
                     type="text"
                     value={settings.slogan || ''}
                     onChange={(e) => setSettings({ ...settings, slogan: e.target.value })}
-                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-primary"
+                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-md text-xs focus:outline-none focus:border-primary"
                   />
                 </div>
 
@@ -632,7 +632,7 @@ export default function AdminSettings() {
                       type="number"
                       value={settings.totalEngineers || 300}
                       onChange={(e) => setSettings({ ...settings, totalEngineers: Number(e.target.value) })}
-                      className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-mono focus:outline-none focus:border-primary"
+                      className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono focus:outline-none focus:border-primary"
                     />
                   </div>
                   <div>
@@ -641,7 +641,7 @@ export default function AdminSettings() {
                       type="number"
                       value={settings.totalCustomers || 50000}
                       onChange={(e) => setSettings({ ...settings, totalCustomers: Number(e.target.value) })}
-                      className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-mono focus:outline-none focus:border-primary"
+                      className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono focus:outline-none focus:border-primary"
                     />
                   </div>
                   <div>
@@ -650,7 +650,7 @@ export default function AdminSettings() {
                       type="text"
                       value={settings.satisfactionRate || '99%'}
                       onChange={(e) => setSettings({ ...settings, satisfactionRate: e.target.value })}
-                      className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-mono focus:outline-none focus:border-primary"
+                      className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono focus:outline-none focus:border-primary"
                     />
                   </div>
                 </div>
@@ -664,7 +664,7 @@ export default function AdminSettings() {
           <button
             type="submit"
             disabled={loading}
-            className="flex items-center gap-2 px-7 py-3 bg-primary hover:bg-primary-dark text-white font-bold rounded-xl text-xs uppercase tracking-wider shadow-glow transition-all hover:scale-105 cursor-pointer disabled:opacity-50"
+            className="flex items-center gap-2 px-7 py-3 bg-primary hover:bg-primary-dark text-white font-bold rounded-md text-xs uppercase tracking-wider transition-all cursor-pointer disabled:opacity-50"
           >
             <Save size={16} />
             <span>{loading ? 'Đang Lưu...' : 'Lưu Toàn Bộ Cấu Hình'}</span>

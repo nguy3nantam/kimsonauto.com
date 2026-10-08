@@ -48,24 +48,24 @@ export default function AboutPage() {
         </div>
 
         {/* Featured Showcase: VinFast Kim Sơn Biên Hoà */}
-        <div className="bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-white rounded-3xl overflow-hidden border border-slate-800 shadow-2xl">
+        <div className="bg-slate-950 text-white rounded-lg overflow-hidden border border-slate-800">
           <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch">
             {/* Image Box */}
             <div className="lg:col-span-7 relative group overflow-hidden min-h-[340px] sm:min-h-[440px] flex items-center bg-black">
               <img 
                 src={withBasePath('/vinfast-kimson-bienhoa.jpg')} 
                 alt="Showroom VinFast Kim Sơn Biên Hoà" 
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                className="w-full h-full object-cover transition-transform duration-700"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none" />
+              <div className="absolute inset-0 bg-slate-950/45 pointer-events-none" />
               
               {/* Badge Over Photo */}
               <div className="absolute top-4 left-4 sm:top-6 sm:left-6 flex flex-wrap gap-2 z-10">
-                <span className="bg-primary/90 backdrop-blur-md text-white text-[11px] font-bold px-3 py-1.5 rounded-full uppercase tracking-wider shadow-lg flex items-center gap-1.5">
+                <span className="bg-primary/90 text-white text-[11px] font-bold px-3 py-1.5 rounded-full uppercase tracking-wider flex items-center gap-1.5">
                   <Sparkles size={13} className="text-primary-light" />
                   <span>Showroom 3S Trọng Điểm</span>
                 </span>
-                <span className="bg-slate-900/80 backdrop-blur-md text-slate-200 text-[11px] font-semibold px-3 py-1.5 rounded-full border border-white/10 hidden sm:inline-flex items-center gap-1.5">
+                <span className="bg-slate-900/80 text-slate-200 text-[11px] font-semibold px-3 py-1.5 rounded-full border border-white/10 hidden sm:inline-flex items-center gap-1.5">
                   <Zap size={13} className="text-emerald-400" />
                   <span>Trạm Sạc Nhanh 24/7</span>
                 </span>
@@ -73,8 +73,8 @@ export default function AboutPage() {
 
               {/* Bottom Caption on mobile */}
               <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 lg:hidden z-10">
-                <p className="text-lg font-black text-white drop-shadow-md">VinFast Kim Sơn Biên Hoà</p>
-                <p className="text-xs text-slate-200 drop-shadow">643 Quốc Lộ 1, P. Long Bình, TP. Biên Hòa, Đồng Nai</p>
+                <p className="text-lg font-black text-white">VinFast Kim Sơn Biên Hoà</p>
+                <p className="text-xs text-slate-200">643 Quốc Lộ 1, P. Long Bình, TP. Biên Hòa, Đồng Nai</p>
               </div>
             </div>
 
@@ -82,7 +82,7 @@ export default function AboutPage() {
             <div className="lg:col-span-5 p-7 sm:p-10 flex flex-col justify-between space-y-6">
               <div className="space-y-4">
                 <div className="inline-flex items-center gap-2 text-primary-light text-xs font-bold uppercase tracking-widest border-b border-primary/30 pb-1">
-                  <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                  <span className="w-2 h-2 rounded-full bg-primary" />
                   <span>Cơ Sở Nổi Bật Hiện Nay</span>
                 </div>
 
@@ -124,7 +124,7 @@ export default function AboutPage() {
                   href="https://maps.google.com/?q=643+Quốc+Lộ+1,+P.Long+Bình,+TP.+Biên+Hòa,+Đồng+Nai"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary hover:bg-primary-dark text-white rounded-xl text-xs font-bold uppercase tracking-wider shadow-glow transition-all hover:scale-105"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary hover:bg-primary-dark text-white rounded-md text-xs font-bold uppercase tracking-wider transition-all"
                 >
                   <MapPin size={14} />
                   <span>Chỉ Đường Google Maps</span>
@@ -132,7 +132,7 @@ export default function AboutPage() {
                 </a>
                 <Link
                   to="/mang-luoi"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/10 hover:bg-white/20 text-white border border-white/10 rounded-xl text-xs font-bold uppercase tracking-wider transition-all"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/10 hover:bg-white/20 text-white border border-white/10 rounded-md text-xs font-bold uppercase tracking-wider transition-all"
                 >
                   <span>11 Chi Nhánh</span>
                   <ChevronRight size={14} />
@@ -143,14 +143,14 @@ export default function AboutPage() {
         </div>
 
         {/* Vision & Mission */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <div className="relative rounded-3xl overflow-hidden shadow-2xl group">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <div className="relative rounded-lg overflow-hidden group">
             <img 
               src="https://images.unsplash.com/photo-1562141961-b5d7d7665637?auto=format&fit=crop&q=80&w=900" 
               alt="Xưởng Kỹ Thuật Kim Sơn" 
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              className="w-full h-full object-cover transition-transform duration-700"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/30 to-transparent flex items-end p-8">
+            <div className="absolute inset-0 bg-slate-950/55 flex items-end p-6">
               <div>
                 <span className="text-[11px] font-bold text-primary-light uppercase tracking-wider">Hạ Tầng Kỹ Thuật</span>
                 <p className="text-white font-bold text-lg mt-0.5">Xưởng dịch vụ đạt chuẩn quốc tế tại Đồng Nai</p>
@@ -183,39 +183,39 @@ export default function AboutPage() {
         </div>
 
         {/* Core Values */}
-        <div className="bg-white rounded-3xl p-8 sm:p-12 border border-slate-200 shadow-md">
+        <div className="bg-white rounded-lg p-6 sm:p-12 border border-slate-200">
           <div className="text-center max-w-2xl mx-auto mb-12">
             <h3 className="text-2xl sm:text-3xl font-black text-slate-900">Giá Trị Cốt Lõi</h3>
             <p className="text-xs text-slate-500 mt-2">Bốn nguyên tắc định hình văn hóa phục vụ của Kim Sơn Automobiles</p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 text-center">
-              <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mx-auto mb-4">
+            <div className="p-6 rounded-lg bg-slate-50 border border-slate-200 text-center">
+              <div className="w-12 h-12 rounded-md bg-primary/10 text-primary flex items-center justify-center mx-auto mb-4">
                 <Target size={24} />
               </div>
               <h4 className="font-bold text-slate-900 mb-2">Tận Tâm</h4>
               <p className="text-xs text-slate-600 leading-relaxed">Lắng nghe khách hàng, tư vấn đúng bệnh, đúng giá, đặt sự an toàn lên hàng đầu.</p>
             </div>
 
-            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 text-center">
-              <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mx-auto mb-4">
+            <div className="p-6 rounded-lg bg-slate-50 border border-slate-200 text-center">
+              <div className="w-12 h-12 rounded-md bg-primary/10 text-primary flex items-center justify-center mx-auto mb-4">
                 <ShieldCheck size={24} />
               </div>
               <h4 className="font-bold text-slate-900 mb-2">Minh Bạch</h4>
               <p className="text-xs text-slate-600 leading-relaxed">Báo giá rõ ràng trước khi làm, bàn giao phụ tùng cũ thay ra tận tay khách hàng.</p>
             </div>
 
-            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 text-center">
-              <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mx-auto mb-4">
+            <div className="p-6 rounded-lg bg-slate-50 border border-slate-200 text-center">
+              <div className="w-12 h-12 rounded-md bg-primary/10 text-primary flex items-center justify-center mx-auto mb-4">
                 <Wrench size={24} />
               </div>
               <h4 className="font-bold text-slate-900 mb-2">Chất Lượng</h4>
               <p className="text-xs text-slate-600 leading-relaxed">Phụ tùng chính phẩm 100%, bảo hành dài hạn với tiêu chuẩn khắt khe.</p>
             </div>
 
-            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 text-center">
-              <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mx-auto mb-4">
+            <div className="p-6 rounded-lg bg-slate-50 border border-slate-200 text-center">
+              <div className="w-12 h-12 rounded-md bg-primary/10 text-primary flex items-center justify-center mx-auto mb-4">
                 <Clock size={24} />
               </div>
               <h4 className="font-bold text-slate-900 mb-2">Tốc Độ</h4>
@@ -225,7 +225,7 @@ export default function AboutPage() {
         </div>
 
         {/* Timeline */}
-        <div className="bg-secondary text-white rounded-3xl p-8 sm:p-12 border border-slate-800 shadow-2xl">
+        <div className="bg-secondary text-white rounded-lg p-6 sm:p-12 border border-slate-800">
           <div className="text-center max-w-2xl mx-auto mb-12">
             <span className="text-xs font-bold text-primary-light uppercase tracking-wider">HÀNH TRÌNH PHÁT TRIỂN</span>
             <h3 className="text-3xl font-black mt-1">Cột Mốc Lịch Sử</h3>
@@ -237,12 +237,12 @@ export default function AboutPage() {
                 <div className="hidden md:block w-1/2"></div>
                 
                 {/* Dot */}
-                <div className="z-10 w-9 h-9 rounded-full bg-primary text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-glow">
+                <div className="z-10 w-9 h-9 rounded-full bg-primary text-white flex items-center justify-center font-bold text-xs shrink-0">
                   {idx + 1}
                 </div>
 
                 {/* Card */}
-                <div className="bg-slate-800/90 p-6 rounded-2xl border border-slate-700 flex-1">
+                <div className="bg-slate-800/90 p-6 rounded-lg border border-slate-700 flex-1">
                   <span className="text-primary-light font-black text-xl">{m.year}</span>
                   <h4 className="text-base font-bold text-white mt-1 mb-2">{m.title}</h4>
                   <p className="text-xs text-slate-300 leading-relaxed">{m.desc}</p>

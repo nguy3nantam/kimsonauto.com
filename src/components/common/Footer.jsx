@@ -101,7 +101,7 @@ export default function Footer() {
             <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-4 border-l-2 border-primary pl-2.5">
               Chuẩn Mực Vận Hành
             </h4>
-            <div className="bg-slate-900 p-4 rounded-2xl border border-slate-800 text-xs space-y-3">
+            <div className="bg-slate-900 p-4 rounded-lg border border-slate-800 text-xs space-y-3">
               <div className="flex items-center gap-2 text-white font-semibold">
                 <ShieldCheck size={16} className="text-emerald-400 shrink-0" />
                 <span>Quy Chuẩn ISO & Chính Hãng</span>

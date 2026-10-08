@@ -2,7 +2,7 @@ import { Leaf, ShieldCheck, Users, HeartHandshake, CheckCircle2 } from 'lucide-r
 
 export default function SustainabilityPage() {
   return (
-    <div className="bg-slate-50 min-h-screen py-16">
+    <div className="bg-slate-50 min-h-screen py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto">
@@ -20,8 +20,8 @@ export default function SustainabilityPage() {
 
         {/* 3 Pillars of ESG */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="bg-white p-8 rounded-3xl border border-slate-200/90 shadow-sm space-y-4">
-            <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold">
+          <div className="bg-white p-6 rounded-lg border border-slate-200/90 space-y-4">
+            <div className="w-12 h-12 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold">
               <Leaf size={24} />
             </div>
             <h3 className="text-lg font-bold text-slate-900 leading-snug">Môi Trường (Environmental)</h3>
@@ -34,8 +34,8 @@ export default function SustainabilityPage() {
             </div>
           </div>
 
-          <div className="bg-white p-8 rounded-3xl border border-slate-200/90 shadow-sm space-y-4">
-            <div className="w-12 h-12 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center font-bold">
+          <div className="bg-white p-6 rounded-lg border border-slate-200/90 space-y-4">
+            <div className="w-12 h-12 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center font-bold">
               <Users size={24} />
             </div>
             <h3 className="text-xl font-black text-slate-900">Xã Hội (Social)</h3>
@@ -48,8 +48,8 @@ export default function SustainabilityPage() {
             </div>
           </div>
 
-          <div className="bg-white p-8 rounded-3xl border border-slate-200/90 shadow-sm space-y-4">
-            <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center font-bold">
+          <div className="bg-white p-6 rounded-lg border border-slate-200/90 space-y-4">
+            <div className="w-12 h-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center font-bold">
               <ShieldCheck size={24} />
             </div>
             <h3 className="text-xl font-black text-slate-900">Quản Trị (Governance)</h3>
@@ -64,7 +64,7 @@ export default function SustainabilityPage() {
         </div>
 
         {/* Community Rescue Banner */}
-        <div className="bg-slate-950 text-white p-8 sm:p-12 rounded-3xl border border-slate-900 flex flex-col md:flex-row items-center justify-between gap-8">
+        <div className="bg-slate-950 text-white p-6 sm:p-12 rounded-lg border border-slate-900 flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="space-y-3 max-w-2xl">
             <div className="inline-flex items-center gap-2 text-xs font-bold text-primary-light uppercase tracking-widest">
               <HeartHandshake size={16} />

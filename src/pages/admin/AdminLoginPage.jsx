@@ -96,7 +96,7 @@ export default function AdminLoginPage({ initialMode = 'login' }) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-primary-subtle/40 to-primary-subtle/30 flex flex-col justify-center items-center p-4 sm:p-6 relative overflow-hidden selection:bg-primary selection:text-white">
+    <div className="min-h-screen bg-slate-50 flex flex-col justify-center items-center p-4 sm:p-6 relative overflow-hidden selection:bg-primary selection:text-white">
       {/* Background Decorative Glow */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-10 right-1/4 w-80 h-80 bg-primary/10 rounded-full blur-2xl pointer-events-none" />
@@ -118,15 +118,15 @@ export default function AdminLoginPage({ initialMode = 'login' }) {
         </div>
 
         {/* Form Box - Style Màu Trắng & Viền Vàng Hoàng Kim */}
-        <div className="bg-white border-2 border-primary rounded-3xl p-6 sm:p-8 shadow-xl shadow-primary/10 backdrop-blur-md">
+        <div className="bg-white border-2 border-primary rounded-lg p-6 sm:p-6">
           {/* Mode Tabs Switcher */}
-          <div className="grid grid-cols-2 gap-1.5 p-1.5 bg-primary-subtle/80 rounded-2xl mb-6 border border-primary/30">
+          <div className="grid grid-cols-2 gap-1.5 p-1.5 bg-primary-subtle/80 rounded-lg mb-6 border border-primary/30">
             <button
               type="button"
               onClick={() => handleSwitchMode('login')}
-              className={`flex items-center justify-center gap-2 py-2.5 text-xs font-bold rounded-xl transition-all ${
+              className={`flex items-center justify-center gap-2 py-2.5 text-xs font-bold rounded-md transition-all ${
                 mode === 'login'
-                  ? 'bg-primary text-white shadow-md shadow-primary/25'
+                  ? 'bg-primary text-white'
                   : 'text-slate-600 hover:text-primary hover:bg-white/80'
               }`}
             >
@@ -136,9 +136,9 @@ export default function AdminLoginPage({ initialMode = 'login' }) {
             <button
               type="button"
               onClick={() => handleSwitchMode('register')}
-              className={`flex items-center justify-center gap-2 py-2.5 text-xs font-bold rounded-xl transition-all ${
+              className={`flex items-center justify-center gap-2 py-2.5 text-xs font-bold rounded-md transition-all ${
                 mode === 'register'
-                  ? 'bg-primary text-white shadow-md shadow-primary/25'
+                  ? 'bg-primary text-white'
                   : 'text-slate-600 hover:text-primary hover:bg-white/80'
               }`}
             >
@@ -148,7 +148,7 @@ export default function AdminLoginPage({ initialMode = 'login' }) {
           </div>
 
           {staticDemo && (
-            <div className="mb-5 flex items-start gap-2 p-3 rounded-2xl bg-blue-50 border border-blue-200 text-[11px] text-blue-800">
+            <div className="mb-5 flex items-start gap-2 p-3 rounded-lg bg-blue-50 border border-blue-200 text-[11px] text-blue-800">
               <ShieldCheck size={16} className="shrink-0 mt-0.5" />
               <span>Dữ liệu đang chạy ở chế độ demo tĩnh trên trình duyệt. Mọi thay đổi chỉ lưu cục bộ trên máy đang xem.</span>
             </div>
@@ -156,14 +156,14 @@ export default function AdminLoginPage({ initialMode = 'login' }) {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             {error && (
-              <div className="flex items-center gap-2 p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-600 text-xs">
+              <div className="flex items-center gap-2 p-3.5 rounded-md bg-red-50 border border-red-200 text-red-600 text-xs">
                 <AlertCircle size={16} className="shrink-0" />
                 <span>{error}</span>
               </div>
             )}
 
             {success && (
-              <div className="flex items-center gap-2 p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs">
+              <div className="flex items-center gap-2 p-3.5 rounded-md bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs">
                 <CheckCircle2 size={16} className="shrink-0" />
                 <span>{success}</span>
               </div>
@@ -184,7 +184,7 @@ export default function AdminLoginPage({ initialMode = 'login' }) {
                       required
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
-                      className="w-full pl-10 pr-4 py-2.5 bg-white border border-primary/30 focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-xl text-slate-800 text-sm placeholder:text-slate-400 focus:outline-none transition-all shadow-2xs"
+                      className="w-full pl-10 pr-4 py-2.5 bg-white border border-primary/30 focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-md text-slate-800 text-sm placeholder:text-slate-400 focus:outline-none transition-all"
                       placeholder="Nguyễn Văn A"
                     />
                   </div>
@@ -203,7 +203,7 @@ export default function AdminLoginPage({ initialMode = 'login' }) {
                       <select
                         value={unit}
                         onChange={(e) => setUnit(e.target.value)}
-                        className="w-full pl-9 pr-3 py-2.5 bg-white border border-primary/30 focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-xl text-slate-800 text-xs sm:text-sm font-semibold focus:outline-none transition-all cursor-pointer shadow-2xs appearance-none"
+                        className="w-full pl-9 pr-3 py-2.5 bg-white border border-primary/30 focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-md text-slate-800 text-xs sm:text-sm font-semibold focus:outline-none transition-all cursor-pointer appearance-none"
                       >
                         {UNIT_OPTIONS.map((u) => (
                           <option key={u} value={u} className="bg-white text-slate-800">
@@ -225,7 +225,7 @@ export default function AdminLoginPage({ initialMode = 'login' }) {
                       <select
                         value={department}
                         onChange={(e) => setDepartment(e.target.value)}
-                        className="w-full pl-9 pr-3 py-2.5 bg-white border border-primary/30 focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-xl text-slate-800 text-xs sm:text-sm font-semibold focus:outline-none transition-all cursor-pointer shadow-2xs appearance-none"
+                        className="w-full pl-9 pr-3 py-2.5 bg-white border border-primary/30 focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-md text-slate-800 text-xs sm:text-sm font-semibold focus:outline-none transition-all cursor-pointer appearance-none"
                       >
                         {DEPARTMENT_OPTIONS.map((d) => (
                           <option key={d} value={d} className="bg-white text-slate-800">
@@ -251,7 +251,7 @@ export default function AdminLoginPage({ initialMode = 'login' }) {
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="w-full pl-9 pr-3 py-2.5 bg-white border border-primary/30 focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-xl text-slate-800 text-sm placeholder:text-slate-400 focus:outline-none transition-all shadow-2xs"
+                        className="w-full pl-9 pr-3 py-2.5 bg-white border border-primary/30 focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-md text-slate-800 text-sm placeholder:text-slate-400 focus:outline-none transition-all"
                         placeholder="email@kimsonauto.com"
                       />
                     </div>
@@ -269,7 +269,7 @@ export default function AdminLoginPage({ initialMode = 'login' }) {
                         type="tel"
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
-                        className="w-full pl-9 pr-3 py-2.5 bg-white border border-primary/30 focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-xl text-slate-800 text-sm placeholder:text-slate-400 focus:outline-none transition-all shadow-2xs"
+                        className="w-full pl-9 pr-3 py-2.5 bg-white border border-primary/30 focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-md text-slate-800 text-sm placeholder:text-slate-400 focus:outline-none transition-all"
                         placeholder="0908 xxx xxx"
                       />
                     </div>
@@ -291,7 +291,7 @@ export default function AdminLoginPage({ initialMode = 'login' }) {
                   required
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 bg-white border border-primary/30 focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-xl text-slate-800 text-sm placeholder:text-slate-400 focus:outline-none transition-all shadow-2xs"
+                  className="w-full pl-10 pr-4 py-2.5 bg-white border border-primary/30 focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-md text-slate-800 text-sm placeholder:text-slate-400 focus:outline-none transition-all"
                   placeholder={mode === 'login' ? 'Nhập tên đăng nhập' : 'Tạo tên đăng nhập (viết liền)'}
                 />
               </div>
@@ -312,7 +312,7 @@ export default function AdminLoginPage({ initialMode = 'login' }) {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 bg-white border border-primary/30 focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-xl text-slate-800 text-sm placeholder:text-slate-400 focus:outline-none transition-all shadow-2xs"
+                  className="w-full pl-10 pr-4 py-2.5 bg-white border border-primary/30 focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-md text-slate-800 text-sm placeholder:text-slate-400 focus:outline-none transition-all"
                   placeholder={mode === 'login' ? 'Nhập mật khẩu' : 'Mật khẩu tối thiểu 6 ký tự'}
                 />
               </div>
@@ -321,7 +321,7 @@ export default function AdminLoginPage({ initialMode = 'login' }) {
             <button
               type="submit"
               disabled={loading}
-              className="w-full mt-2 py-3 bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary text-white font-bold rounded-xl text-sm shadow-lg shadow-primary/25 flex items-center justify-center gap-2 transition-all hover:scale-[1.02] disabled:opacity-50 border border-primary-light/30"
+              className="w-full mt-2 py-3 bg-primary hover:bg-primary-dark text-white font-bold rounded-md text-sm flex items-center justify-center gap-2 transition-all disabled:opacity-50 border border-primary-light/30"
             >
               <span>
                 {loading
@@ -348,9 +348,9 @@ export default function AdminLoginPage({ initialMode = 'login' }) {
                       setUsername(staticDemo ? DEMO_CREDENTIALS.admin.username : 'admin');
                       setPassword(staticDemo ? DEMO_CREDENTIALS.admin.password : 'kimson@2026');
                     }}
-                    className={`p-2 rounded-xl text-left border transition-all ${
+                    className={`p-2 rounded-md text-left border transition-all ${
                       username === 'admin' 
-                        ? 'bg-primary-subtle0 text-white border-primary-dark shadow-sm' 
+                        ? 'bg-primary-subtle0 text-white border-primary-dark' 
                         : 'bg-primary-subtle/70 border-primary/30 text-primary-dark hover:bg-primary/10'
                     }`}
                   >
@@ -364,9 +364,9 @@ export default function AdminLoginPage({ initialMode = 'login' }) {
                       setUsername(staticDemo ? DEMO_CREDENTIALS.leader.username : 'leader_bienhoa');
                       setPassword(staticDemo ? DEMO_CREDENTIALS.leader.password : 'kimson@2026');
                     }}
-                    className={`p-2 rounded-xl text-left border transition-all ${
+                    className={`p-2 rounded-md text-left border transition-all ${
                       username === 'leader_bienhoa' 
-                        ? 'bg-blue-600 text-white border-blue-700 shadow-sm' 
+                        ? 'bg-blue-600 text-white border-blue-700' 
                         : 'bg-blue-50/70 border-blue-200/80 text-blue-900 hover:bg-blue-100'
                     }`}
                   >
@@ -380,9 +380,9 @@ export default function AdminLoginPage({ initialMode = 'login' }) {
                       setUsername(staticDemo ? DEMO_CREDENTIALS.user.username : 'user_bienhoa');
                       setPassword(staticDemo ? DEMO_CREDENTIALS.user.password : 'kimson@2026');
                     }}
-                    className={`p-2 rounded-xl text-left border transition-all ${
+                    className={`p-2 rounded-md text-left border transition-all ${
                       username === 'user_bienhoa' 
-                        ? 'bg-emerald-600 text-white border-emerald-700 shadow-sm' 
+                        ? 'bg-emerald-600 text-white border-emerald-700' 
                         : 'bg-emerald-50/70 border-emerald-200/80 text-emerald-900 hover:bg-emerald-100'
                     }`}
                   >

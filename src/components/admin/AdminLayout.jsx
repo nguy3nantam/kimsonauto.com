@@ -142,7 +142,7 @@ export default function AdminLayout() {
       {/* Mobile Sidebar Overlay */}
       {sidebarOpen && (
         <div 
-          className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-40 lg:hidden"
+          className="fixed inset-0 bg-slate-900/60 z-40 lg:hidden"
           onClick={() => setSidebarOpen(false)}
         />
       )}
@@ -187,9 +187,9 @@ export default function AdminLayout() {
                   key={item.path}
                   to={item.path}
                   onClick={() => setSidebarOpen(false)}
-                  className={`flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-semibold transition-all ${
+                  className={`flex items-center gap-3 px-3.5 py-3 rounded-md text-sm font-semibold transition-all ${
                     active 
-                      ? 'bg-primary text-white shadow-glow' 
+                      ? 'bg-primary text-white' 
                       : 'text-slate-400 hover:bg-slate-900 hover:text-white'
                   }`}
                 >
@@ -206,7 +206,7 @@ export default function AdminLayout() {
           <Link
             to="/"
             target="_blank"
-            className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-white hover:bg-slate-900 transition-colors"
+            className="flex items-center justify-between px-3.5 py-2.5 rounded-md text-xs font-semibold text-slate-400 hover:text-white hover:bg-slate-900 transition-colors"
           >
             <span className="flex items-center gap-2">
               <ExternalLink size={15} />
@@ -217,7 +217,7 @@ export default function AdminLayout() {
 
           <button
             onClick={handleLogout}
-            className="w-full flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-xs font-bold text-red-400 hover:bg-red-500/10 transition-colors"
+            className="w-full flex items-center gap-2 px-3.5 py-2.5 rounded-md text-xs font-bold text-red-400 hover:bg-red-500/10 transition-colors"
           >
             <LogOut size={16} />
             <span>Đăng Xuất Khỏi Hệ Thống</span>
@@ -228,11 +228,11 @@ export default function AdminLayout() {
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Top Header */}
-        <header className="h-20 bg-white border-b border-slate-200 px-4 sm:px-8 flex items-center justify-between sticky top-0 z-30 shadow-xs">
+        <header className="h-20 bg-white border-b border-slate-200 px-4 sm:px-8 flex items-center justify-between sticky top-0 z-30">
           <div className="flex items-center gap-3">
             <button
               onClick={() => setSidebarOpen(true)}
-              className="lg:hidden p-2 text-slate-700 hover:bg-slate-100 rounded-xl"
+              className="lg:hidden p-2 text-slate-700 hover:bg-slate-100 rounded-md"
             >
               <Menu size={24} />
             </button>
@@ -266,12 +266,12 @@ export default function AdminLayout() {
                 </div>
               </div>
 
-              <div className={`w-9 h-9 rounded-xl flex items-center justify-center font-black text-xs shadow-xs ${
+              <div className={`w-9 h-9 rounded-md flex items-center justify-center font-black text-xs ${
                 isAdmin 
-                  ? 'bg-gradient-to-br from-primary-subtle0 to-primary-dark text-white'
+                  ? 'bg-primary text-white'
                   : isLeader 
-                  ? 'bg-gradient-to-br from-blue-600 to-blue-800 text-white'
-                  : 'bg-gradient-to-br from-emerald-600 to-emerald-800 text-white'
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-emerald-600 text-white'
               }`}>
                 {(currentUser?.fullName || currentUser?.name || 'K').charAt(0).toUpperCase()}
               </div>
@@ -280,7 +280,7 @@ export default function AdminLayout() {
         </header>
 
         {/* Page Content Body */}
-        <main className="p-4 sm:p-8 flex-1 overflow-y-auto">
+        <main className="p-4 sm:p-6 flex-1 overflow-y-auto">
           <Outlet />
         </main>
       </div>

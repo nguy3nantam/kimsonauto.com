@@ -311,8 +311,8 @@ export default function AdminPortalHub() {
     <div className="space-y-6">
       {/* Download Alert Notification */}
       {downloadSuccess && (
-        <div role="status" className="fixed top-16 inset-x-4 sm:left-auto sm:right-6 sm:max-w-md z-50 animate-in fade-in slide-in-from-top-4 duration-300">
-          <div className="bg-emerald-600 text-white px-4 py-3 rounded-2xl shadow-xl flex items-center gap-3 text-xs font-bold border border-emerald-400">
+        <div role="status" className="fixed top-16 inset-x-4 sm:left-auto sm:right-6 sm:max-w-md z-50 fade-in duration-300">
+          <div className="bg-emerald-600 text-white px-4 py-3 rounded-lg flex items-center gap-3 text-xs font-bold border border-emerald-400">
             <CheckCircle2 size={18} />
             <span>{downloadSuccess}</span>
           </div>
@@ -320,14 +320,14 @@ export default function AdminPortalHub() {
       )}
 
       {loadError && (
-        <div role="alert" className="flex items-center justify-between gap-3 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+        <div role="alert" className="flex items-center justify-between gap-3 rounded-md border border-red-200 bg-red-50 p-4 text-sm text-red-700">
           <span>{loadError}</span>
           <button type="button" onClick={loadData} disabled={loading} className="shrink-0 font-bold underline">Thử lại</button>
         </div>
       )}
 
       {/* User Welcome Banner with Unit & Department */}
-      <div className="bg-gradient-to-r from-slate-900 via-secondary to-slate-900 rounded-3xl p-6 sm:p-8 text-white shadow-lg relative overflow-hidden">
+      <div className="bg-slate-900 rounded-lg p-6 sm:p-6 text-white relative overflow-hidden">
         <div className="absolute right-0 top-0 translate-x-12 -translate-y-8 w-64 h-64 bg-primary/20 rounded-full blur-3xl pointer-events-none" />
         
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
@@ -342,24 +342,24 @@ export default function AdminPortalHub() {
             </h1>
             
             <div className="flex flex-wrap items-center gap-3 text-xs text-slate-300 pt-1">
-              <div className="flex items-center gap-1.5 bg-slate-800/80 px-3 py-1.5 rounded-xl border border-slate-700/80">
+              <div className="flex items-center gap-1.5 bg-slate-800/80 px-3 py-1.5 rounded-md border border-slate-700/80">
                 <Building2 size={14} className="text-primary-light" />
                 <span>Đơn vị: <strong className="text-white">{currentUser?.unit || 'VF Biên Hòa'}</strong></span>
               </div>
               
-              <div className="flex items-center gap-1.5 bg-slate-800/80 px-3 py-1.5 rounded-xl border border-slate-700/80">
+              <div className="flex items-center gap-1.5 bg-slate-800/80 px-3 py-1.5 rounded-md border border-slate-700/80">
                 <Briefcase size={14} className="text-primary-light" />
                 <span>Bộ phận: <strong className="text-white">{currentUser?.department || 'Kinh Doanh'}</strong></span>
               </div>
 
-              <div className="flex items-center gap-1.5 bg-slate-800/80 px-3 py-1.5 rounded-xl border border-slate-700/80">
+              <div className="flex items-center gap-1.5 bg-slate-800/80 px-3 py-1.5 rounded-md border border-slate-700/80">
                 <ShieldCheck size={14} className="text-emerald-400" />
                 <span>Vai trò: <strong className="text-white">{currentUser?.role || 'Thành Viên'}</strong></span>
               </div>
             </div>
           </div>
 
-          <div className="flex items-center gap-4 shrink-0 bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/10">
+          <div className="flex items-center gap-4 shrink-0 bg-white/10 p-4 rounded-lg border border-white/10">
             <div className="text-center px-3 border-r border-white/10">
               <div className="text-2xl font-black text-white">{announcements.length}</div>
               <div className="text-[10px] uppercase font-bold text-slate-300">Thông Báo</div>
@@ -374,12 +374,12 @@ export default function AdminPortalHub() {
 
       {/* Main Mode Tabs Switcher: Thông Báo vs File Dùng Chung */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-2">
-        <div className="flex items-center gap-2 p-1.5 bg-slate-200/80 rounded-2xl overflow-x-auto">
+        <div className="flex items-center gap-2 p-1.5 bg-slate-200/80 rounded-lg overflow-x-auto">
           <button
             onClick={() => setActiveTab('announcements')}
-            className={`flex shrink-0 items-center gap-2.5 px-3 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all ${
+            className={`flex shrink-0 items-center gap-2.5 px-3 sm:px-5 py-2.5 rounded-md text-xs sm:text-sm font-bold transition-all ${
               activeTab === 'announcements'
-                ? 'bg-primary text-white shadow-md shadow-primary/25'
+                ? 'bg-primary text-white'
                 : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
             }`}
           >
@@ -394,9 +394,9 @@ export default function AdminPortalHub() {
 
           <button
             onClick={() => setActiveTab('files')}
-            className={`flex shrink-0 items-center gap-2.5 px-3 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all ${
+            className={`flex shrink-0 items-center gap-2.5 px-3 sm:px-5 py-2.5 rounded-md text-xs sm:text-sm font-bold transition-all ${
               activeTab === 'files'
-                ? 'bg-primary text-white shadow-md shadow-primary/25'
+                ? 'bg-primary text-white'
                 : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
             }`}
           >
@@ -416,7 +416,7 @@ export default function AdminPortalHub() {
             {activeTab === 'announcements' ? (
               <button
                 onClick={() => setIsAnnouncementModalOpen(true)}
-                className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary text-white text-xs font-bold rounded-xl shadow-glow transition-all"
+                className="flex items-center gap-2 px-4 py-2.5 bg-primary hover:bg-primary-dark text-white text-xs font-bold rounded-md transition-all"
               >
                 <Plus size={16} />
                 <span>{isLeader ? 'Đăng Thông Báo Chi Nhánh' : 'Đăng Thông Báo Mới'}</span>
@@ -424,7 +424,7 @@ export default function AdminPortalHub() {
             ) : (
               <button
                 onClick={() => setIsFileModalOpen(true)}
-                className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary text-white text-xs font-bold rounded-xl shadow-glow transition-all"
+                className="flex items-center gap-2 px-4 py-2.5 bg-primary hover:bg-primary-dark text-white text-xs font-bold rounded-md transition-all"
               >
                 <Plus size={16} />
                 <span>{isLeader ? 'Tải Lên Tệp Chi Nhánh' : 'Chia Sẻ File Tài Liệu Mới'}</span>
@@ -435,7 +435,7 @@ export default function AdminPortalHub() {
 
         {/* Read-only indicator for regular User */}
         {isUser && (
-          <div className="flex items-center gap-2 px-3.5 py-2 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-800 text-xs font-semibold">
+          <div className="flex items-center gap-2 px-3.5 py-2 bg-emerald-50 border border-emerald-200 rounded-md text-emerald-800 text-xs font-semibold">
             <CheckCircle2 size={16} className="text-emerald-600" />
             <span>Chế độ xem tài liệu & thông báo</span>
           </div>
@@ -446,9 +446,9 @@ export default function AdminPortalHub() {
       {/* SECTION 1: THÔNG BÁO NỘI BỘ                               */}
       {/* ========================================================= */}
       {activeTab === 'announcements' && (
-        <div className="space-y-5 animate-in fade-in duration-200">
+        <div className="space-y-5 fade-in duration-200">
           {/* Filters & Search Toolbar */}
-          <div className="bg-white p-4 rounded-2xl border border-slate-200/90 shadow-xs flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
+          <div className="bg-white p-4 rounded-lg border border-slate-200/90 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
             <div className="relative flex-1">
               <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
               <input
@@ -456,12 +456,12 @@ export default function AdminPortalHub() {
                 value={announcementSearch}
                 onChange={(e) => setAnnouncementSearch(e.target.value)}
                 placeholder="Tìm kiếm thông báo theo tiêu đề, nội dung, người ban hành..."
-                className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-primary"
+                className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-md text-xs text-slate-800 focus:outline-none focus:border-primary"
               />
             </div>
 
             <div className="flex flex-wrap sm:flex-nowrap items-center gap-2.5">
-              <div className="flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-1.5">
+              <div className="flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded-md px-2.5 py-1.5">
                 <Filter size={14} className="text-slate-400 shrink-0" />
                 <select
                   value={announcementFilterCategory}
@@ -476,7 +476,7 @@ export default function AdminPortalHub() {
                 </select>
               </div>
 
-              <div className="flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-1.5">
+              <div className="flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded-md px-2.5 py-1.5">
                 <Briefcase size={14} className="text-slate-400 shrink-0" />
                 <select
                   value={announcementFilterDept}
@@ -495,7 +495,7 @@ export default function AdminPortalHub() {
           {/* Announcements Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {filteredAnnouncements.length === 0 ? (
-              <div className="col-span-full py-16 text-center bg-white rounded-3xl border border-slate-200/90 p-8 text-slate-400">
+              <div className="col-span-full py-12 text-center bg-white rounded-lg border border-slate-200/90 p-6 text-slate-400">
                 <Bell size={32} className="mx-auto mb-3 text-slate-300" />
                 <p className="text-sm font-semibold">Chưa có thông báo nào phù hợp với bộ lọc hiện tại.</p>
               </div>
@@ -503,7 +503,7 @@ export default function AdminPortalHub() {
               filteredAnnouncements.map((item) => (
                 <div
                   key={item.id}
-                  className={`bg-white rounded-2xl border p-5 sm:p-6 transition-all hover:shadow-md flex flex-col justify-between ${
+                  className={`bg-white rounded-lg border p-5 sm:p-6 transition-all flex flex-col justify-between ${
                     item.priority === 'urgent'
                       ? 'border-red-300 ring-1 ring-red-200/80 bg-red-50/10'
                       : item.priority === 'high'
@@ -591,15 +591,15 @@ export default function AdminPortalHub() {
       {/* SECTION 2: FILE DÙNG CHUNG                                */}
       {/* ========================================================= */}
       {activeTab === 'files' && (
-        <div className="space-y-5 animate-in fade-in duration-200">
+        <div className="space-y-5 fade-in duration-200">
           {downloadError && (
-            <div role="alert" className="flex items-start gap-2 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+            <div role="alert" className="flex items-start gap-2 rounded-md border border-red-200 bg-red-50 p-4 text-sm text-red-700">
               <AlertCircle size={18} className="shrink-0" />
               <span>{downloadError}</span>
             </div>
           )}
           {/* File Toolbar */}
-          <div className="bg-white p-4 rounded-2xl border border-slate-200/90 shadow-xs flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
+          <div className="bg-white p-4 rounded-lg border border-slate-200/90 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
             <div className="relative flex-1">
               <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
               <input
@@ -607,12 +607,12 @@ export default function AdminPortalHub() {
                 value={fileSearch}
                 onChange={(e) => setFileSearch(e.target.value)}
                 placeholder="Tìm file theo tên tài liệu, nội dung tóm tắt..."
-                className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-primary"
+                className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-md text-xs text-slate-800 focus:outline-none focus:border-primary"
               />
             </div>
 
             <div className="flex flex-wrap sm:flex-nowrap items-center gap-2.5">
-              <div className="flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-1.5">
+              <div className="flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded-md px-2.5 py-1.5">
                 <FolderOpen size={14} className="text-slate-400 shrink-0" />
                 <select
                   value={fileFilterCategory}
@@ -628,7 +628,7 @@ export default function AdminPortalHub() {
                 </select>
               </div>
 
-              <div className="flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-1.5">
+              <div className="flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded-md px-2.5 py-1.5">
                 <FileText size={14} className="text-slate-400 shrink-0" />
                 <select
                   value={fileFilterType}
@@ -648,7 +648,7 @@ export default function AdminPortalHub() {
           {/* Files Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {filteredFiles.length === 0 ? (
-              <div className="col-span-full py-16 text-center bg-white rounded-3xl border border-slate-200/90 p-8 text-slate-400">
+              <div className="col-span-full py-12 text-center bg-white rounded-lg border border-slate-200/90 p-6 text-slate-400">
                 <FolderOpen size={32} className="mx-auto mb-3 text-slate-300" />
                 <p className="text-sm font-semibold">{loading ? 'Đang tải tài liệu...' : loadError ? 'Chưa tải được danh sách tài liệu.' : 'Chưa có file tài liệu nào trong danh mục này.'}</p>
               </div>
@@ -656,12 +656,12 @@ export default function AdminPortalHub() {
               filteredFiles.map((file) => (
                 <div
                   key={file.id}
-                  className="bg-white rounded-2xl border border-slate-200/90 p-5 shadow-xs hover:shadow-md hover:border-primary/40 transition-all flex flex-col justify-between group"
+                  className="bg-white rounded-lg border border-slate-200/90 p-5 hover:border-primary/40 transition-all flex flex-col justify-between group"
                 >
                   <div className="space-y-3">
                     {/* Header Icon & Type */}
                     <div className="flex items-start justify-between">
-                      <div className="p-3 rounded-2xl bg-slate-50 border border-slate-100 group-hover:bg-amber-50/50 transition-colors">
+                      <div className="p-3 rounded-lg bg-slate-50 border border-slate-100 group-hover:bg-amber-50/50 transition-colors">
                         {getFileIcon(file.fileType)}
                       </div>
 
@@ -723,7 +723,7 @@ export default function AdminPortalHub() {
                     <button
                       onClick={() => handleDownloadFile(file)}
                       disabled={!file.available || Boolean(downloadingId)}
-                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-primary text-white hover:bg-primary-dark font-bold text-xs shadow-xs transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-primary text-white hover:bg-primary-dark font-bold text-xs transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       <Download size={13} />
                       <span>{!file.available ? 'Chưa có tệp' : downloadingId === file.id ? 'Đang tải...' : 'Tải Xuống'}</span>
@@ -740,8 +740,8 @@ export default function AdminPortalHub() {
       {/* MODAL: ĐỌC CHI TIẾT THÔNG BÁO                             */}
       {/* ========================================================= */}
       {selectedAnnouncement && (
-        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl max-w-xl w-full shadow-2xl border border-slate-200 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+        <div className="fixed inset-0 z-50 bg-slate-900/60 flex items-center justify-center p-4">
+          <div className="bg-white rounded-lg max-w-xl w-full border border-slate-200 overflow-hidden fade-in zoom-in-95 duration-200">
             <div className="p-6 border-b border-slate-100 flex items-start justify-between gap-4">
               <div className="space-y-1">
                 <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-primary/10 text-primary border border-primary/20">
@@ -753,7 +753,7 @@ export default function AdminPortalHub() {
               </div>
               <button
                 onClick={() => setSelectedAnnouncement(null)}
-                className="p-1.5 text-slate-400 hover:text-slate-600 rounded-xl hover:bg-slate-100 transition-colors"
+                className="p-1.5 text-slate-400 hover:text-slate-600 rounded-md hover:bg-slate-100 transition-colors"
               >
                 <X size={18} />
               </button>
@@ -783,7 +783,7 @@ export default function AdminPortalHub() {
             <div className="p-4 bg-slate-50 border-t border-slate-100 flex items-center justify-end">
               <button
                 onClick={() => setSelectedAnnouncement(null)}
-                className="px-5 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-xs rounded-xl transition-colors"
+                className="px-5 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-xs rounded-md transition-colors"
               >
                 Đóng
               </button>
@@ -796,8 +796,8 @@ export default function AdminPortalHub() {
       {/* MODAL: ĐĂNG THÔNG BÁO MỚI                                 */}
       {/* ========================================================= */}
       {isAnnouncementModalOpen && (
-        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl max-w-lg w-full shadow-2xl border border-slate-200 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+        <div className="fixed inset-0 z-50 bg-slate-900/60 flex items-center justify-center p-4">
+          <div className="bg-white rounded-lg max-w-lg w-full border border-slate-200 overflow-hidden fade-in zoom-in-95 duration-200">
             <div className="p-6 border-b border-slate-100 flex items-center justify-between">
               <div>
                 <h3 className="text-base font-bold text-slate-900">Ban Hành Thông Báo Mới</h3>
@@ -805,7 +805,7 @@ export default function AdminPortalHub() {
               </div>
               <button
                 onClick={() => setIsAnnouncementModalOpen(false)}
-                className="p-1.5 text-slate-400 hover:text-slate-600 rounded-xl hover:bg-slate-100 transition-colors"
+                className="p-1.5 text-slate-400 hover:text-slate-600 rounded-md hover:bg-slate-100 transition-colors"
               >
                 <X size={18} />
               </button>
@@ -822,7 +822,7 @@ export default function AdminPortalHub() {
                   value={newAnnouncement.title}
                   onChange={(e) => setNewAnnouncement({ ...newAnnouncement, title: e.target.value })}
                   placeholder="Nhập tiêu đề thông báo..."
-                  className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:border-primary"
+                  className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-md text-xs sm:text-sm focus:outline-none focus:border-primary"
                 />
               </div>
 
@@ -834,7 +834,7 @@ export default function AdminPortalHub() {
                   <select
                     value={newAnnouncement.category}
                     onChange={(e) => setNewAnnouncement({ ...newAnnouncement, category: e.target.value })}
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-primary"
+                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-md text-xs focus:outline-none focus:border-primary"
                   >
                     <option value="Chính Sách & Quy Định">Chính Sách & Quy Định</option>
                     <option value="Vận Hành & Dịch Vụ">Vận Hành & Dịch Vụ</option>
@@ -850,7 +850,7 @@ export default function AdminPortalHub() {
                   <select
                     value={newAnnouncement.priority}
                     onChange={(e) => setNewAnnouncement({ ...newAnnouncement, priority: e.target.value })}
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-primary"
+                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-md text-xs focus:outline-none focus:border-primary"
                   >
                     <option value="normal">Thông Thường</option>
                     <option value="high">Quan Trọng</option>
@@ -868,7 +868,7 @@ export default function AdminPortalHub() {
                     disabled={isLeader}
                     value={isLeader ? currentUser?.unit || '' : newAnnouncement.targetUnit}
                     onChange={(e) => setNewAnnouncement({ ...newAnnouncement, targetUnit: e.target.value })}
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-primary"
+                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-md text-xs focus:outline-none focus:border-primary"
                   >
                     {isLeader && !UNIT_OPTIONS.includes(currentUser?.unit) && <option value={currentUser?.unit || ''}>{currentUser?.unit || 'Chưa có đơn vị'}</option>}
                     <option value="Tất Cả Đơn Vị">Tất Cả 8 Đơn Vị</option>
@@ -886,7 +886,7 @@ export default function AdminPortalHub() {
                     disabled={isLeader}
                     value={isLeader ? currentUser?.department || '' : newAnnouncement.targetDepartment}
                     onChange={(e) => setNewAnnouncement({ ...newAnnouncement, targetDepartment: e.target.value })}
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-primary"
+                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-md text-xs focus:outline-none focus:border-primary"
                   >
                     {isLeader && !DEPARTMENT_OPTIONS.includes(currentUser?.department) && <option value={currentUser?.department || ''}>{currentUser?.department || 'Chưa có bộ phận'}</option>}
                     <option value="Tất Cả Bộ Phận">Tất Cả 5 Bộ Phận</option>
@@ -907,7 +907,7 @@ export default function AdminPortalHub() {
                   value={newAnnouncement.content}
                   onChange={(e) => setNewAnnouncement({ ...newAnnouncement, content: e.target.value })}
                   placeholder="Soạn thảo nội dung thông báo..."
-                  className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-primary"
+                  className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-md text-xs focus:outline-none focus:border-primary"
                 />
               </div>
 
@@ -928,13 +928,13 @@ export default function AdminPortalHub() {
                 <button
                   type="button"
                   onClick={() => setIsAnnouncementModalOpen(false)}
-                  className="px-4 py-2 border border-slate-200 text-slate-600 rounded-xl text-xs font-bold hover:bg-slate-50"
+                  className="px-4 py-2 border border-slate-200 text-slate-600 rounded-md text-xs font-bold hover:bg-slate-50"
                 >
                   Hủy Bỏ
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary text-white rounded-xl text-xs font-bold shadow-glow"
+                  className="px-5 py-2 bg-primary hover:bg-primary-dark text-white rounded-md text-xs font-bold"
                 >
                   Xuất Bản Thông Báo
                 </button>
@@ -948,8 +948,8 @@ export default function AdminPortalHub() {
       {/* MODAL: CHIA SẺ FILE MỚI                                   */}
       {/* ========================================================= */}
       {isFileModalOpen && (
-        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div role="dialog" aria-modal="true" aria-labelledby="shared-file-title" className="bg-white rounded-3xl max-w-lg w-full max-h-[calc(100dvh-2rem)] overflow-y-auto shadow-2xl border border-slate-200 animate-in fade-in zoom-in-95 duration-200">
+        <div className="fixed inset-0 z-50 bg-slate-900/60 flex items-center justify-center p-4">
+          <div role="dialog" aria-modal="true" aria-labelledby="shared-file-title" className="bg-white rounded-lg max-w-lg w-full max-h-[calc(100dvh-2rem)] overflow-y-auto border border-slate-200 fade-in zoom-in-95 duration-200">
             <div className="p-6 border-b border-slate-100 flex items-center justify-between">
               <div>
                 <h3 id="shared-file-title" className="text-base font-bold text-slate-900">Chia Sẻ File Dùng Chung Mới</h3>
@@ -959,7 +959,7 @@ export default function AdminPortalHub() {
                 onClick={() => setIsFileModalOpen(false)}
                 disabled={uploading}
                 aria-label="Đóng biểu mẫu chia sẻ tệp"
-                className="p-1.5 text-slate-400 hover:text-slate-600 rounded-xl hover:bg-slate-100 transition-colors disabled:opacity-50"
+                className="p-1.5 text-slate-400 hover:text-slate-600 rounded-md hover:bg-slate-100 transition-colors disabled:opacity-50"
               >
                 <X size={18} />
               </button>
@@ -967,7 +967,7 @@ export default function AdminPortalHub() {
 
             <form onSubmit={handleCreateSharedFile} className="p-6 space-y-4">
               {uploadError && (
-                <div role="alert" className="flex items-start gap-2 p-3 rounded-xl border border-red-200 bg-red-50 text-xs text-red-700">
+                <div role="alert" className="flex items-start gap-2 p-3 rounded-md border border-red-200 bg-red-50 text-xs text-red-700">
                   <AlertCircle size={16} className="shrink-0" />
                   <span>{uploadError}</span>
                 </div>
@@ -983,7 +983,7 @@ export default function AdminPortalHub() {
                   accept=".pdf,.docx,.xlsx,.zip"
                   aria-describedby="shared-file-help"
                   onChange={handleSelectFile}
-                  className="w-full min-w-0 px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs file:mr-3 file:rounded-lg file:border-0 file:bg-primary/10 file:px-3 file:py-1.5 file:font-semibold file:text-primary"
+                  className="w-full min-w-0 px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-md text-xs file:mr-3 file:rounded-lg file:border-0 file:bg-primary/10 file:px-3 file:py-1.5 file:font-semibold file:text-primary"
                 />
                 <p id="shared-file-help" className="mt-2 text-xs text-slate-500">PDF, DOCX, XLSX hoặc ZIP. Dung lượng tối đa 10 MB.</p>
                 {selectedFile && (
@@ -1002,7 +1002,7 @@ export default function AdminPortalHub() {
                   value={newFile.description}
                   onChange={(e) => setNewFile({ ...newFile, description: e.target.value })}
                   placeholder="Tóm tắt công dụng hoặc hướng dẫn sử dụng tài liệu..."
-                  className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-primary"
+                  className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-md text-xs focus:outline-none focus:border-primary"
                 />
               </div>
 
@@ -1015,7 +1015,7 @@ export default function AdminPortalHub() {
                     id="shared-file-category"
                     value={newFile.category}
                     onChange={(e) => setNewFile({ ...newFile, category: e.target.value })}
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-primary"
+                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-md text-xs focus:outline-none focus:border-primary"
                   >
                     <option value="Biểu Mẫu Hành Chính">Biểu Mẫu Hành Chính</option>
                     <option value="Catalog & Bảng Giá">Catalog & Bảng Giá</option>
@@ -1037,7 +1037,7 @@ export default function AdminPortalHub() {
                     disabled={isLeader}
                     value={isLeader ? currentUser?.unit || '' : newFile.targetUnit}
                     onChange={(e) => setNewFile({ ...newFile, targetUnit: e.target.value })}
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-primary"
+                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-md text-xs focus:outline-none focus:border-primary"
                   >
                     {isLeader ? <option value={currentUser?.unit || ''}>{currentUser?.unit || 'Chưa có đơn vị'}</option> : (
                       <>
@@ -1057,7 +1057,7 @@ export default function AdminPortalHub() {
                     disabled={isLeader}
                     value={isLeader ? currentUser?.department || '' : newFile.targetDepartment}
                     onChange={(e) => setNewFile({ ...newFile, targetDepartment: e.target.value })}
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-primary"
+                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-md text-xs focus:outline-none focus:border-primary"
                   >
                     {isLeader ? <option value={currentUser?.department || ''}>{currentUser?.department || 'Chưa có bộ phận'}</option> : (
                       <>
@@ -1076,14 +1076,14 @@ export default function AdminPortalHub() {
                   type="button"
                   onClick={() => setIsFileModalOpen(false)}
                   disabled={uploading}
-                  className="px-4 py-2 border border-slate-200 text-slate-600 rounded-xl text-xs font-bold hover:bg-slate-50"
+                  className="px-4 py-2 border border-slate-200 text-slate-600 rounded-md text-xs font-bold hover:bg-slate-50"
                 >
                   Hủy Bỏ
                 </button>
                 <button
                   type="submit"
                   disabled={uploading}
-                  className="px-5 py-2 bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary text-white rounded-xl text-xs font-bold shadow-glow disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-5 py-2 bg-primary hover:bg-primary-dark text-white rounded-md text-xs font-bold disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {uploading ? 'Đang tải lên...' : 'Tải Lên & Chia Sẻ'}
                 </button>

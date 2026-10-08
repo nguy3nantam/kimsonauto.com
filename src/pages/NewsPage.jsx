@@ -55,7 +55,7 @@ function NewsList() {
       ) : error ? (
         <div role="alert" className="py-12 text-center space-y-4">
           <p className="text-slate-600">Chưa thể tải tin tức. Vui lòng thử lại.</p>
-          <button type="button" onClick={() => setAttempt(value => value + 1)} className="rounded-xl bg-primary px-5 py-2.5 text-sm font-bold text-white hover:bg-primary-dark">
+          <button type="button" onClick={() => setAttempt(value => value + 1)} className="rounded-md bg-primary px-5 py-2.5 text-sm font-bold text-white hover:bg-primary-dark">
             Thử lại
           </button>
         </div>
@@ -67,17 +67,17 @@ function NewsList() {
             <Link
               key={item.id}
               to={`/tin-tuc/${encodeURIComponent(item.id)}`}
-              className="bg-white rounded-3xl overflow-hidden border border-slate-200/90 shadow-sm hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary transition-all duration-300 flex flex-col group"
+              className="bg-white rounded-lg overflow-hidden border border-slate-200/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary transition-all duration-300 flex flex-col group"
             >
               <div className="relative aspect-[16/10] overflow-hidden bg-slate-100">
                 {item.image ? (
-                  <img src={item.image} alt="" loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <img src={item.image} alt="" loading="lazy" className="w-full h-full object-cover transition-transform duration-500" />
                 ) : (
                   <div className="h-full flex items-center justify-center text-slate-300"><Newspaper size={48} aria-hidden="true" /></div>
                 )}
-                {item.category && <span className="absolute top-4 left-4 right-4 w-fit bg-slate-900/80 backdrop-blur-md text-white text-[11px] font-bold px-3 py-1 rounded-full">{item.category}</span>}
+                {item.category && <span className="absolute top-4 left-4 right-4 w-fit bg-slate-900/80 text-white text-[11px] font-bold px-3 py-1 rounded-full">{item.category}</span>}
               </div>
-              <div className="p-6 sm:p-8 flex-grow flex flex-col justify-between gap-4">
+              <div className="p-6 sm:p-6 flex-grow flex flex-col justify-between gap-4">
                 <div>
                   <ArticleMeta article={item} />
                   <h2 className="mt-3 text-lg font-black text-slate-900 group-hover:text-primary transition-colors leading-snug break-words">{item.title}</h2>
@@ -140,15 +140,15 @@ function NewsArticle({ id }) {
           <h1 className="text-2xl font-extrabold text-slate-900">{error === 'not-found' ? 'Không tìm thấy bài viết' : 'Không thể tải bài viết'}</h1>
           <p className="text-slate-600">{error === 'not-found' ? 'Bài viết không tồn tại hoặc chưa được xuất bản.' : 'Vui lòng thử lại sau ít phút.'}</p>
           {error !== 'not-found' && (
-            <button type="button" onClick={() => setAttempt(value => value + 1)} className="rounded-xl bg-primary px-5 py-2.5 text-sm font-bold text-white hover:bg-primary-dark">
+            <button type="button" onClick={() => setAttempt(value => value + 1)} className="rounded-md bg-primary px-5 py-2.5 text-sm font-bold text-white hover:bg-primary-dark">
               Thử lại
             </button>
           )}
         </div>
       ) : article && (
-        <article className="bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-sm">
+        <article className="bg-white rounded-lg overflow-hidden border border-slate-200">
           {article.image && <img src={article.image} alt={article.title} className="w-full aspect-[16/9] object-cover" />}
-          <div className="p-5 sm:p-8 lg:p-10 space-y-6">
+          <div className="p-5 sm:p-6 lg:p-10 space-y-6">
             <header className="space-y-4">
               {article.category && <span className="inline-block rounded-full bg-primary/10 px-3 py-1 text-xs font-bold text-primary">{article.category}</span>}
               <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 leading-tight break-words">{article.title}</h1>
@@ -169,7 +169,7 @@ export default function NewsPage() {
   const { id } = useParams();
 
   return (
-    <div className="bg-slate-50 min-h-screen py-10 sm:py-16">
+    <div className="bg-slate-50 min-h-screen py-10 sm:py-12">
       {id ? <NewsArticle key={id} id={id} /> : <NewsList />}
     </div>
   );
