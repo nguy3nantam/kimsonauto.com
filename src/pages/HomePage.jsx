@@ -343,23 +343,23 @@ export default function HomePage() {
       </section>
 
       {/* 6. Sustainability Commitment */}
-      <section className="py-12 bg-slate-950 text-white relative overflow-hidden">
+      <section className="py-12 bg-primary text-white relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-10">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight leading-[1.3]">
               Vươn Mình Cùng Kỷ Nguyên Xanh Kiến Tạo Tương Lai
             </h2>
-            <p className="text-slate-400 text-sm sm:text-base mt-3 leading-relaxed">
+            <p className="text-white/80 text-sm sm:text-base mt-3 leading-relaxed">
               Kim Sơn cam kết hướng tới mục tiêu phát triển bền vững thông qua việc đẩy mạnh dịch vụ ô tô điện không phát thải và đào tạo nhân tài kỹ thuật cho tương lai.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
             {ecosystemData.sustainability.map((item, idx) => (
-              <div key={idx} className="bg-slate-900/90 p-7 rounded-lg border border-slate-800 hover:border-slate-700 transition-all">
-                <div className="text-primary-light font-black text-xl mb-3 font-display">0{idx + 1}</div>
+              <div key={idx} className="bg-white/10 p-7 rounded-lg border border-white/20 hover:border-white/40 transition-all">
+                <div className="text-white font-black text-xl mb-3 font-display">0{idx + 1}</div>
                 <h3 className="text-base sm:text-lg font-bold text-white mb-2 leading-snug">{item.title}</h3>
-                <p className="text-xs text-slate-400 leading-relaxed">{item.desc}</p>
+                <p className="text-xs text-white/80 leading-relaxed">{item.desc}</p>
               </div>
             ))}
           </div>
