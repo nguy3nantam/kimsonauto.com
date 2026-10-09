@@ -238,10 +238,10 @@ export default function HomePage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-center">
             <div className="space-y-5">
               <div className="inline-block text-xs font-bold text-primary uppercase tracking-[0.15em] border-b-2 border-primary pb-1">
-                TỔNG QUAN HỆ SINH THÁI
+                TỔNG QUAN VỀ KIM SƠN AUTOMOBILES
               </div>
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-[1.3]">
-                Giới thiệu về Kim Sơn Automobiles
+                Giới Thiệu
               </h2>
               <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
                 Được xây dựng trên triết lý lấy chất lượng kỹ thuật làm nền tảng và sự hài lòng của khách hàng làm trung tâm, Kim Sơn Automobiles đã khẳng định vị thế là một trong những hệ sinh thái dịch vụ ô tô phát triển nhanh và uy tín nhất thuộc NPP Kim Sơn.
@@ -255,7 +255,7 @@ export default function HomePage() {
                   to="/about"
                   className="inline-flex items-center gap-2 text-primary font-bold text-xs sm:text-sm uppercase tracking-wider hover:gap-3 transition-all"
                 >
-                  <span>Tìm hiểu thêm về tầm nhìn & sứ mệnh Kim Sơn</span>
+                  <span>Tìm hiểu thêm</span>
                   <ArrowRight size={16} />
                 </Link>
               </div>
@@ -269,14 +269,6 @@ export default function HomePage() {
                   loading="lazy"
                   className="w-full h-full object-cover transition-transform duration-700"
                 />
-              </div>
-              <div className="absolute -bottom-5 -left-5 bg-slate-900/95 text-white p-5 rounded-lg border border-slate-800 hidden sm:block max-w-xs">
-                <div className="flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-wider mb-1">
-                  <span className="w-2 h-2 rounded-full bg-primary" />
-                  <span>Showroom 3S Trọng Điểm</span>
-                </div>
-                <p className="text-base font-black text-white font-display">VinFast Kim Sơn Biên Hoà</p>
-                <p className="text-xs text-slate-300 mt-1 leading-relaxed">Cơ sở quy mô hiện đại kết nối trục kinh tế thuộc NPP Kim Sơn.</p>
               </div>
             </div>
           </div>
