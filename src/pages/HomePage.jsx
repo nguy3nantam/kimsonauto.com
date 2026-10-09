@@ -237,7 +237,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-center">
             <div className="space-y-5">
-              <div className="inline-block text-xs font-bold text-primary uppercase tracking-[0.15em] border-b-2 border-primary pb-1">
+              <div className="inline-block text-sm sm:text-base font-bold text-primary uppercase tracking-[0.15em] border-b-2 border-primary pb-1">
                 TỔNG QUAN VỀ KIM SƠN AUTOMOBILES
               </div>
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-[1.3]">
@@ -280,7 +280,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-center">
             <div className="space-y-5">
-              <div className="inline-block text-xs font-bold text-primary uppercase tracking-[0.15em] border-b-2 border-primary pb-1">
+              <div className="inline-block text-sm sm:text-base font-bold text-primary uppercase tracking-[0.15em] border-b-2 border-primary pb-1">
                 QUY MÔ HẠ TẦNG
               </div>
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-[1.3]">
@@ -372,7 +372,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-10">
             <div>
-              <div className="inline-block text-xs font-bold text-primary uppercase tracking-[0.15em] border-b-2 border-primary pb-1 mb-2">
+              <div className="inline-block text-sm sm:text-base font-bold text-primary uppercase tracking-[0.15em] border-b-2 border-primary pb-1 mb-2">
                 TRUYỀN THÔNG & ĐỐI NGOẠI
               </div>
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-[1.3]">
